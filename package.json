@@ -1,0 +1,31 @@
+{
+  "name": "dms-upload",
+  "version": "0.0.1",
+  "description": "A document upload flow that can be implemented in any BMI React application. Documents are stored in DMS. Metadata can be added in the flow.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "echo \"TODO: build\" && exit 0",
+    "test": "echo \"TODO: tests\" && exit 0",
+    "ci:test": "echo \"TODO: ci:test\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.data.amsterdam.nl:bmi/dms-upload.git"
+  },
+  "keywords": [
+    "dms",
+    "upload",
+    "bmi",
+    "asc",
+    "react",
+    "component",
+    "material-ui"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.2.1",
+    "stylelint": "^13.12.0",
+    "typescript": "^4.2.3"
+  }
+}
