@@ -25,7 +25,7 @@
 		"rootDir": "/",
 		"outDir": "dist"
 	},
-	"files": ["src/index.ts"],
+	"files": ["src/entry.tsx"],
 	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }

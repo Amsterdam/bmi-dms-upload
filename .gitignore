@@ -73,4 +73,5 @@ fabric.properties
 junit.xml
 node_modules/
 
+build/
 dist/
