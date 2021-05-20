@@ -6,7 +6,7 @@ import DummyComponent from './DummyComponent';
 
 //👇 This default export determines where your story goes in the story list
 export default {
-	title: 'common/DummyComponent',
+	title: 'components/DummyComponent',
 	component: DummyComponent,
 };
 

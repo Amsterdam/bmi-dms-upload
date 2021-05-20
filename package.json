@@ -57,6 +57,7 @@
 		"@babel/preset-react": "^7.13.13",
 		"@babel/preset-typescript": "^7.13.0",
 		"@babel/runtime": "^7.14.0",
+		"@storybook/addon-a11y": "^6.2.9",
 		"@storybook/addon-actions": "^6.2.9",
 		"@storybook/addon-essentials": "^6.2.9",
 		"@storybook/addon-links": "^6.2.9",
@@ -112,6 +113,8 @@
 		"@amsterdam/asc-assets": "^0.29.3",
 		"@amsterdam/asc-ui": "^0.29.3",
 		"@bmi/component-library": "git+ssh://git@git.data.amsterdam.nl:bmi/component-library.git",
+		"@material-ui/core": "^4.11.4",
+		"polished": "^4.1.2",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
 		"styled-components": "^5.2.3"
