@@ -29,7 +29,7 @@ module.exports = {
 						},
 					},
 					{
-						loader: 'postcss-loader', // 3. Process CSS with postcss
+						loader: 'postcss-loader', // 1. Process CSS with postcss
 						options: {
 							sourceMap: true,
 						},
