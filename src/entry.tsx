@@ -3,3 +3,8 @@ import { render } from 'react-dom';
 import App from './App';
 
 render(<App />, document.getElementById('root'));
+
+// Webpack hot module replacement
+if (module.hot) {
+	module.hot.accept();
+}
