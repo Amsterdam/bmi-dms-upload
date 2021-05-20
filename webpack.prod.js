@@ -39,8 +39,9 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: [
-					MiniCssExtractPlugin.loader, // 2. Extract css into files
-					'css-loader', // 1. Turns css into commonjs
+					MiniCssExtractPlugin.loader, // 3. Extract css into files
+					'css-loader', // 2. Turns css into commonjs
+					'postcss-loader', // 3. Process CSS with postcss
 				],
 			},
 		],

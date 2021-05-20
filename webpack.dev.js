@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 	...common,
 	mode: 'development',
-	devtool: 'none',
+	devtool: 'inline-source-map',
 	output: {
 		filename: 'main.bundle.js',
 		path: path.resolve(__dirname, 'build'),
@@ -20,9 +20,20 @@ module.exports = {
 			...common.module.rules,
 			{
 				test: /\.css$/,
-				use: [
-					'style-loader', // 2. Inject styles into DOM
-					'css-loader', // 1. Turns css into commonjs
+				loader: [
+					'style-loader', // 3. Inject styles into DOM
+					{
+						loader: 'css-loader', // 2. Turns css into commonjs
+						options: {
+							sourceMap: true,
+						},
+					},
+					{
+						loader: 'postcss-loader', // 3. Process CSS with postcss
+						options: {
+							sourceMap: true,
+						},
+					},
 				],
 			},
 		],
@@ -30,7 +41,7 @@ module.exports = {
 	devServer: {
 		inline: true,
 		contentBase: path.join(process.cwd(), '/src'),
-		port: 8000,
+		port: 9999,
 		host: 'localhost',
 		hot: true,
 		hotOnly: true,
