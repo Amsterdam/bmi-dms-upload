@@ -79,3 +79,6 @@ dist/
 
 # Env
 .env
+
+# Reports
+reports/
