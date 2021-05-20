@@ -73,4 +73,12 @@ fabric.properties
 junit.xml
 node_modules/
 
+# Build
+build/
 dist/
+
+# Env
+.env
+
+# Reports
+reports/
