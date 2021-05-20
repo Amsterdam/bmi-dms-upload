@@ -6,8 +6,8 @@
   "scripts": {
     "prepare": "husky install",
     "start": "npm run storybook",
-    "build": "webpack --config webpack.prod.js",
-    "serve": "webpack serve --config webpack.dev.js --open",
+    "build": "webpack --config webpack.prod.conf.js",
+    "serve": "webpack serve --config webpack.dev.conf.js --open",
     "build:storybook": "build-storybook",
     "test": "jest",
     "test:watch": "jest --watch",

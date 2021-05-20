@@ -1,5 +1,5 @@
 const path = require('path');
-const common = require('./webpack.common');
+const common = require('./webpack.base.conf');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
