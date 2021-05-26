@@ -1,0 +1,13 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"rootDir": "./",
+		"outDir": "../lib"
+	},
+	"include": ["**/*.ts", "**/*.tsx"],
+	"exclude": [
+		"entry.tsx",
+		"**/*.test.tsx",
+		"**/*.stories.tsx"
+	]
+}

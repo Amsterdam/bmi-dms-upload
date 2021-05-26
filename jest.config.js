@@ -68,7 +68,7 @@ module.exports = {
 	// ],
 
 	// An array of file extensions your modules use
-	moduleFileExtensions: ['js', 'ts', 'tsx'],
+	moduleFileExtensions: ['js', 'ts', 'tsx', 'jsx'],
 
 	// A map from regular expressions to module names that allow to stub out resources with a single module
 	moduleNameMapper: {
@@ -76,6 +76,8 @@ module.exports = {
 		'~/(.*)$': '<rootDir>/src/$1',
 		'^.+\\.(css|scss)$': '<rootDir>/tests/jest-cssstub.js',
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
+		'^react$': '<rootDir>/node_modules/react',
+		'^react-dom$': '<rootDir>/node_modules/react-dom',
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
