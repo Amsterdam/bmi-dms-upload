@@ -74,11 +74,11 @@ junit.xml
 node_modules/
 
 # Build
-build/
 dist/
+/es/
+/lib/
 
 # Env
 .env
 
-# Reports
 reports/

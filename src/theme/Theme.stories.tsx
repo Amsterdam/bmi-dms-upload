@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React from 'react';
 import muiTheme from './material-ui-theme';
 import { withA11y } from '@storybook/addon-a11y';

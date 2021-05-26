@@ -1,13 +1,18 @@
 {
-  "name": "dms-upload",
-  "version": "0.0.2-alpha.0",
+  "name": "@bmi/dms-upload",
+  "version": "0.0.0",
   "description": "A document upload flow that can be implemented in any BMI React application. Documents are stored in DMS. Metadata can be added in the flow.",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "npm run build:ts:es && npm run build:ts && husky install",
     "start": "npm run storybook",
-    "build": "webpack --config webpack.prod.conf.js",
     "serve": "webpack serve --config webpack.dev.conf.js --open",
+    "build": "webpack --config webpack.prod.conf.js",
+    "build:ts": "tsc -b src/tsconfig.build.json",
+    "build:ts:watch": "tsc -b src/tsconfig.build.json --watch",
+    "build:ts:es": "tsc -b src/tsconfig.build.es.json",
+    "build:ts:es:watch": "tsc -b src/tsconfig.build.es.json --watch",
     "build:storybook": "build-storybook",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -17,7 +22,6 @@
     "lint:types": "tsc --noEmit",
     "fix": "npm-run-all --parallel fix:js fix:css",
     "fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
-    "fix:css": "prettier --write \"src/**/*.{tsx,ts}\"",
     "ci:eslint": "eslint --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\" --format junit --output-file reports/eslint.xml",
     "ci:stylelint": "npm run stylelint -- --quiet --custom-formatter node_modules/stylelint-junit-formatter > reports/stylelint.xml",
     "ci:lint": "npm-run-all --parallel --silent --continue-on-error ci:eslint ci:stylelint",
@@ -63,8 +67,10 @@
     "@storybook/addon-links": "^6.2.9",
     "@storybook/react": "^6.2.9",
     "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/react": "^11.2.7",
     "@types/jest": "^26.0.23",
+    "@types/react-dom": "^17.0.5",
+    "@types/styled-components": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "babel-jest": "^26.6.3",
@@ -85,7 +91,6 @@
     "handlebars-loader": "^1.7.1",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-junit": "^12.0.0",
     "jest-styled-components": "^7.0.4",
     "jest-svg-transformer": "^1.0.0",
@@ -119,6 +124,11 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.2.3"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2",
+    "styled-components": ">=5.2.3"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
