@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "npm run build:ts:es && npm run build:ts && husky install",
     "start": "npm run storybook",
     "serve": "webpack serve --config webpack.dev.conf.js --open",
     "build": "webpack --config webpack.prod.conf.js",
@@ -118,7 +118,7 @@
   "dependencies": {
     "@amsterdam/asc-assets": "^0.29.3",
     "@amsterdam/asc-ui": "^0.29.3",
-    "@bmi/component-library": "file:../component-library",
+    "@bmi/component-library": "git+ssh://git@git.data.amsterdam.nl:bmi/component-library.git",
     "@material-ui/core": "^4.11.4",
     "polished": "^4.1.2",
     "react": "^17.0.2",
