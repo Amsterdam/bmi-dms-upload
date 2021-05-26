@@ -15,7 +15,7 @@ As an example, this package has `@bmi/component-library` as a dependency. To mak
 * Checkout `@bmi/dms-upload` at `/path/to/repos/dms-upload`
 * Checkout `@bmi/component-library` at `/path/to/repos/component-library`
 * `cd /path/to/repos/component-library && npm link`
-* `cd /path/to/repos/dms-upload && npm link component-library`
+* `cd /path/to/repos/dms-upload && npm link @bmi/component-library`
 
 This will create a symlink at `/path/to/repos/dms-upload/node_modules/@bmi/component-library` which points to your 
 clone of the `@bmi/component-library` package.
