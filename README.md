@@ -27,7 +27,7 @@ IMPORTANT: if you use NVM, it is crucial that both `npm link` commands are execu
 
 ## Publish
 
-See this `./Jenkinsfile` and [this Jenkins pipeline](https://ci.secure.amsterdam.nl/job/BMI/job/dms-upload/)
+TODO
 
 ## Unit tests
 
