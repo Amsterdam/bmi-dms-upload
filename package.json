@@ -1,5 +1,5 @@
 {
-  "name": "@bmi/dms-upload",
+  "name": "@amsterdam/dms-upload",
   "version": "0.0.0",
   "description": "A document upload flow that can be implemented in any BMI React application. Documents are stored in DMS. Metadata can be added in the flow.",
   "main": "lib/index.js",
@@ -42,8 +42,8 @@
     "component",
     "material-ui"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Gemeente Amsterdam",
+  "license": "MPL-2.0",
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
