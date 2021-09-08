@@ -22,6 +22,7 @@
     "lint:types": "tsc --noEmit",
     "fix": "npm-run-all --parallel fix:js fix:css",
     "fix:js": "eslint --fix --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
+    "ci:test": "jest --ci --reporters=default",
     "ci:eslint": "eslint --ignore-path .eslintignore -c .eslintrc.js \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\" --format junit --output-file reports/eslint.xml",
     "ci:stylelint": "npm run stylelint -- --quiet --custom-formatter node_modules/stylelint-junit-formatter > reports/stylelint.xml",
     "ci:lint": "npm-run-all --parallel --silent --continue-on-error ci:eslint ci:stylelint",
