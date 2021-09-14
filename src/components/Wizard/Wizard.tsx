@@ -41,6 +41,7 @@ const Wizard: React.FC<Props> = ({ onClose }: Props) => {
 	useEffect(() => {
 		dispatch(init());
 	}, []);
+	// For temporary illustrative purposes:
 	console.log('foo', foo);
 
 	return (
