@@ -1,3 +1,1 @@
-import App from './App';
-
-export { App };
+export { default as AddDocumentButton } from './components/AddDocumentButton/AddDocumentButton';
