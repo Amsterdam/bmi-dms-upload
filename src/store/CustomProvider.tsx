@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import * as dmsUploadReducers from './reducers';
 import { DEFAULT_STATE } from './reducers';
 import { IState } from '~/store/store';
+import * as sagas from './sagas';
 
 const initialState: IState = {
 	dmsUpload: DEFAULT_STATE,
@@ -36,5 +37,8 @@ const CustomProvider: React.FC<Props> = ({ children }: Props) => {
 		</Provider>
 	);
 };
+
+// Initialise the sagas
+[...sagas.default].map((saga) => sagaMiddleware.run(saga));
 
 export default CustomProvider;

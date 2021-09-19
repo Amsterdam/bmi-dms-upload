@@ -17,6 +17,8 @@ const AddDocumentButton: React.FC<Props> = ({
 	onMetadataValidate,
 	onMetadataSubmit,
 	onCancel,
+	surveyId,
+	objectId,
 }: Props) => {
 	const [isWizardVisible, setWizardVisibility] = React.useState<boolean>(false);
 
@@ -40,6 +42,8 @@ const AddDocumentButton: React.FC<Props> = ({
 					onMetadataValidate={onMetadataValidate}
 					onMetadataSubmit={onMetadataSubmit}
 					onCancel={onCancel}
+					objectId={objectId}
+					surveyId={surveyId}
 				/>
 			)}
 		</CustomProvider>

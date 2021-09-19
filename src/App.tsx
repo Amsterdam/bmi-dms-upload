@@ -62,6 +62,9 @@ const App: React.FC = () => {
 							// Dispatch actions/make async calls to remove the uploaded files from DMS
 							// (cancellation is only possible prior to metadata being persisted)
 						}}
+						surveyId="1234"
+						objectId="1"
+						//surveyId and ObjectId are passed as a prop, or maybe just the surveyId is sufficient to retrieve the objectId as well
 					/>
 				</div>
 			</ThemeProvider>

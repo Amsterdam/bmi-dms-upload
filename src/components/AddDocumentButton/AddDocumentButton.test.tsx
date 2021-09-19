@@ -17,6 +17,8 @@ describe('<AddDocumentButton />', () => {
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
+				objectId="1234"
+				surveyId="1"
 			/>,
 		);
 	};
