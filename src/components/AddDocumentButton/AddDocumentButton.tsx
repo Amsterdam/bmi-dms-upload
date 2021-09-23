@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import Wizard, { ImplementationProps } from '../Wizard/Wizard';
 import CustomProvider from '~/store/CustomProvider';
 
-type Props = {
+type Props<T> = {
 	buttonText?: string;
-} & ImplementationProps;
+} & ImplementationProps<T>;
 
-const AddDocumentButton: React.FC<Props> = ({
+export default function AddDocumentButton<T>({
 	buttonText = 'Bestand toevoegen',
 	getPostUrl,
 	getHeaders,
@@ -17,7 +17,7 @@ const AddDocumentButton: React.FC<Props> = ({
 	onMetadataValidate,
 	onMetadataSubmit,
 	onCancel,
-}: Props) => {
+}: Props<T>): ReactElement {
 	const [isWizardVisible, setWizardVisibility] = React.useState<boolean>(false);
 
 	const onHandleClick = () => {
@@ -30,7 +30,7 @@ const AddDocumentButton: React.FC<Props> = ({
 				{buttonText}
 			</Button>
 			{isWizardVisible && (
-				<Wizard
+				<Wizard<T>
 					onClose={() => setWizardVisibility(false)}
 					getPostUrl={getPostUrl}
 					getHeaders={getHeaders}
@@ -44,8 +44,4 @@ const AddDocumentButton: React.FC<Props> = ({
 			)}
 		</CustomProvider>
 	);
-};
-
-AddDocumentButton.displayName = 'AddDocumentButton';
-
-export default AddDocumentButton;
+}

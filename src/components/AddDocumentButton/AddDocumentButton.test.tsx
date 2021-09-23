@@ -7,7 +7,7 @@ import renderWithProviders from '~/tests/utils/withProviders';
 describe('<AddDocumentButton />', () => {
 	const renderComponent = () => {
 		return renderWithProviders(
-			<AddDocumentButton
+			<AddDocumentButton<{}>
 				buttonText="Upload"
 				getPostUrl={jest.fn()}
 				getHeaders={jest.fn()}
