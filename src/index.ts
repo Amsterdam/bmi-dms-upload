@@ -1,1 +1,4 @@
-export { default as AddDocumentButton } from './components/AddDocumentButton/AddDocumentButton';
+export {
+	default as AddDocumentButton,
+	Props as AddDocumentProps,
+} from './components/AddDocumentButton/AddDocumentButton';

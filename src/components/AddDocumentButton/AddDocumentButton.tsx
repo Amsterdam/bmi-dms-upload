@@ -3,7 +3,7 @@ import { Button } from '@amsterdam/asc-ui';
 import Wizard, { ImplementationProps } from '../Wizard/Wizard';
 import CustomProvider from '~/store/CustomProvider';
 
-type Props<T> = {
+export type Props<T> = {
 	buttonText?: string;
 } & ImplementationProps<T>;
 
