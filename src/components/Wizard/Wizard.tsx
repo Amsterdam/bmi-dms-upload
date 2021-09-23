@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from '~/store/CustomProvider';
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
 
-export type ImplementationProps = {
+export type ImplementationProps<T> = {
 	// Dynamically get URL to upload file to
 	getPostUrl: FileUploadProps['getPostUrl'];
 	// Allows for authentication with a token header
@@ -21,20 +21,20 @@ export type ImplementationProps = {
 	// Component to render for capturing meta data
 	metadataForm: ReactNode;
 	// Validation of custom metadata form
-	onMetadataValidate: <T>(data: T) => Promise<boolean>;
+	onMetadataValidate: (data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
-	onMetadataSubmit: <T>(data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
+	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
 
 	// The uploaded document should have the possibility of deletion again if the wizard were to be cancelled prior
 	// to persistence of the metadata
-	onCancel: <T>(data: CancelCallbackArg<T>) => Promise<void>;
+	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
 };
 
-type Props = {
+type Props<T> = {
 	onClose: () => void;
-} & ImplementationProps;
+} & ImplementationProps<T>;
 
-const Wizard: React.FC<Props> = ({ onClose }: Props) => {
+export default function Wizard<T>({ onClose }: Props<T>) {
 	// Store dispatch/select for scaffold/demo purposes:
 	const foo = useSelector(getFoo);
 	const dispatch = useDispatch();
@@ -57,8 +57,4 @@ const Wizard: React.FC<Props> = ({ onClose }: Props) => {
 			</>
 		</Modal>
 	);
-};
-
-Wizard.displayName = 'Wizard';
-
-export default Wizard;
+}

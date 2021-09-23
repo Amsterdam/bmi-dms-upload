@@ -26,7 +26,7 @@ const App: React.FC = () => {
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
 				<div>
-					<AddDocumentButton
+					<AddDocumentButton<MetadataExample>
 						getPostUrl={() => Promise.resolve('/api/example/upload')}
 						getHeaders={async () => {
 							const headers: { [key: string]: string } = {};
@@ -46,19 +46,19 @@ const App: React.FC = () => {
 						// A custom form component should be rendered here that is specifically geared towards
 						// capturing the relevant metadata for the context in which this button is implemented
 						metadataForm={<></>}
-						onMetadataValidate={async function <MetadataExample>(data: MetadataExample) {
+						onMetadataValidate={async function (data: MetadataExample) {
 							// Yup can be leveraged here to validate the metadata that was captured with the form
 							console.log('Validate metadata against schema', data);
 							return true;
 						}}
-						onMetadataSubmit={async function <MetadataExample>(data: MetadataDataSubmitCallbackArg<MetadataExample>) {
+						onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
 							// Dispatch actions/make async calls to persist the metadata
 							// This effectively completes the wizard flow
 							// If an exception were to be thrown from this callback it is gracefully handled with
 							// some generic feedback to the end user
 							console.log('Persist metadata; the wizard has been completed and will be closed after this.');
 						}}
-						onCancel={async function <MetadataExample>({ metadata, file }: CancelCallbackArg<MetadataExample>) {
+						onCancel={async function ({ metadata, file }: CancelCallbackArg<MetadataExample>) {
 							// Dispatch actions/make async calls to remove the uploaded files from DMS
 							// (cancellation is only possible prior to metadata being persisted)
 						}}
