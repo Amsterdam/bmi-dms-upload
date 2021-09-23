@@ -1,10 +1,11 @@
-import React, { ReactNode, useEffect } from 'react';
-import { CustomFile, Modal, FileUploadProps, FileList } from '@amsterdam/bmi-component-library';
+//@ts-nocheck
+import React, { ReactNode } from 'react';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
-import { getDocuments } from '~/store/selectors';
-import { onDocumentRemove, fetchDocumentsRequest } from '~/store/actions';
-import { useDispatch, useSelector } from '~/store/CustomProvider';
+import Step1 from './Step1';
+import Step2 from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
@@ -33,17 +34,22 @@ export type ImplementationProps = {
 	surveyId: string;
 };
 
-export interface IDmsDocument {
-	url: string;
-	guid: string;
-	name: string;
-	objectkaartomschrijving?: string; // beschrijving
-	tekeningdocumentomschrijving?: string; // type document
-	'ils-2'?: boolean;
-	'ils-3'?: boolean;
-	jaar?: string;
+function renderButtons() {
+	const location = useLocation();
+	const history = useHistory();
+	console.log('patname', location.pathname);
+	return location.pathname === '/' ? (
+		<Button
+			onClick={() => {
+				history.push('/step2');
+			}}
+		>
+			Volgende
+		</Button>
+	) : (
+		<Button>Opslaan</Button>
+	);
 }
-
 function onCancel() {
 	console.log('cancel fileUpload');
 }
@@ -52,40 +58,28 @@ type Props = {
 	onClose: () => void;
 } & ImplementationProps;
 
-const Wizard: React.FC<Props> = ({ onClose, objectId, surveyId }: Props) => {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(fetchDocumentsRequest (objectId));
-		// };
-	}, []);
-	// Store dispatch/select for scaffold/demo purposes:
-	const documents: IDmsDocument[] | false = useSelector(getDocuments);
-	// For temporary illustrative purposes:
-	console.log('documents', documents);
-
+const Wizard: React.FC<Props> = ({ onClose, objectId, surveyId, metadataForm, ...props }: Props) => {
 	return (
 		<Modal id="dms-upload-wizard" open={true} onClose={onClose} closeOnBackdropClick={false}>
 			<Modal.TopBar hideCloseButton={false}>Bestand uploaden voor ...</Modal.TopBar>
 			<>
 				<Modal.Content>
-					{documents && documents.length > 0 && (
-						<FileList
-							files={documents as any}
-							removeLabel="Wissen"
-							cancelLabel="Annuleren"
-							fileUploadErrorLabel="dit bestand kan niet worden geüpload"
-							fileUploadInProgressLabel="wordt geupload"
-							onCancel={() => onCancel}
-							onFileRemove={(document: any) => {
-								dispatch(onDocumentRemove(surveyId, document.id));
-							}}
+					<Switch>
+						<Route
+							exact
+							path="/"
+							render={() => <Step1 objectId={objectId} surveyId={surveyId} onCancel={onCancel} {...props} />}
 						/>
-					)}
+						<Route path="/step2" render={() => <Step2 metadataForm={metadataForm} />} />
+					</Switch>
 				</Modal.Content>
 				<Modal.Actions>
-					<Button variant="textButton" iconLeft={<ChevronLeft />}>
-						Annuleren
-					</Button>
+					<Modal.Actions.Left>
+						<Button variant="textButton" iconLeft={<ChevronLeft />}>
+							Annuleren
+						</Button>
+					</Modal.Actions.Left>
+					<Modal.Actions.Right>{renderButtons()}</Modal.Actions.Right>
 				</Modal.Actions>
 			</>
 		</Modal>

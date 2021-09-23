@@ -1,4 +1,4 @@
-import { IDmsDocument } from '~/components/Wizard/Wizard';
+import { CustomFile } from '@amsterdam/bmi-component-library';
 
 export const REMOVE_DOCUMENT = '@@dms-upload/REMOVE_DOCUMENT';
 export const REMOVE_DOCUMENT_SUCCESS = '@@dms-upload/REMOVE_DOCUMENT_SUCCESS';
@@ -66,7 +66,7 @@ export function fetchDocumentsPending(): IFetchDocumentsPending {
 	};
 }
 
-export function fetchDocumentsSuccess(documents: IDmsDocument[]): IFetchDocumentsSuccess {
+export function fetchDocumentsSuccess(documents: CustomFile[]): IFetchDocumentsSuccess {
 	return {
 		type: FETCH_DOCUMENTS_SUCCESS,
 		payload: documents,
