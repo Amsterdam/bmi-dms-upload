@@ -1,9 +1,9 @@
 export namespace Store {
 	/* eslint-disable-next-line */
 	interface DMSUpload {
-		documents: any[]; //export file Type from component library
+		documents: any[];
 		pending: boolean;
-		error: string;
+		error?: Error;
 	}
 }
 

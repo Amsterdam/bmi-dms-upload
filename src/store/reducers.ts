@@ -9,30 +9,11 @@ import {
 import { Store } from './store';
 
 export const DEFAULT_STATE: Store.DMSUpload = {
-	documents: [
-		// {
-		// 	lastModified: 1623407907404,
-		// 	name: 'Stakeholderanalyse.pdf',
-		// 	size: 119660,
-		// 	type: 'image/png',
-		// 	webkitRelativePath: '',
-		// 	tmpId: 1234,
-		// },
-		// {
-		// 	lastModified: 1623407907304,
-		// 	name: 'Migratierapport.pdf',
-		// 	size: 129654,
-		// 	type: 'image/png',
-		// 	webkitRelativePath: '',
-		// 	tmpId: 12345,
-		// },
-	],
+	documents: [],
 	pending: false,
-	error: 'default error',
 };
 
 function reducer(state: Store.DMSUpload = DEFAULT_STATE, action: DMSUploadActions): Store.DMSUpload {
-	console.log('state', state);
 	switch (action.type) {
 		case FETCH_DOCUMENTS_PENDING:
 			return {

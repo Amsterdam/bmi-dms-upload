@@ -1,57 +1,48 @@
-//@ts-nocheck
 import { takeLatest, call, put } from 'redux-saga/effects';
 import {
+	FETCH_DOCUMENTS_REQUEST,
+	REMOVE_DOCUMENT,
+	IRemoveDocument,
+	IFetchDocumentsRequest,
 	fetchDocumentsError,
 	fetchDocumentsPending,
 	fetchDocumentsSuccess,
-	FETCH_DOCUMENTS_REQUEST,
-	REMOVE_DOCUMENT,
 	removeDocumentSuccess,
 } from './actions';
 import axios from 'axios';
 
-export const getDocuments = (objectId) => {
+export const getDocuments = (objectId: string) => {
 	return axios.get(
 		`https://jsonplaceholder.typicode.com/posts/${objectId}/comments`,
 		// `/api/inforing/objects/${objectId}/documents`,
 	);
 };
 
-function* fetchDocumentsSaga(action) {
+function* fetchDocumentsSaga(action: IFetchDocumentsRequest) {
 	const objectId = action.payload;
 	yield put(fetchDocumentsPending());
 	try {
-		const result = yield call(getDocuments, objectId);
-		yield put(fetchDocumentsSuccess(result.data));
-	} catch (e) {
-		yield put(fetchDocumentsError(e));
+		const { data } = yield call(getDocuments, objectId);
+		yield put(fetchDocumentsSuccess(data));
+	} catch (error: any) {
+		yield put(fetchDocumentsError(error));
 	}
 }
 
-export const removeDocument = (
-	// surveyId,
-	guid,
-) => {
+export const removeDocument = (surveyId: string, guid: string) => {
 	axios.delete(
 		`https://jsonplaceholder.typicode.com/posts/${guid}`,
-		// `/api/inforing/surveys/${surveyId}/document/${guid}`
+		// `/api/inforing/surveys/${surveyId}/document/${guid}`,
 	);
 };
 
-function* removeDocumentSaga(action) {
-	const {
-		// surveyId,
-		guid,
-	} = action.payload;
+function* removeDocumentSaga(action: IRemoveDocument) {
+	const { surveyId, guid } = action.payload;
 	try {
-		yield call(
-			removeDocument,
-			//  surveyId,
-			guid,
-		);
+		yield call(removeDocument, surveyId, guid);
 		yield put(removeDocumentSuccess(guid));
-	} catch (e) {
-		console.log('remove document error');
+	} catch (error: any) {
+		yield put(fetchDocumentsError(error));
 	}
 }
 

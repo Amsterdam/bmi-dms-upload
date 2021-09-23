@@ -29,9 +29,20 @@ export type ImplementationProps = {
 	// to persistence of the metadata
 	onCancel: <T>(data: CancelCallbackArg<T>) => Promise<void>;
 
-	objectId: string | number;
+	objectId: string;
 	surveyId: string;
 };
+
+export interface IDmsDocument {
+	url: string;
+	guid: string;
+	name: string;
+	objectkaartomschrijving?: string; // beschrijving
+	tekeningdocumentomschrijving?: string; // type document
+	'ils-2'?: boolean;
+	'ils-3'?: boolean;
+	jaar?: string;
+}
 
 function onCancel() {
 	console.log('cancel fileUpload');
@@ -44,11 +55,11 @@ type Props = {
 const Wizard: React.FC<Props> = ({ onClose, objectId, surveyId }: Props) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(fetchDocumentsRequest(objectId));
+		dispatch(fetchDocumentsRequest (objectId));
 		// };
 	}, []);
 	// Store dispatch/select for scaffold/demo purposes:
-	const documents = useSelector(getDocuments);
+	const documents: IDmsDocument[] | false = useSelector(getDocuments);
 	// For temporary illustrative purposes:
 	console.log('documents', documents);
 
