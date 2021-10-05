@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { muiTheme } from '@amsterdam/bmi-component-library';
@@ -6,6 +7,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
+import DummyForm from './components/DummyForm.tsx/DummyForm';
 
 enum documentTypeEnum {
 	typeOne = 'Type 1',
@@ -29,7 +31,7 @@ const App: React.FC = () => {
 				<BrowserRouter>
 					<div>
 						<AddDocumentButton
-							getPostUrl={() => Promise.resolve('/api/example/upload')}
+							getPostUrl={() => Promise.resolve('https://jsonplaceholder.typicode.com/posts/')}
 							getHeaders={async () => {
 								const headers: { [key: string]: string } = {};
 								if (token) {
@@ -40,7 +42,6 @@ const App: React.FC = () => {
 							onFileSuccess={(file) => {
 								if (typeof file.response !== 'string')
 									throw new Error('BUG: no response provided to onFileSuccess callback');
-
 								const response = JSON.parse(file.response);
 								console.log('Optionally track successfully uploaded documents in state', response);
 							}}
@@ -49,7 +50,7 @@ const App: React.FC = () => {
 							}}
 							// A custom form component should be rendered here that is specifically geared towards
 							// capturing the relevant metadata for the context in which this button is implemented
-							metadataForm={<></>}
+							metadataForm={DummyForm}
 							onMetadataValidate={async function <MetadataExample>(data: MetadataExample) {
 								// Yup can be leveraged here to validate the metadata that was captured with the form
 								console.log('Validate metadata against schema', data);
@@ -65,6 +66,7 @@ const App: React.FC = () => {
 							onCancel={async function <MetadataExample>({ metadata, file }: CancelCallbackArg<MetadataExample>) {
 								// Dispatch actions/make async calls to remove the uploaded files from DMS
 								// (cancellation is only possible prior to metadata being persisted)
+								console.log('remove uploaded file');
 							}}
 							surveyId="1234"
 							objectId="1"
