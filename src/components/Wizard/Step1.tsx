@@ -1,39 +1,28 @@
-import React, { useEffect } from 'react';
-import { CustomFile, FileList, FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
-import { fetchDocumentsRequest, onDocumentRemove } from '~/store/actions';
-import { useDispatch, useSelector } from '~/store/CustomProvider';
-import { getDocuments } from '~/store/selectors';
-import { ImplementationProps } from './Wizard';
+import React from 'react';
+import { CustomFile, FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
 
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
 
-type Props = ImplementationProps & FileUploadProps;
+type Props = FileUploadProps;
 
-export default function Step1({ objectId, surveyId, onCancel, ...props }: Props) {
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(fetchDocumentsRequest(objectId));
-	}, []);
+export default function Step1({ ...props }: Props) {
 
-	const documents: CustomFile[] | false = useSelector(getDocuments);
-
-	console.log('documents', documents);
 	return (
 		<React.Fragment>
-			<FileUpload {...props} />
-			{documents && documents.length > 0 && (
-				<FileList
-					files={documents as any}
-					removeLabel="Wissen"
-					cancelLabel="Annuleren"
-					fileUploadErrorLabel="dit bestand kan niet worden geüpload"
-					fileUploadInProgressLabel="wordt geupload"
-					onCancel={() => onCancel}
-					onFileRemove={(document: any) => {
-						dispatch(onDocumentRemove(surveyId, document.id));
-					}}
-				/>
-			)}
+			<FileUpload
+				getPostUrl={props.getPostUrl}
+				placeholder="Sleep de png bestanden in dit vlak of"
+				droppingLabel="bestanden geselecteerd"
+				selectFilesLabel="selecteer bestanden"
+				removeLabel="Wissen"
+				cancelLabel="Annuleren"
+				fileUploadErrorLabel="dit bestand kan niet worden geüpload"
+				fileUploadInProgressLabel="wordt geupload"
+				options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
+				onFileRemove={props.onFileRemove}
+				onFileSuccess={props.onFileSuccess}
+				getHeaders={props.getHeaders}
+			/>
 		</React.Fragment>
 	);
 }
