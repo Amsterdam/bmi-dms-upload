@@ -3,22 +3,21 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddDocumentButton from '~/components/AddDocumentButton/AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
+import DummyForm from '../DummyForm.tsx/DummyForm';
 
 describe('<AddDocumentButton />', () => {
 	const renderComponent = () => {
 		return renderWithProviders(
-			<AddDocumentButton
+			<AddDocumentButton<{}>
 				buttonText="Upload"
 				getPostUrl={jest.fn()}
 				getHeaders={jest.fn()}
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn}
-				metadataForm={<></>}
+				metadataForm={DummyForm}
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
-				objectId="1234"
-				surveyId="1"
 			/>,
 		);
 	};

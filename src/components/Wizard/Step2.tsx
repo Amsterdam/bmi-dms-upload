@@ -1,11 +1,11 @@
 import React from 'react';
 import { ImplementationProps } from './Wizard';
 
-type Props = {
+type Props<T> = {
 	handleChange: (value: string, name: string) => void;
-} & ImplementationProps;
+} & ImplementationProps<T>;
 
-export default function Step2({ metadataForm, onMetadataValidate, onMetadataSubmit, handleChange }: Props) {
+export default function Step2<T>({ metadataForm, onMetadataValidate, onMetadataSubmit, handleChange }: Props<T>) {
 	return React.createElement(metadataForm, {
 		handleChange,
 		onMetadataValidate,

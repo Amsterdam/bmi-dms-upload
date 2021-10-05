@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
@@ -9,7 +10,7 @@ import Step2 from './Step2';
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
 
-export type ImplementationProps = {
+export type ImplementationProps<T> = {
 	// Dynamically get URL to upload file to
 	getPostUrl: FileUploadProps['getPostUrl'];
 	// Allows for authentication with a token header
@@ -21,28 +22,27 @@ export type ImplementationProps = {
 	// Component to render for capturing meta data
 	metadataForm: React.FunctionComponent<any>;
 	// Validation of custom metadata form
-	onMetadataValidate: <T>(data: T) => Promise<boolean>;
+	onMetadataValidate: (data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
-	onMetadataSubmit: <T>(data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
+	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
 
 	// The uploaded document should have the possibility of deletion again if the wizard were to be cancelled prior
 	// to persistence of the metadata
 	onCancel: <T>(data: CancelCallbackArg<T>) => Promise<void>;
-	onClose: (evt: React.SyntheticEvent) => void;
-	objectId: string;
-	surveyId: string;
 };
 
-type Props = {} & ImplementationProps;
+type Props<T> = {
+	onClose: () => void;
+} & ImplementationProps<T>;
 
-const Wizard: React.FC<Props> = ({
+export default function Wizard<T>({
 	metadataForm,
 	onMetadataValidate,
 	onMetadataSubmit,
 	onClose,
 	onFileSuccess,
 	...props
-}: Props) => {
+}: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
 	const [formValues, setFormValues] = React.useState({});
@@ -120,8 +120,4 @@ const Wizard: React.FC<Props> = ({
 			</>
 		</Modal>
 	);
-};
-
-Wizard.displayName = 'Wizard';
-
-export default Wizard;
+}

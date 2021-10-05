@@ -8,7 +8,6 @@ on:
                 description: 'Tag to use for npm publish (alpha/canary)'
                 default: 'alpha'
                 required: true
-
 jobs:
     publish:
         runs-on: ubuntu-latest

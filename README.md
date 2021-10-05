@@ -15,7 +15,7 @@ import { AddDocumentButton } from '@amsterdam/bmi-dms-upload';
 
 function MyComponent() {
     return (
-		<AddDocumentButton
+		<AddDocumentButton<MetadataExample>
 			// Dynamically construct the URL for the file upload POST
 			getPostUrl={() => Promise.resolve('/api/example/upload')}
 
@@ -45,7 +45,7 @@ function MyComponent() {
 			metadataForm={<></>}
 
 			// Yup can be leveraged here to validate the metadata that was captured with the form
-			onMetadataValidate={async function <MetadataExample>(data: MetadataExample) {
+			onMetadataValidate={async function (data: MetadataExample) {
 				console.log('Validate metadata against schema', data);
 				return true;
 			}}
@@ -54,13 +54,13 @@ function MyComponent() {
 			// This effectively completes the wizard flow
 			// If an exception were to be thrown from this callback it is gracefully handled with
 			// some generic feedback to the end user
-			onMetadataSubmit={async function <MetadataExample>(data: MetadataDataSubmitCallbackArg<MetadataExample>) {
+			onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
 				console.log('Persist metadata; the wizard has been completed and will be closed after this.');
 			}}
 
 			// Dispatch actions/make async calls to remove the uploaded files from DMS
 			// (cancellation is only possible prior to metadata being persisted)
-			onCancel={async function <MetadataExample>({ metadata, file }: CancelCallbackArg<MetadataExample>) {
+			onCancel={async function ({ metadata, file }: CancelCallbackArg<MetadataExample>) {
 				console.log('Remove previously uploaded files and reset state.');
 			}}
 		/>
