@@ -1,5 +1,4 @@
-//@ts-nocheck
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
@@ -20,7 +19,7 @@ export type ImplementationProps = {
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
 	// Component to render for capturing meta data
-	metadataForm: ReactNode;
+	metadataForm: React.FunctionComponent<any>;
 	// Validation of custom metadata form
 	onMetadataValidate: <T>(data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
@@ -29,48 +28,52 @@ export type ImplementationProps = {
 	// The uploaded document should have the possibility of deletion again if the wizard were to be cancelled prior
 	// to persistence of the metadata
 	onCancel: <T>(data: CancelCallbackArg<T>) => Promise<void>;
-
+	onClose: (evt: React.SyntheticEvent) => void;
 	objectId: string;
 	surveyId: string;
 };
 
-function renderButtons() {
+type Props = {} & ImplementationProps;
+
+const Wizard: React.FC<Props> = ({
+	metadataForm,
+	onMetadataValidate,
+	onMetadataSubmit,
+	onClose,
+	onFileSuccess,
+	...props
+}: Props) => {
 	const location = useLocation();
 	const history = useHistory();
-	console.log('patname', location.pathname);
-	return location.pathname === '/' ? (
-		<Button
-			onClick={() => {
-				history.push('/step2');
-			}}
-		>
-			Volgende
-		</Button>
-	) : (
-		<Button>Opslaan</Button>
+	const [formValues, setFormValues] = React.useState({});
+	const [isValidForm, setIsValidForm] = React.useState(false);
+
+	const handleChange = React.useCallback(
+		(e) => {
+			const { name, value } = e.target;
+			console.log('name, value', name, value);
+			const newFormValues = { ...formValues, ...{ [name]: value } };
+			setFormValues(newFormValues);
+			console.log('newFormValues', newFormValues);
+			const isValid = onMetadataValidate(newFormValues);
+			setIsValidForm(isValid);
+		},
+		[formValues, onMetadataValidate],
 	);
-}
-function onCancel() {
-	console.log('cancel fileUpload');
-}
 
-type Props = {
-	onClose: () => void;
-} & ImplementationProps;
-
-const Wizard: React.FC<Props> = ({ onClose, objectId, surveyId, metadataForm, ...props }: Props) => {
 	return (
-		<Modal id="dms-upload-wizard" open={true} onClose={onClose} closeOnBackdropClick={false}>
-			<Modal.TopBar hideCloseButton={false}>Bestand uploaden voor ...</Modal.TopBar>
+		<Modal id="dms-upload-wizard" open={true} closeOnBackdropClick={false}>
+			<Modal.TopBar hideCloseButton={false} onCloseButton={onClose}>
+				Bestand uploaden voor ...
+			</Modal.TopBar>
 			<>
 				<Modal.Content>
 					<Switch>
+						<Route exact path="/" render={() => <Step1 onFileSuccess={onFileSuccess} {...props} />} />
 						<Route
-							exact
-							path="/"
-							render={() => <Step1 objectId={objectId} surveyId={surveyId} onCancel={onCancel} {...props} />}
+							path="/step2"
+							render={() => <Step2 metadataForm={metadataForm} handleChange={handleChange} {...props} />}
 						/>
-						<Route path="/step2" render={() => <Step2 metadataForm={metadataForm} />} />
 					</Switch>
 				</Modal.Content>
 				<Modal.Actions>
@@ -79,7 +82,40 @@ const Wizard: React.FC<Props> = ({ onClose, objectId, surveyId, metadataForm, ..
 							Annuleren
 						</Button>
 					</Modal.Actions.Left>
-					<Modal.Actions.Right>{renderButtons()}</Modal.Actions.Right>
+					<Modal.Actions.Right>
+						{location.pathname === '/' ? (
+							<Button
+								onClick={() => {
+									history.push('/step2');
+								}}
+							>
+								Volgende
+							</Button>
+						) : (
+							<div>
+								<Button
+									onClick={() => {
+										history.push('/');
+									}}
+								>
+									Vorige
+								</Button>
+								<Button
+									onClick={(e) => {
+										isValidForm &&
+											onMetadataSubmit({
+												metadata: formValues,
+												// file,
+											});
+										onClose(e);
+										history.push('/');
+									}}
+								>
+									Opslaan
+								</Button>
+							</div>
+						)}
+					</Modal.Actions.Right>
 				</Modal.Actions>
 			</>
 		</Modal>
