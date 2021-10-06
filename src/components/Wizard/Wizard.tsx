@@ -2,9 +2,9 @@ import React, { ReactNode, useEffect } from 'react';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
-import { getFoo } from '~/store/selectors';
-import { init } from '~/store/actions';
-import { useDispatch, useSelector } from '~/store/CustomProvider';
+import { getFoo } from '../../store/selectors';
+import { init } from '../../store/actions';
+import { useDispatch, useSelector } from '../../store/CustomProvider';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };

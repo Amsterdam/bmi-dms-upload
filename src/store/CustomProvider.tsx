@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import * as dmsUploadReducers from './reducers';
 import { DEFAULT_STATE } from './reducers';
-import { IState } from '~/store/store';
+import { IState } from './store';
 
 const initialState: IState = {
 	dmsUpload: DEFAULT_STATE,
