@@ -1,30 +1,27 @@
 import React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook } from 'react-redux';
-import { combineReducers, createStore } from 'redux';
-import { applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import createSagaMiddleware from 'redux-saga';
-import * as dmsUploadReducers from './reducers';
-import { DEFAULT_STATE } from './reducers';
-import { IState } from '~/store/store';
-import * as sagas from './sagas';
+import { configureStore } from '@reduxjs/toolkit';
+// import createSagaMiddleware from 'redux-saga';
+import { Store } from '~/store/store';
+import { rootReducer } from './dataSlice';
 
-const initialState: IState = {
-	dmsUpload: DEFAULT_STATE,
+const initialState: Store.DMSUpload = {
+	file: null,
+	metadata: {},
 };
 export const CustomContext = React.createContext<any>(null);
 
 export const useStore = createStoreHook(CustomContext);
 export const useDispatch = createDispatchHook(CustomContext);
 export const useSelector = createSelectorHook(CustomContext);
+// const sagaMiddleware = createSagaMiddleware();
 
-const sagaMiddleware = createSagaMiddleware();
-const store = composeWithDevTools(applyMiddleware(sagaMiddleware))(createStore)(
-	combineReducers({
-		dmsUpload: dmsUploadReducers.rootReducer,
-	}),
-	initialState,
-);
+const store = configureStore({
+	reducer: rootReducer,
+	// middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(sagaMiddleware),
+	preloadedState: initialState,
+	// devTools: process.env.NODE_ENV !== 'production', disable on production??
+});
 
 type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
@@ -37,8 +34,5 @@ const CustomProvider: React.FC<Props> = ({ children }: Props) => {
 		</Provider>
 	);
 };
-
-// Initialise the sagas
-[...sagas.default].map((saga) => sagaMiddleware.run(saga));
 
 export default CustomProvider;

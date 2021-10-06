@@ -51,14 +51,26 @@ export default function Wizard<T>({
 	const handleChange = React.useCallback(
 		(e) => {
 			const { name, value } = e.target;
-			console.log('name, value', name, value);
 			const newFormValues = { ...formValues, ...{ [name]: value } };
 			setFormValues(newFormValues);
-			console.log('newFormValues', newFormValues);
 			const isValid = onMetadataValidate(newFormValues);
 			setIsValidForm(isValid);
 		},
 		[formValues, onMetadataValidate],
+	);
+
+	const getFile = React.useCallback(
+		(file) => {
+			console.log('test');
+			if (onFileSuccess) {
+				console.log('success');
+				onFileSuccess(file);
+				console.log('uploadedfile', file);
+
+				//send file to store
+			}
+		},
+		[onFileSuccess],
 	);
 
 	return (
@@ -69,7 +81,7 @@ export default function Wizard<T>({
 			<>
 				<Modal.Content>
 					<Switch>
-						<Route exact path="/" render={() => <Step1 onFileSuccess={onFileSuccess} {...props} />} />
+						<Route exact path="/" render={() => <Step1 onFileSuccess={getFile} {...props} />} />
 						<Route
 							path="/step2"
 							render={() => <Step2 metadataForm={metadataForm} handleChange={handleChange} {...props} />}
@@ -105,7 +117,8 @@ export default function Wizard<T>({
 										isValidForm &&
 											onMetadataSubmit({
 												metadata: formValues,
-												// file,
+												//get file from store
+												file: {},
 											});
 										onClose(e);
 										history.push('/');
