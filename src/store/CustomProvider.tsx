@@ -8,7 +8,6 @@ export const CustomContext = React.createContext<any>(null);
 export const useStore = createStoreHook(CustomContext);
 export const useDispatch = createDispatchHook(CustomContext);
 export const useSelector = createSelectorHook(CustomContext);
-// const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
 	reducer: rootReducer,
@@ -18,6 +17,7 @@ const store = configureStore({
 				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
 				// Ignore these action types
 				ignoredActions: ['file/setFile'],
+				ignoredPaths: ['file.file'],
 			},
 		}),
 	// devTools: process.env.NODE_ENV !== 'production', disable on production??

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import Wizard, { ImplementationProps } from '../Wizard/Wizard';
-import CustomProvider from '~/store/CustomProvider';
+import CustomProvider from '../../store/CustomProvider';
 
 export type Props<T> = {
 	buttonText?: string;

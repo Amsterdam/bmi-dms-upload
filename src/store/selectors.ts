@@ -1,10 +1,17 @@
 // import { createSelector } from 'reselect';
 // import { CustomFile } from '@amsterdam/bmi-component-library';
-import { IState, Store } from './store';
+// import { IState, Store } from './store';
 
-export const getState = (state: IState): Store.DMSUpload => state.dmsUpload;
+// export const getState = (state: IState): Store.DMSUpload => {
+// 	console.log('state', state);
+// 	state.dmsUpload;
+// };
 
-// export const getDocuments = createSelector(
+// export const getFileFromStore = createSelector(
 // 	[getState],
-// 	(state: Store.DMSUpload): CustomFile[] | false => state?.documents ?? false,
+// 	(state: Store.DMSUpload): CustomFile | false => state?.file.file ?? false,
 // );
+
+// export const getMetadataFromStore = createSelector([getState], (state: Store.DMSUpload): any => {
+// 	state?.metadata ?? false;
+// // })

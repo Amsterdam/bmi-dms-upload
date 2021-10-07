@@ -6,7 +6,7 @@ import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import Step1 from './Step1';
 import Step2 from './Step2';
-import { useDispatch } from '../../store/CustomProvider';
+import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata } from '~/store/dataSlice';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
@@ -71,6 +71,10 @@ export default function Wizard<T>({
 		},
 		[onFileSuccess],
 	);
+	const file = useSelector((state) => state).file;
+	const metadata = useSelector((state) => state).metadata;
+	console.log('file and metadata', file, metadata);
+	const fileMedatataSubmit = { file, metadata };
 
 	return (
 		<Modal id="dms-upload-wizard" open={true} closeOnBackdropClick={false}>
@@ -113,12 +117,7 @@ export default function Wizard<T>({
 								</Button>
 								<Button
 									onClick={(e) => {
-										isValidForm &&
-											onMetadataSubmit({
-												metadata: formValues,
-												//get file from store
-												file: {},
-											});
+										isValidForm && onMetadataSubmit(fileMedatataSubmit);
 										onClose(e);
 										history.push('/');
 									}}
