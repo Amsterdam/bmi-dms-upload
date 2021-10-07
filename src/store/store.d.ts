@@ -7,5 +7,6 @@ export namespace Store {
 }
 
 export interface IState {
-	dmsUpload: Store.DMSUpload;
+	file: CustomFile;
+	metadata: MetadataExample;
 }
