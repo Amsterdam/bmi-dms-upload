@@ -6,6 +6,8 @@ import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import { useDispatch } from '../../store/CustomProvider';
+import { setFile, setMetadata } from '~/store/dataSlice';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
@@ -45,6 +47,7 @@ export default function Wizard<T>({
 }: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const [formValues, setFormValues] = React.useState({});
 	const [isValidForm, setIsValidForm] = React.useState(false);
 
@@ -53,22 +56,18 @@ export default function Wizard<T>({
 			const { name, value } = e.target;
 			const newFormValues = { ...formValues, ...{ [name]: value } };
 			setFormValues(newFormValues);
+
 			const isValid = onMetadataValidate(newFormValues);
 			setIsValidForm(isValid);
+			dispatch(setMetadata(newFormValues));
 		},
 		[formValues, onMetadataValidate],
 	);
 
 	const getFile = React.useCallback(
 		(file) => {
-			console.log('test');
-			if (onFileSuccess) {
-				console.log('success');
-				onFileSuccess(file);
-				console.log('uploadedfile', file);
-
-				//send file to store
-			}
+			onFileSuccess(file);
+			dispatch(setFile(file));
 		},
 		[onFileSuccess],
 	);

@@ -1,12 +1,12 @@
+import { CustomFile } from '@amsterdam/bmi-component-library';
 import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export const fileSlice: Slice = createSlice({
 	name: 'file',
-	initialState: {
-		file: null,
-	},
+	initialState: {},
 	reducers: {
-		setFile: (state, action: PayloadAction<File>) => {
+		setFile: (state, action: PayloadAction<CustomFile>) => {
+			console.log('setFIle', action);
 			state.file = action.payload;
 		},
 	},
@@ -14,12 +14,10 @@ export const fileSlice: Slice = createSlice({
 
 export const metadataSlice: Slice = createSlice({
 	name: 'metadata',
-	initialState: {
-		metadata: {},
-	},
+	initialState: {},
 	reducers: {
-		setMetadata: (state, action: PayloadAction<File>) => {
-			state.file = action.payload;
+		setMetadata: (state, action: PayloadAction<CustomFile>) => {
+			state.metadata = action.payload;
 		},
 	},
 });
@@ -27,4 +25,4 @@ export const metadataSlice: Slice = createSlice({
 export const { setFile } = fileSlice.actions;
 export const { setMetadata } = metadataSlice.actions;
 
-export const rootReducer = { file: fileSlice.reducer, metedata: metadataSlice.reducer };
+export const rootReducer = { file: fileSlice.reducer, metadata: metadataSlice.reducer };

@@ -1,14 +1,8 @@
 import React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-// import createSagaMiddleware from 'redux-saga';
-import { Store } from '~/store/store';
 import { rootReducer } from './dataSlice';
 
-const initialState: Store.DMSUpload = {
-	file: null,
-	metadata: {},
-};
 export const CustomContext = React.createContext<any>(null);
 
 export const useStore = createStoreHook(CustomContext);
@@ -18,8 +12,14 @@ export const useSelector = createSelectorHook(CustomContext);
 
 const store = configureStore({
 	reducer: rootReducer,
-	// middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(sagaMiddleware),
-	preloadedState: initialState,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
+				// Ignore these action types
+				ignoredActions: ['file/setFile'],
+			},
+		}),
 	// devTools: process.env.NODE_ENV !== 'production', disable on production??
 });
 

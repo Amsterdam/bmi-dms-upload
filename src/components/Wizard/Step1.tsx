@@ -6,7 +6,6 @@ export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
 type Props = FileUploadProps;
 
 export default function Step1({ ...props }: Props) {
-
 	return (
 		<React.Fragment>
 			<FileUpload
@@ -18,7 +17,7 @@ export default function Step1({ ...props }: Props) {
 				cancelLabel="Annuleren"
 				fileUploadErrorLabel="dit bestand kan niet worden geüpload"
 				fileUploadInProgressLabel="wordt geupload"
-				options={{ noClick: true, noKeyboard: true, accept: 'image/png' }}
+				options={{ noClick: true, noKeyboard: true }}
 				onFileRemove={props.onFileRemove}
 				onFileSuccess={props.onFileSuccess}
 				getHeaders={props.getHeaders}

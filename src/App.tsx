@@ -19,7 +19,7 @@ const App: React.FC = () => {
 				<BrowserRouter>
 					<div>
 						<AddDocumentButton<MetadataExample>
-							getPostUrl={() => Promise.resolve('/api/example/upload')}
+							getPostUrl={() => Promise.resolve('https://reqres.in/api/users')}
 							getHeaders={async () => {
 								const headers: { [key: string]: string } = {};
 								if (token) {
@@ -30,7 +30,6 @@ const App: React.FC = () => {
 							onFileSuccess={(file) => {
 								if (typeof file.response !== 'string')
 									throw new Error('BUG: no response provided to onFileSuccess callback');
-
 								const response = JSON.parse(file.response);
 								console.log('Optionally track successfully uploaded documents in state', response);
 							}}
@@ -56,7 +55,6 @@ const App: React.FC = () => {
 								// Dispatch actions/make async calls to remove the uploaded files from DMS
 								// (cancellation is only possible prior to metadata being persisted)
 								console.log('remove uploaded file');
-
 							}}
 						/>
 					</div>
