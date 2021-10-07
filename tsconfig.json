@@ -25,7 +25,6 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/tests/*": ["tests/*"],
-			"~/*": ["src/*"]
 		},
 		"rootDir": "./",
 		"outDir": "./lib",

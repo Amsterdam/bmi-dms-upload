@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddDocumentButton from '~/components/AddDocumentButton/AddDocumentButton';
+import AddDocumentButton from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
 
 describe('<AddDocumentButton />', () => {
