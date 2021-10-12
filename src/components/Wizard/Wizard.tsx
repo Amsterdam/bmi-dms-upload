@@ -44,6 +44,7 @@ export default function Wizard<T>({
 	onMetadataSubmit,
 	onClose,
 	onFileSuccess,
+	onCancel,
 	...props
 }: Props<T>) {
 	const location = useLocation();
@@ -93,7 +94,15 @@ export default function Wizard<T>({
 				</Modal.Content>
 				<Modal.Actions>
 					<Modal.Actions.Left>
-						<Button variant="textButton" iconLeft={<ChevronLeft />}>
+						<Button
+							variant="textButton"
+							iconLeft={<ChevronLeft />}
+							onClick={() => {
+								onCancel(metadata, file);
+								onClose();
+								history.push('/');
+							}}
+						>
 							Annuleren
 						</Button>
 					</Modal.Actions.Left>
