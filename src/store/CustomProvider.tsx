@@ -17,7 +17,7 @@ const store = configureStore({
 				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
 				// Ignore these action types
 				ignoredActions: ['file/setFile'],
-				ignoredPaths: ['file.file'],
+				ignoredPaths: ['file'],
 			},
 		}),
 	// devTools: process.env.NODE_ENV !== 'production', disable on production??

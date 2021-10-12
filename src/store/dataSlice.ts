@@ -3,11 +3,15 @@ import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
 export const fileSlice: Slice = createSlice({
 	name: 'file',
-	initialState: {},
+	initialState: [],
 	reducers: {
 		setFile: (state, action: PayloadAction<CustomFile>) => {
 			console.log('setFIle', action);
-			state.file = action.payload;
+			state.push(action.payload);
+		},
+		resetFile: (state) => {
+			console.log('reset file');
+			return (state = []);
 		},
 	},
 });
@@ -17,12 +21,17 @@ export const metadataSlice: Slice = createSlice({
 	initialState: {},
 	reducers: {
 		setMetadata: (state, action: PayloadAction<CustomFile>) => {
-			state.metadata = action.payload;
+			//how to get rid of the extra nested metadata property?
+			return (state = action.payload);
+		},
+		resetMetadata: (state) => {
+			console.log('reset metadata');
+			return (state = {});
 		},
 	},
 });
 
-export const { setFile } = fileSlice.actions;
-export const { setMetadata } = metadataSlice.actions;
+export const { setFile, resetFile } = fileSlice.actions;
+export const { setMetadata, resetMetadata } = metadataSlice.actions;
 
 export const rootReducer = { file: fileSlice.reducer, metadata: metadataSlice.reducer };
