@@ -14,11 +14,21 @@ type MetadataExample = {
 	executionDate: string;
 };
 
-export default function DummyForm({ handleChange }): React.ReactNode<MetadataExample> {
+export default function DummyForm({ handleChange, data }): React.ReactNode<MetadataExample> {
 	return (
 		<DummyFormStyle>
-			<TextField onChange={(e) => handleChange(e)} name="document-omschrijving" label="DocumentOmschrijving" />
-			<TextField onChange={(e) => handleChange(e)} name="uitvoeringsdatum" label="Uitvoeringsdatum" />
+			<TextField
+				onChange={(e) => handleChange(e)}
+				name="documentDescription"
+				label="DocumentOmschrijving"
+				defaultValue={data.documentDescription}
+			/>
+			<TextField
+				onChange={(e) => handleChange(e)}
+				name="expirationDate"
+				label="Uitvoeringsdatum"
+				defaultValue={data.expirationDate}
+			/>
 		</DummyFormStyle>
 	);
 }

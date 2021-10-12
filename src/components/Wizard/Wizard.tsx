@@ -50,7 +50,10 @@ export default function Wizard<T>({
 	const location = useLocation();
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const [formValues, setFormValues] = React.useState({});
+	const file = useSelector(getFileFromStore);
+	const metadata = useSelector(getMetadataFromStore);
+	const fileMedatataSubmit = { file, metadata };
+	const [formValues, setFormValues] = React.useState(metadata || {});
 	const [isValidForm, setIsValidForm] = React.useState(false);
 
 	const handleChange = React.useCallback(
@@ -73,9 +76,6 @@ export default function Wizard<T>({
 		},
 		[onFileSuccess],
 	);
-	const file = useSelector(getFileFromStore);
-	const metadata = useSelector(getMetadataFromStore);
-	const fileMedatataSubmit = { file, metadata };
 
 	return (
 		<Modal id="dms-upload-wizard" open={true} closeOnBackdropClick={false}>
@@ -88,7 +88,9 @@ export default function Wizard<T>({
 						<Route exact path="/" render={() => <Step1 onFileSuccess={getFile} {...props} />} />
 						<Route
 							path="/step2"
-							render={() => <Step2 metadataForm={metadataForm} handleChange={handleChange} {...props} />}
+							render={() => (
+								<Step2 metadataForm={metadataForm} handleChange={handleChange} data={metadata} {...props} />
+							)}
 						/>
 					</Switch>
 				</Modal.Content>
@@ -98,15 +100,11 @@ export default function Wizard<T>({
 							variant="textButton"
 							iconLeft={<ChevronLeft />}
 							onClick={() => {
-								console.log('file', file);
-								//remove file from DMS
 								if (file.length !== 0) {
 									onCancel(file);
 								}
-								//remove file from store
 								dispatch(resetFile());
 								dispatch(resetMetadata());
-								//close wizard
 								onClose();
 								history.push('/');
 							}}

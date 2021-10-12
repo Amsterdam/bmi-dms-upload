@@ -6,11 +6,9 @@ export const fileSlice: Slice = createSlice({
 	initialState: [],
 	reducers: {
 		setFile: (state, action: PayloadAction<CustomFile>) => {
-			console.log('setFIle', action);
 			state.push(action.payload);
 		},
 		resetFile: (state) => {
-			console.log('reset file');
 			return (state = []);
 		},
 	},
@@ -25,7 +23,6 @@ export const metadataSlice: Slice = createSlice({
 			return (state = action.payload);
 		},
 		resetMetadata: (state) => {
-			console.log('reset metadata');
 			return (state = {});
 		},
 	},
