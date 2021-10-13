@@ -1,12 +1,13 @@
-import React, { ReactNode } from 'react';
+//@ts-nocheck
+import React from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch } from '../../store/CustomProvider';
-import { setFile } from '../../store/dataSlice';
+import { setFile, setMetadata } from '../../store/dataSlice';
 import { Step1 } from './Step1';
-import { Step2 } from './Step2';
+import Step2 from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
@@ -21,7 +22,7 @@ export type ImplementationProps<T> = {
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
 	// Component to render for capturing meta data
-	metadataForm: ReactNode;
+	metadataForm: React.FunctionComponent<any>;
 	// Validation of custom metadata form
 	onMetadataValidate: (data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
@@ -36,17 +37,37 @@ type Props<T> = {
 	onClose: () => void;
 } & ImplementationProps<T>;
 
-export default function Wizard<T>({ onClose, getHeaders, getPostUrl, onFileRemove, onFileSuccess }: Props<T>) {
+export default function Wizard<T>({
+	onClose,
+	getHeaders,
+	getPostUrl,
+	onFileRemove,
+	onFileSuccess,
+	metadataForm,
+	onMetadataValidate,
+	onMetadataSubmit,
+}: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
 	const dispatch = useDispatch();
-
+	const [formValues, setFormValues] = React.useState({});
 	const getFile = React.useCallback(
 		(file) => {
 			onFileSuccess && onFileSuccess(file);
 			dispatch(setFile(file));
 		},
 		[onFileSuccess],
+	);
+
+	const handleChange = React.useCallback(
+		(e) => {
+			const { name, value } = e.target;
+			const newFormValues = { ...formValues, ...{ [name]: value } } as T;
+			setFormValues(newFormValues);
+
+			dispatch(setMetadata(newFormValues));
+		},
+		[formValues, onMetadataValidate],
 	);
 
 	return (
@@ -67,7 +88,17 @@ export default function Wizard<T>({ onClose, getHeaders, getPostUrl, onFileRemov
 								/>
 							)}
 						/>
-						<Route path="/step2" render={() => <Step2 />} />
+						<Route
+							path="/step2"
+							render={() => (
+								<Step2
+									metadataForm={metadataForm}
+									handleChange={handleChange}
+									onMetadataValidate={onMetadataValidate}
+									onMetadataSubmit={onMetadataSubmit}
+								/>
+							)}
+						/>
 					</Switch>
 				</Modal.Content>
 				<Modal.Actions>
