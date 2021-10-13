@@ -29,7 +29,7 @@ const App: React.FC = () => {
 				<BrowserRouter>
 					<div>
 						<AddDocumentButton<MetadataExample>
-							getPostUrl={() => Promise.resolve('/api/example/upload')}
+							getPostUrl={() => Promise.resolve('https://reqres.in/api/users')}
 							getHeaders={async () => {
 								const headers: { [key: string]: string } = {};
 								if (token) {

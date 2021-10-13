@@ -37,7 +37,7 @@ type Props<T> = {
 	onClose: () => void;
 } & ImplementationProps<T>;
 
-export default function Wizard<T>({ onClose }: Props<T>) {
+export default function Wizard<T>({ onClose, getHeaders, getPostUrl, onFileRemove, onFileSuccess }: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
 	// Store dispatch/select for scaffold/demo purposes:
@@ -55,7 +55,18 @@ export default function Wizard<T>({ onClose }: Props<T>) {
 			<>
 				<Modal.Content>
 					<Switch>
-						<Route exact path="/" render={() => <Step1 />} />
+						<Route
+							exact
+							path="/"
+							render={() => (
+								<Step1
+									getHeaders={getHeaders}
+									getPostUrl={getPostUrl}
+									onFileRemove={onFileRemove}
+									onFileSuccess={onFileSuccess}
+								/>
+							)}
+						/>
 						<Route path="/step2" render={() => <Step2 />} />
 					</Switch>
 				</Modal.Content>
