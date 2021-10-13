@@ -1,10 +1,7 @@
 export namespace Store {
 	/* eslint-disable-next-line */
 	interface DMSUpload {
-		foo: string;
+		file: CustomFile;
+		metadata: MetadataExample<T>;
 	}
-}
-
-export interface IState {
-	dmsUpload: Store.DMSUpload;
 }

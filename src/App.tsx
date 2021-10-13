@@ -59,7 +59,7 @@ const App: React.FC = () => {
 								// This effectively completes the wizard flow
 								// If an exception were to be thrown from this callback it is gracefully handled with
 								// some generic feedback to the end user
-								console.log('Persist metadata; the wizard has been completed and will be closed after this.');
+								console.log('Persist metadata; the wizard has been completed and will be closed after this.', data);
 							}}
 							onCancel={async function ({ metadata, file }: CancelCallbackArg<MetadataExample>) {
 								// Dispatch actions/make async calls to remove the uploaded files from DMS

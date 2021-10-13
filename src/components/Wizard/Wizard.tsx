@@ -4,13 +4,16 @@ import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
-import { useDispatch } from '../../store/CustomProvider';
+import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata } from '../../store/dataSlice';
+import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { Step1 } from './Step1';
 import Step2 from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
+
+export type Metadata<T> = { metadata: T };
 
 export type ImplementationProps<T> = {
 	// Dynamically get URL to upload file to
@@ -50,7 +53,11 @@ export default function Wizard<T>({
 	const location = useLocation();
 	const history = useHistory();
 	const dispatch = useDispatch();
+	const file = useSelector(getFileFromStore);
+	const metadata = useSelector(getMetadataFromStore);
+	const fileMedatataSubmit = { file, metadata };
 	const [formValues, setFormValues] = React.useState({});
+	const [isValidForm, setIsValidForm] = React.useState(false);
 	const getFile = React.useCallback(
 		(file) => {
 			onFileSuccess && onFileSuccess(file);
@@ -65,6 +72,8 @@ export default function Wizard<T>({
 			const newFormValues = { ...formValues, ...{ [name]: value } } as T;
 			setFormValues(newFormValues);
 
+			const isValid = onMetadataValidate(newFormValues);
+			setIsValidForm(isValid);
 			dispatch(setMetadata(newFormValues));
 		},
 		[formValues, onMetadataValidate],
@@ -134,6 +143,7 @@ export default function Wizard<T>({
 								</Button>
 								<Button
 									onClick={() => {
+										isValidForm && onMetadataSubmit(fileMedatataSubmit);
 										onClose();
 										history.push('/');
 									}}
