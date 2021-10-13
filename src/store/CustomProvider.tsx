@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { fileSlice } from './dataSlice';
+import { rootReducer } from './dataSlice';
 
 export const CustomContext = React.createContext<any>(null);
 
@@ -10,7 +10,7 @@ export const useDispatch = createDispatchHook(CustomContext);
 export const useSelector = createSelectorHook(CustomContext);
 
 const store = configureStore({
-	reducer: fileSlice.reducer,
+	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {

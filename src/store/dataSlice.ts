@@ -11,4 +11,18 @@ export const fileSlice: Slice = createSlice({
 	},
 });
 
+export const metadataSlice: Slice = createSlice({
+	name: 'metadata',
+	initialState: {},
+	reducers: {
+		setMetadata: (state, action: PayloadAction<CustomFile>) => {
+			//how to get rid of the extra nested metadata property?
+			return (state = action.payload);
+		},
+	},
+});
+
 export const { setFile } = fileSlice.actions;
+export const { setMetadata } = metadataSlice.actions;
+
+export const rootReducer = { file: fileSlice.reducer, metadata: metadataSlice.reducer };
