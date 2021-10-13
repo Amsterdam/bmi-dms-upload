@@ -105,6 +105,7 @@ export default function Wizard<T>({
 									handleChange={handleChange}
 									onMetadataValidate={onMetadataValidate}
 									onMetadataSubmit={onMetadataSubmit}
+									data={metadata}
 								/>
 							)}
 						/>

@@ -18,11 +18,26 @@ type Props = {
 	data: MetadataExample;
 };
 
-export default function DummyForm({ handleChange }: Props) {
+export default function DummyForm({ handleChange, data }: Props) {
 	return (
 		<DummyFormStyle>
-			<TextField onChange={(e) => handleChange(e)} name="documentDescription" label="DocumentOmschrijving" />
-			<TextField onChange={(e) => handleChange(e)} name="executionDate" label="Uitvoeringsdatum" />
+			<label>DocumentType</label>
+			<select onChange={(e) => handleChange(e)} name="documentType" defaultValue={data.documentType}>
+				<option>{documentTypeEnum.typeOne}</option>
+				<option>{documentTypeEnum.typeTwo}</option>
+			</select>
+			<TextField
+				onChange={(e) => handleChange(e)}
+				name="documentDescription"
+				label="DocumentOmschrijving"
+				defaultValue={data.documentDescription}
+			/>
+			<TextField
+				onChange={(e) => handleChange(e)}
+				name="executionDate"
+				label="Uitvoeringsdatum"
+				defaultValue={data.executionDate}
+			/>
 		</DummyFormStyle>
 	);
 }
