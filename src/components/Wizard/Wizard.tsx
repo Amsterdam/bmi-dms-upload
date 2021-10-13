@@ -5,6 +5,9 @@ import { ChevronLeft } from '@amsterdam/asc-assets';
 import { getFoo } from '~/store/selectors';
 import { init } from '~/store/actions';
 import { useDispatch, useSelector } from '~/store/CustomProvider';
+import { Step1 } from './Step1';
+import { Step2 } from './Step2';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
@@ -35,6 +38,8 @@ type Props<T> = {
 } & ImplementationProps<T>;
 
 export default function Wizard<T>({ onClose }: Props<T>) {
+	const location = useLocation();
+	const history = useHistory();
 	// Store dispatch/select for scaffold/demo purposes:
 	const foo = useSelector(getFoo);
 	const dispatch = useDispatch();
@@ -48,11 +53,54 @@ export default function Wizard<T>({ onClose }: Props<T>) {
 		<Modal id="dms-upload-wizard" open={true} onClose={onClose} closeOnBackdropClick={false}>
 			<Modal.TopBar hideCloseButton={false}>Bestand uploaden voor ...</Modal.TopBar>
 			<>
-				<Modal.Content>[CONTENT]</Modal.Content>
+				<Modal.Content>
+					<Switch>
+						<Route exact path="/" render={() => <Step1 />} />
+						<Route path="/step2" render={() => <Step2 />} />
+					</Switch>
+				</Modal.Content>
 				<Modal.Actions>
-					<Button variant="textButton" iconLeft={<ChevronLeft />}>
-						Annuleren
-					</Button>
+					<Modal.Actions.Left>
+						<Button
+							variant="textButton"
+							iconLeft={<ChevronLeft />}
+							onClick={() => {
+								onClose();
+								history.push('/');
+							}}
+						>
+							Annuleren
+						</Button>
+					</Modal.Actions.Left>
+					<Modal.Actions.Right>
+						{location.pathname === '/' ? (
+							<Button
+								onClick={() => {
+									history.push('/step2');
+								}}
+							>
+								Volgende
+							</Button>
+						) : (
+							<div>
+								<Button
+									onClick={() => {
+										history.push('/');
+									}}
+								>
+									Vorige
+								</Button>
+								<Button
+									onClick={() => {
+										onClose();
+										history.push('/');
+									}}
+								>
+									Opslaan
+								</Button>
+							</div>
+						)}
+					</Modal.Actions.Right>
 				</Modal.Actions>
 			</>
 		</Modal>
