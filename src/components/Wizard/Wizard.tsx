@@ -4,7 +4,7 @@ import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
-import Step1 from './Step1';
+import { Step1 } from './Step1';
 import Step2 from './Step2';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, resetFile, setMetadata, resetMetadata } from '~/store/dataSlice';
@@ -45,7 +45,9 @@ export default function Wizard<T>({
 	onClose,
 	onFileSuccess,
 	onCancel,
-	...props
+	getHeaders,
+	getPostUrl,
+	onFileRemove,
 }: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
@@ -85,11 +87,28 @@ export default function Wizard<T>({
 			<>
 				<Modal.Content>
 					<Switch>
-						<Route exact path="/" render={() => <Step1 onFileSuccess={getFile} {...props} />} />
+						<Route
+							exact
+							path="/"
+							render={() => (
+								<Step1
+									getHeaders={getHeaders}
+									getPostUrl={getPostUrl}
+									onFileRemove={onFileRemove}
+									onFileSuccess={getFile}
+								/>
+							)}
+						/>
 						<Route
 							path="/step2"
 							render={() => (
-								<Step2 metadataForm={metadataForm} handleChange={handleChange} data={metadata} {...props} />
+								<Step2
+									metadataForm={metadataForm}
+									handleChange={handleChange}
+									data={metadata}
+									onMetadataValidate={onMetadataValidate}
+									onMetadataSubmit={onMetadataSubmit}
+								/>
 							)}
 						/>
 					</Switch>
