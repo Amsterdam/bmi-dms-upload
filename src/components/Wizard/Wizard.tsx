@@ -1,13 +1,12 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
+import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
-import { getFoo } from '~/store/selectors';
-import { init } from '~/store/actions';
-import { useDispatch, useSelector } from '~/store/CustomProvider';
+import { useDispatch } from '../../store/CustomProvider';
+import { setFile } from '../../store/dataSlice';
 import { Step1 } from './Step1';
 import { Step2 } from './Step2';
-import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
@@ -40,14 +39,15 @@ type Props<T> = {
 export default function Wizard<T>({ onClose, getHeaders, getPostUrl, onFileRemove, onFileSuccess }: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
-	// Store dispatch/select for scaffold/demo purposes:
-	const foo = useSelector(getFoo);
 	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(init());
-	}, []);
-	// For temporary illustrative purposes:
-	console.log('foo', foo);
+
+	const getFile = React.useCallback(
+		(file) => {
+			onFileSuccess && onFileSuccess(file);
+			dispatch(setFile(file));
+		},
+		[onFileSuccess],
+	);
 
 	return (
 		<Modal id="dms-upload-wizard" open={true} onClose={onClose} closeOnBackdropClick={false}>
@@ -63,7 +63,7 @@ export default function Wizard<T>({ onClose, getHeaders, getPostUrl, onFileRemov
 									getHeaders={getHeaders}
 									getPostUrl={getPostUrl}
 									onFileRemove={onFileRemove}
-									onFileSuccess={onFileSuccess}
+									onFileSuccess={getFile}
 								/>
 							)}
 						/>
