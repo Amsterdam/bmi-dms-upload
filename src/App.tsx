@@ -6,19 +6,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
-import DummyForm from './components/DummyForm/DummyForm';
-
-enum documentTypeEnum {
-	typeOne = 'Type 1',
-	typeTwo = 'Type 2',
-}
-
-/* eslint-disable-next-line */
-type MetadataExample = {
-	documentType: documentTypeEnum;
-	documentDescription: string;
-	executionDate: string;
-};
+import { MetadataExample, DummyForm } from './components/DummyForm/DummyForm';
 
 const App: React.FC = () => {
 	const token = 'EXAMPLE';
@@ -61,10 +49,11 @@ const App: React.FC = () => {
 								// some generic feedback to the end user
 								console.log('Persist metadata; the wizard has been completed and will be closed after this.', data);
 							}}
-							onCancel={async function ({ file, metadata }: CancelCallbackArg<MetadataExample>) {
+							onCancel={async function (data: CancelCallbackArg<MetadataExample>) {
 								// Dispatch actions/make async calls to remove the uploaded files from DMS
 								// (cancellation is only possible prior to metadata being persisted)
-								console.log('remove uploaded file', file, metadata);
+								console.log('remove uploaded file', data);
+								Promise.resolve();
 							}}
 						/>
 					</div>
