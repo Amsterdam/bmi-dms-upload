@@ -1,33 +1,28 @@
+import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
+import { DMSUpload } from './store';
 import { CustomFile } from '@amsterdam/bmi-component-library';
-import { createSlice, PayloadAction, Slice } from '@reduxjs/toolkit';
 
-export const fileSlice: Slice = createSlice({
-	name: 'file',
-	initialState: [],
+const initialState: DMSUpload = {
+	file: {} as CustomFile,
+	metadata: {},
+};
+
+export const slice: Slice = createSlice({
+	name: 'dmsupload',
+	initialState,
 	reducers: {
-		setFile: (state, action: PayloadAction<CustomFile>) => {
-			state.push(action.payload);
+		setFile: (state: DMSUpload, action: PayloadAction<CustomFile>) => {
+			state.file = action.payload;
 		},
-		resetFile: (state) => {
-			return (state = []);
+		setMetadata: (state: DMSUpload, action: PayloadAction<any>) => {
+			state.metadata = action.payload;
+		},
+		resetState: (state: DMSUpload) => {
+			return (state = initialState);
 		},
 	},
 });
 
-export const metadataSlice: Slice = createSlice({
-	name: 'metadata',
-	initialState: {},
-	reducers: {
-		setMetadata: (state, action: PayloadAction<CustomFile>) => {
-			return (state = action.payload);
-		},
-		resetMetadata: (state) => {
-			return (state = {});
-		},
-	},
-});
+export const { setFile, setMetadata, resetState } = slice.actions;
 
-export const { setFile, resetFile } = fileSlice.actions;
-export const { setMetadata, resetMetadata } = metadataSlice.actions;
-
-export const rootReducer = { file: fileSlice.reducer, metadata: metadataSlice.reducer };
+export const { reducer } = slice;

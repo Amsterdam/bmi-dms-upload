@@ -1,22 +1,22 @@
 import React from 'react';
-import { Provider, createStoreHook, createDispatchHook, createSelectorHook } from 'react-redux';
+import { Provider, createStoreHook, createDispatchHook, createSelectorHook, TypedUseSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from './dataSlice';
+import { reducer } from './dataSlice';
 
 export const CustomContext = React.createContext<any>(null);
 
 export const useStore = createStoreHook(CustomContext);
-export const useDispatch = createDispatchHook(CustomContext);
-export const useSelector = createSelectorHook(CustomContext);
+export const useDispatch = createDispatchHook<AppDispatch>(CustomContext);
+export const useSelector: TypedUseSelectorHook<RootState> = createSelectorHook(CustomContext);
 
 const store = configureStore({
-	reducer: rootReducer,
+	reducer,
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
 				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
 				// Ignore these action types
-				ignoredActions: ['file/setFile'],
+				ignoredActions: ['dmsupload/setFile'],
 				ignoredPaths: ['file'],
 			},
 		}),
@@ -34,5 +34,8 @@ const CustomProvider: React.FC<Props> = ({ children }: Props) => {
 		</Provider>
 	);
 };
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default CustomProvider;

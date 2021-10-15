@@ -4,7 +4,7 @@ import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-lib
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
-import { setFile, setMetadata, resetFile, resetMetadata } from '../../store/dataSlice';
+import { setFile, setMetadata, resetState } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { FormProps } from './Step2';
 import { Step1 } from './Step1';
@@ -12,8 +12,6 @@ import { Step2 } from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
-
-export type Metadata<T> = { metadata: T };
 
 export type ImplementationProps<T> = {
 	// Dynamically get URL to upload file to
@@ -56,7 +54,7 @@ export default function Wizard<T>({
 	const dispatch = useDispatch();
 	const file = useSelector(getFileFromStore);
 	const metadata = useSelector(getMetadataFromStore);
-	const fileMedatataSubmit = { file, metadata };
+	const fileMetadataSubmit = { file, metadata };
 	const [formValues, setFormValues] = React.useState({});
 	const [isValidForm, setIsValidForm] = React.useState(false);
 	const getFile = React.useCallback(
@@ -113,8 +111,7 @@ export default function Wizard<T>({
 								if (file || metadata) {
 									onCancel({ file, metadata });
 								}
-								dispatch(resetFile(file));
-								dispatch(resetMetadata(metadata));
+								dispatch(resetState(undefined));
 								onClose();
 								history.push('/');
 							}}
@@ -142,9 +139,8 @@ export default function Wizard<T>({
 								</Button>
 								<Button
 									onClick={() => {
-										isValidForm && onMetadataSubmit(fileMedatataSubmit);
-										dispatch(resetFile());
-										dispatch(resetMetadata());
+										isValidForm && onMetadataSubmit(fileMetadataSubmit);
+										dispatch(resetState(null)); //should be type ActioncreatorWithoutPayload
 										onClose();
 										history.push('/');
 									}}

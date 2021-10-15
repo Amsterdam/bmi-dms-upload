@@ -1,7 +1,16 @@
+import { CustomFile } from '@amsterdam/bmi-component-library';
+
+export interface DMSUpload {
+	file: CustomFile;
+	metadata: any;
+}
+
 export namespace Store {
-	/* eslint-disable-next-line */
-	interface DMSUpload {
+	export interface file {
 		file: CustomFile;
-		metadata: MetadataExample<T>;
+	}
+
+	export interface metadata {
+		metadata: any;
 	}
 }
