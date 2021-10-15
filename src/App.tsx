@@ -61,9 +61,10 @@ const App: React.FC = () => {
 								// some generic feedback to the end user
 								console.log('Persist metadata; the wizard has been completed and will be closed after this.', data);
 							}}
-							onCancel={async function ({ metadata, file }: CancelCallbackArg<MetadataExample>) {
+							onCancel={async function ({ file, metadata }: CancelCallbackArg<MetadataExample>) {
 								// Dispatch actions/make async calls to remove the uploaded files from DMS
 								// (cancellation is only possible prior to metadata being persisted)
+								console.log('remove uploaded file', file, metadata);
 							}}
 						/>
 					</div>

@@ -1,17 +1,17 @@
-//@ts-nocheck
 import React from 'react';
 import { Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
-import { setFile, setMetadata } from '../../store/dataSlice';
+import { setFile, setMetadata, resetFile, resetMetadata } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
+import { FormProps } from './Step2';
 import { Step1 } from './Step1';
-import Step2 from './Step2';
+import { Step2 } from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
-export type CancelCallbackArg<T> = { metadata?: T; file?: CustomFile };
+export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
 
 export type Metadata<T> = { metadata: T };
 
@@ -25,7 +25,7 @@ export type ImplementationProps<T> = {
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
 	// Component to render for capturing meta data
-	metadataForm: React.FunctionComponent<any>;
+	metadataForm: React.FC<FormProps<T>>;
 	// Validation of custom metadata form
 	onMetadataValidate: (data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
@@ -42,6 +42,7 @@ type Props<T> = {
 
 export default function Wizard<T>({
 	onClose,
+	onCancel,
 	getHeaders,
 	getPostUrl,
 	onFileRemove,
@@ -59,7 +60,7 @@ export default function Wizard<T>({
 	const [formValues, setFormValues] = React.useState({});
 	const [isValidForm, setIsValidForm] = React.useState(false);
 	const getFile = React.useCallback(
-		(file) => {
+		(file: CustomFile) => {
 			onFileSuccess && onFileSuccess(file);
 			dispatch(setFile(file));
 		},
@@ -67,12 +68,12 @@ export default function Wizard<T>({
 	);
 
 	const handleChange = React.useCallback(
-		(e) => {
+		async (e) => {
 			const { name, value } = e.target;
 			const newFormValues = { ...formValues, ...{ [name]: value } } as T;
 			setFormValues(newFormValues);
 
-			const isValid = onMetadataValidate(newFormValues);
+			const isValid = await onMetadataValidate(newFormValues);
 			setIsValidForm(isValid);
 			dispatch(setMetadata(newFormValues));
 		},
@@ -99,15 +100,7 @@ export default function Wizard<T>({
 						/>
 						<Route
 							path="/step2"
-							render={() => (
-								<Step2
-									metadataForm={metadataForm}
-									handleChange={handleChange}
-									onMetadataValidate={onMetadataValidate}
-									onMetadataSubmit={onMetadataSubmit}
-									data={metadata}
-								/>
-							)}
+							render={() => <Step2 metadataForm={metadataForm} handleChange={handleChange} data={metadata} />}
 						/>
 					</Switch>
 				</Modal.Content>
@@ -117,6 +110,11 @@ export default function Wizard<T>({
 							variant="textButton"
 							iconLeft={<ChevronLeft />}
 							onClick={() => {
+								if (file || metadata) {
+									onCancel({ file, metadata });
+								}
+								dispatch(resetFile(file));
+								dispatch(resetMetadata(metadata));
 								onClose();
 								history.push('/');
 							}}
@@ -145,6 +143,8 @@ export default function Wizard<T>({
 								<Button
 									onClick={() => {
 										isValidForm && onMetadataSubmit(fileMedatataSubmit);
+										dispatch(resetFile());
+										dispatch(resetMetadata());
 										onClose();
 										history.push('/');
 									}}
