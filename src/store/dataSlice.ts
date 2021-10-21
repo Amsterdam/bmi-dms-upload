@@ -20,9 +20,12 @@ export const slice: Slice = createSlice({
 		resetState: (state: DMSUpload) => {
 			return (state = initialState);
 		},
+		removeFileFromStore: (state: DMSUpload) => {
+			state.file = {} as CustomFile;
+		},
 	},
 });
 
-export const { setFile, setMetadata, resetState } = slice.actions;
+export const { setFile, setMetadata, resetState, removeFileFromStore } = slice.actions;
 
 export const { reducer } = slice;

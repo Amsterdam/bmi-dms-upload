@@ -4,7 +4,7 @@ import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-lib
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
-import { setFile, setMetadata, resetState } from '../../store/dataSlice';
+import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { FormProps } from './Step2';
 import { Step1 } from './Step1';
@@ -57,12 +57,21 @@ export default function Wizard<T>({
 	const fileMetadataSubmit = { file, metadata };
 	const [formValues, setFormValues] = React.useState({});
 	const [isValidForm, setIsValidForm] = React.useState(false);
+
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
 			onFileSuccess && onFileSuccess(file);
 			dispatch(setFile(file));
 		},
 		[onFileSuccess],
+	);
+
+	const handleFileRemove = React.useCallback(
+		(file) => {
+			onFileRemove && onFileRemove(file);
+			dispatch(removeFileFromStore(null));
+		},
+		[onFileRemove],
 	);
 
 	const handleChange = React.useCallback(
@@ -78,6 +87,22 @@ export default function Wizard<T>({
 		[formValues, onMetadataValidate],
 	);
 
+	const fileIsEmptyObject = (file: CustomFile) => Object.keys(file).length === 0;
+
+	const handleSubmit = (e: any) => {
+		console.log(file);
+		e.preventDefault();
+		if (!fileIsEmptyObject(file) && isValidForm) {
+			onMetadataSubmit(fileMetadataSubmit);
+			dispatch(resetState(null));
+			onClose();
+			history.push('/');
+		}
+	};
+
+	const handleStoredFiles = () => {
+		return fileIsEmptyObject(file) ? undefined : [file];
+	};
 	return (
 		<Modal id="dms-upload-wizard" open={true} onClose={onClose} closeOnBackdropClick={false}>
 			<Modal.TopBar hideCloseButton={false}>Bestand uploaden voor ...</Modal.TopBar>
@@ -91,8 +116,9 @@ export default function Wizard<T>({
 								<Step1
 									getHeaders={getHeaders}
 									getPostUrl={getPostUrl}
-									onFileRemove={onFileRemove}
+									onFileRemove={handleFileRemove}
 									onFileSuccess={getFile}
+									storedFiles={handleStoredFiles()}
 								/>
 							)}
 						/>
@@ -137,16 +163,7 @@ export default function Wizard<T>({
 								>
 									Vorige
 								</Button>
-								<Button
-									onClick={() => {
-										isValidForm && onMetadataSubmit(fileMetadataSubmit);
-										dispatch(resetState(null)); //should be type ActioncreatorWithoutPayload
-										onClose();
-										history.push('/');
-									}}
-								>
-									Opslaan
-								</Button>
+								<Button onClick={handleSubmit}>Opslaan</Button>
 							</div>
 						)}
 					</Modal.Actions.Right>
