@@ -88,6 +88,34 @@ export default function Wizard<T>({
 	);
 
 	const fileIsEmptyObject = (file: CustomFile) => Object.keys(file).length === 0;
+	const renderButtons = (location: any, file: CustomFile) => {
+		return (
+			<>
+				{location.pathname === '/' ? (
+					!fileIsEmptyObject(file) ? (
+						<Button
+							onClick={() => {
+								history.push('/step2');
+							}}
+						>
+							Volgende
+						</Button>
+					) : null
+				) : (
+					<div>
+						<Button
+							onClick={() => {
+								history.push('/');
+							}}
+						>
+							Vorige
+						</Button>
+						<Button onClick={handleSubmit}>Opslaan</Button>
+					</div>
+				)}
+			</>
+		);
+	};
 
 	const handleSubmit = (e: any) => {
 		console.log(file);
@@ -145,28 +173,7 @@ export default function Wizard<T>({
 							Annuleren
 						</Button>
 					</Modal.Actions.Left>
-					<Modal.Actions.Right>
-						{location.pathname === '/' ? (
-							<Button
-								onClick={() => {
-									history.push('/step2');
-								}}
-							>
-								Volgende
-							</Button>
-						) : (
-							<div>
-								<Button
-									onClick={() => {
-										history.push('/');
-									}}
-								>
-									Vorige
-								</Button>
-								<Button onClick={handleSubmit}>Opslaan</Button>
-							</div>
-						)}
-					</Modal.Actions.Right>
+					<Modal.Actions.Right>{renderButtons(location, file)}</Modal.Actions.Right>
 				</Modal.Actions>
 			</>
 		</Modal>
