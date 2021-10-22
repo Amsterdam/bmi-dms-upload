@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { FormProps } from './Step2';
-import { Step1 } from './Step1';
-import { Step2 } from './Step2';
+import Step1 from './Step1';
+import Step2 from './Step2';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
@@ -94,6 +94,7 @@ export default function Wizard<T>({
 				{location.pathname === '/' ? (
 					!fileIsEmptyObject(file) ? (
 						<Button
+							name="Volgende"
 							onClick={() => {
 								history.push('/step2');
 							}}

@@ -2,7 +2,7 @@ import { createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
 import { DMSUpload } from './store';
 import { CustomFile } from '@amsterdam/bmi-component-library';
 
-const initialState: DMSUpload = {
+export const initialState: DMSUpload = {
 	file: {} as CustomFile,
 	metadata: {},
 };

@@ -10,7 +10,7 @@ type Props = {
 	storedFiles?: CustomFile[] | CustomFileOrRejection[];
 };
 
-export const Step1: React.FC<Props> = ({ getPostUrl, getHeaders, onFileRemove, onFileSuccess, storedFiles }) => {
+const Step1: React.FC<Props> = ({ getPostUrl, getHeaders, onFileRemove, onFileSuccess, storedFiles }) => {
 	return (
 		<FileUpload
 			getPostUrl={getPostUrl}
@@ -29,3 +29,5 @@ export const Step1: React.FC<Props> = ({ getPostUrl, getHeaders, onFileRemove, o
 		/>
 	);
 };
+
+export default Step1;
