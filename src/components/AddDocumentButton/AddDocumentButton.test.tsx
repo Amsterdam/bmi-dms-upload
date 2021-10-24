@@ -19,6 +19,7 @@ describe('<AddDocumentButton />', () => {
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
 			/>,
+			{},
 		);
 	};
 
