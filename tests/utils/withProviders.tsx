@@ -5,23 +5,37 @@ import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import theme from '~/theme';
-import CustomProvider from '~/store/CustomProvider';
 import { createMemoryHistory } from 'history';
+import { DMSUpload } from '../../src/store/store.d';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { CustomContext } from '~/store/CustomProvider';
 
-function renderWithProviders(ui: React.ReactElement, initialRoute?: string, options?: Omit<RenderOptions, 'queries'>) {
+type ProviderOptions = {
+	initialState?: DMSUpload;
+	initialRoute?: string;
+};
+
+function renderWithProviders(
+	ui: React.ReactElement,
+	{ initialState, initialRoute }: ProviderOptions,
+	options?: Omit<RenderOptions, 'queries'>,
+) {
+	const mockStore = configureStore([]);
+	const store = mockStore({ ...initialState });
 	const history = createMemoryHistory();
 	initialRoute && history.push(initialRoute);
 
 	const AllTheProviders: React.FC = ({ children }) => (
 		<Router history={history}>
-			<CustomProvider>
+			<Provider context={CustomContext} store={store}>
 				<MUIThemeProvider theme={muiTheme}>
 					<ThemeProvider overrides={theme}>
 						<GlobalStyle />
 						{children}
 					</ThemeProvider>
 				</MUIThemeProvider>
-			</CustomProvider>
+			</Provider>
 		</Router>
 	);
 
