@@ -2,12 +2,14 @@ import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import Wizard, { ImplementationProps } from '../Wizard/Wizard';
 import CustomProvider from '../../store/CustomProvider';
+import appendTrailingSlash from '../../utils/appendTrailingSlash';
+import { MetadataGenericType } from '../../store/store';
 
 export type Props<T> = {
 	buttonText?: string;
 } & ImplementationProps<T>;
 
-export default function AddDocumentButton<T>({
+export default function AddDocumentButton<T extends MetadataGenericType>({
 	buttonText = 'Bestand toevoegen',
 	getPostUrl,
 	getHeaders,
@@ -17,6 +19,7 @@ export default function AddDocumentButton<T>({
 	onMetadataValidate,
 	onMetadataSubmit,
 	onCancel,
+	basePath = '/',
 }: Props<T>): ReactElement {
 	const [isWizardVisible, setWizardVisibility] = React.useState<boolean>(false);
 
@@ -40,6 +43,7 @@ export default function AddDocumentButton<T>({
 					onMetadataValidate={onMetadataValidate}
 					onMetadataSubmit={onMetadataSubmit}
 					onCancel={onCancel}
+					basePath={appendTrailingSlash(basePath)}
 				/>
 			)}
 		</CustomProvider>
