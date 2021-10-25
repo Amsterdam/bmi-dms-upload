@@ -1,15 +1,16 @@
 //test routing, zie SOKtabs in aip
 //
 
-import * as React from 'react';
+import React from 'react';
+
 import Wizard from '~/components/Wizard/Wizard';
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { DummyForm, MetadataExample, documentTypeEnum } from '../DummyForm/DummyForm';
 import renderWithProviders from '~/tests/utils/withProviders';
-// import * as Step2 from '~/components/Wizard/Step2';
-// import * as Step1 from '~/components/Wizard/Step1';
+import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '~/store/store';
-import { initialState } from '../../store/dataSlice';
+import { initialState as storeState } from '../../store/dataSlice';
+
 /* eslint-disable react/display-name */
 
 jest.mock('./Step1', () => ({
@@ -29,6 +30,11 @@ jest.mock('./Step2', () => ({
 	),
 }));
 
+// jest.mock('react', () => ({
+//  ...jest.requireActual('react'),
+//  useState: jest.fn(),
+// }));
+
 const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
 const mockFile = Object.assign(rawFile, { tmpId: 100 });
 
@@ -38,54 +44,111 @@ const mockData: MetadataExample = {
 	executionDate: '12-10-2021',
 };
 
-const renderComponent = (state: DMSUpload, url: string) =>
-	renderWithProviders(
-		<Wizard<MetadataExample>
-			onClose={jest.fn()}
-			getPostUrl={jest.fn()}
-			getHeaders={jest.fn()}
-			onFileSuccess={jest.fn()}
-			onFileRemove={jest.fn()}
-			metadataForm={DummyForm}
-			onMetadataValidate={jest.fn()}
-			onMetadataSubmit={jest.fn()}
-			onCancel={jest.fn()}
-		/>,
-		{ initialState: state, initialRoute: url },
-	);
+let cancelButton: HTMLElement;
+
+interface IInitialState {
+	formValues: MetadataExample;
+	isValidForm: boolean;
+}
+
+const defaultInitialState: IInitialState = {
+	formValues: mockData,
+	isValidForm: false,
+};
 
 describe('<Wizard />', () => {
+	const onCloseMock = jest.fn();
+	const onMetadataSubmitMock = jest.fn();
+	// const setFormValues = jest.fn();
+	// const setIsValidForm = jest.fn();
+
+	const renderComponent = (storeState: DMSUpload, url: string, initialState = defaultInitialState) => {
+		// (useStateMock as any)
+		//  .mockImplementationOnce((initial: boolean) => {
+		//      return [initialState?.formValues ?? initial, setFormValues];
+		//  })
+		//  .mockImplementationOnce((initial: undefined) => {
+		//      return [initialState?.isValidForm ?? initial, setIsValidForm];
+		//  })
+		//  // Ensure useState doesn't flip out when called from elsewhere
+		//  .mockImplementation((initial: any) => [initial, jest.fn()]);
+
+		renderWithProviders(
+			<Wizard<MetadataExample>
+				onClose={() => onCloseMock()}
+				getPostUrl={jest.fn()}
+				getHeaders={jest.fn()}
+				onFileSuccess={jest.fn()}
+				onFileRemove={jest.fn()}
+				metadataForm={DummyForm}
+				onMetadataValidate={jest.fn()}
+				onMetadataSubmit={onMetadataSubmitMock}
+				onCancel={jest.fn()}
+			/>,
+			{ initialState: storeState, initialRoute: url },
+		);
+		cancelButton = screen.getByText('Annuleren');
+	};
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
 	test('Step1', () => {
-		renderComponent(initialState, '/');
+		renderComponent(storeState, '/');
 		expect(screen.queryByTestId('step-1')).toBeInTheDocument();
 		expect(screen.queryByTestId('step-2')).not.toBeInTheDocument();
-		const annulerenButton = screen.getByText('Annuleren');
 
-		expect(annulerenButton).toBeInTheDocument();
+		expect(cancelButton).toBeInTheDocument();
 	});
 
-	test('Should render Next button when file in state', () => {
+	test('Should render Next button when file in state and go to next page on click', () => {
 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-
 		const nextButton = screen.getByText('Volgende');
-
 		expect(nextButton).toBeInTheDocument();
-	});
-
-	test('Should render the right buttons in step 2', () => {
-		// const spy = jest.spyOn(Step2, 'default');
-
-		renderComponent(initialState, '/step2');
-		// expect(spy).toHaveBeenCalledWith({}, DummyForm, jest.fn, {});
+		fireEvent.click(nextButton);
 		expect(screen.queryByTestId('step-2')).toBeInTheDocument();
-		const annulerenButton = screen.getByText('Annuleren');
-		const saveButton = screen.getByText('Opslaan');
-
-		expect(annulerenButton).toBeInTheDocument();
-		expect(saveButton).toBeInTheDocument();
+		expect(screen.queryByTestId('step-1')).not.toBeInTheDocument();
 	});
 
-	test('Should render next button when file in state', () => {
-		// const component = renderComponent(initialState, './');
+	test('Should render the correct buttons in step 2', () => {
+		renderComponent(storeState, '/step2');
+
+		expect(screen.queryByTestId('step-2')).toBeInTheDocument();
+		expect(cancelButton).toBeInTheDocument();
+		expect(screen.getByText('Opslaan')).toBeInTheDocument();
+	});
+
+	test('Should call resetState, onClose when clicking Cancel button', () => {
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(cancelButton);
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
+	});
+
+	test('Should not submit when invalid data', () => {
+		renderComponent(
+			{
+				file: mockFile,
+				metadata: { documentType: documentTypeEnum.typeOne, documentDescription: '', executionDate: '' },
+			},
+			'/step2',
+		);
+		fireEvent.click(screen.getByText('Opslaan'));
+		expect(onMetadataSubmitMock).not.toHaveBeenCalled();
+	});
+
+	test('Should submit when valid data', () => {
+		// not working yet
+		// renderComponent(storeState, '/step2', { formValues: mockData, isValidForm: true });
+		// // const spy = jest.spyOn(selectors, 'getFileFromStore');
+		// // expect(spy).toHaveBeenCalled();
+		// expect(screen.getByText('Vorige')).toBeInTheDocument();
+		// // console.log(container);
+		// expect(onMetadataSubmitMock).toHaveBeenCalled();
+		// fireEvent.click(screen.getByText('Opslaan'));
+		// fireEvent.click(screen.getByText('Vorige'));
+		// expect(screen.queryByTestId('step-1')).toBeInTheDocument();
 	});
 });
