@@ -9,10 +9,10 @@ import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { FormProps } from './Step2';
 import Step1 from './Step1';
 import Step2 from './Step2';
+import { PreviousButtonStyle, CancelButtonStyle } from './WizardStyle';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
-
 export type ImplementationProps<T> = {
 	// Dynamically get URL to upload file to
 	getPostUrl: FileUploadProps['getPostUrl'];
@@ -94,6 +94,7 @@ export default function Wizard<T>({
 				{location.pathname === '/' ? (
 					!fileIsEmptyObject(file) ? (
 						<Button
+							variant="primary"
 							name="Volgende"
 							onClick={() => {
 								history.push('/step2');
@@ -104,14 +105,18 @@ export default function Wizard<T>({
 					) : null
 				) : (
 					<div>
-						<Button
+						<PreviousButtonStyle
+							variant="textButton"
+							iconLeft={<ChevronLeft />}
 							onClick={() => {
 								history.push('/');
 							}}
 						>
 							Vorige
+						</PreviousButtonStyle>
+						<Button variant="primary" onClick={handleSubmit}>
+							Opslaan
 						</Button>
-						<Button onClick={handleSubmit}>Opslaan</Button>
 					</div>
 				)}
 			</>
@@ -159,7 +164,7 @@ export default function Wizard<T>({
 				</Modal.Content>
 				<Modal.Actions>
 					<Modal.Actions.Left>
-						<Button
+						<CancelButtonStyle
 							variant="textButton"
 							iconLeft={<ChevronLeft />}
 							onClick={() => {
@@ -172,7 +177,7 @@ export default function Wizard<T>({
 							}}
 						>
 							Annuleren
-						</Button>
+						</CancelButtonStyle>
 					</Modal.Actions.Left>
 					<Modal.Actions.Right>{renderButtons(location, file)}</Modal.Actions.Right>
 				</Modal.Actions>
