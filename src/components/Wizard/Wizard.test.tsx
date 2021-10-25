@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-import Wizard from '~/components/Wizard/Wizard';
 import { screen, fireEvent } from '@testing-library/react';
 import { DummyForm, MetadataExample, documentTypeEnum } from '../DummyForm/DummyForm';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
-import { DMSUpload } from '~/store/store';
+import { DMSUpload } from '../../store/store';
 import { initialState as storeState } from '../../store/dataSlice';
+import Wizard from './Wizard';
 
 /* eslint-disable react/display-name */
 

@@ -3,8 +3,8 @@
 
 import * as React from 'react';
 import { screen } from '@testing-library/react';
+import Step1 from './Step1';
 import renderWithProviders from '~/tests/utils/withProviders';
-import Step1 from '~/components/Wizard/Step1';
 /* eslint-disable react/display-name */
 
 function renderComponent() {

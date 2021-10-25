@@ -4,12 +4,12 @@ import { Router } from 'react-router-dom';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
-import theme from '~/theme';
 import { createMemoryHistory } from 'history';
-import { DMSUpload } from '../../src/store/store.d';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { CustomContext } from '~/store/CustomProvider';
+import { DMSUpload } from '../../src/store/store.d';
+import theme from '../../src/theme';
+import { CustomContext } from '../../src/store/CustomProvider';
 
 type ProviderOptions = {
 	initialState?: DMSUpload;

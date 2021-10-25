@@ -4,8 +4,8 @@
 import * as React from 'react';
 import { screen } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
-import Step2 from '~/components/Wizard/Step2';
 import { DummyForm, MetadataExample, documentTypeEnum } from '../DummyForm/DummyForm';
+import Step2 from './Step2';
 /* eslint-disable react/display-name */
 
 const mockData: MetadataExample = {
