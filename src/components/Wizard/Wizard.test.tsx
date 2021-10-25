@@ -13,27 +13,8 @@ import Wizard from './Wizard';
 
 /* eslint-disable react/display-name */
 
-jest.mock('./Step1', () => ({
-	__esModule: true,
-	default: () => (
-		<>
-			<div data-testid="step-1"></div>
-		</>
-	),
-}));
-jest.mock('./Step2', () => ({
-	__esModule: true,
-	default: () => (
-		<>
-			<div data-testid="step-2"></div>
-		</>
-	),
-}));
-
-// jest.mock('react', () => ({
-//  ...jest.requireActual('react'),
-//  useState: jest.fn(),
-// }));
+jest.mock('./Step1');
+jest.mock('./Step2');
 
 const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
 const mockFile = Object.assign(rawFile, { tmpId: 100 });
@@ -83,7 +64,7 @@ describe('<Wizard />', () => {
 				metadataForm={DummyForm}
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={onMetadataSubmitMock}
-				onCancel={jest.fn()}
+				onCancel={jest.fn().mockImplementation(() => Promise.resolve())}
 			/>,
 			{ initialState: storeState, initialRoute: url },
 		);

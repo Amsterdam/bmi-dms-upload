@@ -1,11 +1,11 @@
-import removeTrailingSlash from './removeTrailingSlash';
+import appendTrailingSlash from './appendTrailingSlash';
 
-describe('utils/removeTrailingSlash', () => {
+describe('utils/appendTrailingSlash', () => {
 	test('With trailing slash', () => {
-		expect(removeTrailingSlash('/some/path/')).toEqual('/some/path');
+		expect(appendTrailingSlash('/some/path/')).toEqual('/some/path/');
 	});
 
 	test('Without trailing slash', () => {
-		expect(removeTrailingSlash('/some/path')).toEqual('/some/path');
+		expect(appendTrailingSlash('/some/path')).toEqual('/some/path/');
 	});
 });
