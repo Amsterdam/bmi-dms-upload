@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import { FormProps } from './Step2';
-import Step1 from './Step1';
+import Step1, { SupportedHTTPMethods } from './Step1';
 import Step2 from './Step2';
 import { PreviousButtonStyle, CancelButtonStyle } from './WizardStyles';
 import { MetadataGenericType } from '../../store/store';
@@ -38,6 +38,7 @@ export type ImplementationProps<T> = {
 
 	// Defaults to '/' or base path of page where this wizard is implemented from
 	basePath?: string;
+	uploadHTTPMethod?: SupportedHTTPMethods;
 };
 
 type Props<T> = {
@@ -55,6 +56,7 @@ export default function Wizard<T>({
 	onMetadataValidate,
 	onMetadataSubmit,
 	basePath = '/',
+	uploadHTTPMethod = 'POST',
 }: Props<T>) {
 	const location = useLocation();
 	const history = useHistory();
@@ -142,6 +144,7 @@ export default function Wizard<T>({
 									onFileRemove={handleFileRemove}
 									onFileSuccess={getFile}
 									storedFiles={!file ? [] : [file]}
+									httpMethod={uploadHTTPMethod}
 								/>
 							)}
 						/>

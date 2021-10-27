@@ -20,6 +20,7 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 	onMetadataSubmit,
 	onCancel,
 	basePath = '/',
+	uploadHTTPMethod = 'POST',
 }: Props<T>): ReactElement {
 	const [isWizardVisible, setWizardVisibility] = React.useState<boolean>(false);
 
@@ -44,6 +45,7 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 					onMetadataSubmit={onMetadataSubmit}
 					onCancel={onCancel}
 					basePath={appendTrailingSlash(basePath)}
+					uploadHTTPMethod={uploadHTTPMethod}
 				/>
 			)}
 		</CustomProvider>

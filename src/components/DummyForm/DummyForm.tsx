@@ -25,7 +25,7 @@ export const validationSchema = yup.object().shape({
 	executionDate: yup.string().required(),
 });
 
-export const DummyForm = ({ handleChange, data }: Props): JSX.Element => (
+export const DummyForm: React.FC<Props> = ({ handleChange, data }) => (
 	<DummyFormStyle>
 		<label>DocumentType</label>
 		<select onChange={(e) => handleChange(e)} name="documentType" defaultValue={data.documentType}>
