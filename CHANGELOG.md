@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.5](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2021-10-27)
+
+
+### Features
+
+* **fileupload:** http method for file upload can now be configured ([a7bd9c8](https://github.com/Amsterdam/bmi-dms-upload/commit/a7bd9c8bb44e8ff0dc568a84e77fe15b2f2187e7))
+
 ### [0.0.1-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2021-10-25)
 
 
