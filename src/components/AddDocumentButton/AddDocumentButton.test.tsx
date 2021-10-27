@@ -1,12 +1,15 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddDocumentButton from './AddDocumentButton';
+import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
 import { DummyForm, MetadataExample } from '../DummyForm/DummyForm';
+import Step1 from '../Wizard/Step1';
+
+jest.mock('../Wizard/Step1');
 
 describe('<AddDocumentButton />', () => {
-	const renderComponent = () => {
+	const renderComponent = (props: Partial<Props<MetadataExample>> = {}) => {
 		return renderWithProviders(
 			<AddDocumentButton<MetadataExample>
 				buttonText="Upload"
@@ -18,6 +21,7 @@ describe('<AddDocumentButton />', () => {
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
+				{...props}
 			/>,
 			{},
 		);
@@ -29,11 +33,20 @@ describe('<AddDocumentButton />', () => {
 		expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 	});
 
-	test('Clicking button opens up wizard', () => {
-		renderComponent();
-		const button = screen.getByText('Upload', { selector: 'button' });
-		userEvent.click(button);
-		expect(screen.getByText('Upload', { selector: 'button' })).toBeInTheDocument();
-		expect(screen.queryByRole('dialog')).toBeInTheDocument();
-	});
+	describe.each([['POST'], ['PUT']])(
+		'Clicking the button opens a Modal (http method configured as %s)',
+		(httpMethod) => {
+			test('Clicking button opens up wizard', () => {
+				renderComponent({
+					uploadHTTPMethod: httpMethod as 'POST' | 'PUT',
+				});
+				const button = screen.getByText('Upload', { selector: 'button' });
+				userEvent.click(button);
+				expect(screen.getByText('Upload', { selector: 'button' })).toBeInTheDocument();
+				expect(screen.queryByRole('dialog')).toBeInTheDocument();
+				expect(screen.getByTestId('step-1')).toBeInTheDocument();
+				expect(Step1).toHaveBeenCalledWith(expect.objectContaining({ httpMethod }), {});
+			});
+		},
+	);
 });
