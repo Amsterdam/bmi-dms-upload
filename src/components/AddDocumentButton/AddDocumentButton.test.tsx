@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
 import { DummyForm, MetadataExample } from '../DummyForm/DummyForm';
-import Step1 from '../Wizard/Step1';
+import Step1, { SupportedHTTPMethods } from '../Wizard/Step1';
 
 jest.mock('../Wizard/Step1');
 
@@ -38,7 +38,7 @@ describe('<AddDocumentButton />', () => {
 		(httpMethod) => {
 			test('Clicking button opens up wizard', () => {
 				renderComponent({
-					uploadHTTPMethod: httpMethod as 'POST' | 'PUT',
+					uploadHTTPMethod: httpMethod as SupportedHTTPMethods,
 				});
 				const button = screen.getByText('Upload', { selector: 'button' });
 				userEvent.click(button);
