@@ -1,0 +1,30 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import MetadataForm from './MetadataForm'
+
+<Meta
+  title="Metadata Form"
+  component={MetadataForm}
+  decorators={[
+    (MetadataForm) => (
+      <div
+        style={{
+          padding: '40px 10px',
+        }}
+      >
+        <MetadataForm />
+      </div>
+    ),
+  ]}
+/>
+
+# Metadata Form
+
+A [JSONForms](https://jsonforms.io/) form generated from JSON schema which can be passed as a prop.
+
+## Default
+
+<Canvas>
+	<Story name="Default">
+		<MetadataForm />
+	</Story>
+</Canvas>

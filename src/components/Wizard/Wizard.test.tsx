@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { screen, fireEvent } from '@testing-library/react';
-import { DummyForm, MetadataExample, documentTypeEnum } from '../DummyForm/DummyForm';
+import MetadataForm, { MetadataExample, documentTypeEnum } from '../MetadataForm/MetadataForm';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
@@ -61,7 +61,7 @@ describe('<Wizard />', () => {
 				getHeaders={jest.fn()}
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn()}
-				metadataForm={DummyForm}
+				metadataForm={MetadataForm}
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={onMetadataSubmitMock}
 				onCancel={jest.fn().mockImplementation(() => Promise.resolve())}

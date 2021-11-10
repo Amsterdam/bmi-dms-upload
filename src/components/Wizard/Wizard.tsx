@@ -88,8 +88,11 @@ export default function Wizard<T>({
 			const newFormValues = { ...formValues, ...{ [name]: value } } as T;
 			setFormValues(newFormValues);
 
+			console.log(':: HANDLING CHANGE', newFormValues);
+
 			const isValid = await onMetadataValidate(newFormValues);
 			setIsValidForm(isValid);
+			console.log(':: isValid', isValid);
 			dispatch(setMetadata((newFormValues as unknown) as MetadataGenericType));
 		},
 		[formValues, onMetadataValidate],
@@ -99,6 +102,8 @@ export default function Wizard<T>({
 
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
+
+		console.log(':: HANDLING SUBMIT', file, isValidForm);
 
 		if (file && isValidForm) {
 			onMetadataSubmit({ file, metadata })
@@ -191,7 +196,7 @@ export default function Wizard<T>({
 									Vorige
 								</PreviousButtonStyle>
 								<Button variant="primary" onClick={handleSubmit}>
-									Opslaan
+									Opslaan!
 								</Button>
 							</div>
 						)}

@@ -1,0 +1,13 @@
+{
+	"type": "object",
+	"properties": {
+		"documentDescription": {
+			"type": "string"
+		},
+		"dummyDate": {
+			"type": "string",
+			"format": "date"
+		}
+	},
+	"required": ["documentDescription", "dummyDate"]
+}

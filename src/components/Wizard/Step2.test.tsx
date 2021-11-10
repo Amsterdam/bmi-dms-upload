@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { screen } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
-import { DummyForm, MetadataExample, documentTypeEnum } from '../DummyForm/DummyForm';
+import MetadataForm, { MetadataExample, documentTypeEnum } from '../MetadataForm/MetadataForm';
 import Step2 from './Step2';
 /* eslint-disable react/display-name */
 
@@ -15,7 +15,7 @@ const mockData: MetadataExample = {
 };
 
 function renderComponent() {
-	return renderWithProviders(<Step2 metadataForm={DummyForm} data={mockData} handleChange={jest.fn()} />, {});
+	return renderWithProviders(<Step2 metadataForm={MetadataForm} data={mockData} handleChange={jest.fn()} />, {});
 }
 
 describe('<Step2 />', () => {

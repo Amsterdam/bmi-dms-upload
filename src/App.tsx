@@ -6,7 +6,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
-import { MetadataExample, DummyForm, validationSchema } from './components/DummyForm/DummyForm';
+import MetadataForm, { MetadataExample } from './components/MetadataForm/MetadataForm';
 
 const App: React.FC = () => {
 	const token = 'EXAMPLE';
@@ -44,13 +44,14 @@ const App: React.FC = () => {
 										}}
 										// A custom form component should be rendered here that is specifically geared towards
 										// capturing the relevant metadata for the context in which this button is implemented
-										metadataForm={DummyForm}
+										metadataForm={MetadataForm}
 										onMetadataValidate={async function (data: MetadataExample) {
 											// Yup can be leveraged here to validate the metadata that was captured with the form
 											console.log(':: onMetadataValidate', data);
-											const valid = await validationSchema.isValid(data);
-											console.log('data valid', valid);
-											return valid;
+											return true;
+											// const valid = await validationSchema.isValid(data);
+											// console.log('data valid', valid);
+											// return valid;
 										}}
 										onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
 											// Dispatch actions/make async calls to persist the metadata
