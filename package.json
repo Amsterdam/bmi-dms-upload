@@ -94,6 +94,7 @@
     "eslint": "^7.23.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-testing-library": "^5.0.0",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "husky": "^6.0.0",
@@ -125,9 +126,12 @@
     "yup": "^0.32.11"
   },
   "dependencies": {
-    "@amsterdam/asc-assets": "^0.29.3",
-    "@amsterdam/asc-ui": "^0.29.3",
+    "@amsterdam/asc-assets": "^0.33.0",
+    "@amsterdam/asc-ui": "^0.33.0",
     "@amsterdam/bmi-component-library": "0.0.5-alpha.5",
+    "@jsonforms/core": "^2.5.2",
+    "@jsonforms/react": "^2.5.2",
+    "@jsonforms/vanilla-renderers": "^2.5.2",
     "@material-ui/core": "^4.11.4",
     "@reduxjs/toolkit": "^1.6.2",
     "polished": "^4.1.2",
