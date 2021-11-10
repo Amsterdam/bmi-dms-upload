@@ -1,0 +1,39 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs';
+import MetadataColumnHeaders from './MetadataColumnHeaders';
+import { threeColumns, twoColumns } from './__stubs__/columns';
+
+<Meta
+  title="Metadata Column Headers"
+  component={MetadataColumnHeaders}
+  decorators={[
+    (MetadataColumnHeaders) => (
+      <div
+        style={{
+          padding: '40px 10px',
+        }}
+      >
+        <MetadataColumnHeaders />
+      </div>
+    ),
+  ]}
+/>
+
+# Metadata Column Headers
+
+Column headers with configurable rendered as Flexbox row layout
+
+## Default
+
+<Canvas>
+	<Story name="2 Columns">
+		<MetadataColumnHeaders columns={twoColumns} />
+	</Story>
+</Canvas>
+
+## 3 columns
+
+<Canvas>
+	<Story name="3 Columns">
+		<MetadataColumnHeaders columns={threeColumns} />
+	</Story>
+</Canvas>
