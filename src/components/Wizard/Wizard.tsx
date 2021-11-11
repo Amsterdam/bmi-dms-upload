@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
@@ -6,17 +6,20 @@ import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
-import { FormProps } from './Step2';
+// import { FormProps } from './Step2';
 import Step1, { SupportedHTTPMethods } from './Step1';
 import Step2 from './Step2';
-import { PreviousButtonStyle, CancelButtonStyle } from './WizardStyles';
-import { MetadataGenericType } from '../../store/store';
-import appendTrailingSlash from '../../utils/appendTrailingSlash';
-import appendPathSegment from '../../utils/appendPathSegment';
+import { PreviousButtonStyle, CancelButtonStyle, ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
+import { appendTrailingSlash, appendPathSegment } from '../../utils';
+import { JsonForms } from '@jsonforms/react';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
 export type ImplementationProps<T> = {
+	asset: {
+		code: string;
+		name: string;
+	};
 	// Dynamically get URL to upload file to
 	getPostUrl: FileUploadProps['getPostUrl'];
 	// Allows for authentication with a token header
@@ -26,9 +29,10 @@ export type ImplementationProps<T> = {
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
 	// Component to render for capturing meta data
-	metadataForm: React.FC<FormProps<T>>;
+	// metadataForm: React.FC<FormProps<T>>;
+	metadataForm: ComponentProps<typeof JsonForms>;
 	// Validation of custom metadata form
-	onMetadataValidate: (data: T) => Promise<boolean>;
+	// onMetadataValidate: (data: T) => Promise<boolean>;
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
 	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
 
@@ -46,6 +50,7 @@ type Props<T> = {
 } & ImplementationProps<T>;
 
 export default function Wizard<T>({
+	asset: { name },
 	onClose,
 	onCancel,
 	getHeaders,
@@ -53,7 +58,7 @@ export default function Wizard<T>({
 	onFileRemove,
 	onFileSuccess,
 	metadataForm,
-	onMetadataValidate,
+	// onMetadataValidate,
 	onMetadataSubmit,
 	basePath = '/',
 	uploadHTTPMethod = 'POST',
@@ -63,8 +68,10 @@ export default function Wizard<T>({
 	const dispatch = useDispatch();
 	const file = useSelector(getFileFromStore);
 	const metadata = (useSelector(getMetadataFromStore) as unknown) as T;
-	const [formValues, setFormValues] = React.useState({});
-	const [isValidForm, setIsValidForm] = React.useState(false);
+	// const [formValues, setFormValues] = React.useState({});
+	const [isValidForm, setIsValidForm] = useState(false);
+
+	console.log(':: isValidForm', isValidForm);
 
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
@@ -74,7 +81,7 @@ export default function Wizard<T>({
 		[onFileSuccess],
 	);
 
-	const handleFileRemove = React.useCallback(
+	const handleFileRemove = useCallback(
 		(file) => {
 			onFileRemove && onFileRemove(file);
 			dispatch(removeFileFromStore());
@@ -82,21 +89,21 @@ export default function Wizard<T>({
 		[onFileRemove],
 	);
 
-	const handleChange = React.useCallback(
-		async (e) => {
-			const { name, value } = e.target;
-			const newFormValues = { ...formValues, ...{ [name]: value } } as T;
-			setFormValues(newFormValues);
-
-			console.log(':: HANDLING CHANGE', newFormValues);
-
-			const isValid = await onMetadataValidate(newFormValues);
-			setIsValidForm(isValid);
-			console.log(':: isValid', isValid);
-			dispatch(setMetadata((newFormValues as unknown) as MetadataGenericType));
-		},
-		[formValues, onMetadataValidate],
-	);
+	// const handleChange = React.useCallback(
+	// 	async (e) => {
+	// 		const { name, value } = e.target;
+	// 		const newFormValues = { ...formValues, ...{ [name]: value } } as T;
+	// 		setFormValues(newFormValues);
+	//
+	// 		console.log(':: HANDLING CHANGE', newFormValues);
+	//
+	// 		const isValid = await onMetadataValidate(newFormValues);
+	// 		setIsValidForm(isValid);
+	// 		console.log(':: isValid', isValid);
+	// 		dispatch(setMetadata((newFormValues as unknown) as MetadataGenericType));
+	// 	},
+	// 	[formValues, onMetadataValidate],
+	// );
 
 	// const fileIsEmptyObject = (file: CustomFile) => Object.keys(file).length === 0;
 
@@ -135,10 +142,12 @@ export default function Wizard<T>({
 			}}
 			closeOnBackdropClick={false}
 		>
-			<Modal.TopBar hideCloseButton={false}>Bestand uploaden voor ...</Modal.TopBar>
+			<Modal.TopBar hideCloseButton={false}>
+				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+			</Modal.TopBar>
 			<>
 				<Modal.Content>
-					<>
+					<ModalContentStyle>
 						<Route
 							exact
 							path={basePath}
@@ -155,9 +164,18 @@ export default function Wizard<T>({
 						/>
 						<Route
 							path={appendPathSegment(basePath, 'step2')}
-							render={() => <Step2 metadataForm={metadataForm} handleChange={handleChange} data={metadata} />}
+							render={() => (
+								<Step2
+									metadataForm={metadataForm}
+									onChange={(valid) => {
+										// TODO Ensure data is pulled form form and pushed to store
+										dispatch(setMetadata({}));
+										setIsValidForm(valid);
+									}}
+								/>
+							)}
 						/>
-					</>
+					</ModalContentStyle>
 				</Modal.Content>
 				<Modal.Actions>
 					<Modal.Actions.Left>
@@ -195,8 +213,8 @@ export default function Wizard<T>({
 								>
 									Vorige
 								</PreviousButtonStyle>
-								<Button variant="primary" onClick={handleSubmit}>
-									Opslaan!
+								<Button variant="primary" onClick={handleSubmit} disabled={!isValidForm}>
+									Opslaan
 								</Button>
 							</div>
 						)}

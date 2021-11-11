@@ -1,23 +1,19 @@
-import React from 'react';
-import { ImplementationProps } from './Wizard';
+import React, { ComponentProps } from 'react';
 import { WizardForm } from './Step2Styles';
+import { JsonForms } from '@jsonforms/react';
+import MetadataForm from '../MetadataForm/MetadataForm';
+import { ErrorObject } from 'ajv';
 
-export type FormProps<T> = {
-	handleChange: (e: any) => void;
-	data: T;
+export type Props = {
+	metadataForm: ComponentProps<typeof JsonForms>;
+	// TODO Centralize the type for this callback
+	onChange: (valid: boolean, errors: ErrorObject[]) => void;
 };
 
-export type Props<T> = {
-	metadataForm: ImplementationProps<T>['metadataForm'];
-} & FormProps<T>;
-
-const Step2 = <T,>({ metadataForm, handleChange, data }: Props<T>) => {
+const Step2: React.FC<Props> = ({ metadataForm, onChange }) => {
 	return (
 		<WizardForm>
-			{React.createElement<FormProps<T>>(metadataForm, {
-				handleChange,
-				data,
-			})}
+			<MetadataForm {...metadataForm} onChange={onChange} />
 		</WizardForm>
 	);
 };

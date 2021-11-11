@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
-import MetadataForm, { MetadataExample } from '../MetadataForm/MetadataForm';
+import MetadataForm from '../MetadataForm/MetadataForm';
 import Step1, { SupportedHTTPMethods } from '../Wizard/Step1';
 
 jest.mock('../Wizard/Step1');

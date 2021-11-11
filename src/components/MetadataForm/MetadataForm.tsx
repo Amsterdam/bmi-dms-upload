@@ -1,31 +1,24 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { MetadataFormStyle } from './MetadataFormStyles';
 import { JsonForms } from '@jsonforms/react';
-import schema from './schema.json';
-import uiSchema from './uiSchema.json';
-import customRenderers from '../customRenderers';
-import customLayoutRenderers from '../customLayouts';
-import { vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
+import Form from '../Form/Form';
+import { ErrorObject } from 'ajv';
 
-export enum documentTypeEnum {
-	typeOne = 'Type 1',
-	typeTwo = 'Type 2',
-}
-
-export type MetadataExample = {
-	documentType: documentTypeEnum;
-	documentDescription: string;
-	executionDate: string;
+type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
+	onChange: (valid: boolean, errors: ErrorObject[]) => void;
 };
 
-type Props = {
-	handleChange: (e: any) => void;
-	data: MetadataExample;
-};
-
-const MetadataForm: React.FC<Props> = ({ handleChange, data }) => {
-	console.log(':: vanillaRenderers', vanillaRenderers);
+const MetadataForm: React.FC<Props> = ({
+	ajv,
+	i18n,
+	schema,
+	uischema,
+	renderers,
+	data = {},
+	validationMode = 'ValidateAndShow',
+	onChange,
+}) => {
 	return (
 		<MetadataFormStyle>
 			<h2>Metadata toevoegen</h2>
@@ -41,11 +34,18 @@ const MetadataForm: React.FC<Props> = ({ handleChange, data }) => {
 					},
 				]}
 			/>
-			<JsonForms
+			<Form
+				ajv={ajv}
+				i18n={i18n}
 				schema={schema}
-				uischema={uiSchema}
-				data={{}}
-				renderers={[...vanillaRenderers, ...customRenderers, ...customLayoutRenderers]}
+				uischema={uischema}
+				data={data}
+				renderers={renderers}
+				validationMode={validationMode}
+				onChange={(valid, errors) => {
+					console.log('[[', valid, errors);
+					onChange(valid, errors);
+				}}
 			/>
 		</MetadataFormStyle>
 	);

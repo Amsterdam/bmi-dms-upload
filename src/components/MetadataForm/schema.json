@@ -2,12 +2,20 @@
 	"type": "object",
 	"properties": {
 		"documentDescription": {
-			"type": "string"
+			"type": "string",
+			"errorMessage": {
+				"required": "w00t?"
+			}
 		},
 		"dummyDate": {
 			"type": "string",
 			"format": "date"
 		}
 	},
-	"required": ["documentDescription", "dummyDate"]
+	"required": ["documentDescription", "dummyDate"],
+	"errorMessage": {
+		"required": {
+			"documentDescription": "w00t!"
+		}
+	}
 }

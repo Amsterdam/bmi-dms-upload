@@ -10,13 +10,14 @@ export type Props<T> = {
 } & ImplementationProps<T>;
 
 export default function AddDocumentButton<T extends MetadataGenericType>({
+	asset,
 	buttonText = 'Bestand toevoegen',
 	getPostUrl,
 	getHeaders,
 	onFileSuccess,
 	onFileRemove,
 	metadataForm,
-	onMetadataValidate,
+	// onMetadataValidate,
 	onMetadataSubmit,
 	onCancel,
 	basePath = '/',
@@ -35,13 +36,14 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 			</Button>
 			{isWizardVisible && (
 				<Wizard<T>
+					asset={asset}
 					onClose={() => setWizardVisibility(false)}
 					getPostUrl={getPostUrl}
 					getHeaders={getHeaders}
 					onFileSuccess={onFileSuccess}
 					onFileRemove={onFileRemove}
 					metadataForm={metadataForm}
-					onMetadataValidate={onMetadataValidate}
+					// onMetadataValidate={onMetadataValidate}
 					onMetadataSubmit={onMetadataSubmit}
 					onCancel={onCancel}
 					basePath={appendTrailingSlash(basePath)}

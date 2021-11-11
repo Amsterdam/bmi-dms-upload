@@ -1,0 +1,13 @@
+{
+	"type": "object",
+	"properties": {
+		"documentDescription": {
+			"type": "string"
+		}
+	},
+	"required": ["documentDescription"],
+	"errorMessage": {
+		"isNotEmpty": "w00t!",
+		"required": "should have property foo"
+	}
+}
