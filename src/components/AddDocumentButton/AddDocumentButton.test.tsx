@@ -5,8 +5,8 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
-import MetadataForm from '../MetadataForm/MetadataForm';
 import Step1, { SupportedHTTPMethods } from '../Wizard/Step1';
+import { MetadataExample } from '../../types/MetadataExample';
 
 jest.mock('../Wizard/Step1');
 
@@ -19,7 +19,7 @@ describe('<AddDocumentButton />', () => {
 				getHeaders={jest.fn()}
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn}
-				metadataForm={MetadataForm}
+				metadataForm={{}}
 				onMetadataValidate={jest.fn()}
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}

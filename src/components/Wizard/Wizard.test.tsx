@@ -1,15 +1,16 @@
 //test routing, zie SOKtabs in aip
 //
 
-import React from 'react';
+import * as React from 'react';
 
 import { screen, fireEvent } from '@testing-library/react';
-import MetadataForm, { MetadataExample, documentTypeEnum } from '../MetadataForm/MetadataForm';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
 import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
+import { MetadataExample } from '../../types/MetadataExample';
+import { asset, schema, uischema } from './__stubs__';
 
 /* eslint-disable react/display-name */
 
@@ -20,7 +21,6 @@ const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
 const mockFile = Object.assign(rawFile, { tmpId: 100 });
 
 const mockData: MetadataExample = {
-	documentType: documentTypeEnum.typeOne,
 	documentDescription: 'test',
 	executionDate: '12-10-2021',
 };
@@ -56,13 +56,19 @@ describe('<Wizard />', () => {
 
 		renderWithProviders(
 			<Wizard<MetadataExample>
+				asset={asset}
 				onClose={() => onCloseMock()}
 				getPostUrl={jest.fn()}
 				getHeaders={jest.fn()}
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn()}
-				metadataForm={MetadataForm}
-				onMetadataValidate={jest.fn()}
+				metadataForm={{
+					schema,
+					uischema,
+					data: mockData,
+					onChange: jest.fn(),
+					renderers: [],
+				}}
 				onMetadataSubmit={onMetadataSubmitMock}
 				onCancel={jest.fn().mockImplementation(() => Promise.resolve())}
 			/>,
@@ -112,7 +118,7 @@ describe('<Wizard />', () => {
 		renderComponent(
 			{
 				file: mockFile,
-				metadata: { documentType: documentTypeEnum.typeOne, documentDescription: '', executionDate: '' },
+				metadata: { documentDescription: '', executionDate: '' },
 			},
 			'/step2',
 		);

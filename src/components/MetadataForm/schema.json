@@ -3,19 +3,19 @@
 	"properties": {
 		"documentDescription": {
 			"type": "string",
+			"bmi-isNotEmpty": true,
 			"errorMessage": {
-				"required": "w00t?"
+				"bmi-isNotEmpty": "Dit is een verplicht veld"
 			}
 		},
 		"dummyDate": {
 			"type": "string",
-			"format": "date"
+			"format": "date",
+			"errorMessage": {
+				"format": "Dit is een verplicht veld"
+			}
 		}
 	},
-	"required": ["documentDescription", "dummyDate"],
-	"errorMessage": {
-		"required": {
-			"documentDescription": "w00t!"
-		}
-	}
+	"additionalProperties": false,
+	"required": ["documentDescription", "dummyDate"]
 }

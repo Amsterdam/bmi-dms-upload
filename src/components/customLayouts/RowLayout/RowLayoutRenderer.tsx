@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { ResolvedJsonFormsDispatch, withJsonFormsLayoutProps } from '@jsonforms/react';
 import { LayoutProps, Layout } from '@jsonforms/core';
 import Row from './Row';

@@ -3,10 +3,10 @@ import { MetadataFormStyle } from './MetadataFormStyles';
 import { JsonForms } from '@jsonforms/react';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
-import { ErrorObject } from 'ajv';
+import { OnChangeCallback } from '../../types';
 
 type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
-	onChange: (valid: boolean, errors: ErrorObject[]) => void;
+	onChange: OnChangeCallback;
 };
 
 const MetadataForm: React.FC<Props> = ({
@@ -19,6 +19,7 @@ const MetadataForm: React.FC<Props> = ({
 	validationMode = 'ValidateAndShow',
 	onChange,
 }) => {
+	console.log('onChange', onChange);
 	return (
 		<MetadataFormStyle>
 			<h2>Metadata toevoegen</h2>
@@ -44,7 +45,7 @@ const MetadataForm: React.FC<Props> = ({
 				validationMode={validationMode}
 				onChange={(valid, errors) => {
 					console.log('[[', valid, errors);
-					onChange(valid, errors);
+					onChange && onChange(valid, errors);
 				}}
 			/>
 		</MetadataFormStyle>

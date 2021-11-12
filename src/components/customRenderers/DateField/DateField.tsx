@@ -2,13 +2,11 @@ import * as React from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { ErrorMessage, Label, TextField as ASCTextField } from '@amsterdam/asc-ui';
 import { ControlProps } from '@jsonforms/core';
+import useCustomControl from '../../../hooks/useCustomControl';
 
-const DateField = ({ data: value = '', path, label, handleChange, errors }: ControlProps) => {
-	// TODO make custom hook like so and share it with TextField:
-	// const { onFocus, onBlur, onChange, isDirty, isValid } = useCustomControl();
-	const [focused, setFocused] = useState<boolean>(false);
-	const [isDirty, setIsDirty] = useState<boolean>(!!value);
-	const isValid = errors.length === 0 && isDirty;
+const DateField = (props: ControlProps) => {
+	const { data: value = '', path, label, errors } = props;
+	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange } = useCustomControl(props);
 
 	return (
 		<>
@@ -19,15 +17,12 @@ const DateField = ({ data: value = '', path, label, handleChange, errors }: Cont
 					value={value}
 					type="date"
 					name={path}
-					onChange={(e) => {
-						if (e.currentTarget.value) setIsDirty(true);
-						handleChange(path, e.currentTarget.value || undefined);
-					}}
+					onChange={onChange}
 					error={!isValid && isDirty}
-					onFocus={(e) => setFocused(true)}
-					onBlur={(e) => setFocused(false)}
+					onFocus={onFocus}
+					onBlur={onBlur}
 				/>
-				{!isValid && !focused && isDirty && <ErrorMessage message={errors} />}
+				{!isValid && !isFocused && isDirty && <ErrorMessage message={errors} />}
 			</div>
 		</>
 	);

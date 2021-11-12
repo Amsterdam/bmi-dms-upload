@@ -1,20 +1,31 @@
 import * as React from 'react';
 import { screen } from '@testing-library/react';
-import renderWithProviders from '~/tests/utils/withProviders';
-import MetadataForm, { MetadataExample, documentTypeEnum } from '../MetadataForm/MetadataForm';
 import Step2 from './Step2';
-/* eslint-disable react/display-name */
+import { MetadataExample } from '../../types/MetadataExample';
+import { schema, uischema } from './__stubs__';
+import renderWithTheme from '~/tests/utils/withTheme';
 
 const mockData: MetadataExample = {
-	documentType: documentTypeEnum.typeOne,
 	documentDescription: 'test',
 	executionDate: '12-10-2021',
 };
 
-function renderComponent() {
-	return renderWithProviders(<Step2 metadataForm={MetadataForm} data={mockData} handleChange={jest.fn()} />, {});
+function renderComponent(onChange = jest.fn()) {
+	return renderWithTheme(
+		<Step2
+			metadataForm={{
+				schema,
+				uischema,
+				data: mockData,
+				renderers: [],
+			}}
+			onChange={onChange}
+		/>,
+		{},
+	);
 }
 
+// TODO Write tests
 describe('<Step2 />', () => {
 	test('Should render form', () => {
 		renderComponent();

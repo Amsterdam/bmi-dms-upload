@@ -3,20 +3,16 @@ import { JsonForms } from '@jsonforms/react';
 import { materialRenderers } from '@jsonforms/material-renderers';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
-import AJV, { ErrorObject } from 'ajv';
-import addFormats from 'ajv-formats';
-import ajvErrors from 'ajv-errors';
 import { Schema } from 'ajv/lib/types/index';
+import createAjv from '../../utils/createAjv';
+import { OnChangeCallback } from '../../types';
 
 type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
-	onChange: (valid: boolean, errors: ErrorObject[]) => void;
+	onChange: OnChangeCallback;
 };
 
 const DEFAULT_RENDERERS = [...materialRenderers, ...customRenderers, ...customLayoutRenderers];
-
-const ajv = new AJV({ allErrors: true, messages: true });
-addFormats(ajv, ['date']);
-const ajvWithCustomErrors = ajvErrors(ajv, { keepErrors: true });
+const ajv = createAjv();
 
 const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, renderers, onChange }) => {
 	return (
@@ -26,25 +22,12 @@ const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, rendere
 			data={data}
 			renderers={[...DEFAULT_RENDERERS, ...renderers]}
 			validationMode={validationMode}
-			onChange={({ errors, data }) => {
+			onChange={({ errors = [], data }) => {
 				const validate = ajv.compile(schema as Schema);
 				const valid = validate(data);
-				onChange(valid, errors as ErrorObject[]);
+				onChange(valid, errors);
 			}}
-			ajv={ajvWithCustomErrors}
-			i18n={{
-				locale: 'nl',
-				translate: (key: string | undefined, args: string | undefined): string => {
-					if (typeof key === 'string' && !key.startsWith('error.')) return args || '';
-					switch (key) {
-						case 'error.required':
-							return 'Dit is een verplicht veld';
-						default:
-							return '** missing error message **';
-					}
-					return '** missing translation **';
-				},
-			}}
+			ajv={ajv}
 		/>
 	);
 };
