@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook, TypedUseSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { reducer } from './dataSlice';

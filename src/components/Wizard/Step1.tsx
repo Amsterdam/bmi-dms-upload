@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { FileUpload, FileUploadProps, CustomFile } from '@amsterdam/bmi-component-library';
 // TODO export this type in a legit manner
 import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/common/src/FileUpload/hooks';

@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "es2017"],
 		"types": [
 			"jest",
 			"node",
@@ -9,12 +9,12 @@
 		],
 		"allowJs": false,
 		"skipLibCheck": true,
-		"esModuleInterop": true,
+		"esModuleInterop": false,
 		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "commonjs",
+		"module": "ES2015",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"isolatedModules": false,

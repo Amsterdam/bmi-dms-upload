@@ -12,6 +12,7 @@ module.exports = (api) => {
 			],
 			// "react-hot-loader/babel"
 			// '@babel/plugin-transform-destructuring',
+			'@babel/plugin-transform-runtime',
 		],
 		presets: [
 			[
