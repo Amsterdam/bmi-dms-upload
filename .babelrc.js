@@ -12,6 +12,7 @@ module.exports = (api) => {
 			],
 			// "react-hot-loader/babel"
 			// '@babel/plugin-transform-destructuring',
+			['@babel/plugin-proposal-private-property-in-object', { loose: true }],
 			'@babel/plugin-transform-runtime',
 		],
 		presets: [
