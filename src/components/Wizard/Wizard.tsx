@@ -6,12 +6,11 @@ import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
-// import { FormProps } from './Step2';
 import Step1, { SupportedHTTPMethods } from './Step1';
-import Step2 from './Step2';
 import { PreviousButtonStyle, CancelButtonStyle, ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
+import MetadataForm from '../MetadataForm/MetadataForm';
 
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
@@ -28,11 +27,9 @@ export type ImplementationProps<T> = {
 	onFileSuccess?: FileUploadProps['onFileSuccess'];
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
-	// Component to render for capturing meta data
-	// metadataForm: React.FC<FormProps<T>>;
+	// Props for JsonForms component to render for capturing meta data
 	metadataForm: ComponentProps<typeof JsonForms>;
-	// Validation of custom metadata form
-	// onMetadataValidate: (data: T) => Promise<boolean>;
+
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
 	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
 
@@ -58,7 +55,6 @@ export default function Wizard<T>({
 	onFileRemove,
 	onFileSuccess,
 	metadataForm,
-	// onMetadataValidate,
 	onMetadataSubmit,
 	basePath = '/',
 	uploadHTTPMethod = 'POST',
@@ -67,11 +63,8 @@ export default function Wizard<T>({
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const file = useSelector(getFileFromStore);
-	const metadata = (useSelector(getMetadataFromStore) as unknown) as T;
-	// const [formValues, setFormValues] = React.useState({});
+	const metadata = useSelector(getMetadataFromStore) as T;
 	const [isValidForm, setIsValidForm] = useState(false);
-
-	console.log(':: isValidForm', isValidForm);
 
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
@@ -89,28 +82,8 @@ export default function Wizard<T>({
 		[onFileRemove],
 	);
 
-	// const handleChange = React.useCallback(
-	// 	async (e) => {
-	// 		const { name, value } = e.target;
-	// 		const newFormValues = { ...formValues, ...{ [name]: value } } as T;
-	// 		setFormValues(newFormValues);
-	//
-	// 		console.log(':: HANDLING CHANGE', newFormValues);
-	//
-	// 		const isValid = await onMetadataValidate(newFormValues);
-	// 		setIsValidForm(isValid);
-	// 		console.log(':: isValid', isValid);
-	// 		dispatch(setMetadata((newFormValues as unknown) as MetadataGenericType));
-	// 	},
-	// 	[formValues, onMetadataValidate],
-	// );
-
-	// const fileIsEmptyObject = (file: CustomFile) => Object.keys(file).length === 0;
-
 	const handleSubmit = (e: SyntheticEvent) => {
 		e.preventDefault();
-
-		console.log(':: HANDLING SUBMIT', file, isValidForm);
 
 		if (file && isValidForm) {
 			onMetadataSubmit({ file, metadata })
@@ -157,7 +130,7 @@ export default function Wizard<T>({
 									getPostUrl={getPostUrl}
 									onFileRemove={handleFileRemove}
 									onFileSuccess={getFile}
-									storedFiles={!file ? [] : [file]}
+									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
 									httpMethod={uploadHTTPMethod}
 								/>
 							)}
@@ -165,11 +138,11 @@ export default function Wizard<T>({
 						<Route
 							path={appendPathSegment(basePath, 'step2')}
 							render={() => (
-								<Step2
-									metadataForm={metadataForm}
-									onChange={(valid) => {
-										// TODO Ensure data is pulled form form and pushed to store
-										dispatch(setMetadata({}));
+								<MetadataForm
+									{...metadataForm}
+									onChange={(data, valid, errors) => {
+										console.log(':: !!', data, valid, errors);
+										dispatch(setMetadata(data));
 										setIsValidForm(valid);
 									}}
 								/>

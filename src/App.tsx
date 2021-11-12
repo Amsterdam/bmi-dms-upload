@@ -6,9 +6,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
-// import MetadataForm from './components/MetadataForm/MetadataForm';
-import schema from './components/MetadataForm/schema.json';
-import uiSchema from './components/MetadataForm/uiSchema.json';
+import { schema, uischema } from './components/MetadataForm/__stubs__';
 
 type MetadataExample = {
 	documentDescription: string;
@@ -56,8 +54,8 @@ const App: React.FC = () => {
 										// A custom form component should be rendered here that is specifically geared towards
 										// capturing the relevant metadata for the context in which this button is implemented
 										metadataForm={{
-											schema: schema,
-											uischema: uiSchema,
+											schema,
+											uischema,
 											data: {
 												documentDescription: '__DOCUMENT_DESCRIPTION__',
 											} as Partial<MetadataExample>,

@@ -1,6 +1,5 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
-
-export type MetadataGenericType = Record<string, unknown>;
+import { MetadataGenericType } from '../types';
 
 export interface DMSUpload {
 	file?: CustomFile;

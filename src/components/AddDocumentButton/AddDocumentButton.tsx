@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import Wizard, { ImplementationProps } from '../Wizard/Wizard';
 import CustomProvider from '../../store/CustomProvider';
-import appendTrailingSlash from '../../utils/appendTrailingSlash';
-import { MetadataGenericType } from '../../store/store';
+import { appendTrailingSlash } from '../../utils';
+import { MetadataGenericType } from '../../types';
 
 export type Props<T> = {
 	buttonText?: string;
@@ -17,7 +17,6 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 	onFileSuccess,
 	onFileRemove,
 	metadataForm,
-	// onMetadataValidate,
 	onMetadataSubmit,
 	onCancel,
 	basePath = '/',
@@ -43,7 +42,6 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 					onFileSuccess={onFileSuccess}
 					onFileRemove={onFileRemove}
 					metadataForm={metadataForm}
-					// onMetadataValidate={onMetadataValidate}
 					onMetadataSubmit={onMetadataSubmit}
 					onCancel={onCancel}
 					basePath={appendTrailingSlash(basePath)}

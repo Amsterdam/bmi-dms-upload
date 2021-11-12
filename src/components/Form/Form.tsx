@@ -25,7 +25,7 @@ const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, rendere
 			onChange={({ errors = [], data }) => {
 				const validate = ajv.compile(schema as Schema);
 				const valid = validate(data);
-				onChange(valid, errors);
+				onChange(data, valid, errors);
 			}}
 			ajv={ajv}
 		/>

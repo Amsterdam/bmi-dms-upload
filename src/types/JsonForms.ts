@@ -1,3 +1,4 @@
 import { ErrorObject } from 'ajv';
+import { MetadataGenericType } from './MetadataGenericType';
 
-export type OnChangeCallback = (valid: boolean, errors: ErrorObject[]) => void;
+export type OnChangeCallback = (data: MetadataGenericType, valid: boolean, errors: ErrorObject[]) => void;

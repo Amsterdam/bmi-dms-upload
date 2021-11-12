@@ -1,7 +1,6 @@
 import { Meta, Story, Canvas } from '@storybook/addon-docs'
 import MetadataForm from './MetadataForm'
-import schema from './schema.json'
-import uiSchema from './uiSchema.json'
+import { schema, uischema } from './__stubs__'
 
 <Meta
   title="Metadata Form"
@@ -27,9 +26,9 @@ A [JSONForms](https://jsonforms.io/) form generated from JSON schema which can b
 
 <Canvas>
 	<Story name="Default">
-		<MetadataForm schema={schema} uischema={uiSchema} data={{
+		<MetadataForm schema={schema} uischema={uischema} data={{
 			documentDescription: '__DOCUMENT_DESCRIPTION__',
-		}} renderers={[]} />
+		}} renderers={[]} onChange={() => {}} />
 	</Story>
 </Canvas>
 
@@ -37,8 +36,8 @@ A [JSONForms](https://jsonforms.io/) form generated from JSON schema which can b
 
 <Canvas>
 	<Story name="No data">
-		<MetadataForm schema={schema} uischema={uiSchema} data={{
+		<MetadataForm schema={schema} uischema={uischema} data={{
 			documentDescription: ''
-		}} renderers={[]} />
+		}} renderers={[]} onChange={() => {}} />
 	</Story>
 </Canvas>

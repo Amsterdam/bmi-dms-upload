@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ResolvedJsonFormsDispatch, withJsonFormsLayoutProps } from '@jsonforms/react';
 import { LayoutProps, Layout } from '@jsonforms/core';
-import Row from './Row';
+import RowStyles from './RowStyles';
 
 const RowLayoutRenderer = ({ schema, uischema, path, renderers, cells, enabled, visible }: LayoutProps) => {
 	return (
@@ -9,7 +9,7 @@ const RowLayoutRenderer = ({ schema, uischema, path, renderers, cells, enabled, 
 			{visible &&
 				(uischema as Layout).elements.map((child, idx) => {
 					return (
-						<Row key={`row-${idx}`}>
+						<RowStyles key={`row-${idx}`}>
 							<ResolvedJsonFormsDispatch
 								schema={schema}
 								uischema={child}
@@ -18,7 +18,7 @@ const RowLayoutRenderer = ({ schema, uischema, path, renderers, cells, enabled, 
 								renderers={renderers}
 								cells={cells}
 							/>
-						</Row>
+						</RowStyles>
 					);
 				})}
 		</div>

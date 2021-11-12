@@ -19,7 +19,6 @@ const MetadataForm: React.FC<Props> = ({
 	validationMode = 'ValidateAndShow',
 	onChange,
 }) => {
-	console.log('onChange', onChange);
 	return (
 		<MetadataFormStyle>
 			<h2>Metadata toevoegen</h2>
@@ -43,10 +42,7 @@ const MetadataForm: React.FC<Props> = ({
 				data={data}
 				renderers={renderers}
 				validationMode={validationMode}
-				onChange={(valid, errors) => {
-					console.log('[[', valid, errors);
-					onChange && onChange(valid, errors);
-				}}
+				onChange={onChange}
 			/>
 		</MetadataFormStyle>
 	);

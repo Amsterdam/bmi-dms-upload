@@ -1,0 +1,43 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import TestForm from './TestForm'
+import schema from './schema.json'
+import uiSchema from './uiSchema.json'
+
+<Meta
+	title="Test Form"
+	component={TestForm}
+	decorators={[
+		(TestForm) => (
+			<div
+				style={{
+					padding: '40px 10px',
+				}}
+			>
+				<TestForm />
+			</div>
+		),
+	]}
+/>
+
+# Test Form
+
+A [JSONForms](https://jsonforms.io/) form generated from JSON schema which can be passed as a prop.
+
+## With data
+
+<Canvas>
+	<Story name="Default">
+		<TestForm schema={schema} uischema={uiSchema} data={{
+			documentDescription: '__DOCUMENT_DESCRIPTION__'
+		}} renderers={[]} />
+	</Story>
+</Canvas>
+
+## No data
+
+<Canvas>
+	<Story name="No data">
+		<TestForm schema={schema} uischema={uiSchema} data={{
+		}} renderers={[]} />
+	</Story>
+</Canvas>
