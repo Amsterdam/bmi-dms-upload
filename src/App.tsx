@@ -61,14 +61,6 @@ const App: React.FC = () => {
 											} as Partial<MetadataExample>,
 											renderers: [],
 										}}
-										// onMetadataValidate={async function (data: MetadataExample) {
-										// 	// Yup can be leveraged here to validate the metadata that was captured with the form
-										// 	console.log(':: onMetadataValidate', data);
-										// 	return true;
-										// 	// const valid = await validationSchema.isValid(data);
-										// 	// console.log('data valid', valid);
-										// 	// return valid;
-										// }}
 										onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
 											// Dispatch actions/make async calls to persist the metadata
 											// This effectively completes the wizard flow
