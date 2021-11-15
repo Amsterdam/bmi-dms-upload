@@ -141,7 +141,6 @@ export default function Wizard<T>({
 								<MetadataForm
 									{...metadataForm}
 									onChange={(data, valid, errors) => {
-										console.log(':: !!', data, valid, errors);
 										dispatch(setMetadata(data));
 										setIsValidForm(valid);
 									}}

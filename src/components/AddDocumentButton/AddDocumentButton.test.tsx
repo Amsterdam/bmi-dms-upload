@@ -6,7 +6,8 @@ import userEvent from '@testing-library/user-event';
 import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '~/tests/utils/withProviders';
 import Step1, { SupportedHTTPMethods } from '../Wizard/Step1';
-import { MetadataExample } from '../../types/MetadataExample';
+import { MetadataExample } from '../../types';
+import { asset } from '../Wizard/__stubs__';
 
 jest.mock('../Wizard/Step1');
 
@@ -14,6 +15,7 @@ describe('<AddDocumentButton />', () => {
 	const renderComponent = (props: Partial<Props<MetadataExample>> = {}) => {
 		return renderWithProviders(
 			<AddDocumentButton<MetadataExample>
+				asset={asset}
 				buttonText="Upload"
 				getPostUrl={jest.fn()}
 				getHeaders={jest.fn()}
