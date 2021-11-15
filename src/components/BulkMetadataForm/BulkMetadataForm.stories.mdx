@@ -1,0 +1,31 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import BulkMetadataForm from './BulkMetadataForm'
+
+<Meta
+  title="Metadata Form - Bulk"
+  component={BulkMetadataForm}
+  decorators={[
+    (BulkMetadataForm) => (
+      <div
+        style={{
+          padding: '40px 10px',
+        }}
+      >
+        <BulkMetadataForm />
+      </div>
+    ),
+  ]}
+/>
+
+# Bulk MetadataForm Form
+
+A [JSONForms](https://jsonforms.io/) form generated from JSON schema. It uses a "Group layout". Each row in the form
+is a separate group with a TextField and Checkbox control.
+
+## Default
+
+<Canvas>
+	<Story name="Default">
+		<BulkMetadataForm />
+	</Story>
+</Canvas>
