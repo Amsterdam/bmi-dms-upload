@@ -10,9 +10,8 @@ const Checkbox = ({ data: value = '', path, handleChange }: ControlProps) => {
 				<ASCCheckbox
 					id={path}
 					checked={value}
-					// name={path}
 					onChange={(e) => {
-						handleChange(path, !!e.currentTarget.value);
+						handleChange(path, e.currentTarget.checked);
 					}}
 				/>
 			</div>
