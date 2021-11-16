@@ -8,7 +8,7 @@ import Form from './Form';
 import { schema, uischema } from '../MetadataForm/__stubs__';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
-import createAjv from '../../utils/createAjv';
+import ajv from '../../utils/createAjv';
 import { tester, DateField } from '../customRenderers/DateField';
 import { error } from './__stubs__/errors';
 
@@ -17,8 +17,6 @@ jest.mock('@jsonforms/react', () => ({
 	JsonForms: jest.fn().mockImplementation(() => <div data-testid="form" />),
 }));
 
-// Note that createAjv() returns a cached version if called more than once
-const ajv = createAjv();
 const props = {
 	ajv,
 	schema,
