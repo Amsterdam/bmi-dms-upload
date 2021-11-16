@@ -3,7 +3,7 @@ import { JsonForms } from '@jsonforms/react';
 import { materialRenderers } from '@jsonforms/material-renderers';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
-import { Schema } from 'ajv/lib/types/index';
+import { Schema } from 'ajv';
 import createAjv from '../../utils/createAjv';
 import { OnChangeCallback } from '../../types';
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 const MetadataForm = jest.fn().mockImplementation(() => <div data-testid="metadata-form" />);
 

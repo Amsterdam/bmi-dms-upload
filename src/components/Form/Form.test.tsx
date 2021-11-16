@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ComponentProps } from 'react';
 import * as JsonFormsModule from '@jsonforms/react';
 import { materialRenderers } from '@jsonforms/material-renderers';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { Label, TextField as ASCTextField, ErrorMessage } from '@amsterdam/asc-ui';
 import { ControlProps } from '@jsonforms/core';
