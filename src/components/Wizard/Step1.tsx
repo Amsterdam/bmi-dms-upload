@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
-import { ComponentProps } from 'react';
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
