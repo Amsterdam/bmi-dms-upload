@@ -1,5 +1,5 @@
-import React from 'react';
+import { createMockComponent } from '~/tests/helpers/createMockComponent';
 
-const MetdadataColumnHeaders = jest.fn().mockImplementation(() => <div data-testid="metadata-column-headers" />);
+const MetdadataColumnHeaders = createMockComponent('MetdadataColumnHeaders', 'metadata-column-headers');
 
 export default MetdadataColumnHeaders;

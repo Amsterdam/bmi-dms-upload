@@ -6,7 +6,7 @@ import Form from '../Form/Form';
 import { OnChangeCallback } from '../../types';
 import { Heading } from '@amsterdam/asc-ui';
 
-type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
+export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
 };
 

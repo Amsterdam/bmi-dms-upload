@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 import renderWithTheme from '~/tests/utils/withTheme';
-import MetadataForm from './MetadataForm';
+import MetadataForm, { Props } from './MetadataForm';
 import { schema, uischema } from './__stubs__';
 import { screen } from '@testing-library/react';
 import { JsonForms } from '@jsonforms/react';
@@ -10,7 +10,7 @@ import Form from '../Form/Form';
 jest.mock('../MetadataColumnHeaders/MetadataColumnHeaders');
 jest.mock('../Form/Form');
 
-const props: ComponentProps<typeof MetadataForm> = {
+const props: Props = {
 	ajv: undefined,
 	schema,
 	uischema,
