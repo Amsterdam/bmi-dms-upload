@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import muiTheme from '../src/theme/material-ui-theme';
