@@ -1,10 +1,9 @@
 import React from 'react';
-import { ComponentProps } from 'react';
 import * as JsonFormsModule from '@jsonforms/react';
 import { materialRenderers } from '@jsonforms/material-renderers';
 import renderWithTheme from '~/tests/utils/withTheme';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import Form from './Form';
+import { Props } from './Form';
 import { schema, uischema } from '../MetadataForm/__stubs__';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
@@ -29,7 +28,7 @@ const props = {
 };
 
 describe('<Form/>', () => {
-	const render = (customProps: Partial<ComponentProps<typeof Form>> = {}, onChange = jest.fn()) => {
+	const render = (customProps: Partial<Props> = {}, onChange = jest.fn()) => {
 		renderWithTheme(<MetadataForm onChange={onChange} {...Object.assign({}, props, customProps)} />);
 	};
 

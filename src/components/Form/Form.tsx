@@ -7,7 +7,7 @@ import { Schema } from 'ajv';
 import ajv from '../../utils/createAjv';
 import { OnChangeCallback } from '../../types';
 
-type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
+export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
 };
 
