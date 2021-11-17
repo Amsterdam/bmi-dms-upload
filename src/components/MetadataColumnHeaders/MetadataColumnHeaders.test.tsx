@@ -11,7 +11,7 @@ describe('<MetadataColumnHeaders />', () => {
 		test.each(twoColumns.map((col) => [col.header, col.width]))('%s at %s% width', (header, width) => {
 			const columnHeader = screen.getByText(header);
 			expect(columnHeader).toBeInTheDocument();
-			expect(window.getComputedStyle(columnHeader).width).toEqual(`${width}%`);
+			expect(window.getComputedStyle(columnHeader).width).toBe(`${width}%`);
 		});
 	});
 
@@ -21,7 +21,7 @@ describe('<MetadataColumnHeaders />', () => {
 		test.each(threeColumns.map((col) => [col.header, col.width]))('%s at %s% width', (header, width) => {
 			const columnHeader = screen.getByText(header);
 			expect(columnHeader).toBeInTheDocument();
-			expect(window.getComputedStyle(columnHeader).width).toEqual(`${width}%`);
+			expect(window.getComputedStyle(columnHeader).width).toBe(`${width}%`);
 		});
 	});
 });
