@@ -59,11 +59,11 @@ describe('<Form/>', () => {
 
 	describe('onChange', () => {
 		const spy = jest.spyOn(JsonFormsModule, 'JsonForms');
-		const onChangeCallback = jest.fn();
+		const onChange = jest.fn();
 
 		beforeEach(() => {
 			render({
-				onChange: onChangeCallback,
+				onChange: onChange,
 			});
 		});
 
@@ -74,7 +74,7 @@ describe('<Form/>', () => {
 			};
 			// @ts-ignore
 			spy.mock.calls[0][0].onChange({ errors: [error], data });
-			expect(onChangeCallback).toHaveBeenCalledWith(data, false, [error]);
+			expect(onChange).toHaveBeenCalledWith(data, false, [error]);
 		});
 
 		test('Informs of validation success', () => {
@@ -84,7 +84,7 @@ describe('<Form/>', () => {
 			};
 			// @ts-ignore
 			spy.mock.calls[0][0].onChange({ errors: [], data });
-			expect(onChangeCallback).toHaveBeenCalledWith(data, true, []);
+			expect(onChange).toHaveBeenCalledWith(data, true, []);
 		});
 	});
 });
