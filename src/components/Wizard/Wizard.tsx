@@ -12,13 +12,14 @@ import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
 
+export type Asset = {
+	code: string;
+	name: string;
+};
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
 export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
 export type ImplementationProps<T> = {
-	asset: {
-		code: string;
-		name: string;
-	};
+	asset: Asset;
 	// Dynamically get URL to upload file to
 	getPostUrl: FileUploadProps['getPostUrl'];
 	// Allows for authentication with a token header
