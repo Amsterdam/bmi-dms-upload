@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "ES2017",
-		"lib": ["dom", "dom.iterable", "es2017"],
+		"lib": ["dom", "dom.iterable", "ES2017"],
 		"types": [
 			"jest",
 			"node",
@@ -9,7 +9,7 @@
 		],
 		"allowJs": false,
 		"skipLibCheck": true,
-		"esModuleInterop": false,
+		"esModuleInterop": true,
 		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,

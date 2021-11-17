@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';

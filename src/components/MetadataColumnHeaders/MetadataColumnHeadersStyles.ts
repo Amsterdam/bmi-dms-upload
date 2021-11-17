@@ -14,5 +14,5 @@ export const MetadataColumnHeadersStyle = styled.div`
 export const ColumnHeaderStyle = styled.span<{ width: number }>`
 	flex: 1 0 auto;
 	font-weight: 700;
-	width: ${(props) => props.width}%;
+	width: ${({ width }) => width}%;
 `;

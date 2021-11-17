@@ -3,16 +3,15 @@ import { JsonForms } from '@jsonforms/react';
 import { materialRenderers } from '@jsonforms/material-renderers';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
-import { Schema } from 'ajv/lib/types/index';
-import createAjv from '../../utils/createAjv';
+import { Schema } from 'ajv';
+import ajv from '../../utils/createAjv';
 import { OnChangeCallback } from '../../types';
 
-type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
+export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
 };
 
 const DEFAULT_RENDERERS = [...materialRenderers, ...customRenderers, ...customLayoutRenderers];
-const ajv = createAjv();
 
 const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, renderers, onChange }) => {
 	return (
