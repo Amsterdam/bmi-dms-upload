@@ -1,4 +1,6 @@
-export const uischema = {
+import { RowLayoutSchema } from '../../../types';
+
+export const uischema: RowLayoutSchema = {
 	type: 'RowLayout',
 	elements: [
 		{
