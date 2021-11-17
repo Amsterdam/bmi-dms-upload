@@ -1,4 +1,4 @@
-import { Button, themeSpacing } from '@amsterdam/asc-ui';
+import { Button, Heading, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
 export const PreviousButtonStyle = styled(Button)`
@@ -15,7 +15,6 @@ export const ModalContentStyle = styled.div`
 	padding: ${themeSpacing(8)};
 `;
 
-export const ModalTopBarStyle = styled.h1`
-	font-weight: 700;
+export const ModalTopBarStyle = styled(Heading)`
 	font-size: 18px;
 `;
