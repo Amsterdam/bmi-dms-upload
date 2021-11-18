@@ -1,17 +1,17 @@
-import React from 'react';
-import { FileUpload, FileUploadProps, CustomFile } from '@amsterdam/bmi-component-library';
-// TODO export this type in a legit manner
-import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/common/src/FileUpload/hooks';
+import React, { ComponentProps } from 'react';
+import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
+
+type FileUploadProps = ComponentProps<typeof FileUpload>;
 
 type Props = {
 	getPostUrl: FileUploadProps['getPostUrl'];
 	getHeaders: FileUploadProps['getHeaders'];
 	onFileSuccess?: FileUploadProps['onFileSuccess'];
 	onFileRemove?: FileUploadProps['onFileRemove'];
-	storedFiles?: CustomFile[] | CustomFileOrRejection[];
+	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
 };
 
@@ -38,7 +38,7 @@ const Step1: React.FC<Props> = ({
 				onFileRemove={onFileRemove}
 				onFileSuccess={onFileSuccess}
 				getHeaders={getHeaders}
-				storedFiles={storedFiles as CustomFileOrRejection[]}
+				storedFiles={storedFiles}
 				httpMethod={httpMethod}
 			/>
 		</Step1Styles>

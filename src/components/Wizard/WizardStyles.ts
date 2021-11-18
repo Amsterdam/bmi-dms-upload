@@ -1,4 +1,4 @@
-import { Button } from '@amsterdam/asc-ui';
+import { Button, Heading, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
 
 export const PreviousButtonStyle = styled(Button)`
@@ -9,4 +9,12 @@ export const PreviousButtonStyle = styled(Button)`
 export const CancelButtonStyle = styled(Button)`
 	align-self: center;
 	padding-left: 10px;
+`;
+
+export const ModalContentStyle = styled.div`
+	padding: ${themeSpacing(8)};
+`;
+
+export const ModalTopBarStyle = styled(Heading)`
+	font-size: 18px;
 `;

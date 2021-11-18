@@ -7,7 +7,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { DMSUpload } from '../../src/store/store.d';
+import { DMSUpload } from '../../src/store/store';
 import theme from '../../src/theme';
 import { CustomContext } from '../../src/store/CustomProvider';
 
@@ -18,7 +18,7 @@ type ProviderOptions = {
 
 function renderWithProviders(
 	ui: React.ReactElement,
-	{ initialState, initialRoute }: ProviderOptions,
+	{ initialState, initialRoute }: ProviderOptions = {},
 	options?: Omit<RenderOptions, 'queries'>,
 ) {
 	const mockStore = configureStore([]);

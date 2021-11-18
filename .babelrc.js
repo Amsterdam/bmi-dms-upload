@@ -10,8 +10,7 @@ module.exports = (api) => {
 					namespace: 'sc-',
 				},
 			],
-			// "react-hot-loader/babel"
-			// '@babel/plugin-transform-destructuring',
+			'@babel/plugin-transform-runtime',
 		],
 		presets: [
 			[

@@ -6,12 +6,16 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
-import { MetadataExample, DummyForm, validationSchema } from './components/DummyForm/DummyForm';
+import { schema, uischema } from './components/MetadataForm/__stubs__';
+
+type MetadataExample = {
+	documentDescription: string;
+	executionDate: string;
+};
+
+const basePath = '/base/path';
 
 const App: React.FC = () => {
-	const token = 'EXAMPLE';
-	const basePath = '/base/path';
-
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
@@ -23,12 +27,14 @@ const App: React.FC = () => {
 							component={() => (
 								<div>
 									<AddDocumentButton<MetadataExample>
+										asset={{
+											code: 'BRU0004',
+											name: 'BRU0004 Heibrug',
+										}}
 										getPostUrl={() => Promise.resolve('https://reqres.in/api/users')}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
-											if (token) {
-												headers['some-token'] = token;
-											}
+											headers['some-token'] = '__TOKEN__';
 											return Promise.resolve(headers);
 										}}
 										onFileSuccess={(file) => {
@@ -44,13 +50,13 @@ const App: React.FC = () => {
 										}}
 										// A custom form component should be rendered here that is specifically geared towards
 										// capturing the relevant metadata for the context in which this button is implemented
-										metadataForm={DummyForm}
-										onMetadataValidate={async function (data: MetadataExample) {
-											// Yup can be leveraged here to validate the metadata that was captured with the form
-											console.log(':: onMetadataValidate', data);
-											const valid = await validationSchema.isValid(data);
-											console.log('data valid', valid);
-											return valid;
+										metadataForm={{
+											schema,
+											uischema,
+											data: {
+												documentDescription: '__DOCUMENT_DESCRIPTION__',
+											} as Partial<MetadataExample>,
+											renderers: [],
 										}}
 										onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
 											// Dispatch actions/make async calls to persist the metadata

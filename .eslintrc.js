@@ -12,7 +12,7 @@ module.exports = {
 		},
 	},
 	parser: '@typescript-eslint/parser',
-	plugins: ['react', '@typescript-eslint'],
+	plugins: ['react', '@typescript-eslint', 'testing-library'],
 	rules: {
 		'@typescript-eslint/ban-ts-ignore': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
