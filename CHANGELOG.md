@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2021-11-18)
+
+
+### Features
+
+* **metadatacolumnheaders:** added MetadataColumnHeaders component + tests + storybook entry ([628b86b](https://github.com/Amsterdam/bmi-dms-upload/commit/628b86b465a5a2005007ac3027e6bca0de7b6639))
+* **validation:** wip commit for validation logic with latest alpha release of jsonforms ([d78e55e](https://github.com/Amsterdam/bmi-dms-upload/commit/d78e55e08e50e9498516bf74afbfcbcf8e310f01))
+
+
+### Bug Fixes
+
+* **tsconfig:** ignoring **/__mocks/* for TS build purposes ([fdc3383](https://github.com/Amsterdam/bmi-dms-upload/commit/fdc33833887fc3ea225427f5ae32f1d8293df91b))
+* **tsconfig:** reverted esModuleInterop back to true while fixing source of the problem ([eeb3acd](https://github.com/Amsterdam/bmi-dms-upload/commit/eeb3acd3e881a56564e25730b3485d943dfc2fa4))
+
 ### [0.0.1-alpha.5](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2021-10-27)
 
 
