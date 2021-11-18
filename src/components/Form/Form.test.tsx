@@ -1,12 +1,9 @@
 import React from 'react';
 import * as JsonFormsModule from '@jsonforms/react';
-import { materialRenderers } from '@jsonforms/material-renderers';
 import renderWithTheme from '~/tests/utils/withTheme';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import { Props } from './Form';
+import { DEFAULT_RENDERERS, Props } from './Form';
 import { schema, uischema } from '../MetadataForm/__stubs__';
-import customRenderers from '../customRenderers';
-import customLayoutRenderers from '../customLayouts';
 import ajv from '../../utils/createAjv';
 import { tester, DateField } from '../customRenderers/DateField';
 import { error } from './__stubs__/errors';
@@ -38,7 +35,7 @@ describe('<Form/>', () => {
 		expect(spy.mock.calls[0][0]).toEqual(
 			expect.objectContaining({
 				...props,
-				renderers: [...materialRenderers, ...customRenderers, ...customLayoutRenderers],
+				renderers: DEFAULT_RENDERERS,
 			}),
 		);
 	});
@@ -52,7 +49,7 @@ describe('<Form/>', () => {
 		expect(spy.mock.calls[0][0]).toEqual(
 			expect.objectContaining({
 				...props,
-				renderers: [...materialRenderers, ...customRenderers, ...customLayoutRenderers, ...additionalCustomRenderers],
+				renderers: [...DEFAULT_RENDERERS, ...additionalCustomRenderers],
 			}),
 		);
 	});

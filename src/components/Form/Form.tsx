@@ -11,7 +11,7 @@ export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
 };
 
-const DEFAULT_RENDERERS = [...materialRenderers, ...customRenderers, ...customLayoutRenderers];
+export const DEFAULT_RENDERERS = [...materialRenderers, ...customRenderers, ...customLayoutRenderers];
 
 const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, renderers, onChange }) => {
 	return (
