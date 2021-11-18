@@ -13,10 +13,9 @@ type MetadataExample = {
 	executionDate: string;
 };
 
-const App: React.FC = () => {
-	const token = 'EXAMPLE';
-	const basePath = '/base/path';
+const basePath = '/base/path';
 
+const App: React.FC = () => {
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
@@ -35,9 +34,7 @@ const App: React.FC = () => {
 										getPostUrl={() => Promise.resolve('https://reqres.in/api/users')}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
-											if (token) {
-												headers['some-token'] = token;
-											}
+											headers['some-token'] = '__TOKEN__';
 											return Promise.resolve(headers);
 										}}
 										onFileSuccess={(file) => {
