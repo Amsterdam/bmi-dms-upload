@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.7](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2021-11-22)
+
+
+### Features
+
+* **types:** exporting json schema types ([09d38ed](https://github.com/Amsterdam/bmi-dms-upload/commit/09d38ed9fcaaed4743db2e3b9b84989fb1e76286))
+
 ### [0.0.1-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2021-11-18)
 
 
