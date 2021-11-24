@@ -102,21 +102,18 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
+	function terminate() {
+		// In case the user presses the escape button on his/her keyboard
+		onCancel({ file, metadata }).catch((err) => {
+			// TODO handle error gracefully
+			console.error(err);
+		});
+		resetAndClose();
+	}
+
 	return (
-		<Modal
-			id="dms-upload-wizard"
-			open={true}
-			onClose={() => {
-				// In case the user presses the escape button on his/her keyboard
-				onCancel({ file, metadata }).catch((err) => {
-					// TODO handle error gracefully
-					console.error(err);
-				});
-				resetAndClose();
-			}}
-			closeOnBackdropClick={false}
-		>
-			<Modal.TopBar hideCloseButton={false}>
+		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
 				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
 			</Modal.TopBar>
 			<>
@@ -162,6 +159,7 @@ export default function Wizard<T>({
 								});
 								resetAndClose();
 							}}
+							data-testid="cancel-wizard"
 						>
 							Annuleren
 						</CancelButtonStyle>
