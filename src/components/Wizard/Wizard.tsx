@@ -159,6 +159,7 @@ export default function Wizard<T>({
 								});
 								resetAndClose();
 							}}
+							data-testid="cancel-wizard"
 						>
 							Annuleren
 						</CancelButtonStyle>

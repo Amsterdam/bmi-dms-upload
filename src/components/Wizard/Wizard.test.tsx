@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { screen, fireEvent } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
@@ -10,6 +11,11 @@ import { asset, schema, uischema } from './__stubs__';
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
+
+jest.mock('react-router-dom', () => ({
+	...(jest.requireActual('react-router-dom') as Record<string, unknown>),
+	useHistory: jest.fn(),
+}));
 
 const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
 const mockFile = Object.assign(rawFile, { tmpId: 100 });
@@ -85,12 +91,15 @@ describe('<Wizard />', () => {
 	});
 
 	test('Should render Next button when file in state and go to next page on click', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
 		renderComponent({ file: mockFile, metadata: { mockData } });
 		const nextButton = screen.getByText('Volgende');
 		expect(nextButton).toBeInTheDocument();
 		fireEvent.click(nextButton);
-		expect(screen.queryByTestId('metadata-form')).toBeInTheDocument();
-		expect(screen.queryByTestId('step-1')).not.toBeInTheDocument();
+		expect(pushSpy).toHaveBeenCalledWith('/step2');
 	});
 
 	// test('Should render the correct buttons in step 2', () => {
@@ -101,13 +110,21 @@ describe('<Wizard />', () => {
 	// 	expect(screen.getByText('Opslaan')).toBeInTheDocument();
 	// });
 
-	test('Should call resetState, onClose when clicking Cancel button', () => {
-		const spy = jest.spyOn(actions, 'resetState');
-		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-		fireEvent.click(cancelButton);
-		expect(spy).toHaveBeenCalled();
-		expect(onCloseMock).toHaveBeenCalled();
-	});
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'Clicking button with test id %s triggers resetState and terminates the wizard',
+		(dataTestId) => {
+			const pushSpy = jest.fn();
+			(useHistory as jest.Mock).mockReturnValue({
+				push: pushSpy,
+			});
+			const spy = jest.spyOn(actions, 'resetState');
+			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(spy).toHaveBeenCalled();
+			expect(onCloseMock).toHaveBeenCalled();
+			expect(pushSpy).toHaveBeenCalledWith('/');
+		},
+	);
 
 	test('Should not submit when invalid data', () => {
 		renderComponent(
