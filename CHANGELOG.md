@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2021-11-24)
+
+
+### Bug Fixes
+
+* **step1:** file upload should only accept a single file ([53f3bb8](https://github.com/Amsterdam/bmi-dms-upload/commit/53f3bb812a9cfbebf90836357c437e910f47284e))
+* **wizard:** bind cancel procedure to close button in modal header ([17c9e04](https://github.com/Amsterdam/bmi-dms-upload/commit/17c9e04814be0b3202a8344f8d11f20b52af8d04))
+
 ### [0.0.1-alpha.7](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2021-11-22)
 
 
