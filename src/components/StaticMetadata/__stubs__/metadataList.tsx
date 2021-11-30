@@ -7,7 +7,6 @@ export const metadataList: DescriptionList = [
 	{ label: 'Monitoring', value: 'Ja' },
 	{ label: 'Actief', value: 'Nee' },
 	{ label: 'Uitvoeringsdatum', value: '10-10-2021' },
-	{ label: 'Herhalingsmeter', value: null },
 	{
 		label: 'Categorieën',
 		value: (
