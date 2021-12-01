@@ -204,16 +204,17 @@ export default function Wizard<T>({
 									>
 										Volgende
 									</Button>
-								) : (
-									<div>
-										<PreviousButtonStyle
-											variant="textButton"
-											iconLeft={<ChevronLeft />}
-											onClick={() => history.push(basePath)}
-										>
-											Vorige
-										</PreviousButtonStyle>
-										<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
+						) : (
+							<div>
+								<PreviousButtonStyle
+									variant="textButton"
+									iconLeft={<ChevronLeft />}
+									onClick={() => history.push(basePath)}
+									data-testid="previous-button"
+								>
+									Vorige
+								</PreviousButtonStyle>
+								<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
 											Opslaan
 										</Button>
 									</div>
