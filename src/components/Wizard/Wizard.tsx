@@ -181,6 +181,7 @@ export default function Wizard<T>({
 									variant="textButton"
 									iconLeft={<ChevronLeft />}
 									onClick={() => history.push(basePath)}
+									data-testid="previous-button"
 								>
 									Vorige
 								</PreviousButtonStyle>
