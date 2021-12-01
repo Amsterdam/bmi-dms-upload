@@ -127,6 +127,23 @@ describe('<Wizard />', () => {
 		},
 	);
 
+	test('should go to navigate to previous step when clicking previousbutton', () => {
+		renderComponent(
+			{
+				file: mockFile,
+				metadata: { mockData },
+			},
+			'/step2',
+		);
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		fireEvent.click(screen.getByTestId('previous-button'));
+
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
+
 	test('Should not submit when invalid data', () => {
 		renderComponent(
 			{
@@ -138,6 +155,27 @@ describe('<Wizard />', () => {
 		fireEvent.click(screen.getByText('Opslaan'));
 		expect(onMetadataSubmitMock).not.toHaveBeenCalled();
 	});
+
+	//test 72-73		onFileSuccess && onFileSuccess(file);
+	// dispatch(setFile(file));
+	//test 80-81 onFileRemove && onFileRemove(file);
+	// dispatch(removeFileFromStore());
+	// test 87-94 e.preventDefault();
+
+	// if (file && isValidForm) {
+	// 	onMetadataSubmit({ file, metadata })
+	// 		.then(() => resetAndClose())
+	// 		.catch((err) => {
+	// 			// TODO handle error gracefully
+	// 			console.error(err);
+
+	//test 115 terminate function
+	// dispatch(setMetadata(data));
+	// setIsValidForm(valid);
+
+	// 									console.error(err);
+
+	// 183= previous button click
 
 	// test('Should submit when valid data', () => {
 	// not working yet
