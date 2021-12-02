@@ -85,6 +85,7 @@ export default function Wizard<T>({
 	);
 
 	const handleSubmit = (e: SyntheticEvent) => {
+		console.log('submitted from wizard');
 		e.preventDefault();
 
 		if (file && isValidForm) {
