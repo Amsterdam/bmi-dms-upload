@@ -3,15 +3,17 @@ import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft, Close } from '@amsterdam/asc-assets';
+import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import Step1, { SupportedHTTPMethods } from './Step1';
-import { PreviousButtonStyle, CancelButtonStyle, ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
+import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
 import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
+import WizardFooter from '../WizardFooter/WizardFooter';
 
 export type Asset = {
 	code: string;
@@ -86,6 +88,7 @@ export default function Wizard<T>({
 	);
 
 	const handleSubmit = (e: SyntheticEvent) => {
+		console.log('submitted from wizard');
 		e.preventDefault();
 
 		if (file && isValidForm) {
@@ -101,6 +104,27 @@ export default function Wizard<T>({
 	function resetAndClose() {
 		dispatch(resetState());
 		onClose();
+		history.push(basePath);
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToCancel() {
+		onCancel({ file, metadata }).catch((err) => {
+			// TODO handle error gracefully
+			console.error(err);
+		});
+		resetAndClose();
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToNextStep() {
+		console.log('should go to next step');
+		history.push(appendPathSegment(basePath, 'step2'));
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToPreviousStep() {
+		console.log('should go to previous step');
 		history.push(basePath);
 	}
 
@@ -131,98 +155,53 @@ export default function Wizard<T>({
 		<>
 			{isOpen && <ConfirmTermination />}
 			{!isOpen && (
-				<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
-					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-						<ModalTopBarStyle styleAs="h4" as="h2">
-							Bestand uploaden voor {name}
-						</ModalTopBarStyle>
-					</Modal.TopBar>
-					<>
-						<Modal.Content>
-							<ModalContentStyle>
-								<Route
-									exact
-									path={basePath}
-									render={() => (
-										<Step1
-											getHeaders={getHeaders}
-											getPostUrl={getPostUrl}
-											onFileRemove={handleFileRemove}
-											onFileSuccess={getFile}
-											storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-											httpMethod={uploadHTTPMethod}
-										/>
-									)}
+		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+			</Modal.TopBar>
+			<>
+				<Modal.Content>
+					<ModalContentStyle>
+						<Route
+							exact
+							path={basePath}
+							render={() => (
+								<Step1
+									getHeaders={getHeaders}
+									getPostUrl={getPostUrl}
+									onFileRemove={handleFileRemove}
+									onFileSuccess={getFile}
+									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+									httpMethod={uploadHTTPMethod}
 								/>
-								<Route
-									path={appendPathSegment(basePath, 'step2')}
-									render={() => (
-										<MetadataForm
-											{...metadataForm}
-											onChange={(data, valid, errors) => {
-												dispatch(setMetadata(data));
-												setIsValidForm(valid);
-											}}
-										/>
-									)}
-								/>
-							</ModalContentStyle>
-							<button
-								onClick={() => {
-									setIsOpen(true);
-									confirm(props);
-								}}
-							>
-								ConfirmTermination
-							</button>
-						</Modal.Content>
-						<Modal.Actions>
-							<Modal.Actions.Left>
-								<CancelButtonStyle
-									variant="textButton"
-									iconLeft={<Close />}
-									onClick={() => {
-										onCancel({ file, metadata }).catch((err) => {
-											// TODO handle error gracefully
-											console.error(err);
-										});
-										resetAndClose();
+							)}
+						/>
+						<Route
+							path={appendPathSegment(basePath, 'step2')}
+							render={() => (
+								<MetadataForm
+									{...metadataForm}
+									onChange={(data, valid, errors) => {
+										dispatch(setMetadata(data));
+										setIsValidForm(valid);
 									}}
-									data-testid="cancel-wizard"
-								>
-									Annuleren
-								</CancelButtonStyle>
-							</Modal.Actions.Left>
-							<Modal.Actions.Right>
-								{appendTrailingSlash(location.pathname) === basePath ? (
-									<Button
-										variant="secondary"
-										taskflow
-										name="Volgende"
-										onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
-										disabled={!file}
-									>
-										Volgende
-									</Button>
-						) : (
-							<div>
-								<PreviousButtonStyle
-									variant="textButton"
-									iconLeft={<ChevronLeft />}
-									onClick={() => history.push(basePath)}
-									data-testid="previous-button"
-								>
-									Vorige
-								</PreviousButtonStyle>
-								<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
-											Opslaan
-										</Button>
-									</div>
-								)}
-							</Modal.Actions.Right>
-						</Modal.Actions>
-					</>
-				</Modal>
+								/>
+							)}
+						/>
+					</ModalContentStyle>
+				</Modal.Content>
+				<WizardFooter
+					showCancelButton={true}
+					onCancelClick={clickToCancel}
+					onNextClick={clickToNextStep}
+					onPreviousClick={clickToPreviousStep}
+					onSaveClick={handleSubmit}
+					showPreviousButton={true}
+					showNextButton={appendTrailingSlash(location.pathname) === basePath ? !!file : false}
+					showSaveButton={true}
+				/>
+			</>
+		</Modal>
 			)}
 		</>
 	);
