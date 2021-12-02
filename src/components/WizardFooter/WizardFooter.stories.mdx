@@ -1,0 +1,150 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs'
+import WizardFooter from './WizardFooter'
+
+<Meta
+  title="Wizard Footer"
+  component={WizardFooter}
+  decorators={[
+    (WizardFooter) => <WizardFooter />
+  ]}
+/>
+
+# Metadata Form
+
+A [JSONForms](https://jsonforms.io/) form generated from JSON schema which can be passed as a prop.
+
+## Default
+
+<Canvas>
+	<Story name="Default">
+		<WizardFooter />
+	</Story>
+</Canvas>
+
+## Cancel, Previous and Next
+
+<Canvas>
+	<Story name="Cancel, Previous and Next">
+		<WizardFooter showCancelButton={true} showPreviousButton={true} showNextButton={true} />
+	</Story>
+</Canvas>
+
+## Cancel, Previous and Next (alternative)
+
+<Canvas>
+	<Story name="Cancel, Previous and Next (alternative)">
+		<WizardFooter showCancelButton={true} showPreviousButton={true} altNextButton={true} showNextButton={true} />
+	</Story>
+</Canvas>
+
+## Cancel, Previous and Next (disabled)
+
+<Canvas>
+	<Story name="Cancel, Previous and Next (disabled)">
+		<WizardFooter showCancelButton={true} showPreviousButton={true} preventNextStep={true} showNextButton={true} />
+	</Story>
+</Canvas>
+
+## Cancel, Previous and Next (custom labels)
+
+<Canvas>
+	<Story name="Cancel, Previous and Next (custom labels)">
+			<WizardFooter showCancelButton={true} showPreviousButton={true} showNextButton={true} cancelLabel='❌' previousLabel='⬅️' nextLabel='➡️' />
+	</Story>
+</Canvas>
+
+## Cancel and Save
+
+<Canvas>
+	<Story name="Cancel and Save">
+		<WizardFooter showCancelButton={true} showSaveButton={true} />
+	</Story>
+</Canvas>
+
+## Cancel and Save (alternative)
+
+<Canvas>
+	<Story name="Cancel and Save (alternative)">
+		<WizardFooter showCancelButton={true} showSaveButton={true} altSaveButton={true} />
+	</Story>
+</Canvas>
+
+## Cancel and Save (disabled)
+
+<Canvas>
+	<Story name="Cancel and Save (disabled)">
+		<WizardFooter showCancelButton={true} preventSave={true} showSaveButton={true}  />
+	</Story>
+</Canvas>
+
+## Cancel and Next (custom labels)
+
+<Canvas>
+	<Story name="Cancel and Save (custom labels)">
+		<WizardFooter showCancelButton={true} showSaveButton={true} cancelLabel="❌" saveLabel="➡️" />
+	</Story>
+</Canvas>
+
+## Previous and Next
+
+<Canvas>
+	<Story name="Previous and Next">
+		<WizardFooter showPreviousButton={true} showNextButton={true} />
+	</Story>
+</Canvas>
+
+## Previous and Next (alternative)
+
+<Canvas>
+	<Story name="Previous and Next (alternative)">
+		<WizardFooter showPreviousButton={true} showNextButton={true} altNextButton={true} />
+	</Story>
+</Canvas>
+
+## Previous and Next (disabled)
+
+<Canvas>
+	<Story name="Previous and Next (disabled)">
+		<WizardFooter showPreviousButton={true} showNextButton={true} preventNextStep={true} />
+	</Story>
+</Canvas>
+
+## Previous and Next (custom labels)
+
+<Canvas>
+	<Story name="Previous and Save (custom labels)">
+		<WizardFooter showPreviousButton={true} showNextButton={true} previousLabel='⬅️' nextLabel='⏺' />
+	</Story>
+</Canvas>
+
+## Next and Save
+
+<Canvas>
+	<Story name="Next and Save">
+		<WizardFooter showNextButton={true} showSaveButton={true} />
+	</Story>
+</Canvas>
+
+## Next and Save (alternative)
+
+<Canvas>
+	<Story name="Next and Save (alternative)">
+		<WizardFooter showNextButton={true} showSaveButton={true} altNextButton={true} altSaveButton={true} />
+	</Story>
+</Canvas>
+
+## Next and Save (disabled)
+
+<Canvas>
+	<Story name="Next and Save (disabled)">
+		<WizardFooter showNextButton={true} showSaveButton={true} preventNextStep={true} preventSave={true} />
+	</Story>
+</Canvas>
+
+## Next and Save (custom labels)
+
+<Canvas>
+	<Story name="Next and Save (custom labels)">
+		<WizardFooter showNextButton={true} showSaveButton={true} nextLabel='➡️' saveLabel='⏺' />
+	</Story>
+</Canvas>
