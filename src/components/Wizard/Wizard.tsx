@@ -86,6 +86,7 @@ export default function Wizard<T>({
 	);
 
 	const handleSubmit = (e: SyntheticEvent) => {
+		console.log('submitted from wizard');
 		e.preventDefault();
 
 		if (file && isValidForm) {
@@ -101,6 +102,27 @@ export default function Wizard<T>({
 	function resetAndClose() {
 		dispatch(resetState());
 		onClose();
+		history.push(basePath);
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToCancel() {
+		onCancel({ file, metadata }).catch((err) => {
+			// TODO handle error gracefully
+			console.error(err);
+		});
+		resetAndClose();
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToNextStep() {
+		console.log('should go to next step');
+		history.push(appendPathSegment(basePath, 'step2'));
+	}
+
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToPreviousStep() {
+		console.log('should go to previous step');
 		history.push(basePath);
 	}
 
