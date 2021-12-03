@@ -30,7 +30,7 @@ export default function AddDocumentButton<T extends MetadataGenericType>({
 
 	return (
 		<CustomProvider>
-			<Button variant="primary" onClick={onHandleClick}>
+			<Button variant="primaryInverted" onClick={onHandleClick}>
 				{buttonText}
 			</Button>
 			{isWizardVisible && (

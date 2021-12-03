@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2021-11-25)
+
+
+### Bug Fixes
+
+* **adddocumentbutton:** changed button vairant ([304c0ff](https://github.com/Amsterdam/bmi-dms-upload/commit/304c0ff20b71d3788f6de08bcc6ded80e28c29f4))
+
 ### [0.0.1-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2021-11-24)
 
 
