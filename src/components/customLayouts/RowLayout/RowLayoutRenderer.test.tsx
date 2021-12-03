@@ -25,4 +25,16 @@ describe('<RowLayoutRenderer />', () => {
 		render();
 		expect(screen.queryByTestId('row-layout')?.children).toHaveLength(2);
 	});
+
+	test('Should render Labels', () => {
+		render();
+		expect(screen.getByText('Dummy date')).toBeInTheDocument();
+		expect(screen.getByText('Documentomschrijving')).toBeInTheDocument();
+	});
+
+    test('Should not render when visible set to false', () => {
+        render({visible:false})
+        expect(screen.queryByTestId('row-layout')?.children).toHaveLength(0);
+
+    })
 });
