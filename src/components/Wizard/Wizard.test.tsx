@@ -189,43 +189,6 @@ describe('<Wizard />', () => {
 		expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
 	});
 
-	test('should go to navigate to previous step when clicking previousbutton', () => {
-		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		renderComponent(
-			{
-				file: mockFile,
-				metadata: { mockData },
-			},
-			'/step2',
-		);
-		const previousButton = screen.getByTestId('previous-button');
-		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-		fireEvent.click(previousButton);
-
-		expect(pushSpy).toHaveBeenCalledWith('/');
-	});
-
-	test('should go to navigate to previous step when clicking previousbutton', () => {
-		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		renderComponent(
-			{
-				file: mockFile,
-				metadata: { mockData },
-			},
-			'/step2',
-		);
-		const previousButton = screen.getByTestId('previous-button');
-		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-		fireEvent.click(previousButton);
-
-		expect(pushSpy).toHaveBeenCalledWith('/');
-	});
 	describe('onMetadataSubmit()', () => {
 		test('is called when saving while <MetaDataForm /> is valid', async () => {
 			const pushSpy = jest.fn();
@@ -260,26 +223,6 @@ describe('<Wizard />', () => {
 			renderComponent({ file: mockFile, metadata: {} }, '/step2');
 
 			expect(screen.getByText('Opslaan')).toHaveAttribute('disabled');
-		});
-
-		test('should be able to catch error on submit', async () => {
-			const pushSpy = jest.fn().mockImplementation(() => {
-				throw new Error('...');
-			});
-			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
-			const metadata: MetadataExample = {
-				documentDescription: '__DOCUMENT_DESCRIPTION__',
-				executionDate: '__EXECUTION_DATE__',
-			};
-			getMetadataFromStoreMock.mockReturnValue(metadata);
-
-			renderComponent({ file: mockFile, metadata }, '/step2');
-			act(() => {
-				fireEvent.click(screen.getByText('Opslaan'));
-			});
-			await waitFor(() => {
-				expect(pushSpy).toThrowError();
-			});
 		});
 
 		test('should be able to catch error on submit', async () => {
