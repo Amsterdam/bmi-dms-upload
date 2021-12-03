@@ -42,7 +42,7 @@ export type ImplementationProps<T> = {
 	uploadHTTPMethod?: SupportedHTTPMethods;
 };
 
-type Props<T> = {
+export type Props<T> = {
 	onClose: () => void;
 } & ImplementationProps<T>;
 
@@ -120,7 +120,12 @@ export default function Wizard<T>({
 	}
 
 	return (
-		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+		<Modal
+			id="dms-upload-wizard"
+			open={true}
+			onClose={() => terminate()}
+			closeOnBackdropClick={false}
+		>
 			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
 				<ModalTopBarStyle styleAs="h4" as="h2">
 					Bestand uploaden voor {name}
