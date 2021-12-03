@@ -127,6 +127,10 @@ describe('<Wizard />', () => {
 	);
 
 	test('should go to navigate to previous step when clicking previousbutton', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
 		renderComponent(
 			{
 				file: mockFile,
@@ -134,11 +138,9 @@ describe('<Wizard />', () => {
 			},
 			'/step2',
 		);
-		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		fireEvent.click(screen.getByTestId('previous-button'));
+		const previousButton = screen.getByTestId('previous-button');
+		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
+		fireEvent.click(previousButton);
 
 		expect(pushSpy).toHaveBeenCalledWith('/');
 	});
