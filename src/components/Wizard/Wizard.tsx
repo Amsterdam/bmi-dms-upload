@@ -46,7 +46,7 @@ export type ImplementationProps<T> = {
 	uploadHTTPMethod?: SupportedHTTPMethods;
 };
 
-type Props<T> = {
+export type Props<T> = {
 	onClose: () => void;
 } & ImplementationProps<T>;
 
@@ -152,10 +152,19 @@ export default function Wizard<T>({
 	};
 
 	return (
+<<<<<<< HEAD
 		<>
 			{isOpen && <ConfirmTermination />}
 			{!isOpen && (
 		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+=======
+		<Modal
+			id="dms-upload-wizard"
+			open={true}
+			onClose={() => terminate()}
+			closeOnBackdropClick={false}
+		>
+>>>>>>> test(wizard and rowlayoutrenderer): some tests
 			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
 				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
 			</Modal.TopBar>
