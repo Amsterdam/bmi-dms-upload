@@ -14,6 +14,6 @@ describe('<StaticMetadata />', () => {
 
 	test('Passes props through', () => {
 		const spy = jest.spyOn(cl, 'DescriptionList');
-		expect(spy.mock.calls[0][0]['list']).toEqual(metadataList);
+		expect(spy.mock.calls[0][0].list).toEqual(metadataList);
 	});
 });
