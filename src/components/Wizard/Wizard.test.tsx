@@ -185,25 +185,6 @@ describe('<Wizard />', () => {
 		expect(pushSpy).toHaveBeenCalledWith('/');
 	});
 
-	test('should go to navigate to previous step when clicking previousbutton', () => {
-		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		renderComponent(
-			{
-				file: mockFile,
-				metadata: { mockData },
-			},
-			'/step2',
-		);
-		const previousButton = screen.getByTestId('previous-button');
-		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-		fireEvent.click(previousButton);
-
-		expect(pushSpy).toHaveBeenCalledWith('/');
-	});
-
 	test('should open a confirm termination dialog', () => {
 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
 		fireEvent.click(screen.getByTestId('cancel-wizard'));
