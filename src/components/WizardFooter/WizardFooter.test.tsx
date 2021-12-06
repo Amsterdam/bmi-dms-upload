@@ -5,62 +5,52 @@ import WizardFooter from './WizardFooter';
 
 describe('<WizardFooter />', () => {
 	test('Renders default cancel button', () => {
-		renderWithTheme(<WizardFooter showCancelButton={true} />);
+		renderWithTheme(<WizardFooter cancel={{ visible: true, onClick: undefined }} />);
 		expect(screen.getByText('Annuleren'));
 	});
 
 	test('Renders custom cancel button', () => {
-		renderWithTheme(<WizardFooter showCancelButton={true} cancelLabel={'Cancel'} />);
+		renderWithTheme(<WizardFooter cancel={{ visible: true, onClick: undefined, label: 'Cancel' }} />);
 		expect(screen.getByText('Cancel'));
 	});
 
 	test('Renders default previous button', () => {
-		renderWithTheme(<WizardFooter showPreviousButton={true} />);
+		renderWithTheme(<WizardFooter previous={{ visible: true, onClick: undefined }} />);
 		expect(screen.getByText('Vorige'));
 	});
 
 	test('Renders custom previous button', () => {
-		renderWithTheme(<WizardFooter showPreviousButton={true} previousLabel={'Previous'} />);
+		renderWithTheme(<WizardFooter previous={{ visible: true, onClick: undefined, label: 'Previous' }} />);
 		expect(screen.getByText('Previous'));
 	});
 
 	test('Renders default next button', () => {
-		renderWithTheme(<WizardFooter showNextButton={true} />);
-		expect(screen.getByText('Volgende'));
-	});
-
-	test('Renders alternative next button', () => {
-		renderWithTheme(<WizardFooter showNextButton={true} altNextButton={true} />);
+		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined }} />);
 		expect(screen.getByText('Volgende'));
 	});
 
 	test('Renders custom next button', () => {
-		renderWithTheme(<WizardFooter showNextButton={true} nextLabel={'Next'} />);
+		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined, label: 'Next' }} />);
 		expect(screen.getByText('Next'));
 	});
 
 	test('Renders disabled next button', () => {
-		renderWithTheme(<WizardFooter showNextButton={true} preventNextStep={true} />);
+		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined, disabled: true }} />);
 		expect(screen.getByText('Volgende')).toBeDisabled();
 	});
 
 	test('Renders default save button', () => {
-		renderWithTheme(<WizardFooter showSaveButton={true} />);
-		expect(screen.getByText('Opslaan'));
-	});
-
-	test('Renders alternative save button', () => {
-		renderWithTheme(<WizardFooter showSaveButton={true} altSaveButton={true} />);
+		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined }} />);
 		expect(screen.getByText('Opslaan'));
 	});
 
 	test('Renders custom save button', () => {
-		renderWithTheme(<WizardFooter showSaveButton={true} saveLabel={'Save'} />);
+		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined, label: 'Save' }} />);
 		expect(screen.getByText('Save'));
 	});
 
 	test('Renders disabled save button', () => {
-		renderWithTheme(<WizardFooter showSaveButton={true} preventSave={true} />);
+		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined, disabled: true }} />);
 		expect(screen.getByText('Opslaan')).toBeDisabled();
 	});
 });

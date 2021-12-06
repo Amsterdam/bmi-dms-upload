@@ -1,121 +1,89 @@
-import React, { Component } from 'react';
-import { ChevronLeft } from '@amsterdam/asc-assets';
+import React, { ComponentProps } from 'react';
 import {
-	CancelButtonStyle,
-	PreviousButtonStyle,
 	ButtonPanelStyle,
+	CancelButtonStyle,
 	LeftActionStyle,
+	PreviousButtonStyle,
 	RightActionStyle,
 	WizardButton,
 } from './WizardFooterStyles';
+import { ChevronLeft } from '@amsterdam/asc-assets';
+import { Button } from '@amsterdam/asc-ui';
 
-export default class WizardFooter extends Component<{
-	cancelLabel: string;
-	nextLabel: string;
-	previousLabel: string;
-	saveLabel: string;
-	showCancelButton: boolean;
-	showNextButton: boolean;
-	showPreviousButton: boolean;
-	showSaveButton: boolean;
-	altNextButton: boolean;
-	altSaveButton: boolean;
-	preventNextStep: boolean;
-	preventSave: boolean;
-	onCancelClick: any;
-	onPreviousClick: any;
-	onNextClick: any;
-	onSaveClick: any;
-}> {
-	static defaultProps = {
-		cancelLabel: 'Annuleren',
-		nextLabel: 'Volgende',
-		previousLabel: 'Vorige',
-		saveLabel: 'Opslaan',
-		showCancelButton: false,
-		showNextButton: false,
-		showPreviousButton: false,
-		showSaveButton: false,
-		altNextButton: false,
-		altSaveButton: false,
-		preventNextStep: false,
-		preventSave: false,
-		onCancelClick: null,
-		onPreviousClick: null,
-		onNextClick: null,
-		onSaveClick: null,
+type ButtonConfig = {
+	visible?: boolean;
+	disabled?: boolean;
+	label?: string;
+	onClick: ComponentProps<typeof Button>['onClick'];
+};
+type Props = {
+	cancel?: ButtonConfig;
+	next?: ButtonConfig;
+	previous?: ButtonConfig;
+	save?: ButtonConfig;
+};
+
+function useButtonConfig(
+	config: ButtonConfig | undefined,
+	defaultLabel: string,
+): { visible: boolean; label: string; disabled: boolean; onClick?: ButtonConfig['onClick'] } {
+	return {
+		visible: config?.visible ?? false,
+		label: config?.label ?? defaultLabel,
+		disabled: config?.disabled ?? false,
+		onClick: config?.onClick,
 	};
-
-	render() {
-		const {
-			cancelLabel,
-			nextLabel,
-			previousLabel,
-			saveLabel,
-			showCancelButton,
-			showNextButton,
-			showPreviousButton,
-			showSaveButton,
-			altNextButton,
-			altSaveButton,
-			preventNextStep,
-			preventSave,
-			onCancelClick,
-			onPreviousClick,
-			onNextClick,
-			onSaveClick,
-		} = this.props;
-
-		return (
-			<div>
-				<ButtonPanelStyle>
-					<LeftActionStyle>
-						{showCancelButton ? (
-							<CancelButtonStyle variant="textButton" iconLeft={<ChevronLeft />} onClick={onCancelClick}>
-								{cancelLabel}
-							</CancelButtonStyle>
-						) : (
-							''
-						)}
-					</LeftActionStyle>
-
-					<RightActionStyle>
-						{showPreviousButton ? (
-							<PreviousButtonStyle variant="textButton" iconLeft={<ChevronLeft />} onClick={onPreviousClick}>
-								{previousLabel}
-							</PreviousButtonStyle>
-						) : (
-							''
-						)}
-
-						{showNextButton ? (
-							<WizardButton
-								name="next"
-								variant={altNextButton ? 'secondary' : 'primary'}
-								onClick={onNextClick}
-								disabled={preventNextStep}
-							>
-								{nextLabel}
-							</WizardButton>
-						) : (
-							''
-						)}
-
-						{showSaveButton ? (
-							<WizardButton
-								name="save"
-								variant={altSaveButton ? 'secondary' : 'primary'}
-								onClick={onSaveClick}
-								disabled={preventSave}
-							>
-								{saveLabel}
-							</WizardButton>
-						) : (
-							''
-						)}
-					</RightActionStyle>
-				</ButtonPanelStyle>
-			</div>
-		);
-	}
 }
+const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
+	const { visible: showCancelButton, onClick: onCancelClick, label: cancelLabel } = useButtonConfig(
+		cancel,
+		'Annuleren',
+	);
+
+	const {
+		visible: showNextButton,
+		disabled: preventNextStep,
+		onClick: onNextClick,
+		label: nextLabel,
+	} = useButtonConfig(next, 'Volgende');
+
+	const { visible: showPreviousButton, onClick: onPreviousClick, label: previousLabel } = useButtonConfig(
+		previous,
+		'Vorige',
+	);
+
+	const { visible: showSaveButton, disabled: preventSave, onClick: onSaveClick, label: saveLabel } = useButtonConfig(
+		save,
+		'Opslaan',
+	);
+
+	return (
+		<ButtonPanelStyle>
+			<LeftActionStyle>
+				{showCancelButton ? (
+					<CancelButtonStyle variant="textButton" iconLeft={<ChevronLeft />} onClick={onCancelClick}>
+						{cancelLabel}
+					</CancelButtonStyle>
+				) : null}
+			</LeftActionStyle>
+			<RightActionStyle>
+				{showPreviousButton && (
+					<PreviousButtonStyle variant="textButton" iconLeft={<ChevronLeft />} onClick={onPreviousClick}>
+						{previousLabel}
+					</PreviousButtonStyle>
+				)}
+				{showNextButton && (
+					<WizardButton name="next" variant="secondary" onClick={onNextClick} disabled={preventNextStep}>
+						{nextLabel}
+					</WizardButton>
+				)}
+				{showSaveButton && (
+					<WizardButton name="save" variant="secondary" onClick={onSaveClick} disabled={preventSave}>
+						{saveLabel}
+					</WizardButton>
+				)}
+			</RightActionStyle>
+		</ButtonPanelStyle>
+	);
+};
+export default WizardFooter;
