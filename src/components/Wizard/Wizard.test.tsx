@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
-// import * as actions from '../../store/dataSlice';
+import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
 import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
@@ -110,21 +110,31 @@ describe('<Wizard />', () => {
 	// 	expect(screen.getByText('Opslaan')).toBeInTheDocument();
 	// });
 
-	// test.each([['cancel-wizard'], ['modal-close-button']])(
-	// 	'Clicking button with test id %s triggers resetState and terminates the wizard',
-	// 	(dataTestId) => {
-	// 		const pushSpy = jest.fn();
-	// 		(useHistory as jest.Mock).mockReturnValue({
-	// 			push: pushSpy,
-	// 		});
-	// 		const spy = jest.spyOn(actions, 'resetState');
-	// 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-	// 		fireEvent.click(screen.getByTestId(dataTestId));
-	// 		expect(spy).toHaveBeenCalled();
-	// 		expect(onCloseMock).toHaveBeenCalled();
-	// 		expect(pushSpy).toHaveBeenCalledWith('/');
-	// 	},
-	// );
+	test('Clicking button with test id %s triggers resetState and terminates the wizard', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(screen.getByTestId('modal-close-button'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
+
+	test('Clicking cancel button triggers resetState and terminates the wizard', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(screen.getByText('Annuleren'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
 
 	test('should go to navigate to previous step when clicking previousbutton', () => {
 		const pushSpy = jest.fn();
