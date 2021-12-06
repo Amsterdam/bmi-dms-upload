@@ -177,22 +177,16 @@ describe('<Wizard />', () => {
 		expect(pushSpy).toHaveBeenCalledWith('/');
 	});
 
-	test('should go to navigate to previous step when clicking previousbutton', () => {
+	test('Clicking cancel button triggers resetState and terminates the wizard', () => {
 		const pushSpy = jest.fn();
 		(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
-		renderComponent(
-			{
-				file: mockFile,
-				metadata: { mockData },
-			},
-			'/step2',
-		);
-		const previousButton = screen.getByTestId('previous-button');
-		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-		fireEvent.click(previousButton);
-
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(screen.getByText('Annuleren'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
 		expect(pushSpy).toHaveBeenCalledWith('/');
 	});
 
