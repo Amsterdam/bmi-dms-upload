@@ -60,11 +60,11 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 	return (
 		<ButtonPanelStyle>
 			<LeftActionStyle>
-				{showCancelButton ? (
+				{showCancelButton && (
 					<CancelButtonStyle variant="textButton" iconLeft={<ChevronLeft />} onClick={onCancelClick}>
 						{cancelLabel}
 					</CancelButtonStyle>
-				) : null}
+				)}
 			</LeftActionStyle>
 			<RightActionStyle>
 				{showPreviousButton && (
