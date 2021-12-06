@@ -8,5 +8,7 @@ export const DocumentViewerStyle = styled.div`
 `;
 
 export const DocViewerStyle = styled(DocViewer)`
-	border: 1px solid black;
+	& div#file-name {
+		margin-left: 0;
+	}
 `;
