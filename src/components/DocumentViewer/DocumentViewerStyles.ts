@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import DocViewer from 'react-doc-viewer';
+import { ComponentProps } from 'react';
 
-export const DocumentViewerStyle = styled.div`
+export const DocViewerStyle = styled(DocViewer)<ComponentProps<typeof DocViewer>>`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-`;
 
-export const DocViewerStyle = styled(DocViewer)`
 	& div#file-name {
 		margin-left: 0;
 	}
