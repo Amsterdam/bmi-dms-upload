@@ -6,6 +6,7 @@ import { screen } from '@testing-library/react';
 import { JsonForms } from '@jsonforms/react';
 import MetdadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
+import { mockComponentProps, mocked } from '~/tests/helpers';
 
 jest.mock('../MetadataColumnHeaders/MetadataColumnHeaders');
 jest.mock('../Form/Form');
@@ -20,6 +21,8 @@ const props: Props = {
 	onChange: jest.fn(),
 };
 
+const MetdadataColumnHeadersMock = mocked(MetdadataColumnHeaders);
+
 describe('<MetadataForm />', () => {
 	const render = (customProps: Partial<ComponentProps<typeof JsonForms>> = {}) => {
 		renderWithTheme(<MetadataForm {...Object.assign({}, props, customProps)} />);
@@ -33,15 +36,12 @@ describe('<MetadataForm />', () => {
 
 	test('Renders column headers', () => {
 		render();
-		expect(MetdadataColumnHeaders).toHaveBeenCalledWith(
-			{
-				columns: [
-					{ header: 'Metadataveld', width: 50 },
-					{ header: 'Waarde', width: 50 },
-				],
-			},
-			{},
-		);
+		expect(mockComponentProps<ComponentProps<typeof MetdadataColumnHeaders>>(MetdadataColumnHeadersMock)).toEqual({
+			columns: [
+				{ header: 'Metadataveld', width: 50 },
+				{ header: 'Waarde', width: 50 },
+			],
+		});
 	});
 
 	test('Renders form', () => {

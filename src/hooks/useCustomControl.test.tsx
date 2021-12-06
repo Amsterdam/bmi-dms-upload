@@ -1,8 +1,8 @@
-import useCustomControl from './useCustomControl';
 import { ControlProps } from '@jsonforms/core';
 import { renderHook } from '@testing-library/react-hooks';
+import useCustomControl from './useCustomControl';
 
-describe('', () => {
+describe('useCustomControl()', () => {
 	test('should return correct entries', () => {
 		const { result } = renderHook(() =>
 			useCustomControl({

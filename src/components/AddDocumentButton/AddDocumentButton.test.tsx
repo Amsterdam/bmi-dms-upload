@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -21,8 +19,7 @@ describe('<AddDocumentButton />', () => {
 				getHeaders={jest.fn()}
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn}
-				metadataForm={{}}
-				onMetadataValidate={jest.fn()}
+				metadataForm={{} as Props<MetadataExample>['metadataForm']}
 				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
 				{...props}
