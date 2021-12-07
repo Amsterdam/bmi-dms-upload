@@ -156,7 +156,7 @@ export default function Wizard<T>({
 					</ModalContentStyle>
 				</Modal.Content>
 				<WizardFooter
-					cancel={{ visible: true, onClick: clickToCancel }}
+					cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
 					previous={{ visible: true, onClick: () => history.push(basePath) }}
 					next={{
 						visible: appendTrailingSlash(location.pathname) === basePath ? !!file : false,
