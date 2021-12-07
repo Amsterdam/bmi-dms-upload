@@ -1,5 +1,6 @@
 import { ControlProps } from '@jsonforms/core';
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-dom/test-utils';
 import useCustomControl from './useCustomControl';
 
 describe('useCustomControl()', () => {
@@ -32,5 +33,24 @@ describe('useCustomControl()', () => {
 		expect(currResult.onBlur).toEqual(expect.any(Function));
 		expect(currResult.onFocus).toEqual(expect.any(Function));
 		expect(currResult.onChange).toEqual(expect.any(Function));
+	});
+
+	test('onFocus should set isFocused to true and isDirty to true', () => {
+		const mockHandleChange = jest.fn()
+		const { result } = renderHook(() =>
+			useCustomControl({
+				data: 'test',
+				errors: 'test-error',
+				label: 'test-label',
+				path: '/test',
+				handleChange:(path,value) => mockHandleChange(path,value),
+			} as ControlProps),
+		);
+
+		act(() => {
+			result.current.onFocus();
+		});
+		expect(result.current.isFocused).toBe(true);
+		expect(result.current.isDirty).toBe(true);
 	});
 });
