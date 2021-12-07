@@ -17,6 +17,8 @@ const RowStyles = styled.div`
 
 	> label {
 		font-weight: 400;
+		align-items: normal;
+		margin: ${themeSpacing(1)} 0;
 	}
 
 	[role='alert'] {
