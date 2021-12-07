@@ -142,7 +142,8 @@ describe('<Wizard />', () => {
 		'should catch error when promise is rejected',
 		(dataTestId) => {
 			//to turn off error logging
-			jest.spyOn(console, 'error').mockImplementation(jest.fn());const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			jest.spyOn(console, 'error').mockImplementation(jest.fn());
+			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
 			renderComponent({ file: mockFile, metadata: {} }, '/', {
 				onCancel: onCancelMockRejected,
 			});
@@ -151,37 +152,16 @@ describe('<Wizard />', () => {
 		},
 	);
 
-	test('Clicking modal close button triggers resetState and terminates the wizard',
-		() => {
-			const pushSpy = jest.fn();
-			mocked(useHistory as jest.Mock).mockReturnValue({
-				push: pushSpy,
-			});
-			const spy = jest.spyOn(actions, 'resetState');
-			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-			fireEvent.click(screen.getByTestId('modal-close-button'));
-			expect(spy).toHaveBeenCalled();
-			expect(onCloseMock).toHaveBeenCalled();
-			expect(pushSpy).toHaveBeenCalledWith('/');
-		}
-	);
-
-	test('should go to navigate to previous step when clicking previousbutton', () => {
+	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
 		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
+		mocked(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
-		renderComponent(
-			{
-				file: mockFile,
-				metadata: { mockData },
-			},
-			'/step2',
-		);
-		const previousButton = screen.getByTestId('previous-button');
-		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-		fireEvent.click(previousButton);
-
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(screen.getByTestId('modal-close-button'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
 		expect(pushSpy).toHaveBeenCalledWith('/');
 	});
 
