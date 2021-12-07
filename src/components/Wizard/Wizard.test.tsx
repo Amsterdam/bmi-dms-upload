@@ -138,6 +138,18 @@ describe('<Wizard />', () => {
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'should catch error when promise is rejected',
 		(dataTestId) => {
+			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			renderComponent({ file: mockFile, metadata: {} }, '/', {
+				onCancel: onCancelMockRejected,
+			});
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(onCancelMockRejected).rejects.toThrow();
+		},
+	);
+
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'should catch error when promise is rejected',
+		(dataTestId) => {
 			//to turn off error logging
 			jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
@@ -157,7 +169,6 @@ describe('<Wizard />', () => {
 		});
 		const spy = jest.spyOn(actions, 'resetState');
 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-
 		fireEvent.click(screen.getByTestId('modal-close-button'));
 		expect(spy).toHaveBeenCalled();
 		expect(onCloseMock).toHaveBeenCalled();
