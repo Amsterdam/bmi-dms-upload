@@ -10,3 +10,4 @@ export default {
 export const Image: Story = () => <DocumentViewer url="/assets/example.png" />;
 export const PDF: Story = () => <DocumentViewer url="/assets/example.pdf" />;
 export const NotFound: Story = () => <DocumentViewer url="/assets/bogus404" />;
+export const NoRenderer: Story = () => <DocumentViewer url="/assets/example.zip" />;
