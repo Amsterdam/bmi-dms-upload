@@ -1,4 +1,6 @@
 import React, { ComponentProps } from 'react';
+import { ChevronLeft } from '@amsterdam/asc-assets';
+import { Button } from '@amsterdam/asc-ui';
 import {
 	ButtonPanelStyle,
 	CancelButtonStyle,
@@ -7,8 +9,6 @@ import {
 	RightActionStyle,
 	WizardButton,
 } from './WizardFooterStyles';
-import { ChevronLeft } from '@amsterdam/asc-assets';
-import { Button } from '@amsterdam/asc-ui';
 
 type ButtonConfig = {
 	visible?: boolean;

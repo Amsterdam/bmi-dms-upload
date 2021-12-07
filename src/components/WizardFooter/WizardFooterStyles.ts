@@ -11,21 +11,21 @@ export const PreviousButtonStyle = styled(Button)<ButtonProps>`
 `;
 export const CancelButtonStyle = styled(Button)<ButtonProps>`
 	text-align: left;
-	padding: ${themeSpacing(2.5, 0)};
+	padding: ${themeSpacing(2, 0)};
 	vertical-align: text-top;
 `;
 export const ButtonPanelStyle = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	padding: ${themeSpacing(2.5, 0)};
+	padding: ${themeSpacing(2, 0)};
 `;
 export const WizardButton = styled(Button)<ButtonProps>`
-	margin-left: ${themeSpacing(1.25)};
+	margin-left: ${themeSpacing(1)};
 `;
 export const LeftActionStyle = styled.div`
-	padding-left: ${themeSpacing(3.75)};
+	padding-left: ${themeSpacing(4)};
 `;
 export const RightActionStyle = styled.div`
-	padding-right: ${themeSpacing(3.75)};
+	padding-right: ${themeSpacing(4)};
 `;
