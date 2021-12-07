@@ -2,7 +2,7 @@ import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 're
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
-import { ChevronLeft } from '@amsterdam/asc-assets';
+import { ChevronLeft, Close } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -153,7 +153,7 @@ export default function Wizard<T>({
 					<Modal.Actions.Left>
 						<CancelButtonStyle
 							variant="textButton"
-							iconLeft={<ChevronLeft />}
+							iconLeft={<Close />}
 							onClick={() => {
 								onCancel({ file, metadata }).catch((err) => {
 									// TODO handle error gracefully
@@ -168,15 +168,15 @@ export default function Wizard<T>({
 					</Modal.Actions.Left>
 					<Modal.Actions.Right>
 						{appendTrailingSlash(location.pathname) === basePath ? (
-							file ? (
-								<Button
-									variant="primary"
-									name="Volgende"
-									onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
-								>
-									Volgende
-								</Button>
-							) : null
+							<Button
+								variant="secondary"
+								taskflow
+								name="Volgende"
+								onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
+								disabled={!file}
+							>
+								Volgende
+							</Button>
 						) : (
 							<div>
 								<PreviousButtonStyle
@@ -186,7 +186,7 @@ export default function Wizard<T>({
 								>
 									Vorige
 								</PreviousButtonStyle>
-								<Button variant="primary" onClick={handleSubmit} disabled={!isValidForm}>
+								<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
 									Opslaan
 								</Button>
 							</div>
