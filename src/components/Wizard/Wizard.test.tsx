@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, act, waitFor, getByText } from '@testing-library/react';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
@@ -8,14 +8,34 @@ import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
 import { MetadataExample } from '../../types';
 import { asset, schema, uischema } from './__stubs__';
+import MetadataForm from '../MetadataForm/MetadataForm';
+import { mocked, mockComponentProps } from '~/tests/helpers';
+import { getMetadataFromStore } from '../../store/selectors';
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
 
 jest.mock('react-router-dom', () => ({
 	...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-	useHistory: jest.fn(),
+	useHistory: jest.fn().mockImplementation(() => ({
+		push: jest.fn(),
+	})),
 }));
+
+jest.mock('react-redux', () => ({
+	...(jest.requireActual('react-redux') as Record<string, unknown>),
+	useDispatch: () => jest.fn(),
+	useSelector: (f: () => void) => f(),
+}));
+
+jest.mock('../../store/selectors', () => ({
+	...(jest.requireActual('../../store/selectors') as Record<string, unknown>),
+	getMetadataFromStore: jest.fn(),
+}));
+
+const MetadataFormMock = mocked(MetadataForm);
+const getMetadataFromStoreMock = mocked(getMetadataFromStore);
+const useHistoryMock = mocked(useHistory);
 
 const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
 const mockFile = Object.assign(rawFile, { tmpId: 100 });
@@ -39,7 +59,7 @@ const defaultInitialState: IInitialState = {
 
 describe('<Wizard />', () => {
 	const onCloseMock = jest.fn();
-	const onMetadataSubmitMock = jest.fn();
+	const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
 	// const setFormValues = jest.fn();
 	// const setIsValidForm = jest.fn();
 
@@ -100,6 +120,37 @@ describe('<Wizard />', () => {
 		expect(nextButton).toBeInTheDocument();
 		fireEvent.click(nextButton);
 		expect(pushSpy).toHaveBeenCalledWith('/step2');
+	});
+
+	describe('onMetadataSubmit()', () => {
+		test('is called when saving while <MetaDataForm /> is valid', async () => {
+			const pushSpy = jest.fn();
+			const setMetadataSpy = jest.spyOn(actions, 'setMetadata');
+			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
+			const metadata = {
+				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				executionDate: '__EXECUTION_DATE__',
+			} as MetadataExample;
+			getMetadataFromStoreMock.mockReturnValue(metadata);
+			renderComponent({ file: mockFile, metadata: {} }, '/step2');
+			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
+			act(() => {
+				onChange(metadata, true, []);
+			});
+			act(() => {
+				fireEvent.click(screen.getByText('Opslaan'));
+			});
+			await waitFor(() => {
+				expect(setMetadataSpy).toHaveBeenCalledWith(metadata);
+				expect(onMetadataSubmitMock).toHaveBeenCalledWith({
+					file: mockFile,
+					metadata,
+				});
+				expect(pushSpy).toHaveBeenCalledWith('/');
+			});
+		});
+
+		test('is NOT called when saving while <MetaDataForm /> is NOT valid', () => {});
 	});
 
 	// test('Should render the correct buttons in step 2', () => {
