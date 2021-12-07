@@ -127,10 +127,10 @@ describe('<Wizard />', () => {
 			const pushSpy = jest.fn();
 			const setMetadataSpy = jest.spyOn(actions, 'setMetadata');
 			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
-			const metadata = {
+			const metadata: MetadataExample = {
 				documentDescription: '__DOCUMENT_DESCRIPTION__',
 				executionDate: '__EXECUTION_DATE__',
-			} as MetadataExample;
+			};
 			getMetadataFromStoreMock.mockReturnValue(metadata);
 			renderComponent({ file: mockFile, metadata: {} }, '/step2');
 			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
