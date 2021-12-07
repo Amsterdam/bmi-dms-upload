@@ -6,8 +6,8 @@ export const MetadataColumnHeadersStyle = styled.div`
 	flex-flow: row nowrap;
 	justify-content: start;
 	align-content: start;
-	border-bottom: 1px solid ${themeColor('tint', 'level3')};
-	border-top: 1px solid ${themeColor('tint', 'level3')};
+	border-bottom: 2px solid ${themeColor('tint', 'level3')};
+	border-top: 2px solid ${themeColor('tint', 'level3')};
 	padding: ${themeSpacing(3)} ${themeSpacing(2)};
 `;
 
