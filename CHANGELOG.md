@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1-alpha.10](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2021-12-07)
+
+
+### Features
+
+* **step1:** placeholder and maxFiles for step1 are now configurable by prop ([c3646a6](https://github.com/Amsterdam/bmi-dms-upload/commit/c3646a6b4597f9c66953229c47853278898ed606))
+
 ### [0.0.1-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2021-11-25)
 
 
