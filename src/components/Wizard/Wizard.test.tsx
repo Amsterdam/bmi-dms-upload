@@ -144,7 +144,18 @@ describe('<Wizard />', () => {
 			});
 		});
 
-		// 	test('is NOT called when saving while <MetaDataForm /> is NOT valid', async () => {})
+		test('is NOT called when saving while <MetaDataForm /> is NOT valid', async () => {
+			const pushSpy = jest.fn();
+			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
+			renderComponent({ file: mockFile, metadata: {} }, '/step2');
+
+			act(() => {
+				fireEvent.click(screen.getByText('Opslaan'));
+			});
+			await waitFor(() => {
+				expect(onMetadataSubmitMock).not.toHaveBeenCalled();
+			});
+		});
 	});
 
 	test('setFile is called when file is uploaded successfully', () => {
