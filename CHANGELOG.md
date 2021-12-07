@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.10...v0.0.1) (2021-12-07)
+
+
+### Bug Fixes
+
+* **header:** styling in line with design system ([36ef717](https://github.com/Amsterdam/bmi-dms-upload/commit/36ef717cbc1ab3b05e28306e41ed1011f71b8695))
+* **metadataform:** fixed alignment of label with text field ([309fc33](https://github.com/Amsterdam/bmi-dms-upload/commit/309fc33c392188892f6ef671efd071cc1e99cc32))
+* **styling:** styling fixes after design QA ([8cf9698](https://github.com/Amsterdam/bmi-dms-upload/commit/8cf9698e55dd6c43fa5d947011fc831cb7276be0))
+* **wizard:** tweaking buttons in footer after design QA ([7948562](https://github.com/Amsterdam/bmi-dms-upload/commit/794856216d044221b6daa594fb4f5ceddcf8f42f))
+
 ### [0.0.1-alpha.10](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2021-12-07)
 
 
