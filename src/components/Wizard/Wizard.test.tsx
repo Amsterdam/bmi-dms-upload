@@ -1,6 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
-import { screen, fireEvent, act, waitFor, getByText } from '@testing-library/react';
+import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/common/src/FileUpload/hooks';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
@@ -9,6 +10,7 @@ import Wizard from './Wizard';
 import { MetadataExample } from '../../types';
 import { asset, schema, uischema } from './__stubs__';
 import MetadataForm from '../MetadataForm/MetadataForm';
+import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
 
@@ -33,6 +35,7 @@ jest.mock('../../store/selectors', () => ({
 	getMetadataFromStore: jest.fn(),
 }));
 
+const Step1Mock = mocked(Step1);
 const MetadataFormMock = mocked(MetadataForm);
 const getMetadataFromStoreMock = mocked(getMetadataFromStore);
 const useHistoryMock = mocked(useHistory);
@@ -60,28 +63,19 @@ const defaultInitialState: IInitialState = {
 describe('<Wizard />', () => {
 	const onCloseMock = jest.fn();
 	const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
-	// const setFormValues = jest.fn();
-	// const setIsValidForm = jest.fn();
+	const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
+	const onFileRemoveMock = jest.fn().mockImplementation(() => Promise.resolve());
+	const onCancelMock = jest.fn().mockImplementation(() => Promise.resolve());
 
 	const renderComponent = (storeState: DMSUpload, url: string = '/', initialState = defaultInitialState) => {
-		// (useStateMock as any)
-		//  .mockImplementationOnce((initial: boolean) => {
-		//      return [initialState?.formValues ?? initial, setFormValues];
-		//  })
-		//  .mockImplementationOnce((initial: undefined) => {
-		//      return [initialState?.isValidForm ?? initial, setIsValidForm];
-		//  })
-		//  // Ensure useState doesn't flip out when called from elsewhere
-		//  .mockImplementation((initial: any) => [initial, jest.fn()]);
-
 		renderWithProviders(
 			<Wizard<MetadataExample>
 				asset={asset}
 				onClose={() => onCloseMock()}
 				getPostUrl={jest.fn()}
 				getHeaders={jest.fn()}
-				onFileSuccess={jest.fn()}
-				onFileRemove={jest.fn()}
+				onFileSuccess={onFileSuccessMock}
+				onFileRemove={onFileRemoveMock}
 				metadataForm={{
 					schema,
 					uischema,
@@ -90,7 +84,7 @@ describe('<Wizard />', () => {
 					renderers: [],
 				}}
 				onMetadataSubmit={onMetadataSubmitMock}
-				onCancel={jest.fn().mockImplementation(() => Promise.resolve())}
+				onCancel={onCancelMock}
 				basePath={'/'}
 			/>,
 			{ initialState: storeState, initialRoute: url },
@@ -150,16 +144,30 @@ describe('<Wizard />', () => {
 			});
 		});
 
-		test('is NOT called when saving while <MetaDataForm /> is NOT valid', () => {});
+		// 	test('is NOT called when saving while <MetaDataForm /> is NOT valid', async () => {})
 	});
 
-	// test('Should render the correct buttons in step 2', () => {
-	// 	renderComponent(storeState, '/step2');
-	//
-	// 	expect(screen.queryByTestId('step-2')).toBeInTheDocument();
-	// 	expect(cancelButton).toBeInTheDocument();
-	// 	expect(screen.getByText('Opslaan')).toBeInTheDocument();
-	// });
+	test('setFile is called when file is uploaded successfully', () => {
+		const setFileSpy = jest.spyOn(actions, 'setFile');
+		renderComponent(storeState);
+		const { onFileSuccess } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileSuccess && onFileSuccess(mockFile);
+		});
+		expect(setFileSpy).toHaveBeenCalledWith(mockFile);
+		expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile);
+	});
+
+	test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
+		const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
+		renderComponent({ file: mockFile, metadata: {} }, '/');
+		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
+		});
+		expect(removeFileFromStoreSpy).toHaveBeenCalled();
+		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
+	});
 
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'Clicking button with test id %s triggers resetState and terminates the wizard',
@@ -207,38 +215,4 @@ describe('<Wizard />', () => {
 		fireEvent.click(screen.getByText('Opslaan'));
 		expect(onMetadataSubmitMock).not.toHaveBeenCalled();
 	});
-
-	//test 72-73		onFileSuccess && onFileSuccess(file);
-	// dispatch(setFile(file));
-	//test 80-81 onFileRemove && onFileRemove(file);
-	// dispatch(removeFileFromStore());
-	// test 87-94 e.preventDefault();
-
-	// if (file && isValidForm) {
-	// 	onMetadataSubmit({ file, metadata })
-	// 		.then(() => resetAndClose())
-	// 		.catch((err) => {
-	// 			// TODO handle error gracefully
-	// 			console.error(err);
-
-	//test 115 terminate function
-	// dispatch(setMetadata(data));
-	// setIsValidForm(valid);
-
-	// 									console.error(err);
-
-	// 183= previous button click
-
-	// test('Should submit when valid data', () => {
-	// not working yet
-	// renderComponent(storeState, '/step2', { formValues: mockData, isValidForm: true });
-	// // const spy = jest.spyOn(selectors, 'getFileFromStore');
-	// // expect(spy).toHaveBeenCalled();
-	// expect(screen.getByText('Vorige')).toBeInTheDocument();
-	// // console.log(container);
-	// expect(onMetadataSubmitMock).toHaveBeenCalled();
-	// fireEvent.click(screen.getByText('Opslaan'));
-	// fireEvent.click(screen.getByText('Vorige'));
-	// expect(screen.queryByTestId('step-1')).toBeInTheDocument();
-	// });
 });
