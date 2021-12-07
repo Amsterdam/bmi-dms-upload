@@ -85,7 +85,7 @@ describe('<Wizard />', () => {
 	test('Starts by rendering <Step1 />', () => {
 		renderComponent(storeState);
 		expect(screen.queryByTestId('step-1')).toBeInTheDocument();
-		expect(screen.queryByText('Volgende')).not.toBeInTheDocument();
+		expect(screen.queryByText('Volgende')).toBeDisabled();
 		expect(screen.queryByTestId('metadata-form')).not.toBeInTheDocument();
 		expect(cancelButton).toBeInTheDocument();
 	});
