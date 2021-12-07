@@ -15,6 +15,8 @@ export const ModalContentStyle = styled.div`
 	padding: ${themeSpacing(8)};
 `;
 
-export const ModalTopBarStyle = styled(Heading)`
+export const ModalTopBarStyle = styled(Heading)<ComponentProps<typeof Heading>>`
 	font-size: 18px;
+	line-height: 25px;
+	font-weight: 700;
 `;
