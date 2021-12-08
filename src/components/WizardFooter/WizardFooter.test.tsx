@@ -1,56 +1,102 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import renderWithTheme from '../../../tests/utils/withTheme';
 import WizardFooter from './WizardFooter';
 
 describe('<WizardFooter />', () => {
-	test('Renders default cancel button', () => {
-		renderWithTheme(<WizardFooter cancel={{ visible: true, onClick: undefined }} />);
-		expect(screen.getByText('Annuleren'));
-	});
+	test.each([
+		['cancel', 'default', 'Annuleren'],
+		['cancel', 'custom', 'Cancel', 'Cancel'],
+		['cancel', 'clicked', 'Annuleren'],
+		['previous', 'default', 'Vorige'],
+		['previous', 'custom', 'Previous', 'Previous'],
+		['previous', 'clicked', 'Vorige'],
+		['next', 'default', 'Volgende'],
+		['next', 'custom', 'Next', 'Next'],
+		['next', 'clicked', 'Volgende'],
+		['next', 'disabled', 'Volgende'],
+		['save', 'default', 'Opslaan'],
+		['save', 'custom', 'Save', 'Save'],
+		['save', 'clicked', 'Opslaan'],
+		['save', 'disabled', 'Opslaan'],
+	])('Renders %s %s button', (buttonType, testCase, buttonLabel, customLabel = undefined) => {
+		const onClickEvent = () => console.log(buttonType + ' clicked');
+		let renderComponent: any;
 
-	test('Renders custom cancel button', () => {
-		renderWithTheme(<WizardFooter cancel={{ visible: true, onClick: undefined, label: 'Cancel' }} />);
-		expect(screen.getByText('Cancel'));
-	});
+		if (testCase === 'default') {
+			switch (buttonType) {
+				case 'cancel':
+					renderComponent = <WizardFooter cancel={{ visible: true }} />;
+					break;
+				case 'previous':
+					renderComponent = <WizardFooter previous={{ visible: true }} />;
+					break;
+				case 'next':
+					renderComponent = <WizardFooter next={{ visible: true }} />;
+					break;
+				case 'save':
+					renderComponent = <WizardFooter save={{ visible: true }} />;
+					break;
+			}
+		}
 
-	test('Renders default previous button', () => {
-		renderWithTheme(<WizardFooter previous={{ visible: true, onClick: undefined }} />);
-		expect(screen.getByText('Vorige'));
-	});
+		if (testCase === 'custom') {
+			switch (buttonType) {
+				case 'cancel':
+					renderComponent = <WizardFooter cancel={{ visible: true, label: customLabel }} />;
+					break;
+				case 'previous':
+					renderComponent = <WizardFooter previous={{ visible: true, label: customLabel }} />;
+					break;
+				case 'next':
+					renderComponent = <WizardFooter next={{ visible: true, label: customLabel }} />;
+					break;
+				case 'save':
+					renderComponent = <WizardFooter save={{ visible: true, label: customLabel }} />;
+					break;
+			}
+		}
 
-	test('Renders custom previous button', () => {
-		renderWithTheme(<WizardFooter previous={{ visible: true, onClick: undefined, label: 'Previous' }} />);
-		expect(screen.getByText('Previous'));
-	});
+		if (testCase === 'disabled') {
+			switch (buttonType) {
+				case 'next':
+					renderComponent = <WizardFooter next={{ visible: true, disabled: true }} />;
+					break;
+				case 'save':
+					renderComponent = <WizardFooter save={{ visible: true, disabled: true }} />;
+					break;
+			}
+		}
 
-	test('Renders default next button', () => {
-		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined }} />);
-		expect(screen.getByText('Volgende'));
-	});
+		if (testCase === 'clicked') {
+			switch (buttonType) {
+				case 'cancel':
+					renderComponent = <WizardFooter cancel={{ visible: true, onClick: onClickEvent }} />;
+					break;
+				case 'previous':
+					renderComponent = <WizardFooter previous={{ visible: true, onClick: onClickEvent }} />;
+					break;
+				case 'next':
+					renderComponent = <WizardFooter next={{ visible: true, onClick: onClickEvent }} />;
+					break;
+				case 'save':
+					renderComponent = <WizardFooter save={{ visible: true, onClick: onClickEvent }} />;
+					break;
+			}
+		}
 
-	test('Renders custom next button', () => {
-		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined, label: 'Next' }} />);
-		expect(screen.getByText('Next'));
-	});
+		renderWithTheme(renderComponent);
 
-	test('Renders disabled next button', () => {
-		renderWithTheme(<WizardFooter next={{ visible: true, onClick: undefined, disabled: true }} />);
-		expect(screen.getByText('Volgende')).toBeDisabled();
-	});
+		if (testCase === 'clicked') {
+			const consoleSpy = jest.spyOn(console, 'log');
+			fireEvent.click(screen.getByText(buttonLabel));
+			expect(consoleSpy).toHaveBeenCalledWith(buttonType + ' clicked');
+		}
 
-	test('Renders default save button', () => {
-		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined }} />);
-		expect(screen.getByText('Opslaan'));
-	});
+		if (testCase === 'disabled') {
+			expect(screen.getByText(buttonLabel)).toBeDisabled();
+		}
 
-	test('Renders custom save button', () => {
-		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined, label: 'Save' }} />);
-		expect(screen.getByText('Save'));
-	});
-
-	test('Renders disabled save button', () => {
-		renderWithTheme(<WizardFooter save={{ visible: true, onClick: undefined, disabled: true }} />);
-		expect(screen.getByText('Opslaan')).toBeDisabled();
+		expect(screen.getByText(buttonLabel));
 	});
 });

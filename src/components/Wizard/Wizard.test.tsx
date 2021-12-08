@@ -192,9 +192,9 @@ describe('<Wizard />', () => {
 			'Clicking button with test id %s triggers resetState and terminates the wizard',
 			(dataTestId) => {
 				const pushSpy = jest.fn();
-				mocked(useHistory as jest.Mock).mockReturnValue({
+				mocked(useHistory).mockReturnValue({
 					push: pushSpy,
-				});
+				} as any);
 				const spy = jest.spyOn(actions, 'resetState');
 				renderComponent({ file: mockFile, metadata: { mockData } }, '/');
 				fireEvent.click(screen.getByTestId(dataTestId));

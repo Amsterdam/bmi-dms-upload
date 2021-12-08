@@ -14,8 +14,8 @@ type ButtonConfig = {
 	visible?: boolean;
 	disabled?: boolean;
 	label?: string;
-	onClick: ComponentProps<typeof Button>['onClick'];
-	dataTestId?: string | null;
+	onClick?: ComponentProps<typeof Button>['onClick'];
+	dataTestId?: string;
 };
 type Props = {
 	cancel?: ButtonConfig;
@@ -32,14 +32,14 @@ function useButtonConfig(
 	label: string;
 	disabled: boolean;
 	onClick?: ButtonConfig['onClick'];
-	dataTestId?: string | null;
+	dataTestId?: string;
 } {
 	return {
 		visible: config?.visible ?? false,
 		label: config?.label ?? defaultLabel,
 		disabled: config?.disabled ?? false,
 		onClick: config?.onClick,
-		dataTestId: config?.dataTestId ?? null,
+		dataTestId: config?.dataTestId,
 	};
 }
 const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
