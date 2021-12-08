@@ -20,72 +20,26 @@ describe('<WizardFooter />', () => {
 		['save', 'clicked', 'Opslaan'],
 		['save', 'disabled', 'Opslaan'],
 	])('Renders %s %s button', (buttonType, testCase, buttonLabel, customLabel = undefined) => {
-		const onClickEvent = () => console.log(buttonType + ' clicked');
-		let renderComponent: any;
+		const onClick = () => console.log(buttonType + ' clicked');
+		let props: any;
 
 		if (testCase === 'default') {
-			switch (buttonType) {
-				case 'cancel':
-					renderComponent = <WizardFooter cancel={{ visible: true }} />;
-					break;
-				case 'previous':
-					renderComponent = <WizardFooter previous={{ visible: true }} />;
-					break;
-				case 'next':
-					renderComponent = <WizardFooter next={{ visible: true }} />;
-					break;
-				case 'save':
-					renderComponent = <WizardFooter save={{ visible: true }} />;
-					break;
-			}
+			props = { [buttonType]: { visible: true } };
 		}
 
 		if (testCase === 'custom') {
-			switch (buttonType) {
-				case 'cancel':
-					renderComponent = <WizardFooter cancel={{ visible: true, label: customLabel }} />;
-					break;
-				case 'previous':
-					renderComponent = <WizardFooter previous={{ visible: true, label: customLabel }} />;
-					break;
-				case 'next':
-					renderComponent = <WizardFooter next={{ visible: true, label: customLabel }} />;
-					break;
-				case 'save':
-					renderComponent = <WizardFooter save={{ visible: true, label: customLabel }} />;
-					break;
-			}
+			props = { [buttonType]: { visible: true, label: customLabel } };
 		}
 
 		if (testCase === 'disabled') {
-			switch (buttonType) {
-				case 'next':
-					renderComponent = <WizardFooter next={{ visible: true, disabled: true }} />;
-					break;
-				case 'save':
-					renderComponent = <WizardFooter save={{ visible: true, disabled: true }} />;
-					break;
-			}
+			props = { [buttonType]: { visible: true, disabled: true } };
 		}
 
 		if (testCase === 'clicked') {
-			switch (buttonType) {
-				case 'cancel':
-					renderComponent = <WizardFooter cancel={{ visible: true, onClick: onClickEvent }} />;
-					break;
-				case 'previous':
-					renderComponent = <WizardFooter previous={{ visible: true, onClick: onClickEvent }} />;
-					break;
-				case 'next':
-					renderComponent = <WizardFooter next={{ visible: true, onClick: onClickEvent }} />;
-					break;
-				case 'save':
-					renderComponent = <WizardFooter save={{ visible: true, onClick: onClickEvent }} />;
-					break;
-			}
+			props = { [buttonType]: { visible: true, onClick: onClick } };
 		}
 
-		renderWithTheme(renderComponent);
+		renderWithTheme(<WizardFooter {...props} />);
 
 		if (testCase === 'clicked') {
 			const consoleSpy = jest.spyOn(console, 'log');
