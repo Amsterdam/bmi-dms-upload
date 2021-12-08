@@ -27,6 +27,7 @@ const disabledButtons = [
 ];
 
 describe('<WizardFooter />', () => {
+	// Renders buttons with default and custom labels
 	test.each(defaultAndCustomButtons)(
 		'Renders %s %s button',
 		(buttonType, testCase, buttonLabel, customLabel: any = undefined) => {
@@ -46,6 +47,7 @@ describe('<WizardFooter />', () => {
 		},
 	);
 
+	// Triggers onClick on rendered buttons
 	test.each(clickedButtons)('Clicks on %s button', (buttonType, buttonLabel) => {
 		const onClick = jest.fn();
 		const props = { [buttonType]: { visible: true, onClick: onClick, dataTestId: buttonType } };
@@ -58,6 +60,7 @@ describe('<WizardFooter />', () => {
 		expect(onClick.mock.calls[0][0].type).toEqual('click');
 	});
 
+	// Renders disabled buttons
 	test.each(disabledButtons)('Renders disabled %s button', (buttonType, buttonLabel) => {
 		const props = { [buttonType]: { visible: true, disabled: true } };
 
