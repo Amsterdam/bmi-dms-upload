@@ -152,7 +152,7 @@ describe('<Wizard />', () => {
 
 	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
 		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
+		mocked(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
 		const spy = jest.spyOn(actions, 'resetState');
