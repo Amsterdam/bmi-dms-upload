@@ -8,6 +8,7 @@ import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
 import { MetadataExample } from '../../types';
 import { asset, schema, uischema } from './__stubs__';
+import { mocked } from '~/tests/helpers';
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
@@ -114,7 +115,7 @@ describe('<Wizard />', () => {
 		'Clicking button with test id %s triggers resetState and terminates the wizard',
 		(dataTestId) => {
 			const pushSpy = jest.fn();
-			(useHistory as jest.Mock).mockReturnValue({
+			mocked(useHistory as jest.Mock).mockReturnValue({
 				push: pushSpy,
 			});
 			const spy = jest.spyOn(actions, 'resetState');
