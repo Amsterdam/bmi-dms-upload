@@ -14,17 +14,12 @@ const defaultAndCustomButtons = [
 	['save', 'custom', 'Save', 'Save'],
 ];
 
-const clickedButtons = [
-	['cancel', 'Annuleren'],
-	['previous', 'Vorige'],
-	['next', 'Volgende'],
-	['save', 'Opslaan'],
-];
-
 const disabledButtons = [
 	['save', 'Opslaan'],
 	['next', 'Volgende'],
 ];
+
+const clickableButtons = [['cancel', 'Annuleren'], ['previous', 'Vorige'], ...disabledButtons];
 
 describe('<WizardFooter />', () => {
 	// Renders buttons with default and custom labels
@@ -48,15 +43,14 @@ describe('<WizardFooter />', () => {
 	);
 
 	// Triggers onClick on rendered buttons
-	test.each(clickedButtons)('Clicks on %s button', (buttonType, buttonLabel) => {
+	test.each(clickableButtons)('Clicks on %s button', (buttonType, buttonLabel) => {
 		const onClick = jest.fn();
-		const props = { [buttonType]: { visible: true, onClick: onClick, dataTestId: buttonType } };
+		const props = { [buttonType]: { visible: true, onClick: onClick } };
 
 		renderWithTheme(<WizardFooter {...props} />);
 
 		fireEvent.click(screen.getByText(buttonLabel));
 
-		console.log(onClick.mock.calls[0][0].type);
 		expect(onClick.mock.calls[0][0].type).toEqual('click');
 	});
 
