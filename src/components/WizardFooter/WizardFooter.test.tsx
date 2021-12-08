@@ -47,14 +47,15 @@ describe('<WizardFooter />', () => {
 	);
 
 	test.each(clickedButtons)('Clicks on %s button', (buttonType, buttonLabel) => {
-		const onClick = () => console.log(buttonType + ' clicked');
-		const props = { [buttonType]: { visible: true, onClick: onClick } };
+		const onClick = jest.fn();
+		const props = { [buttonType]: { visible: true, onClick: onClick, dataTestId: buttonType } };
 
 		renderWithTheme(<WizardFooter {...props} />);
 
-		const consoleSpy = jest.spyOn(console, 'log');
 		fireEvent.click(screen.getByText(buttonLabel));
-		expect(consoleSpy).toHaveBeenCalledWith(buttonType + ' clicked');
+
+		console.log(onClick.mock.calls[0][0].type);
+		expect(onClick.mock.calls[0][0].type).toEqual('click');
 	});
 
 	test.each(disabledButtons)('Renders disabled %s button', (buttonType, buttonLabel) => {
