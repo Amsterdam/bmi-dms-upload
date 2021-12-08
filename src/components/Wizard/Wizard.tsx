@@ -1,8 +1,5 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
-import { Button } from '@amsterdam/asc-ui';
-import { ChevronLeft, Close } from '@amsterdam/asc-assets';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
@@ -139,64 +136,55 @@ export default function Wizard<T>({
 	};
 
 	return (
-<<<<<<< HEAD
 		<>
 			{isOpen && <ConfirmTermination />}
 			{!isOpen && (
-		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
-=======
-		<Modal
-			id="dms-upload-wizard"
-			open={true}
-			onClose={() => terminate()}
-			closeOnBackdropClick={false}
-		>
->>>>>>> test(wizard and rowlayoutrenderer): some tests
-			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
-			</Modal.TopBar>
-			<>
-				<Modal.Content>
-					<ModalContentStyle>
-						<Route
-							exact
-							path={basePath}
-							render={() => (
-								<Step1
-									getHeaders={getHeaders}
-									getPostUrl={getPostUrl}
-									onFileRemove={handleFileRemove}
-									onFileSuccess={getFile}
-									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-									httpMethod={uploadHTTPMethod}
+				<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+						<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+					</Modal.TopBar>
+					<>
+						<Modal.Content>
+							<ModalContentStyle>
+								<Route
+									exact
+									path={basePath}
+									render={() => (
+										<Step1
+											getHeaders={getHeaders}
+											getPostUrl={getPostUrl}
+											onFileRemove={handleFileRemove}
+											onFileSuccess={getFile}
+											storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+											httpMethod={uploadHTTPMethod}
+										/>
+									)}
 								/>
-							)}
-						/>
-						<Route
-							path={appendPathSegment(basePath, 'step2')}
-							render={() => (
-								<MetadataForm
-									{...metadataForm}
-									onChange={(data, valid, errors) => {
-										dispatch(setMetadata(data));
-										setIsValidForm(valid);
-									}}
+								<Route
+									path={appendPathSegment(basePath, 'step2')}
+									render={() => (
+										<MetadataForm
+											{...metadataForm}
+											onChange={(data, valid, errors) => {
+												dispatch(setMetadata(data));
+												setIsValidForm(valid);
+											}}
+										/>
+									)}
 								/>
-							)}
+							</ModalContentStyle>
+						</Modal.Content>
+						<WizardFooter
+							cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
+							previous={{ visible: true, onClick: () => history.push(basePath) }}
+							next={{
+								visible: appendTrailingSlash(location.pathname) === basePath ? !!file : false,
+								onClick: () => history.push(appendPathSegment(basePath, 'step2')),
+							}}
+							save={{ visible: true, onClick: handleSubmit }}
 						/>
-					</ModalContentStyle>
-				</Modal.Content>
-				<WizardFooter
-					cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
-					previous={{ visible: true, onClick: () => history.push(basePath) }}
-					next={{
-						visible: appendTrailingSlash(location.pathname) === basePath ? !!file : false,
-						onClick: () => history.push(appendPathSegment(basePath, 'step2')),
-					}}
-					save={{ visible: true, onClick: handleSubmit }}
-				/>
-			</>
-		</Modal>
+					</>
+				</Modal>
 			)}
 		</>
 	);

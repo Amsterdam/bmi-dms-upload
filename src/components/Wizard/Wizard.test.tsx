@@ -192,7 +192,7 @@ describe('<Wizard />', () => {
 			'Clicking button with test id %s triggers resetState and terminates the wizard',
 			(dataTestId) => {
 				const pushSpy = jest.fn();
-				(useHistory as jest.Mock).mockReturnValue({
+				mocked(useHistory as jest.Mock).mockReturnValue({
 					push: pushSpy,
 				});
 				const spy = jest.spyOn(actions, 'resetState');
