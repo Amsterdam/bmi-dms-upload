@@ -1,5 +1,6 @@
 import { ControlProps } from '@jsonforms/core';
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from 'react-dom/test-utils';
 import useCustomControl from './useCustomControl';
 
 describe('useCustomControl()', () => {
@@ -51,7 +52,9 @@ describe('useCustomControl()', () => {
 	test('onFocus', () => {
 		const { result } = renderHook(() => useCustomControl(props));
 
-		result.current.onFocus();
+		act(() => {
+			result.current.onFocus();
+		});
 
 		expect(result.current.isFocused).toBe(true);
 		expect(result.current.isDirty).toBe(true);
@@ -59,16 +62,20 @@ describe('useCustomControl()', () => {
 
 	test('onBlur', () => {
 		const { result } = renderHook(() => useCustomControl(props));
-		result.current.onBlur({
-			currentTarget: {
-				value: '__VALUE__',
-			},
+		act(() => {
+			result.current.onBlur({
+				currentTarget: {
+					value: '__VALUE__',
+				},
+			});
 		});
 		expect(handleChangeMock).toHaveBeenCalledWith('./', '__VALUE__');
 		expect(result.current.isFocused).toBe(false);
 
-		result.current.onBlur({
-			currentTarget: {},
+		act(() => {
+			result.current.onBlur({
+				currentTarget: {},
+			});
 		});
 		expect(handleChangeMock).toHaveBeenCalledWith('./', '');
 	});
