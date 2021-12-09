@@ -142,9 +142,7 @@ describe('<Wizard />', () => {
 		'should catch error when promise is rejected',
 		(dataTestId) => {
 			//to turn off error logging
-			jest.spyOn(console, 'error').mockImplementation(jest.fn());
-
-			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			jest.spyOn(console, 'error').mockImplementation(jest.fn());const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
 			renderComponent({ file: mockFile, metadata: {} }, '/', {
 				onCancel: onCancelMockRejected,
 			});
@@ -153,18 +151,20 @@ describe('<Wizard />', () => {
 		},
 	);
 
-	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
-		const pushSpy = jest.fn();
-		mocked(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		const spy = jest.spyOn(actions, 'resetState');
-		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-		fireEvent.click(screen.getByTestId('modal-close-button'));
-		expect(spy).toHaveBeenCalled();
-		expect(onCloseMock).toHaveBeenCalled();
-		expect(pushSpy).toHaveBeenCalledWith('/');
-	});
+	test('Clicking modal close button triggers resetState and terminates the wizard',
+		() => {
+			const pushSpy = jest.fn();
+			mocked(useHistory as jest.Mock).mockReturnValue({
+				push: pushSpy,
+			});
+			const spy = jest.spyOn(actions, 'resetState');
+			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+			fireEvent.click(screen.getByTestId('modal-close-button'));
+			expect(spy).toHaveBeenCalled();
+			expect(onCloseMock).toHaveBeenCalled();
+			expect(pushSpy).toHaveBeenCalledWith('/');
+		}
+	);
 
 	test('should go to navigate to previous step when clicking previousbutton', () => {
 		const pushSpy = jest.fn();
@@ -244,6 +244,31 @@ describe('<Wizard />', () => {
 			});
 			await waitFor(() => {
 				expect(pushSpy).toThrowError();
+			});
+		});
+
+		test('should be able to catch error on submit', async () => {
+			const pushSpy = jest.fn().mockImplementation(() => {
+				throw new Error('...');
+			});
+			const errorSpy = jest.spyOn(console, 'error');
+			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
+			const metadata: MetadataExample = {
+				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				executionDate: '__EXECUTION_DATE__',
+			};
+			getMetadataFromStoreMock.mockReturnValue(metadata);
+
+			renderComponent({ file: mockFile, metadata: {} }, '/step2');
+			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
+			act(() => {
+				onChange(metadata, true, []);
+			});
+			act(() => {
+				fireEvent.click(screen.getByText('Opslaan'));
+			});
+			await waitFor(() => {
+				expect(errorSpy).toHaveBeenCalled();
 			});
 		});
 	});
