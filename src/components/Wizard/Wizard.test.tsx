@@ -124,16 +124,16 @@ describe('<Wizard />', () => {
 		expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile);
 	});
 
-		test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
-			const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
-			renderComponent({ file: mockFile, metadata: {} }, '/');
-			const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
-			act(() => {
-				onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
-			});
-			expect(removeFileFromStoreSpy).toHaveBeenCalled();
-			expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
+	test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
+		const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
+		renderComponent({ file: mockFile, metadata: {} }, '/');
+		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
 		});
+		expect(removeFileFromStoreSpy).toHaveBeenCalled();
+		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
+	});
 
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'should catch error when promise is rejected',
@@ -156,7 +156,7 @@ describe('<Wizard />', () => {
 			const pushSpy = jest.fn();
 			mocked(useHistory).mockReturnValue({
 				push: pushSpy,
-			}as any);
+			} as any);
 			const spy = jest.spyOn(actions, 'resetState');
 			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
 			fireEvent.click(screen.getByTestId(dataTestId));
@@ -166,34 +166,34 @@ describe('<Wizard />', () => {
 		},
 	);
 
-		test('should go to navigate to previous step when clicking previousbutton', () => {
-			const pushSpy = jest.fn();
-			(useHistory as jest.Mock).mockReturnValue({
-				push: pushSpy,
-			});
-			renderComponent(
-				{
-					file: mockFile,
-					metadata: { mockData },
-				},
-				'/step2',
-			);
-			const previousButton = screen.getByTestId('previous-button');
-			expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-			fireEvent.click(previousButton);
-
-			expect(pushSpy).toHaveBeenCalledWith('/');
-		});
-
-		test('should go to navigate to previous step when clicking previousbutton', () => {
+	test('should go to navigate to previous step when clicking previousbutton', () => {
 		const pushSpy = jest.fn();
 		(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
-			renderComponent(
-				{
-					file: mockFile,
-					metadata: { mockData },
+		renderComponent(
+			{
+				file: mockFile,
+				metadata: { mockData },
+			},
+			'/step2',
+		);
+		const previousButton = screen.getByTestId('previous-button');
+		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
+		fireEvent.click(previousButton);
+
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
+
+	test('should go to navigate to previous step when clicking previousbutton', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		renderComponent(
+			{
+				file: mockFile,
+				metadata: { mockData },
 			},
 			'/step2',
 		);
@@ -211,18 +211,19 @@ describe('<Wizard />', () => {
 			const metadata: MetadataExample = {
 				documentDescription: '__DOCUMENT_DESCRIPTION__',
 				executionDate: '__EXECUTION_DATE__',
-				};
-				getMetadataFromStoreMock.mockReturnValue(metadata);
+			};
+			getMetadataFromStoreMock.mockReturnValue(metadata);
 			renderComponent({ file: mockFile, metadata: {} }, '/step2');
 			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
 			act(() => {
 				onChange(metadata, true, []);
 			});
 			act(() => {
-			fireEvent.click(screen.getByText('Opslaan'));});
+				fireEvent.click(screen.getByText('Opslaan'));
+			});
 			await waitFor(() => {
 				expect(setMetadataSpy).toHaveBeenCalledWith(metadata);
-			expect(onMetadataSubmitMock).toHaveBeenCalledWith({
+				expect(onMetadataSubmitMock).toHaveBeenCalledWith({
 					file: mockFile,
 					metadata,
 				});
@@ -256,7 +257,6 @@ describe('<Wizard />', () => {
 			await waitFor(() => {
 				expect(pushSpy).toThrowError();
 			});
-		});
 		});
 	});
 });

@@ -50,9 +50,7 @@ describe('useCustomControl()', () => {
 	test('onFocus', () => {
 		const { result } = renderHook(() => useCustomControl(props));
 
-		act(() => {
-			result.current.onFocus();
-		});
+		result.current.onFocus();
 
 		expect(result.current.isFocused).toBe(true);
 		expect(result.current.isDirty).toBe(true);
