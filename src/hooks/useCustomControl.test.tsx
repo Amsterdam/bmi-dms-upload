@@ -1,9 +1,22 @@
 import { ControlProps } from '@jsonforms/core';
 import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-dom/test-utils';
 import useCustomControl from './useCustomControl';
 
 describe('useCustomControl()', () => {
+	const handleChangeMock = jest.fn();
+	const props: ControlProps = {
+		data: 'value',
+		errors: 'error',
+		label: 'label',
+		handleChange: handleChangeMock,
+		path: './',
+		id: 'd',
+		rootSchema: {},
+		uischema: { scope: 'test', type: 'Control' },
+		schema: {},
+		enabled: true,
+		visible: true,
+	};
 	test('should return correct entries', () => {
 		const { result } = renderHook(() =>
 			useCustomControl({
@@ -35,22 +48,44 @@ describe('useCustomControl()', () => {
 		expect(currResult.onChange).toEqual(expect.any(Function));
 	});
 
-	test('onFocus should set isFocused to true and isDirty to true', () => {
-		const mockHandleChange = jest.fn()
-		const { result } = renderHook(() =>
-			useCustomControl({
-				data: 'test',
-				errors: 'test-error',
-				label: 'test-label',
-				path: '/test',
-				handleChange:(path,value) => mockHandleChange(path,value),
-			} as ControlProps),
-		);
+	test('onFocus', () => {
+		const { result } = renderHook(() => useCustomControl(props));
 
-		act(() => {
-			result.current.onFocus();
-		});
+		result.current.onFocus();
+
 		expect(result.current.isFocused).toBe(true);
 		expect(result.current.isDirty).toBe(true);
+	});
+
+	test('onBlur', () => {
+		const { result } = renderHook(() => useCustomControl(props));
+		result.current.onBlur({
+			currentTarget: {
+				value: '__VALUE__',
+			},
+		});
+		expect(handleChangeMock).toHaveBeenCalledWith('./', '__VALUE__');
+		expect(result.current.isFocused).toBe(false);
+
+		result.current.onBlur({
+			currentTarget: {},
+		});
+		expect(handleChangeMock).toHaveBeenCalledWith('./', '');
+	});
+
+	test('onChange', () => {
+		const { result } = renderHook(() => useCustomControl(props));
+		result.current.onChange({
+			currentTarget: {
+				value: '__VALUE__',
+			},
+		});
+		expect(handleChangeMock).toHaveBeenCalledWith('./', '__VALUE__');
+
+		result.current.onChange({
+			currentTarget: {},
+		});
+
+		expect(handleChangeMock).toHaveBeenCalledWith('./', '');
 	});
 });
