@@ -113,6 +113,74 @@ describe('<Wizard />', () => {
 		expect(pushSpy).toHaveBeenCalledWith('/step2');
 	});
 
+	test('setFile is called when file is uploaded successfully', () => {
+		const setFileSpy = jest.spyOn(actions, 'setFile');
+		renderComponent(storeState);
+		const { onFileSuccess } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileSuccess && onFileSuccess(mockFile);
+		});
+		expect(setFileSpy).toHaveBeenCalledWith(mockFile);
+		expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile);
+	});
+
+	test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
+		const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
+		renderComponent({ file: mockFile, metadata: {} }, '/');
+		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
+		});
+		expect(removeFileFromStoreSpy).toHaveBeenCalled();
+		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
+	});
+
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'should catch error when promise is rejected',
+		(dataTestId) => {
+			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			renderComponent({ file: mockFile, metadata: {} }, '/', {
+				onCancel: onCancelMockRejected,
+			});
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(onCancelMockRejected).rejects.toThrow();
+		},
+	);
+
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'Clicking button with test id %s triggers resetState and terminates the wizard',
+		(dataTestId) => {
+			const pushSpy = jest.fn();
+			(useHistory as jest.Mock).mockReturnValue({
+				push: pushSpy,
+			});
+			const spy = jest.spyOn(actions, 'resetState');
+			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(spy).toHaveBeenCalled();
+			expect(onCloseMock).toHaveBeenCalled();
+			expect(pushSpy).toHaveBeenCalledWith('/');
+		},
+	);
+
+	test('should go to navigate to previous step when clicking previousbutton', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		renderComponent(
+			{
+				file: mockFile,
+				metadata: { mockData },
+			},
+			'/step2',
+		);
+		const previousButton = screen.getByTestId('previous-button');
+		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
+		fireEvent.click(previousButton);
+
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
 	describe('onMetadataSubmit()', () => {
 		test('is called when saving while <MetaDataForm /> is valid', async () => {
 			const pushSpy = jest.fn();
@@ -154,85 +222,29 @@ describe('<Wizard />', () => {
 			});
 		});
 
-		test('setFile is called when file is uploaded successfully', () => {
-			const setFileSpy = jest.spyOn(actions, 'setFile');
-			renderComponent(storeState);
-			const { onFileSuccess } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		test('should be able to catch error on submit', async () => {
+			const pushSpy = jest.fn().mockImplementation(() => {
+				throw new Error('...');
+			});
+			const errorSpy = jest.spyOn(console, 'error');
+			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
+			const metadata: MetadataExample = {
+				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				executionDate: '__EXECUTION_DATE__',
+			};
+			getMetadataFromStoreMock.mockReturnValue(metadata);
+
+			renderComponent({ file: mockFile, metadata: {} }, '/step2');
+			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
 			act(() => {
-				onFileSuccess && onFileSuccess(mockFile);
+				onChange(metadata, true, []);
 			});
-			expect(setFileSpy).toHaveBeenCalledWith(mockFile);
-			expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile);
-		});
-
-		test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
-			const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
-			renderComponent({ file: mockFile, metadata: {} }, '/');
-			const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 			act(() => {
-				onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
+				fireEvent.click(screen.getByText('Opslaan'));
 			});
-			expect(removeFileFromStoreSpy).toHaveBeenCalled();
-			expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
-		});
-
-		test.each([['cancel-wizard'], ['modal-close-button']])(
-			'should catch error when promise is rejected',
-			(dataTestId) => {
-				const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
-				renderComponent({ file: mockFile, metadata: {} }, '/', {
-					onCancel: onCancelMockRejected,
-				});
-				fireEvent.click(screen.getByTestId(dataTestId));
-				expect(onCancelMockRejected).rejects.toThrow();
-			},
-		);
-
-		test.each([['cancel-wizard'], ['modal-close-button']])(
-			'Clicking button with test id %s triggers resetState and terminates the wizard',
-			(dataTestId) => {
-				const pushSpy = jest.fn();
-				(useHistory as jest.Mock).mockReturnValue({
-					push: pushSpy,
-				});
-				const spy = jest.spyOn(actions, 'resetState');
-				renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-				fireEvent.click(screen.getByTestId(dataTestId));
-				expect(spy).toHaveBeenCalled();
-				expect(onCloseMock).toHaveBeenCalled();
-				expect(pushSpy).toHaveBeenCalledWith('/');
-			},
-		);
-
-		test('should go to navigate to previous step when clicking previousbutton', () => {
-			const pushSpy = jest.fn();
-			(useHistory as jest.Mock).mockReturnValue({
-				push: pushSpy,
+			await waitFor(() => {
+				expect(errorSpy).toHaveBeenCalled();
 			});
-			renderComponent(
-				{
-					file: mockFile,
-					metadata: { mockData },
-				},
-				'/step2',
-			);
-			const previousButton = screen.getByTestId('previous-button');
-			expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-			fireEvent.click(previousButton);
-
-			expect(pushSpy).toHaveBeenCalledWith('/');
-		});
-
-		test('Should not submit when invalid data', () => {
-			renderComponent(
-				{
-					file: mockFile,
-					metadata: { documentDescription: '', executionDate: '' },
-				},
-				'/step2',
-			);
-			fireEvent.click(screen.getByText('Opslaan'));
-			expect(onMetadataSubmitMock).not.toHaveBeenCalled();
 		});
 	});
 });
