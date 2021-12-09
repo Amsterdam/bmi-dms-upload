@@ -139,9 +139,7 @@ describe('<Wizard />', () => {
 		'should catch error when promise is rejected',
 		(dataTestId) => {
 			//to turn off error logging
-			jest.spyOn(console, 'error').mockImplementation(jest.fn());
-
-			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			jest.spyOn(console, 'error').mockImplementation(jest.fn());const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
 			renderComponent({ file: mockFile, metadata: {} }, '/', {
 				onCancel: onCancelMockRejected,
 			});
@@ -256,6 +254,31 @@ describe('<Wizard />', () => {
 			});
 			await waitFor(() => {
 				expect(pushSpy).toThrowError();
+			});
+		});
+
+		test('should be able to catch error on submit', async () => {
+			const pushSpy = jest.fn().mockImplementation(() => {
+				throw new Error('...');
+			});
+			const errorSpy = jest.spyOn(console, 'error');
+			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
+			const metadata: MetadataExample = {
+				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				executionDate: '__EXECUTION_DATE__',
+			};
+			getMetadataFromStoreMock.mockReturnValue(metadata);
+
+			renderComponent({ file: mockFile, metadata: {} }, '/step2');
+			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
+			act(() => {
+				onChange(metadata, true, []);
+			});
+			act(() => {
+				fireEvent.click(screen.getByText('Opslaan'));
+			});
+			await waitFor(() => {
+				expect(errorSpy).toHaveBeenCalled();
 			});
 		});
 	});
