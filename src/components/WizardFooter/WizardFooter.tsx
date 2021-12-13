@@ -107,6 +107,7 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 						onClick={onNextClick}
 						disabled={preventNextStep}
 						data-testid={previousTestId}
+						taskflow
 					>
 						{nextLabel}
 					</WizardButton>

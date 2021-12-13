@@ -51,7 +51,7 @@ describe('<WizardFooter />', () => {
 
 		fireEvent.click(screen.getByText(buttonLabel));
 
-		expect(onClick.mock.calls[0][0].type).toEqual('click');
+		expect(onClick).toHaveBeenCalled();
 	});
 
 	// Renders disabled buttons

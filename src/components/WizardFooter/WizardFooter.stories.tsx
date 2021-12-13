@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import WizardFooter from './WizardFooter';
 
 storiesOf('WizardFooter', module)
-	.add('Default', () => <WizardFooter />)
 	.add('Cancel, Previous and Next', () => (
 		<WizardFooter
 			cancel={{ visible: true, onClick: undefined }}
@@ -21,9 +20,9 @@ storiesOf('WizardFooter', module)
 	))
 	.add('Cancel, Previous and Next (custom labels', () => (
 		<WizardFooter
-			cancel={{ visible: true, onClick: undefined, label: '❌' }}
-			previous={{ visible: true, onClick: undefined, label: '⬅️' }}
-			next={{ visible: true, disabled: true, onClick: undefined, label: '➡️' }}
+			cancel={{ visible: true, onClick: undefined, label: 'Cancel' }}
+			previous={{ visible: true, onClick: undefined, label: 'Previous' }}
+			next={{ visible: true, disabled: true, onClick: undefined, label: 'Next' }}
 		/>
 	))
 	.add('Cancel and Save', () => (
@@ -37,8 +36,8 @@ storiesOf('WizardFooter', module)
 	))
 	.add('Cancel and Save (custom labels)', () => (
 		<WizardFooter
-			cancel={{ visible: true, onClick: undefined, label: '❌' }}
-			save={{ visible: true, onClick: undefined, label: '➡️' }}
+			cancel={{ visible: true, onClick: undefined, label: 'Cancel' }}
+			save={{ visible: true, onClick: undefined, label: 'Save' }}
 		/>
 	))
 	.add('Previous and Next', () => (
@@ -50,10 +49,10 @@ storiesOf('WizardFooter', module)
 			next={{ visible: true, disabled: true, onClick: undefined }}
 		/>
 	))
-	.add('Previous and Save (custom labels)', () => (
+	.add('Previous and Next (custom labels)', () => (
 		<WizardFooter
-			previous={{ visible: true, onClick: undefined, label: '⬅️' }}
-			next={{ visible: true, onClick: undefined, label: '⏺' }}
+			previous={{ visible: true, onClick: undefined, label: 'Previous' }}
+			next={{ visible: true, onClick: undefined, label: 'Next' }}
 		/>
 	))
 	.add('Next and Save', () => (
@@ -67,7 +66,7 @@ storiesOf('WizardFooter', module)
 	))
 	.add('Next and Save (custom labels)', () => (
 		<WizardFooter
-			next={{ visible: true, label: '➡️', onClick: undefined }}
-			save={{ visible: true, label: '⏺', onClick: undefined }}
+			next={{ visible: true, label: 'Next', onClick: undefined }}
+			save={{ visible: true, label: 'Save', onClick: undefined }}
 		/>
 	));
