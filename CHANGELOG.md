@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.10...v0.0.2-alpha.0) (2021-12-13)
+
+
+### Features
+
+* **bulkmetadata:** add StaticMetadata component ([47d03df](https://github.com/Amsterdam/bmi-dms-upload/commit/47d03df514b73dc46d5e641868d0481c5be53635))
+* **bulkmetadata:** add StaticMetadata tests ([c49b413](https://github.com/Amsterdam/bmi-dms-upload/commit/c49b413ebdefdb53e4d843e086a0abfe014fbd7a))
+* **bulkmetadata:** update test ([533ba3c](https://github.com/Amsterdam/bmi-dms-upload/commit/533ba3c76b3b9f21534af3e3eba621be9caea7e3))
+* **bulkmetadata:** updated by review comments ([81c0892](https://github.com/Amsterdam/bmi-dms-upload/commit/81c08920e24cb052149efe12137c7b9494103cca))
+* **bulkmetadata:** updated by review comments ([5bbc734](https://github.com/Amsterdam/bmi-dms-upload/commit/5bbc734a4c74c6503f071007c6bcda15c96528a2))
+* **bulkmetadata:** updated by review comments ([a9c73e8](https://github.com/Amsterdam/bmi-dms-upload/commit/a9c73e825ab498660f6683086e024975bb725c85))
+* **bulkmetadata:** updated by review comments ([1a1fa9e](https://github.com/Amsterdam/bmi-dms-upload/commit/1a1fa9e7d8c3d3ccabe242339a4a7891c31e3f57))
+
+
+### Bug Fixes
+
+* **header:** styling in line with design system ([36ef717](https://github.com/Amsterdam/bmi-dms-upload/commit/36ef717cbc1ab3b05e28306e41ed1011f71b8695))
+* **metadataform:** fixed alignment of label with text field ([309fc33](https://github.com/Amsterdam/bmi-dms-upload/commit/309fc33c392188892f6ef671efd071cc1e99cc32))
+* **styling:** styling fixes after design QA ([8cf9698](https://github.com/Amsterdam/bmi-dms-upload/commit/8cf9698e55dd6c43fa5d947011fc831cb7276be0))
+* **wizard:** tweaking buttons in footer after design QA ([7948562](https://github.com/Amsterdam/bmi-dms-upload/commit/794856216d044221b6daa594fb4f5ceddcf8f42f))
+
 ### [0.0.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.10...v0.0.1) (2021-12-07)
 
 
