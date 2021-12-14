@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
 import { Button } from '@amsterdam/asc-ui';
 import { ChevronLeft, Close } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
@@ -11,6 +11,7 @@ import { PreviousButtonStyle, CancelButtonStyle, ModalContentStyle, ModalTopBarS
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
+import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
 
 export type Asset = {
 	code: string;
@@ -66,6 +67,7 @@ export default function Wizard<T>({
 	const file = useSelector(getFileFromStore);
 	const metadata = useSelector(getMetadataFromStore) as T;
 	const [isValidForm, setIsValidForm] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
@@ -111,89 +113,116 @@ export default function Wizard<T>({
 		resetAndClose();
 	}
 
+	const props = {
+		title: 'Annuleer uploaden',
+		message:
+			'U gaat het uploaden van de bestanden annuleren. De geuploade bestanden zullen uit het systeem worden verwijderd',
+		textCancelButton: '< Terug',
+		textConfirmButton: 'Oke >',
+		onCancel: () => {
+			console.log('Terug');
+		},
+		onConfirm: () => {
+			console.log('Oke');
+		},
+	};
+
 	return (
-		<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
-			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-				<ModalTopBarStyle styleAs="h4" as="h2">
-					Bestand uploaden voor {name}
-				</ModalTopBarStyle>
-			</Modal.TopBar>
-			<>
-				<Modal.Content>
-					<ModalContentStyle>
-						<Route
-							exact
-							path={basePath}
-							render={() => (
-								<Step1
-									getHeaders={getHeaders}
-									getPostUrl={getPostUrl}
-									onFileRemove={handleFileRemove}
-									onFileSuccess={getFile}
-									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-									httpMethod={uploadHTTPMethod}
+		<>
+			{isOpen && <ConfirmTermination />}
+			{!isOpen && (
+				<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
+					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+						<ModalTopBarStyle styleAs="h4" as="h2">
+							Bestand uploaden voor {name}
+						</ModalTopBarStyle>
+					</Modal.TopBar>
+					<>
+						<Modal.Content>
+							<ModalContentStyle>
+								<Route
+									exact
+									path={basePath}
+									render={() => (
+										<Step1
+											getHeaders={getHeaders}
+											getPostUrl={getPostUrl}
+											onFileRemove={handleFileRemove}
+											onFileSuccess={getFile}
+											storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+											httpMethod={uploadHTTPMethod}
+										/>
+									)}
 								/>
-							)}
-						/>
-						<Route
-							path={appendPathSegment(basePath, 'step2')}
-							render={() => (
-								<MetadataForm
-									{...metadataForm}
-									onChange={(data, valid, errors) => {
-										dispatch(setMetadata(data));
-										setIsValidForm(valid);
-									}}
+								<Route
+									path={appendPathSegment(basePath, 'step2')}
+									render={() => (
+										<MetadataForm
+											{...metadataForm}
+											onChange={(data, valid, errors) => {
+												dispatch(setMetadata(data));
+												setIsValidForm(valid);
+											}}
+										/>
+									)}
 								/>
-							)}
-						/>
-					</ModalContentStyle>
-				</Modal.Content>
-				<Modal.Actions>
-					<Modal.Actions.Left>
-						<CancelButtonStyle
-							variant="textButton"
-							iconLeft={<Close />}
-							onClick={() => {
-								onCancel({ file, metadata }).catch((err) => {
-									// TODO handle error gracefully
-									console.error(err);
-								});
-								resetAndClose();
-							}}
-							data-testid="cancel-wizard"
-						>
-							Annuleren
-						</CancelButtonStyle>
-					</Modal.Actions.Left>
-					<Modal.Actions.Right>
-						{appendTrailingSlash(location.pathname) === basePath ? (
-							<Button
-								variant="secondary"
-								taskflow
-								name="Volgende"
-								onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
-								disabled={!file}
+							</ModalContentStyle>
+							<button
+								onClick={() => {
+									setIsOpen(true);
+									confirm(props);
+								}}
 							>
-								Volgende
-							</Button>
-						) : (
-							<div>
-								<PreviousButtonStyle
+								Annuleren
+							</button>
+						</Modal.Content>
+						<Modal.Actions>
+							<Modal.Actions.Left>
+								<CancelButtonStyle
 									variant="textButton"
-									iconLeft={<ChevronLeft />}
-									onClick={() => history.push(basePath)}
+									iconLeft={<Close />}
+									onClick={() => {
+										onCancel({ file, metadata }).catch((err) => {
+											// TODO handle error gracefully
+											console.error(err);
+										});
+										resetAndClose();
+									}}
+									data-testid="cancel-wizard"
 								>
-									Vorige
-								</PreviousButtonStyle>
-								<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
-									Opslaan
-								</Button>
-							</div>
-						)}
-					</Modal.Actions.Right>
-				</Modal.Actions>
-			</>
-		</Modal>
+									Annuleren
+								</CancelButtonStyle>
+							</Modal.Actions.Left>
+							<Modal.Actions.Right>
+								{appendTrailingSlash(location.pathname) === basePath ? (
+									<Button
+										variant="secondary"
+										taskflow
+										name="Volgende"
+										onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
+										disabled={!file}
+									>
+										Volgende
+									</Button>
+								) : (
+									<div>
+										<PreviousButtonStyle
+											variant="textButton"
+											iconLeft={<ChevronLeft />}
+											onClick={() => history.push(basePath)}
+										>
+											Vorige
+										</PreviousButtonStyle>
+										<Button variant="secondary" onClick={handleSubmit} disabled={!isValidForm}>
+											Opslaan
+										</Button>
+									</div>
+								)}
+							</Modal.Actions.Right>
+						</Modal.Actions>
+					</>
+				</Modal>
+			)}
+		</>
 	);
 }
