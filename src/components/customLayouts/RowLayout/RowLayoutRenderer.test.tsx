@@ -32,9 +32,8 @@ describe('<RowLayoutRenderer />', () => {
 		expect(screen.getByText('Documentomschrijving')).toBeInTheDocument();
 	});
 
-    test('Should not render when visible set to false', () => {
-        render({visible:false})
-        expect(screen.queryByTestId('row-layout')?.children).toHaveLength(0);
-
-    })
+	test('Should not render when visible set to false', () => {
+		render({ visible: false });
+		expect(screen.queryByTestId('row-layout')?.children).toHaveLength(0);
+	});
 });
