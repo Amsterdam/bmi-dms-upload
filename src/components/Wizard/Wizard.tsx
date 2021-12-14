@@ -134,12 +134,7 @@ export default function Wizard<T>({
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
-			<Modal
-			id="dms-upload-wizard"
-			open
-			onClose={() => terminate()}
-			closeOnBackdropClick={false}
-		>
+			<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
 						Bestand uploaden voor {name}
