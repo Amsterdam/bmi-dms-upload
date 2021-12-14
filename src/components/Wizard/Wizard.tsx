@@ -159,7 +159,7 @@ export default function Wizard<T>({
 				</Modal.Content>
 				<WizardFooter
 					cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
-					previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
+					previous={{ visible: appendTrailingSlash(location.pathname) !== basePath, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
 					next={{
 						visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
 						onClick: () => history.push(appendPathSegment(basePath, 'step2')),

@@ -234,7 +234,7 @@ describe('<Wizard />', () => {
 
 			expect(screen.getByText('Opslaan')).toHaveAttribute('disabled');
 		});
-
+          
 		test('should be able to catch error on submit', async () => {
 			const pushSpy = jest.fn().mockImplementation(() => {
 				throw new Error('...');
@@ -245,7 +245,6 @@ describe('<Wizard />', () => {
 				executionDate: '__EXECUTION_DATE__',
 			};
 			getMetadataFromStoreMock.mockReturnValue(metadata);
-
 			renderComponent({ file: mockFile, metadata }, '/step2');
 			act(() => {
 				fireEvent.click(screen.getByText('Opslaan'));
