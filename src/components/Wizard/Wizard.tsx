@@ -185,7 +185,7 @@ export default function Wizard<T>({
 							}}
 							save={{
 						visible: appendTrailingSlash(location.pathname) !== basePath,
-						disabled: !file,
+						disabled: !isValidForm,
 						onClick: handleSubmit,
 						dataTestId: 'save-button',
 					}}
