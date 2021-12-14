@@ -32,11 +32,9 @@ describe('useCustomControl()', () => {
 			isFocused: false,
 			isDirty: true,
 			isValid: false,
-			onFocus: function () {
-				console.log('onFocus');
-			},
-			onBlur: () => console.log('onBlur'),
-			onChange: () => console.log('onChange'),
+			onFocus: jest.fn(),
+			onBlur: jest.fn(),
+			onChange: jest.fn(),
 		};
 		const currResult = result.current;
 

@@ -214,19 +214,13 @@ describe('<Wizard />', () => {
 			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
 			renderComponent({ file: mockFile, metadata: {} }, '/step2');
 
-			act(() => {
-				fireEvent.click(screen.getByText('Opslaan'));
-			});
-			await waitFor(() => {
-				expect(onMetadataSubmitMock).not.toHaveBeenCalled();
-			});
+			expect(screen.getByText('Opslaan')).toHaveAttribute('disabled');
 		});
 
 		test('should be able to catch error on submit', async () => {
 			const pushSpy = jest.fn().mockImplementation(() => {
 				throw new Error('...');
 			});
-			const errorSpy = jest.spyOn(console, 'error');
 			useHistoryMock.mockReturnValue({ push: pushSpy } as any);
 			const metadata: MetadataExample = {
 				documentDescription: '__DOCUMENT_DESCRIPTION__',
@@ -234,16 +228,12 @@ describe('<Wizard />', () => {
 			};
 			getMetadataFromStoreMock.mockReturnValue(metadata);
 
-			renderComponent({ file: mockFile, metadata: {} }, '/step2');
-			const { onChange } = mockComponentProps<ComponentProps<typeof MetadataForm>>(MetadataFormMock);
-			act(() => {
-				onChange(metadata, true, []);
-			});
+			renderComponent({ file: mockFile, metadata }, '/step2');
 			act(() => {
 				fireEvent.click(screen.getByText('Opslaan'));
 			});
 			await waitFor(() => {
-				expect(errorSpy).toHaveBeenCalled();
+				expect(pushSpy).toThrowError();
 			});
 		});
 	});
