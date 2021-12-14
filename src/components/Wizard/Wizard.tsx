@@ -181,7 +181,7 @@ export default function Wizard<T>({
 									confirm(props);
 								}}
 							>
-								Annuleren
+								ConfirmTermination
 							</button>
 						</Modal.Content>
 						<WizardFooter
