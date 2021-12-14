@@ -13,14 +13,16 @@ export function createMockComponent(
 ): React.FC<ComponentMockProps> {
 	const NamedComponentMock: React.FC<ComponentMockProps> = ({
 		children,
-		'data-testid': dataTestId = defaultDataTestId,
+		'data-testid': dataTestId = defaultDataTestId || componentName,
 		onClick,
 		onChange,
 		className,
+		...props
 	}) => (
 		<div
 			data-mock={`Mock${componentName}`}
 			data-testid={dataTestId}
+			data-props={props}
 			onClick={onClick}
 			onChange={onChange}
 			className={className}
@@ -28,6 +30,8 @@ export function createMockComponent(
 			{children}
 		</div>
 	);
-	NamedComponentMock.displayName = componentName;
-	return jest.fn().mockImplementation(NamedComponentMock);
+	const component = jest.fn().mockImplementation(NamedComponentMock);
+	// @ts-ignore HACK so that snapshots do not suffer from `mockConstructor` instead of the component name
+	component.displayName = componentName;
+	return component;
 }
