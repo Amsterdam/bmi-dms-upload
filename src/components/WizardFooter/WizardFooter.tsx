@@ -95,7 +95,7 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 						variant="textButton"
 						iconLeft={<ChevronLeft />}
 						onClick={onPreviousClick}
-						data-testid={nextTestId}
+						data-testid={previousTestId}
 					>
 						{previousLabel}
 					</PreviousButtonStyle>
@@ -106,7 +106,7 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 						variant="secondary"
 						onClick={onNextClick}
 						disabled={preventNextStep}
-						data-testid={previousTestId}
+						data-testid={nextTestId}
 						taskflow
 					>
 						{nextLabel}
