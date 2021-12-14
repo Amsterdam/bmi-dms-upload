@@ -139,42 +139,42 @@ export default function Wizard<T>({
 		<>
 			{isOpen && <ConfirmTermination />}
 			{!isOpen && (
-				<Modal id="dms-upload-wizard" open={true} onClose={() => terminate()} closeOnBackdropClick={false}>
-					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-						<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
-					</Modal.TopBar>
-					<>
-						<Modal.Content>
-							<ModalContentStyle>
-								<Route
-									exact
-									path={basePath}
-									render={() => (
-										<Step1
-											getHeaders={getHeaders}
-											getPostUrl={getPostUrl}
-											onFileRemove={handleFileRemove}
-											onFileSuccess={getFile}
-											storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-											httpMethod={uploadHTTPMethod}
-										/>
-									)}
+				<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
+			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+			</Modal.TopBar>
+			<>
+				<Modal.Content>
+					<ModalContentStyle>
+						<Route
+							exact
+							path={basePath}
+							render={() => (
+								<Step1
+									getHeaders={getHeaders}
+									getPostUrl={getPostUrl}
+									onFileRemove={handleFileRemove}
+									onFileSuccess={getFile}
+									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+									httpMethod={uploadHTTPMethod}
 								/>
-								<Route
-									path={appendPathSegment(basePath, 'step2')}
-									render={() => (
-										<MetadataForm
-											{...metadataForm}
-											onChange={(data, valid, errors) => {
-												dispatch(setMetadata(data));
-												setIsValidForm(valid);
-											}}
-										/>
-									)}
+							)}
+						/>
+						<Route
+							path={appendPathSegment(basePath, 'step2')}
+							render={() => (
+								<MetadataForm
+									{...metadataForm}
+									onChange={(data, valid, errors) => {
+										dispatch(setMetadata(data));
+										setIsValidForm(valid);
+									}}
 								/>
-							</ModalContentStyle>
-						</Modal.Content>
-						<WizardFooter
+							)}
+						/>
+					</ModalContentStyle>
+				</Modal.Content>
+				<WizardFooter
 							cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
 							previous={{ visible: true, onClick: () => history.push(basePath) }}
 							next={{
