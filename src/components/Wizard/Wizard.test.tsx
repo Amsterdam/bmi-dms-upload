@@ -138,6 +138,9 @@ describe('<Wizard />', () => {
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'should catch error when promise is rejected',
 		(dataTestId) => {
+			//to turn off error logging
+			jest.spyOn(console, 'error').mockImplementation(jest.fn());
+
 			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
 			renderComponent({ file: mockFile, metadata: {} }, '/', {
 				onCancel: onCancelMockRejected,
