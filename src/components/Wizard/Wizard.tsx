@@ -178,12 +178,16 @@ export default function Wizard<T>({
 							cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
 							previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
 							next={{
-								visible: appendTrailingSlash(location.pathname) === basePath,
+								visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
 								onClick: () => history.push(appendPathSegment(basePath, 'step2')),
 						disabled: !file,
 						dataTestId: 'next-button',
 							}}
-							save={{ visible: true, onClick: handleSubmit, dataTestId: 'save-button' }}
+							save={{
+						visible: appendTrailingSlash(location.pathname) === '/step2',
+						onClick: handleSubmit,
+						dataTestId: 'save-button',
+					}}
 						/>
 					</>
 				</Modal>
