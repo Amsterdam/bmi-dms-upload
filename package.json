@@ -130,7 +130,7 @@
   "dependencies": {
     "@amsterdam/asc-assets": "^0.33.0",
     "@amsterdam/asc-ui": "^0.33.0",
-    "@amsterdam/bmi-component-library": "0.0.7",
+    "@amsterdam/bmi-component-library": "0.0.11",
     "@jsonforms/core": "3.0.0-alpha.2",
     "@jsonforms/material-renderers": "3.0.0-alpha.2",
     "@jsonforms/react": "3.0.0-alpha.2",
