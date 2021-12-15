@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1...v0.0.2) (2021-12-15)
+
+
+### Features
+
+* **bulkmetadata:** add StaticMetadata component ([47d03df](https://github.com/Amsterdam/bmi-dms-upload/commit/47d03df514b73dc46d5e641868d0481c5be53635))
+* **bulkmetadata:** add StaticMetadata tests ([c49b413](https://github.com/Amsterdam/bmi-dms-upload/commit/c49b413ebdefdb53e4d843e086a0abfe014fbd7a))
+* **bulkmetadata:** update test ([533ba3c](https://github.com/Amsterdam/bmi-dms-upload/commit/533ba3c76b3b9f21534af3e3eba621be9caea7e3))
+* **bulkmetadata:** updated by review comments ([81c0892](https://github.com/Amsterdam/bmi-dms-upload/commit/81c08920e24cb052149efe12137c7b9494103cca))
+* **bulkmetadata:** updated by review comments ([5bbc734](https://github.com/Amsterdam/bmi-dms-upload/commit/5bbc734a4c74c6503f071007c6bcda15c96528a2))
+* **bulkmetadata:** updated by review comments ([a9c73e8](https://github.com/Amsterdam/bmi-dms-upload/commit/a9c73e825ab498660f6683086e024975bb725c85))
+* **bulkmetadata:** updated by review comments ([1a1fa9e](https://github.com/Amsterdam/bmi-dms-upload/commit/1a1fa9e7d8c3d3ccabe242339a4a7891c31e3f57))
+
+
+### Bug Fixes
+
+* **modal:** freshly squeezed package-lock.json ([08f5167](https://github.com/Amsterdam/bmi-dms-upload/commit/08f5167f46a2be53def251a4c0b2356dfb0d47e7))
+* **modal:** modal actions were not split left and right in the production build ([d8a270f](https://github.com/Amsterdam/bmi-dms-upload/commit/d8a270fa280e4cfeadd30cac8d355471affb90e9))
+
 ### [0.0.2-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1-alpha.10...v0.0.2-alpha.0) (2021-12-13)
 
 
