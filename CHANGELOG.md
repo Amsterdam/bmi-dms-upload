@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.2...v0.0.3-alpha.0) (2021-12-17)
+
+
+### Features
+
+* **dms-upload:** bumped component library version and adjusted storybook, readme ([7b08195](https://github.com/Amsterdam/bmi-dms-upload/commit/7b081957047bd4ef76490785b0b64cf52d8d3534))
+
 ### [0.0.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.1...v0.0.2) (2021-12-15)
 
 
