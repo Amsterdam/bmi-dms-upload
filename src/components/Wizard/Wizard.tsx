@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -9,8 +9,9 @@ import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
+import Dialog, { confirm } from '../Dialog/Dialog';
 import WizardFooter from '../WizardFooter/WizardFooter';
+import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
 
 export type Asset = {
 	code: string;
@@ -103,15 +104,6 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
-	// This is a dummy method extracted from the original wizard implementation
-	function clickToCancel() {
-		onCancel({ file, metadata }).catch((err) => {
-			// TODO handle error gracefully
-			console.error(err);
-		});
-		resetAndClose();
-	}
-
 	function terminate() {
 		// In case the user presses the escape button on his/her keyboard
 		onCancel({ file, metadata }).catch((err) => {
@@ -146,7 +138,9 @@ export default function Wizard<T>({
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
 			<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-					<ModalTopBarStyle styleAs="h4" as="h2">Bestand uploaden voor {name}</ModalTopBarStyle>
+					<ModalTopBarStyle styleAs="h4" as="h2">
+						Bestand uploaden voor {name}
+					</ModalTopBarStyle>
 				</Modal.TopBar>
 				<>
 					<Modal.Content>
