@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps, confirm} from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
