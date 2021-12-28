@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps, confirm} from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -144,44 +144,44 @@ export default function Wizard<T>({
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
 			<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
-			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-				<ModalTopBarStyle styleAs="h4" as="h2">
-					Bestand uploaden voor {name}
-				</ModalTopBarStyle>
-			</Modal.TopBar>
-			<>
-				<Modal.Content>
-					<ModalContentStyle>
-						<Route
-							exact
-							path={basePath}
-							render={() => (
-								<Step1
-									getHeaders={getHeaders}
-									getPostUrl={getPostUrl}
-									onFileRemove={handleFileRemove}
-									onFileSuccess={getFile}
-									storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-									httpMethod={uploadHTTPMethod}
-								/>
-							)}
-						/>
-						<Route
-							path={appendPathSegment(basePath, 'step2')}
-							render={() => (
-								<MetadataForm
-									{...metadataForm}
-									onChange={(data, valid, errors) => {
-										dispatch(setMetadata(data));
-										setIsValidForm(valid);
-									}}
-								/>
-							)}
-						/>
-					</ModalContentStyle>
-				</Modal.Content>
-				<WizardFooter
-					cancel={{ visible: true, onClick: () => confirmTermination(), dataTestId: 'cancel-wizard' }}
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+					<ModalTopBarStyle styleAs="h4" as="h2">
+						Bestand uploaden voor {name}
+					</ModalTopBarStyle>
+				</Modal.TopBar>
+				<>
+					<Modal.Content>
+						<ModalContentStyle>
+							<Route
+								exact
+								path={basePath}
+								render={() => (
+									<Step1
+										getHeaders={getHeaders}
+										getPostUrl={getPostUrl}
+										onFileRemove={handleFileRemove}
+										onFileSuccess={getFile}
+										storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+										httpMethod={uploadHTTPMethod}
+									/>
+								)}
+							/>
+							<Route
+								path={appendPathSegment(basePath, 'step2')}
+								render={() => (
+									<MetadataForm
+										{...metadataForm}
+										onChange={(data, valid, errors) => {
+											dispatch(setMetadata(data));
+											setIsValidForm(valid);
+										}}
+									/>
+								)}
+							/>
+						</ModalContentStyle>
+					</Modal.Content>
+					<WizardFooter
+						cancel={{ visible: true, onClick: () => confirmTermination(), dataTestId: 'cancel-wizard' }}
 						previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
 						next={{
 							visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
