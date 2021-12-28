@@ -138,13 +138,11 @@ export default function Wizard<T>({
 
 	return (
 		<>
-			{isOpen && <ConfirmTermination />}
+			{isOpen && <Dialog id={'confirm-termination-dialog'} />}
 			{!isOpen && (
 				<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
 					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-						<ModalTopBarStyle >
-							Bestand uploaden voor {name}
-						</ModalTopBarStyle>
+						<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
 					</Modal.TopBar>
 					<>
 						<Modal.Content>
@@ -186,22 +184,21 @@ export default function Wizard<T>({
 							</button>
 						</Modal.Content>
 						<WizardFooter
-									cancel={{ visible: true,
-									onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
-								previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
-								next={{
-							visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
-										onClick: () => history.push(appendPathSegment(basePath, 'step2')),
-										disabled: !file,
-									dataTestId: 'next-button',
-										}}
-									save={{
+							cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
+							previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
+							next={{
+								visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
+								onClick: () => history.push(appendPathSegment(basePath, 'step2')),
+								disabled: !file,
+								dataTestId: 'next-button',
+							}}
+							save={{
 								visible: appendTrailingSlash(location.pathname) !== basePath,
-										disabled: !isValidForm,
-											onClick: handleSubmit,
-									dataTestId: 'save-button',
-								}}
-							/>
+								disabled: !isValidForm,
+								onClick: handleSubmit,
+								dataTestId: 'save-button',
+							}}
+						/>
 					</>
 				</Modal>
 			)}
