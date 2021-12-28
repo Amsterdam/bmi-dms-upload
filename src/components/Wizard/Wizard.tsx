@@ -103,15 +103,6 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
-	// This is a dummy method extracted from the original wizard implementation
-	function clickToCancel() {
-		onCancel({ file, metadata }).catch((err) => {
-			// TODO handle error gracefully
-			console.error(err);
-		});
-		resetAndClose();
-	}
-
 	function terminate() {
 		// In case the user presses the escape button on his/her keyboard
 		onCancel({ file, metadata }).catch((err) => {
