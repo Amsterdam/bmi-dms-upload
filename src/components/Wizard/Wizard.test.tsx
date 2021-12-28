@@ -96,7 +96,7 @@ describe('<Wizard />', () => {
 	test('Starts by rendering <Step1 />', () => {
 		renderComponent(storeState);
 		expect(screen.queryByTestId('step-1')).toBeInTheDocument();
-		expect(screen.queryByText('Volgende')).toBeDisabled();
+		expect(screen.queryByText('Volgende')).not.toBeInTheDocument();
 		expect(screen.queryByTestId('metadata-form')).not.toBeInTheDocument();
 		expect(cancelButton).toBeInTheDocument();
 	});
@@ -150,6 +150,21 @@ describe('<Wizard />', () => {
 		},
 	);
 
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'Clicking button with test id %s triggers resetState and terminates the wizard',
+		(dataTestId) => {
+			const pushSpy = jest.fn();
+			mocked(useHistory).mockReturnValue({
+				push: pushSpy,
+			}as any);
+			const spy = jest.spyOn(actions, 'resetState');
+			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(spy).toHaveBeenCalled();
+			expect(onCloseMock).toHaveBeenCalled();
+			expect(pushSpy).toHaveBeenCalledWith('/');
+		},
+	);
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'Clicking button with test id %s triggers resetState and terminates the wizard',
 		(dataTestId) => {
@@ -219,7 +234,7 @@ describe('<Wizard />', () => {
 
 			expect(screen.getByText('Opslaan')).toHaveAttribute('disabled');
 		});
-
+          
 		test('should be able to catch error on submit', async () => {
 			const pushSpy = jest.fn().mockImplementation(() => {
 				throw new Error('...');
@@ -230,7 +245,6 @@ describe('<Wizard />', () => {
 				executionDate: '__EXECUTION_DATE__',
 			};
 			getMetadataFromStoreMock.mockReturnValue(metadata);
-
 			renderComponent({ file: mockFile, metadata }, '/step2');
 			act(() => {
 				fireEvent.click(screen.getByText('Opslaan'));
