@@ -103,13 +103,10 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
-	// This is a dummy method extracted from the original wizard implementation
-	function clickToCancel() {
-		onCancel({ file, metadata }).catch((err) => {
-			// TODO handle error gracefully
-			console.error(err);
-		});
-		resetAndClose();
+	function confirmTermination() {
+		console.log('confirmTermination');
+		setIsOpen(true);
+		confirm(props);
 	}
 
 	function terminate() {
@@ -139,69 +136,59 @@ export default function Wizard<T>({
 	return (
 		<>
 			{isOpen && <Dialog id={'confirm-termination-dialog'} />}
-			{!isOpen && (
-				<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
-					<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
-						<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
-					</Modal.TopBar>
-					<>
-						<Modal.Content>
-							<ModalContentStyle>
-								<Route
-									exact
-									path={basePath}
-									render={() => (
-										<Step1
-											getHeaders={getHeaders}
-											getPostUrl={getPostUrl}
-											onFileRemove={handleFileRemove}
-											onFileSuccess={getFile}
-											storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
-											httpMethod={uploadHTTPMethod}
-										/>
-									)}
-								/>
-								<Route
-									path={appendPathSegment(basePath, 'step2')}
-									render={() => (
-										<MetadataForm
-											{...metadataForm}
-											onChange={(data, valid, errors) => {
-												dispatch(setMetadata(data));
-												setIsValidForm(valid);
-											}}
-										/>
-									)}
-								/>
-							</ModalContentStyle>
-							<button
-								onClick={() => {
-									setIsOpen(true);
-									confirm(props);
-								}}
-							>
-								ConfirmTermination
-							</button>
-						</Modal.Content>
-						<WizardFooter
-							cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
-							previous={{ visible: true, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
-							next={{
-								visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
-								onClick: () => history.push(appendPathSegment(basePath, 'step2')),
-								disabled: !file,
-								dataTestId: 'next-button',
-							}}
-							save={{
-								visible: appendTrailingSlash(location.pathname) !== basePath,
-								disabled: !isValidForm,
-								onClick: handleSubmit,
-								dataTestId: 'save-button',
-							}}
-						/>
-					</>
-				</Modal>
-			)}
+			<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+					<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+				</Modal.TopBar>
+				<>
+					<Modal.Content>
+						<ModalContentStyle>
+							<Route
+								exact
+								path={basePath}
+								render={() => (
+									<Step1
+										getHeaders={getHeaders}
+										getPostUrl={getPostUrl}
+										onFileRemove={handleFileRemove}
+										onFileSuccess={getFile}
+										storedFiles={!file ? [] : ([file] as FileUploadProps['storedFiles'])}
+										httpMethod={uploadHTTPMethod}
+									/>
+								)}
+							/>
+							<Route
+								path={appendPathSegment(basePath, 'step2')}
+								render={() => (
+									<MetadataForm
+										{...metadataForm}
+										onChange={(data, valid, errors) => {
+											dispatch(setMetadata(data));
+											setIsValidForm(valid);
+										}}
+									/>
+								)}
+							/>
+						</ModalContentStyle>
+					</Modal.Content>
+					<WizardFooter
+						cancel={{ visible: true, onClick: () => confirmTermination(), dataTestId: 'cancel-wizard' }}
+						previous={{ visible: false, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
+						next={{
+							visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
+							onClick: () => history.push(appendPathSegment(basePath, 'step2')),
+							disabled: !file,
+							dataTestId: 'next-button',
+						}}
+						save={{
+							visible: appendTrailingSlash(location.pathname) !== basePath,
+							disabled: !isValidForm,
+							onClick: handleSubmit,
+							dataTestId: 'save-button',
+						}}
+					/>
+				</>
+			</Modal>
 		</>
 	);
 }
