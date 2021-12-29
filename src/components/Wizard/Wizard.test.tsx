@@ -150,36 +150,25 @@ describe('<Wizard />', () => {
 		},
 	);
 
-	test.each([['cancel-wizard'], ['modal-close-button']])(
-		'Clicking button with test id %s triggers resetState and terminates the wizard',
-		(dataTestId) => {
-			const pushSpy = jest.fn();
-			mocked(useHistory).mockReturnValue({
-				push: pushSpy,
-			} as any);
-			const spy = jest.spyOn(actions, 'resetState');
-			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-			fireEvent.click(screen.getByTestId(dataTestId));
-			expect(spy).toHaveBeenCalled();
-			expect(onCloseMock).toHaveBeenCalled();
-			expect(pushSpy).toHaveBeenCalledWith('/');
-		},
-	);
-	test.each([['cancel-wizard'], ['modal-close-button']])(
-		'Clicking button with test id %s triggers resetState and terminates the wizard',
-		(dataTestId) => {
-			const pushSpy = jest.fn();
-			(useHistory as jest.Mock).mockReturnValue({
-				push: pushSpy,
-			});
-			const spy = jest.spyOn(actions, 'resetState');
-			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-			fireEvent.click(screen.getByTestId(dataTestId));
-			expect(spy).toHaveBeenCalled();
-			expect(onCloseMock).toHaveBeenCalled();
-			expect(pushSpy).toHaveBeenCalledWith('/');
-		},
-	);
+	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+
+		fireEvent.click(screen.getByTestId('modal-close-button'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
+
+	test('should open a confirm termination dialog', () => {
+		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
+		fireEvent.click(screen.getByTestId('cancel-wizard'));
+		expect(screen.getByTestId('confirm-dialog')).toBeInTheDocument();
+	});
 
 	test('should go to navigate to previous step when clicking previousbutton', () => {
 		const pushSpy = jest.fn();

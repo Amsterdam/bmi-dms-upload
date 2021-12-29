@@ -14,6 +14,7 @@ type Props = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	backdropOpacity?: number;
 	zIndexOffset?: number;
+	hideCloseButton?: boolean;
 };
 
 export interface IState {
@@ -23,6 +24,7 @@ export interface IState {
 	textConfirmButton?: string;
 	onCancel?: () => void;
 	onConfirm: () => void;
+	onCloseButton?: () => void;
 }
 
 const initialState: IState = {
@@ -32,6 +34,7 @@ const initialState: IState = {
 	textConfirmButton: 'Ja',
 	onCancel: () => {},
 	onConfirm: () => {},
+	onCloseButton: () => {},
 };
 
 const store = new BehaviorSubject(initialState);
@@ -43,8 +46,9 @@ export const confirm = ({
 	textCancelButton = 'Nee',
 	onConfirm = () => {},
 	onCancel,
+	onCloseButton,
 }: IState) => {
-	store.next({ title, message, textConfirmButton, textCancelButton, onCancel, onConfirm });
+	store.next({ title, message, textConfirmButton, textCancelButton, onCancel, onConfirm, onCloseButton });
 };
 
 export interface IDialog extends React.FunctionComponent<Props> {}
@@ -52,10 +56,11 @@ export interface IDialog extends React.FunctionComponent<Props> {}
 const Dialog: IDialog = ({
 	id,
 	classnames,
-	size = 'sm',
+	size = 'xs',
 	backdropOpacity,
 	cancelOnBackdropClick,
 	zIndexOffset,
+	hideCloseButton = true,
 }: Props) => {
 	const [state, setState] = React.useState<IState>(initialState);
 	const classes = classNames(`modal-${size}`, classnames);
@@ -72,8 +77,13 @@ const Dialog: IDialog = ({
 	return createPortal(
 		<>
 			{state.message.length > 0 && (
-				<DialogStyle id={id} className={classes} zIndexOffset={zIndexOffset}>
-					<DialogTopBar>
+				<DialogStyle id={id} data-testid="confirm-dialog" className={classes} zIndexOffset={zIndexOffset}>
+					<DialogTopBar
+						hideCloseButton={hideCloseButton}
+						onCloseButton={() => {
+							state.onCloseButton && state.onCloseButton();
+						}}
+					>
 						<DialogTopBarStyle>{state.title}</DialogTopBarStyle>
 					</DialogTopBar>
 					<DialogContent>
@@ -105,6 +115,7 @@ const Dialog: IDialog = ({
 			)}
 			{state.message.length > 0 && (
 				<BackDropStyle
+					data-testid="backdrop-button"
 					backdropOpacity={backdropOpacity}
 					zIndexOffset={zIndexOffset}
 					onClick={() => {
