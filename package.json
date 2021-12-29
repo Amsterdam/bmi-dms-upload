@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "scripts": {
-    "prepare": "npm run build:ts:es && npm run build:ts && husky install",
+    "prepare": "husky install",
+    "prebuild": "npm run build:ts:es && npm run build:ts",
     "start": "npm run storybook",
     "serve": "webpack serve --config webpack.dev.conf.js --open",
     "build": "webpack --config webpack.prod.conf.js",
