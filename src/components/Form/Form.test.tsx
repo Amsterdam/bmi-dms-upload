@@ -19,7 +19,7 @@ const props = {
 	schema,
 	uischema,
 	data: {
-		documentType: '__DOCUMENT_TYPE__',
+		textField: '__TEXT__',
 	},
 	renderers: [],
 	validationMode: 'ValidateAndShow',
@@ -66,7 +66,7 @@ describe('<Form/>', () => {
 
 		test('Informs of validation errors', () => {
 			const data = {
-				documentDescription: '',
+				textField: '',
 				dummyDate: '2021-11-15',
 			};
 			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
@@ -76,7 +76,8 @@ describe('<Form/>', () => {
 
 		test('Informs of validation success', () => {
 			const data = {
-				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				textField: '__TEXT__',
+				documentDescription: 'Bouwkundig onderzoek',
 				dummyDate: '2021-11-15',
 			};
 			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
