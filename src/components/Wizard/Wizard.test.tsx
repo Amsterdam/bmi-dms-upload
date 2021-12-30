@@ -1,8 +1,9 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/es/form/FileUpload/hooks';
 import renderWithProviders from '~/tests/utils/withProviders';
+import { FileRejection } from 'react-dropzone';
+import { CustomFile } from '@amsterdam/bmi-component-library';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
 import { initialState as storeState } from '../../store/dataSlice';
@@ -13,6 +14,8 @@ import MetadataForm from '../MetadataForm/MetadataForm';
 import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
+
+export type CustomFileOrRejection = CustomFile & FileRejection;
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
