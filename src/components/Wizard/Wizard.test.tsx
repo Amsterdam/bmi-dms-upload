@@ -1,7 +1,8 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/common/src/FileUpload/hooks';
+import { FileRejection } from 'react-dropzone';
+import { CustomFile } from '@amsterdam/bmi-component-library';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
@@ -13,6 +14,8 @@ import MetadataForm from '../MetadataForm/MetadataForm';
 import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
+
+export type CustomFileOrRejection = CustomFile & FileRejection;
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
@@ -156,7 +159,7 @@ describe('<Wizard />', () => {
 			const pushSpy = jest.fn();
 			mocked(useHistory).mockReturnValue({
 				push: pushSpy,
-			}as any);
+			} as any);
 			const spy = jest.spyOn(actions, 'resetState');
 			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
 			fireEvent.click(screen.getByTestId(dataTestId));
@@ -234,7 +237,7 @@ describe('<Wizard />', () => {
 
 			expect(screen.getByText('Opslaan')).toHaveAttribute('disabled');
 		});
-          
+
 		test('should be able to catch error on submit', async () => {
 			const pushSpy = jest.fn().mockImplementation(() => {
 				throw new Error('...');
