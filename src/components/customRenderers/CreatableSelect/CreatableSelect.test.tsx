@@ -44,7 +44,7 @@ describe('customRenderers / CreatableSelect', () => {
 		await selectEvent.clearFirst(input);
 		fireEvent.blur(input);
 		expect(getByRole('alert').textContent).toBe(
-			schemaStub.properties.documentDescription.errorMessage['bmi-isNotEmpty'],
+			schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
 		);
 	});
 
