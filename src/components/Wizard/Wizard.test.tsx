@@ -15,7 +15,7 @@ import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
 
-export type CustomFileOrRejection = CustomFile & FileRejection;
+type CustomFileOrRejection = CustomFile & FileRejection;
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
