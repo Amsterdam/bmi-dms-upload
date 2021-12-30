@@ -27,6 +27,7 @@ const CreatableSelect = (props: ControlProps) => {
 							? {
 									label: value,
 									value: value,
+									// eslint-disable-next-line no-mixed-spaces-and-tabs
 							  }
 							: undefined
 					}
