@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.0...v0.0.3-alpha.1) (2021-12-30)
+
+
+### Features
+
+* **bulkmetadata:** add StaticMetadata component ([c0b4551](https://github.com/Amsterdam/bmi-dms-upload/commit/c0b455102c0e8a405361eb3436c64dac3462fc40))
+* **bulkmetadata:** add StaticMetadata component ([c4af604](https://github.com/Amsterdam/bmi-dms-upload/commit/c4af604f27c8a25f59379a7608ed949da1d91e2d))
+* **bulkmetadata:** add StaticMetadata tests ([0c1d459](https://github.com/Amsterdam/bmi-dms-upload/commit/0c1d459c0ab7d285b7976f98ce2e25647f8ea99e))
+* **bulkmetadata:** add StaticMetadata tests ([fc805cb](https://github.com/Amsterdam/bmi-dms-upload/commit/fc805cbb3a483e1c1a41c0d64927b8489a3a1626))
+* **bulkmetadata:** update test ([8263a7a](https://github.com/Amsterdam/bmi-dms-upload/commit/8263a7ab1d5c6b3ac7bf8bc760103fe6b909250a))
+* **bulkmetadata:** updated by review comments ([40c00e4](https://github.com/Amsterdam/bmi-dms-upload/commit/40c00e451ceb87d5177130e112bb65cdc5c35322))
+* **bulkmetadata:** updated by review comments ([dfb4a1f](https://github.com/Amsterdam/bmi-dms-upload/commit/dfb4a1fcb77b7a4b53515bbfdaaa2c9f91afd750))
+* **bulkmetadata:** updated by review comments ([40eab59](https://github.com/Amsterdam/bmi-dms-upload/commit/40eab59524b84f7a3206c6e2c6a3df8cbbd5d30e))
+* **bulkmetadata:** updated by review comments ([44ad9b1](https://github.com/Amsterdam/bmi-dms-upload/commit/44ad9b1c8d6d724bdf423af17bfc0bec4041ce19))
+* **bulkmetadata:** updated by review comments ([ccc0d6b](https://github.com/Amsterdam/bmi-dms-upload/commit/ccc0d6b7ca03a4ab66c30ec186f184385ed35644))
+* **step1:** placeholder and maxFiles for step1 are now configurable by prop ([8471ef4](https://github.com/Amsterdam/bmi-dms-upload/commit/8471ef48535f60b4c680243bd05a52d0631a6d17))
+
+
+### Bug Fixes
+
+* **header:** styling in line with design system ([64d1461](https://github.com/Amsterdam/bmi-dms-upload/commit/64d14617a04718ef2e758431253583412aa0e304))
+* **metadataform:** fixed alignment of label with text field ([a54dd80](https://github.com/Amsterdam/bmi-dms-upload/commit/a54dd809e2bc6115961a6443bbe195ff989c0ac6))
+* **styling:** styling fixes after design QA ([2d5e62e](https://github.com/Amsterdam/bmi-dms-upload/commit/2d5e62e902f971f290d49f217c640eed8fb0388c))
+* **wizard:** tweaking buttons in footer after design QA ([5af866d](https://github.com/Amsterdam/bmi-dms-upload/commit/5af866d44a0833d82240ad1922fe6d88f8228c76))
+* **wizard:** tweaking buttons in footer after design QA ([3fd67ab](https://github.com/Amsterdam/bmi-dms-upload/commit/3fd67abe459b330064fa9bf4d97ba97d510c0093))
+
 ### [0.0.3-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.2...v0.0.3-alpha.0) (2021-12-17)
 
 
