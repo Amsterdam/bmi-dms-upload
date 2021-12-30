@@ -129,7 +129,7 @@ describe('<Wizard />', () => {
 		renderComponent({ file: mockFile, metadata: {} }, '/');
 		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 		act(() => {
-			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
+			onFileRemove && onFileRemove(mockFile as any);
 		});
 		expect(removeFileFromStoreSpy).toHaveBeenCalled();
 		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
