@@ -23,7 +23,7 @@ describe('<RowLayoutRenderer />', () => {
 
 	test('Should render RowLayoutRenderer', () => {
 		render();
-		expect(screen.queryByTestId('row-layout')?.children).toHaveLength(2);
+		expect(screen.queryByTestId('row-layout')?.children).toHaveLength(uischema.elements.length);
 	});
 
 	test('Should render Labels', () => {
