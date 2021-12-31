@@ -1,6 +1,8 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { FileRejection } from 'react-dropzone';
+import { CustomFile } from '@amsterdam/bmi-component-library';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
@@ -12,6 +14,8 @@ import MetadataForm from '../MetadataForm/MetadataForm';
 import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
+
+type CustomFileOrRejection = CustomFile & FileRejection;
 
 jest.mock('./Step1');
 jest.mock('../MetadataForm/MetadataForm');
@@ -128,7 +132,7 @@ describe('<Wizard />', () => {
 		renderComponent({ file: mockFile, metadata: {} }, '/');
 		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 		act(() => {
-			onFileRemove && onFileRemove(mockFile as any);
+			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
 		});
 		expect(removeFileFromStoreSpy).toHaveBeenCalled();
 		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
