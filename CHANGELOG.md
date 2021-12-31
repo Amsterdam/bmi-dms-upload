@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.1...v0.0.3-alpha.2) (2021-12-31)
+
+
+### Bug Fixes
+
+* **creatable:** TypeScript errors no more ([58604b2](https://github.com/Amsterdam/bmi-dms-upload/commit/58604b26db38cb4fb1ef1dbcfab7582d5b2ca733))
+
 ### [0.0.3-alpha.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.0...v0.0.3-alpha.1) (2021-12-30)
 
 
