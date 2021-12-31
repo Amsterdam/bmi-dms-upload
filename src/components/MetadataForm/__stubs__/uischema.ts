@@ -5,6 +5,11 @@ export const uischema: RowLayoutSchema = {
 	elements: [
 		{
 			type: 'Control',
+			label: 'Textfield',
+			scope: '#/properties/textField',
+		},
+		{
+			type: 'Control',
 			label: 'Documentomschrijving',
 			scope: '#/properties/documentDescription',
 		},
