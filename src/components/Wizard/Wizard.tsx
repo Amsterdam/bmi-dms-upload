@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -9,7 +9,6 @@ import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import Dialog, { confirm } from '../Dialog/Dialog';
 import WizardFooter from '../WizardFooter/WizardFooter';
 import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
 
@@ -126,7 +125,6 @@ export default function Wizard<T>({
 		textConfirmButton: 'Oke',
 		onCancel: () => {
 			setIsOpen(false);
-			// terminate();
 		},
 		onConfirm: () => {
 			terminate();
