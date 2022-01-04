@@ -132,23 +132,11 @@ describe('<Wizard />', () => {
 		renderComponent({ file: mockFile, metadata: {} }, '/');
 		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 		act(() => {
-			onFileRemove && onFileRemove(mockFile as any);
+			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
 		});
 		expect(removeFileFromStoreSpy).toHaveBeenCalled();
 		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
 	});
-
-	test.each([['cancel-wizard'], ['modal-close-button']])(
-		'should catch error when promise is rejected',
-		(dataTestId) => {
-			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
-			renderComponent({ file: mockFile, metadata: {} }, '/', {
-				onCancel: onCancelMockRejected,
-			});
-			fireEvent.click(screen.getByTestId(dataTestId));
-			expect(onCancelMockRejected).rejects.toThrow();
-		},
-	);
 
 	test.each([['cancel-wizard'], ['modal-close-button']])(
 		'should catch error when promise is rejected',
