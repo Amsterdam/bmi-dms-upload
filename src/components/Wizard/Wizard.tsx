@@ -9,8 +9,9 @@ import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import Dialog, { confirm } from '../Dialog/Dialog';
 import WizardFooter from '../WizardFooter/WizardFooter';
+import { confirm } from '@amsterdam/bmi-component-library';
+import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
 
 export type Asset = {
 	code: string;
@@ -103,12 +104,6 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
-	function confirmTermination() {
-		console.log('confirmTermination');
-		setIsOpen(true);
-		confirm(props);
-	}
-
 	function terminate() {
 		// In case the user presses the escape button on his/her keyboard
 		onCancel({ file, metadata }).catch((err) => {
@@ -116,6 +111,12 @@ export default function Wizard<T>({
 			console.error(err);
 		});
 		resetAndClose();
+	}
+
+	function confirmTermination() {
+		console.log('confirmTermination');
+		setIsOpen(true);
+		confirm(props);
 	}
 
 	const props = {
@@ -135,7 +136,7 @@ export default function Wizard<T>({
 
 	return (
 		<>
-			{isOpen && <Dialog id={'confirm-termination-dialog'} />}
+			{isOpen && <ConfirmTermination backdropOpacity={1} />}
 			<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
 					<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>

@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/common/src/FileUpload/hooks';
+import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/es/form/FileUpload/hooks';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../store/store';
