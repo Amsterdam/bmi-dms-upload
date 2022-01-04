@@ -167,7 +167,7 @@ describe('<Wizard />', () => {
 	test('should open a confirm termination dialog', () => {
 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
 		fireEvent.click(screen.getByTestId('cancel-wizard'));
-		expect(screen.getByTestId('confirm-dialog')).toBeInTheDocument();
+		expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
 	});
 
 	test('should go to navigate to previous step when clicking previousbutton', () => {

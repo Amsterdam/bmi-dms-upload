@@ -114,7 +114,6 @@ export default function Wizard<T>({
 	}
 
 	function confirmTermination() {
-		console.log('confirmTermination');
 		setIsOpen(true);
 		confirm(props);
 	}
