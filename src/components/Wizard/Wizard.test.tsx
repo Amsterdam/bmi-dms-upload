@@ -99,7 +99,7 @@ describe('<Wizard />', () => {
 	test('Starts by rendering <Step1 />', () => {
 		renderComponent(storeState);
 		expect(screen.queryByTestId('step-1')).toBeInTheDocument();
-		expect(screen.queryByText('Volgende')).toBeDisabled();
+		expect(screen.queryByText('Volgende')).not.toBeInTheDocument();
 		expect(screen.queryByTestId('metadata-form')).not.toBeInTheDocument();
 		expect(cancelButton).toBeInTheDocument();
 	});
@@ -153,27 +153,13 @@ describe('<Wizard />', () => {
 	);
 
 	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
-
-			const pushSpy = jest.fn();
-			mocked(useHistory as jest.Mock).mockReturnValue({
-				push: pushSpy,
-			} );
-			const spy = jest.spyOn(actions, 'resetState');
-			renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-			fireEvent.click(screen.getByTestId('modal-close-button'));
-		expect(spy).toHaveBeenCalled();
-		expect(onCloseMock).toHaveBeenCalled();
-		expect(pushSpy).toHaveBeenCalledWith('/');
-	});
-
-	test('Clicking cancel button triggers resetState and terminates the wizard', () => {
 		const pushSpy = jest.fn();
-		(useHistory as jest.Mock).mockReturnValue({
+		mocked(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
 		const spy = jest.spyOn(actions, 'resetState');
 		renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-		fireEvent.click(screen.getByText('Annuleren'));
+		fireEvent.click(screen.getByTestId('modal-close-button'));
 		expect(spy).toHaveBeenCalled();
 		expect(onCloseMock).toHaveBeenCalled();
 		expect(pushSpy).toHaveBeenCalledWith('/');
