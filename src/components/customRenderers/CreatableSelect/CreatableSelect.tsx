@@ -5,6 +5,10 @@ import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 
+function isInsideModal(id: string): boolean {
+	return !!document.getElementById(id)?.closest('[role=dialog]');
+}
+
 const CreatableSelect = (props: ControlProps) => {
 	const {
 		data: value = '',
@@ -47,6 +51,8 @@ const CreatableSelect = (props: ControlProps) => {
 					onFocus={onFocus}
 					// Emulate onBlur event object
 					onBlur={() => onBlur({ currentTarget: { value: selected } })}
+					// To avoid overflow/z-index issues in modal windows
+					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
 				{!isValid && !isFocused && isDirty && <ErrorMessage message={errors} />}
 			</div>
