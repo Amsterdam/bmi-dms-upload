@@ -6,7 +6,6 @@ import renderWithTheme from '~/tests/utils/withTheme';
 describe('<BulkMetadataForm />', () => {
 	test('Should render the component', () => {
 		renderWithTheme(<BulkMetadataForm />);
+		expect(screen.getByTestId('bulk-metadata-form')).toBeInTheDocument();
 	});
-
-	expect(screen.getByText('Metadataveld')).toBeInTheDocument();
 });

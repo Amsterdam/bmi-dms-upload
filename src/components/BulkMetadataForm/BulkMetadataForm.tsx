@@ -76,7 +76,7 @@ export const data = {
 
 const BulkMetadataForm: React.FC<Props> = () => {
 	return (
-		<BulkMetadataFormStyles>
+		<BulkMetadataFormStyles data-testid={'bulk-metadata-form'}>
 			<MetadataColumnHeaders
 				columns={[
 					{
