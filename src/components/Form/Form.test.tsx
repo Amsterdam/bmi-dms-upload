@@ -77,7 +77,7 @@ describe('<Form/>', () => {
 		test('Informs of validation success', () => {
 			const data = {
 				textField: '__TEXT__',
-				documentDescription: 'Bouwkundig onderzoek',
+				documentDescription: 'c135b8b2-6ccb-4742-b586-543d537e7a17',
 				dummyDate: '2021-11-15',
 			};
 			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
