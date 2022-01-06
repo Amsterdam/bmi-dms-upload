@@ -1,5 +1,5 @@
 import React from 'react';
-import { JsonForms } from '@jsonforms/react';
+import Form from '../Form/Form';
 import { vanillaRenderers, vanillaCells } from '@jsonforms/vanilla-renderers';
 import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
@@ -93,12 +93,13 @@ const BulkMetadataForm: React.FC<Props> = () => {
 					},
 				]}
 			/>
-			<JsonForms
+			<Form
 				schema={schema}
 				uischema={uischema}
 				data={data}
 				renderers={[...vanillaRenderers, ...customRenderers, ...customLayoutRenderers]}
 				cells={vanillaCells}
+				onChange={() => console.log('changed')}
 			/>
 		</BulkMetadataFormStyles>
 	);
