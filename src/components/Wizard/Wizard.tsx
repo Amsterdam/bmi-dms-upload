@@ -1,16 +1,15 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
-import { Button } from '@amsterdam/asc-ui';
-import { ChevronLeft } from '@amsterdam/asc-assets';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
 import Step1, { SupportedHTTPMethods } from './Step1';
-import { PreviousButtonStyle, CancelButtonStyle, ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
+import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../utils';
 import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
+import WizardFooter from '../WizardFooter/WizardFooter';
 
 export type Asset = {
 	code: string;
@@ -43,7 +42,7 @@ export type ImplementationProps<T> = {
 	uploadHTTPMethod?: SupportedHTTPMethods;
 };
 
-type Props<T> = {
+export type Props<T> = {
 	onClose: () => void;
 } & ImplementationProps<T>;
 
@@ -102,22 +101,30 @@ export default function Wizard<T>({
 		history.push(basePath);
 	}
 
+	// This is a dummy method extracted from the original wizard implementation
+	function clickToCancel() {
+		onCancel({ file, metadata }).catch((err) => {
+			// TODO handle error gracefully
+			console.error(err);
+		});
+		resetAndClose();
+	}
+
+	function terminate() {
+		// In case the user presses the escape button on his/her keyboard
+		onCancel({ file, metadata }).catch((err) => {
+			// TODO handle error gracefully
+			console.error(err);
+		});
+		resetAndClose();
+	}
+
 	return (
-		<Modal
-			id="dms-upload-wizard"
-			open={true}
-			onClose={() => {
-				// In case the user presses the escape button on his/her keyboard
-				onCancel({ file, metadata }).catch((err) => {
-					// TODO handle error gracefully
-					console.error(err);
-				});
-				resetAndClose();
-			}}
-			closeOnBackdropClick={false}
-		>
-			<Modal.TopBar hideCloseButton={false}>
-				<ModalTopBarStyle>Bestand uploaden voor {name}</ModalTopBarStyle>
+		<Modal id="dms-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
+			<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+				<ModalTopBarStyle styleAs="h4" as="h2">
+					Bestand uploaden voor {name}
+				</ModalTopBarStyle>
 			</Modal.TopBar>
 			<>
 				<Modal.Content>
@@ -150,49 +157,22 @@ export default function Wizard<T>({
 						/>
 					</ModalContentStyle>
 				</Modal.Content>
-				<Modal.Actions>
-					<Modal.Actions.Left>
-						<CancelButtonStyle
-							variant="textButton"
-							iconLeft={<ChevronLeft />}
-							onClick={() => {
-								onCancel({ file, metadata }).catch((err) => {
-									// TODO handle error gracefully
-									console.error(err);
-								});
-								resetAndClose();
-							}}
-						>
-							Annuleren
-						</CancelButtonStyle>
-					</Modal.Actions.Left>
-					<Modal.Actions.Right>
-						{appendTrailingSlash(location.pathname) === basePath ? (
-							file ? (
-								<Button
-									variant="primary"
-									name="Volgende"
-									onClick={() => history.push(appendPathSegment(basePath, 'step2'))}
-								>
-									Volgende
-								</Button>
-							) : null
-						) : (
-							<div>
-								<PreviousButtonStyle
-									variant="textButton"
-									iconLeft={<ChevronLeft />}
-									onClick={() => history.push(basePath)}
-								>
-									Vorige
-								</PreviousButtonStyle>
-								<Button variant="primary" onClick={handleSubmit} disabled={!isValidForm}>
-									Opslaan
-								</Button>
-							</div>
-						)}
-					</Modal.Actions.Right>
-				</Modal.Actions>
+				<WizardFooter
+					cancel={{ visible: true, onClick: clickToCancel, dataTestId: 'cancel-wizard' }}
+					previous={{ visible: appendTrailingSlash(location.pathname) !== basePath, onClick: () => history.push(basePath), dataTestId: 'previous-button' }}
+					next={{
+						visible: !!(appendTrailingSlash(location.pathname) === basePath && file),
+						onClick: () => history.push(appendPathSegment(basePath, 'step2')),
+						disabled: !file,
+						dataTestId: 'next-button',
+					}}
+					save={{
+						visible: appendTrailingSlash(location.pathname) !== basePath,
+						disabled: !isValidForm,
+						onClick: handleSubmit,
+						dataTestId: 'save-button',
+					}}
+				/>
 			</>
 		</Modal>
 	);

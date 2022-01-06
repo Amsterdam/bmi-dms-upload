@@ -1,5 +1,5 @@
-import React from 'react';
+import { createMockComponent } from '~/tests/helpers/createMockComponent';
 
-const Form = jest.fn().mockImplementation(() => <div data-testid="form" />);
+const Form = createMockComponent('Form', 'form');
 
 export default Form;

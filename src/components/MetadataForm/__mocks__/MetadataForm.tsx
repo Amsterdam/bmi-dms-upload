@@ -1,5 +1,5 @@
-import React from 'react';
+import { createMockComponent } from '~/tests/helpers/createMockComponent';
 
-const MetadataForm = jest.fn().mockImplementation(() => <div data-testid="metadata-form" />);
+const MetadataForm = createMockComponent('MetadataForm', 'metadata-form');
 
 export default MetadataForm;

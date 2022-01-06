@@ -1,4 +1,6 @@
-export const schema = {
+import { CustomJsonSchema } from '../../../types';
+
+export const schema: CustomJsonSchema = {
 	type: 'object',
 	properties: {
 		documentDescription: {

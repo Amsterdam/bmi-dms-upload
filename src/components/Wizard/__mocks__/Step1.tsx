@@ -1,5 +1,5 @@
-import React from 'react';
+import { createMockComponent } from '~/tests/helpers/createMockComponent';
 
-const Step1 = jest.fn().mockImplementation(() => <div data-testid="step-1" />);
+const Step1 = createMockComponent('Step1', 'step-1');
 
 export default Step1;

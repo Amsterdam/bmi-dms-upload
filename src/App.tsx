@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { muiTheme } from '@amsterdam/bmi-component-library';
+import { muiTheme, CustomFile } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
@@ -13,10 +13,9 @@ type MetadataExample = {
 	executionDate: string;
 };
 
-const App: React.FC = () => {
-	const token = 'EXAMPLE';
-	const basePath = '/base/path';
+const basePath = '/base/path';
 
+const App: React.FC = () => {
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
@@ -32,12 +31,13 @@ const App: React.FC = () => {
 											code: 'BRU0004',
 											name: 'BRU0004 Heibrug',
 										}}
-										getPostUrl={() => Promise.resolve('https://reqres.in/api/users')}
+										getPostUrl={(file: CustomFile) => {
+											console.log(':: getPostUrl', file);
+											return Promise.resolve('https://reqres.in/api/users');
+										}}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
-											if (token) {
-												headers['some-token'] = token;
-											}
+											headers['some-token'] = '__TOKEN__';
 											return Promise.resolve(headers);
 										}}
 										onFileSuccess={(file) => {

@@ -1,15 +1,13 @@
-import React from 'react';
-import * as JsonFormsModule from '@jsonforms/react';
-import { materialRenderers } from '@jsonforms/material-renderers';
+import React, { ComponentProps } from 'react';
+import { JsonForms } from '@jsonforms/react';
 import renderWithTheme from '~/tests/utils/withTheme';
 import MetadataForm from '../MetadataForm/MetadataForm';
-import { Props } from './Form';
+import { DEFAULT_RENDERERS, Props } from './Form';
 import { schema, uischema } from '../MetadataForm/__stubs__';
-import customRenderers from '../customRenderers';
-import customLayoutRenderers from '../customLayouts';
 import ajv from '../../utils/createAjv';
 import { tester, DateField } from '../customRenderers/DateField';
 import { error } from './__stubs__/errors';
+import { mockComponentProps, mocked } from '~/tests/helpers';
 
 jest.mock('@jsonforms/react', () => ({
 	...jest.requireActual('@jsonforms/react'),
@@ -21,11 +19,13 @@ const props = {
 	schema,
 	uischema,
 	data: {
-		documentType: '__DOCUMENT_TYPE__',
+		textField: '__TEXT__',
 	},
 	renderers: [],
 	validationMode: 'ValidateAndShow',
 };
+
+const JsonFormsMock = mocked(JsonForms);
 
 describe('<Form/>', () => {
 	const render = (customProps: Partial<Props> = {}, onChange = jest.fn()) => {
@@ -33,57 +33,55 @@ describe('<Form/>', () => {
 	};
 
 	test('Renders <JsonForms /> component with default set of custom renderers', () => {
-		const spy = jest.spyOn(JsonFormsModule, 'JsonForms');
 		render();
-		expect(spy.mock.calls[0][0]).toEqual(
+		expect(mockComponentProps(JsonFormsMock)).toEqual(
 			expect.objectContaining({
 				...props,
-				renderers: [...materialRenderers, ...customRenderers, ...customLayoutRenderers],
+				renderers: DEFAULT_RENDERERS,
 			}),
 		);
 	});
 
 	test('Allows for additional custom renderers to be passed as a prop', () => {
 		const additionalCustomRenderers = [{ tester, renderer: DateField }];
-		const spy = jest.spyOn(JsonFormsModule, 'JsonForms');
 		render({
 			renderers: additionalCustomRenderers,
 		});
-		expect(spy.mock.calls[0][0]).toEqual(
+		expect(mockComponentProps(JsonFormsMock)).toEqual(
 			expect.objectContaining({
 				...props,
-				renderers: [...materialRenderers, ...customRenderers, ...customLayoutRenderers, ...additionalCustomRenderers],
+				renderers: [...DEFAULT_RENDERERS, ...additionalCustomRenderers],
 			}),
 		);
 	});
 
 	describe('onChange', () => {
-		const spy = jest.spyOn(JsonFormsModule, 'JsonForms');
 		const onChange = jest.fn();
 
 		beforeEach(() => {
 			render({
-				onChange: onChange,
+				onChange,
 			});
 		});
 
 		test('Informs of validation errors', () => {
 			const data = {
-				documentDescription: '',
+				textField: '',
 				dummyDate: '2021-11-15',
 			};
-			// @ts-ignore
-			spy.mock.calls[0][0].onChange({ errors: [error], data });
+			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
+			if (onChangeProp) onChangeProp({ errors: [error], data });
 			expect(onChange).toHaveBeenCalledWith(data, false, [error]);
 		});
 
 		test('Informs of validation success', () => {
 			const data = {
-				documentDescription: '__DOCUMENT_DESCRIPTION__',
+				textField: '__TEXT__',
+				documentDescription: 'Bouwkundig onderzoek',
 				dummyDate: '2021-11-15',
 			};
-			// @ts-ignore
-			spy.mock.calls[0][0].onChange({ errors: [], data });
+			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
+			if (onChangeProp) onChangeProp({ errors: [], data });
 			expect(onChange).toHaveBeenCalledWith(data, true, []);
 		});
 	});

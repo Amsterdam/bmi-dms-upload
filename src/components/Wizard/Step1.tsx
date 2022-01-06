@@ -13,6 +13,8 @@ type Props = {
 	onFileRemove?: FileUploadProps['onFileRemove'];
 	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
+	placeholder?: string;
+	maxFiles?: number;
 };
 
 const Step1: React.FC<Props> = ({
@@ -22,19 +24,21 @@ const Step1: React.FC<Props> = ({
 	onFileSuccess,
 	storedFiles,
 	httpMethod = 'POST',
+	placeholder = 'Sleep een bestand in dit vlak of',
+	maxFiles = 1,
 }) => {
 	return (
 		<Step1Styles>
 			<FileUpload
 				getPostUrl={getPostUrl}
-				placeholder="Sleep de png bestanden in dit vlak of"
+				placeholder={placeholder}
 				droppingLabel="bestanden geselecteerd"
-				selectFilesLabel="selecteer bestanden"
+				selectFilesLabel="selecteer bestand"
 				removeLabel="Wissen"
 				cancelLabel="Annuleren"
 				fileUploadErrorLabel="dit bestand kan niet worden geüpload"
 				fileUploadInProgressLabel="wordt geupload"
-				options={{ noClick: true, noKeyboard: true }}
+				options={{ noClick: true, noKeyboard: true, maxFiles }}
 				onFileRemove={onFileRemove}
 				onFileSuccess={onFileSuccess}
 				getHeaders={getHeaders}

@@ -4,7 +4,7 @@ import { LayoutProps, Layout } from '@jsonforms/core';
 import RowStyles from './RowStyles';
 
 const RowLayoutRenderer = ({ schema, uischema, path, renderers, cells, enabled, visible }: LayoutProps) => (
-	<div>
+	<div data-testid='row-layout'>
 		{visible &&
 			(uischema as Layout).elements.map((child, idx) => {
 				return (
