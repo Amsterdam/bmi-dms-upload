@@ -5,6 +5,29 @@ import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 
+type SchemaOptionType = {
+	const: string;
+	title: string;
+};
+
+type SelectOptionType = {
+	value: string;
+	label: string;
+};
+
+function getOptionForValue(options: SchemaOptionType[], value: string): SelectOptionType | undefined {
+	const option = options.find((option) => option.const === value);
+	return option
+		? {
+				value: option.const,
+				label: option.title,
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
+		  }
+		: value
+		? { value, label: value }
+		: undefined;
+}
+
 function isInsideModal(id: string): boolean {
 	return !!document.getElementById(id)?.closest('[role=dialog]');
 }
@@ -18,7 +41,9 @@ const CreatableSelect = (props: ControlProps) => {
 		schema: { oneOf: options = [] },
 	} = props;
 	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange } = useCustomControl(props);
-	const [selected, setSelected] = useState<string>(value);
+	const [selected, setSelected] = useState<SelectOptionType | undefined>(
+		getOptionForValue(options as SchemaOptionType[], value),
+	);
 
 	return (
 		<>
@@ -26,21 +51,14 @@ const CreatableSelect = (props: ControlProps) => {
 			<div>
 				<Creatable
 					inputId={path}
-					value={
-						value
-							? {
-									label: value,
-									value: value,
-									// eslint-disable-next-line no-mixed-spaces-and-tabs
-							  }
-							: undefined
-					}
+					value={selected}
 					// @ts-ignore
 					onChange={(option: any) => {
-						const value = option ? (option.value ? (option.value === 'null' ? null : option.value) : null) : null;
+						const val = option ? (option.value ? (option.value === 'null' ? null : option.value) : null) : null;
+						const opt = getOptionForValue(options as SchemaOptionType[], val);
 						// Emulate onChange event object
-						onChange({ currentTarget: { value } });
-						setSelected(value);
+						onChange({ currentTarget: { value: opt?.value ?? '' } });
+						setSelected(opt);
 					}}
 					isClearable
 					options={options.map(({ const: value, title: label }) => ({
@@ -50,7 +68,7 @@ const CreatableSelect = (props: ControlProps) => {
 					error={!isValid && isDirty}
 					onFocus={onFocus}
 					// Emulate onBlur event object
-					onBlur={() => onBlur({ currentTarget: { value: selected } })}
+					onBlur={() => onBlur({ currentTarget: { value: selected?.value ?? '' } })}
 					// To avoid overflow/z-index issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
