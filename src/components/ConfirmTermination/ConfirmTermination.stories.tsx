@@ -3,22 +3,24 @@ import { storiesOf } from '@storybook/react';
 import { confirm } from '@amsterdam/bmi-component-library';
 import ConfirmTermination from './ConfirmTermination';
 
-const emptyButtons = {
-	onCancel: () => {
-		confirm(empty);
-	},
-	onConfirm: () => {
-		confirm(empty);
-	},
-	onCloseButton: () => {
-		confirm(empty);
-	},
+const empty = () =>
+	confirm({
+		title: '',
+		message: '',
+		onCancel: () => {},
+		onConfirm: () => {},
+	});
+
+const callbackMocks = {
+	onCancel: empty,
+	onConfirm: empty,
+	onCloseButton: empty,
 };
 
 const props = {
 	title: 'Waarschuwing',
 	message: 'Weet u zeker dat u dit document definitief wilt verwijderen?',
-	...emptyButtons,
+	...callbackMocks,
 };
 
 const customProps = {
@@ -26,14 +28,7 @@ const customProps = {
 	message: 'Do you want to delete this document?',
 	textCancelButton: 'Cancel',
 	textConfirmButton: 'Confirm',
-	...emptyButtons,
-};
-
-const empty = {
-	title: '',
-	message: '',
-	onCancel: () => {},
-	onConfirm: () => {},
+	...callbackMocks,
 };
 
 const landingPage = (customProps: any) => {

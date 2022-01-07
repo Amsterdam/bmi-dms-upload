@@ -35,7 +35,7 @@ const ConfirmTermination: IDialog = ({ size = 'xs', hideCloseButton = true, back
 			/>
 			{backdropOpacity == 1 && <BackDropStyle zIndexOffset={1} />}
 		</>,
-		document.querySelector('body')!,
+		document.body!,
 	);
 };
 
