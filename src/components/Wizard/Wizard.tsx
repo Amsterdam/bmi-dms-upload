@@ -65,8 +65,8 @@ export default function Wizard<T>({
 	const dispatch = useDispatch();
 	const file = useSelector(getFileFromStore);
 	const metadata = useSelector(getMetadataFromStore) as T;
-	const [isValidForm, setIsValidForm] = useState(false);
-	const [isOpen, setIsOpen] = useState(false);
+	const [isValidForm, setIsValidForm] = useState<boolean>(false);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
@@ -114,22 +114,20 @@ export default function Wizard<T>({
 
 	function confirmTermination() {
 		setIsOpen(true);
-		confirm(props);
+		confirm({
+			title: 'Annuleer uploaden',
+			message:
+				'U gaat het uploaden van de bestanden annuleren. De geuploade bestanden zullen uit het systeem worden verwijderd',
+			textCancelButton: 'Terug',
+			textConfirmButton: 'Oke',
+			onCancel: () => {
+				setIsOpen(false);
+			},
+			onConfirm: () => {
+				terminate();
+			},
+		});
 	}
-
-	const props = {
-		title: 'Annuleer uploaden',
-		message:
-			'U gaat het uploaden van de bestanden annuleren. De geuploade bestanden zullen uit het systeem worden verwijderd',
-		textCancelButton: 'Terug',
-		textConfirmButton: 'Oke',
-		onCancel: () => {
-			setIsOpen(false);
-		},
-		onConfirm: () => {
-			terminate();
-		},
-	};
 
 	return (
 		<>
@@ -162,7 +160,7 @@ export default function Wizard<T>({
 								render={() => (
 									<MetadataForm
 										{...metadataForm}
-										onChange={(data, valid, errors) => {
+										onChange={(data, valid) => {
 											dispatch(setMetadata(data));
 											setIsValidForm(valid);
 										}}
