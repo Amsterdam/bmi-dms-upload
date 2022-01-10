@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.5...v0.0.3-alpha.6) (2022-01-10)
+
+
+### Bug Fixes
+
+* **creatable:** Ensure that the react-select dropdown is on top in case it is present inside a modal ([d7a6627](https://github.com/Amsterdam/bmi-dms-upload/commit/d7a66278852a1769c193ad1d2cfaba58a8873eed))
+* **creatable:** Special treatment when validating a new option coming from <Creatable /> ([69e5d28](https://github.com/Amsterdam/bmi-dms-upload/commit/69e5d284d5c4170f87aa0a2bac834b17fb46f357))
+* **creatable:** z-index can now be controlled via a prop ([531a8be](https://github.com/Amsterdam/bmi-dms-upload/commit/531a8be35e32712ebe403c7fbdace91649986cb5))
+
 ### [0.0.3-alpha.5](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.4...v0.0.3-alpha.5) (2022-01-06)
 
 ### [0.0.3-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.3...v0.0.3-alpha.4) (2022-01-06)
