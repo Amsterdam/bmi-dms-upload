@@ -5,7 +5,8 @@ import customRenderers from '../customRenderers';
 import customLayoutRenderers from '../customLayouts';
 import { Schema } from 'ajv';
 import ajv from '../../utils/createAjv';
-import { OnChangeCallback } from '../../types';
+import { CustomJsonSchema, OnChangeCallback } from '../../types';
+import addCreatableSupportToSchema from '../../utils/addCreatableSupportToSchema';
 
 export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
@@ -22,7 +23,8 @@ const Form: React.FC<Props> = ({ schema, uischema, data, validationMode, rendere
 			renderers={[...DEFAULT_RENDERERS, ...renderers]}
 			validationMode={validationMode}
 			onChange={({ errors = [], data }) => {
-				const validate = ajv.compile(schema as Schema);
+				const creatableSchema = addCreatableSupportToSchema(schema as CustomJsonSchema, data);
+				const validate = ajv.compile(creatableSchema as Schema);
 				const valid = validate(data);
 				onChange(data, valid, errors);
 			}}

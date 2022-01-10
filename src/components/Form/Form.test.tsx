@@ -84,5 +84,16 @@ describe('<Form/>', () => {
 			if (onChangeProp) onChangeProp({ errors: [], data });
 			expect(onChange).toHaveBeenCalledWith(data, true, []);
 		});
+
+		test('Creatable can be any value', () => {
+			const data = {
+				textField: '__TEXT__',
+				documentDescription: '__ANY_VALUE',
+				dummyDate: '2021-11-15',
+			};
+			const { onChange: onChangeProp } = mockComponentProps<ComponentProps<typeof JsonForms>>(JsonFormsMock);
+			if (onChangeProp) onChangeProp({ errors: [], data });
+			expect(onChange).toHaveBeenCalledWith(data, true, []);
+		});
 	});
 });
