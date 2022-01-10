@@ -69,7 +69,8 @@ const CreatableSelect = (props: ControlProps) => {
 					onFocus={onFocus}
 					// Emulate onBlur event object
 					onBlur={() => onBlur({ currentTarget: { value: selected?.value ?? '' } })}
-					// To avoid overflow/z-index issues in modal windows
+					zIndexMenu={99999}
+					// To avoid overflow issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
 				{!isValid && !isFocused && isDirty && <ErrorMessage message={errors} />}
