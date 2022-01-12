@@ -3,7 +3,6 @@ import renderWithTheme from '~/tests/utils/withTheme';
 import MetadataForm, { Props } from './MetadataForm';
 import { schema, uischema } from './__stubs__';
 import { screen } from '@testing-library/react';
-import { JsonForms } from '@jsonforms/react';
 import MetdadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
 import { mockComponentProps, mocked } from '~/tests/helpers';
@@ -24,7 +23,7 @@ const props: Props = {
 const MetdadataColumnHeadersMock = mocked(MetdadataColumnHeaders);
 
 describe('<MetadataForm />', () => {
-	const render = (customProps: Partial<ComponentProps<typeof JsonForms>> = {}) => {
+	const render = (customProps: Partial<Props> = {}) => {
 		renderWithTheme(<MetadataForm {...Object.assign({}, props, customProps)} />);
 	};
 
@@ -65,5 +64,15 @@ describe('<MetadataForm />', () => {
 		const propsWithOverride = { onChange: () => '!!' };
 		render(propsWithOverride);
 		expect(Form).toHaveBeenCalledWith(Object.assign({}, props, propsWithOverride), {});
+	});
+
+	test('Renders without title', () => {
+		render({ heading: '' });
+		expect(screen.queryByText('Metadata toevoegen')).not.toBeInTheDocument();
+	});
+
+	test('Renders without column headers', () => {
+		render({ showColumnHeaders: false });
+		expect(screen.queryByTestId('metadata-column-headers')).not.toBeInTheDocument();
 	});
 });
