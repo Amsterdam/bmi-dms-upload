@@ -7,7 +7,7 @@ import { OnChangeCallback } from '../../types';
 
 export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
-	headerTitle?: string | null;
+	heading?: string;
 	showColumnHeaders?: boolean;
 };
 
@@ -20,12 +20,12 @@ const MetadataForm: React.FC<Props> = ({
 	data = {},
 	validationMode = 'ValidateAndShow',
 	onChange,
-	headerTitle = 'Metadata toevoegen',
+	heading = 'Metadata toevoegen',
 	showColumnHeaders = true,
 }) => {
 	return (
 		<MetadataFormStyle>
-			{headerTitle && <StyledHeading forwardedAs="h2">{headerTitle}</StyledHeading>}
+			{heading && <StyledHeading forwardedAs="h2">{heading}</StyledHeading>}
 			{showColumnHeaders && (
 				<MetadataColumnHeaders
 					columns={[
