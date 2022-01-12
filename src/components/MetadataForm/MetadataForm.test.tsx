@@ -23,7 +23,7 @@ const props: Props = {
 const MetdadataColumnHeadersMock = mocked(MetdadataColumnHeaders);
 
 describe('<MetadataForm />', () => {
-	const render = (customProps: Partial<ComponentProps<typeof MetadataForm>> = {}) => {
+	const render = (customProps: Partial<Props> = {}) => {
 		renderWithTheme(<MetadataForm {...Object.assign({}, props, customProps)} />);
 	};
 
@@ -67,7 +67,7 @@ describe('<MetadataForm />', () => {
 	});
 
 	test('Renders without title', () => {
-		render({ headerTitle: null });
+		render({ heading: '' });
 		expect(screen.queryByText('Metadata toevoegen')).not.toBeInTheDocument();
 	});
 
