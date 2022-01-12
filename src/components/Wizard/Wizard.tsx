@@ -1,6 +1,6 @@
 import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps, confirm } from '@amsterdam/bmi-component-library';
+import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../store/CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -11,6 +11,7 @@ import { JsonForms } from '@jsonforms/react';
 import MetadataForm from '../MetadataForm/MetadataForm';
 import WizardFooter from '../WizardFooter/WizardFooter';
 import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
+import useConfirmTermination from '../../hooks/useConfirmTermination';
 
 export type Asset = {
 	code: string;
@@ -66,7 +67,7 @@ export default function Wizard<T>({
 	const file = useSelector(getFileFromStore);
 	const metadata = useSelector(getMetadataFromStore) as T;
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const { isOpen, confirm } = useConfirmTermination(() => terminate());
 
 	const getFile = React.useCallback(
 		(file: CustomFile) => {
@@ -112,23 +113,6 @@ export default function Wizard<T>({
 		resetAndClose();
 	}
 
-	function confirmTermination() {
-		setIsOpen(true);
-		confirm({
-			title: 'Annuleer uploaden',
-			message:
-				'U gaat het uploaden van de bestanden annuleren. De geuploade bestanden zullen uit het systeem worden verwijderd',
-			textCancelButton: 'Terug',
-			textConfirmButton: 'Oke',
-			onCancel: () => {
-				setIsOpen(false);
-			},
-			onConfirm: () => {
-				terminate();
-			},
-		});
-	}
-
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
@@ -170,7 +154,7 @@ export default function Wizard<T>({
 						</ModalContentStyle>
 					</Modal.Content>
 					<WizardFooter
-						cancel={{ visible: true, onClick: confirmTermination, dataTestId: 'cancel-wizard' }}
+						cancel={{ visible: true, onClick: confirm, dataTestId: 'cancel-wizard' }}
 						previous={{
 							visible: appendTrailingSlash(location.pathname) !== basePath,
 							onClick: () => history.push(basePath),
