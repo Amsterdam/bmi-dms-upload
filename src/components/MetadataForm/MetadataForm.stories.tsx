@@ -46,7 +46,7 @@ NoData.args = {
 
 export const NoTitle = Template.bind({});
 NoTitle.args = {
-	headerTitle: null,
+	heading: '',
 };
 
 export const NoColumnHeaders = Template.bind({});
@@ -56,6 +56,6 @@ NoColumnHeaders.args = {
 
 export const NoTitleAndColumnHeaders = Template.bind({});
 NoTitleAndColumnHeaders.args = {
-	headerTitle: null,
+	heading: '',
 	showColumnHeaders: false,
 };
