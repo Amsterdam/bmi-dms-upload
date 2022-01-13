@@ -7,25 +7,23 @@ import ConfirmTermination, { Props } from './ConfirmTermination';
 describe('<ConfirmTermination />', () => {
 	const onClick = jest.fn();
 
-	const defaultArg: Partial<typeof confirm> = {
+	type ConfirmArg = Parameters<typeof confirm>[0];
+
+	const defaultArg: ConfirmArg = {
 		title: 'Test Title',
 		message: 'Test Message',
-	};
-
-	const callbackMocks = {
-		onCancel: onClick,
 		onConfirm: onClick,
 	};
 
-	interface IState {
-		message: string;
-		onConfirm: () => void;
-	}
+	const callbackMocks = {
+		onConfirm: onClick,
+	};
 
-	const clickAndRenderDialog = (args: Partial<typeof confirm> = defaultArg, props: Partial<Props> = {}) => {
+	const clickAndRenderDialog = (args: ConfirmArg = defaultArg, props: Partial<Props> = {}) => {
+		// @ts-ignore
 		renderWithTheme(
 			<>
-				<button data-testid="open-dialog" onClick={() => confirm(args as IState)} />
+				<button data-testid="open-dialog" onClick={() => confirm(args)} />
 				<ConfirmTermination {...props} />
 			</>,
 		);
@@ -76,6 +74,7 @@ describe('<ConfirmTermination />', () => {
 
 	// checks if a dialog without a message renders
 	test('Dialog should not render', () => {
+		// @ts-ignore
 		clickAndRenderDialog(callbackMocks);
 		expect(screen.queryByTestId('confirm-dialog')).toBeNull();
 	});
