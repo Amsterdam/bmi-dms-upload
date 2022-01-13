@@ -4,17 +4,6 @@ import { BackDropStyle } from './ConfirmTerminationStyles';
 import { createPortal } from 'react-dom';
 import { MODAL_SIZES } from '../../enums/MODAL_SIZES';
 
-export interface IState {
-	message: string;
-	onConfirm: () => void;
-	title?: string;
-	textCancelButton?: string;
-	textConfirmButton?: string;
-	onCancel?: () => void;
-	size?: string;
-	onClose?: () => void;
-}
-
 export type Props = {
 	size?: MODAL_SIZES;
 	hideCloseButton?: boolean;
