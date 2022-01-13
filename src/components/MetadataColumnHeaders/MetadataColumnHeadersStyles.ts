@@ -11,8 +11,9 @@ export const MetadataColumnHeadersStyle = styled.div`
 	padding: ${themeSpacing(3)} ${themeSpacing(2)};
 `;
 
-export const ColumnHeaderStyle = styled.span<{ width: number }>`
+export const ColumnHeaderStyle = styled.span<{ width: number; align: string }>`
 	flex: 1 0 auto;
 	font-weight: 700;
 	width: ${({ width }) => width}%;
+	text-align: ${({ align }) => align};
 `;

@@ -4,6 +4,7 @@ import { MetadataColumnHeadersStyle, ColumnHeaderStyle } from './MetadataColumnH
 export type Column = {
 	header: string;
 	width: number; // % value
+	align?: string;
 };
 
 type Props = {
@@ -12,8 +13,8 @@ type Props = {
 
 const MetadataColumnHeaders: React.FC<Props> = ({ columns }) => (
 	<MetadataColumnHeadersStyle aria-hidden>
-		{columns.map(({ header, width }, idx) => (
-			<ColumnHeaderStyle key={`column-${idx}`} width={width}>
+		{columns.map(({ header, width, align }, idx) => (
+			<ColumnHeaderStyle key={`column-${idx}`} width={width} align={align ?? 'left'}>
 				{header}
 			</ColumnHeaderStyle>
 		))}
