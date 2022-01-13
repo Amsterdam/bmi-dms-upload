@@ -16,6 +16,7 @@ describe('<ConfirmTermination />', () => {
 	};
 
 	const callbackMocks = {
+		onCancel: onClick,
 		onConfirm: onClick,
 	};
 
