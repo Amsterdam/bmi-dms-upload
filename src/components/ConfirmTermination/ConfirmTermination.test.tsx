@@ -21,7 +21,6 @@ describe('<ConfirmTermination />', () => {
 	};
 
 	const clickAndRenderDialog = (args: ConfirmArg = defaultArg, props: Partial<Props> = {}) => {
-		// @ts-ignore
 		renderWithTheme(
 			<>
 				<button data-testid="open-dialog" onClick={() => confirm(args)} />
