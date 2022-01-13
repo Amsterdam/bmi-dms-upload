@@ -2,12 +2,12 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import renderWithTheme from '~/tests/utils/withTheme';
 import { confirm } from '@amsterdam/bmi-component-library';
-import ConfirmTermination, { Props, IState } from './ConfirmTermination';
+import ConfirmTermination, { Props } from './ConfirmTermination';
 
 describe('<ConfirmTermination />', () => {
 	const onClick = jest.fn();
 
-	const defaultArg = {
+	const defaultArg: Partial<typeof confirm> = {
 		title: 'Test Title',
 		message: 'Test Message',
 	};
@@ -17,7 +17,12 @@ describe('<ConfirmTermination />', () => {
 		onConfirm: onClick,
 	};
 
-	const clickAndRenderDialog = (args: Partial<IState> = defaultArg, props: Partial<Props> = {}) => {
+	interface IState {
+		message: string;
+		onConfirm: () => void;
+	}
+
+	const clickAndRenderDialog = (args: Partial<typeof confirm> = defaultArg, props: Partial<Props> = {}) => {
 		renderWithTheme(
 			<>
 				<button data-testid="open-dialog" onClick={() => confirm(args as IState)} />

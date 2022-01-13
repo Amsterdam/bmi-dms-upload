@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfirmDialog } from '@amsterdam/bmi-component-library';
 import { BackDropStyle } from './ConfirmTerminationStyles';
 import { createPortal } from 'react-dom';
+import { MODAL_SIZES } from '../../enums/MODAL_SIZES';
 
 export interface IState {
 	message: string;
@@ -15,14 +16,18 @@ export interface IState {
 }
 
 export type Props = {
-	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	size?: MODAL_SIZES;
 	hideCloseButton?: boolean;
 	backdropOpacity?: number;
 };
 
 export interface IDialog extends React.FunctionComponent<Props> {}
 
-const ConfirmTermination: IDialog = ({ size = 'xs', hideCloseButton = true, backdropOpacity = 0.3 }: Props) => {
+const ConfirmTermination: IDialog = ({
+	size = MODAL_SIZES.XS,
+	hideCloseButton = true,
+	backdropOpacity = 0.3,
+}: Props) => {
 	return createPortal(
 		<>
 			<ConfirmDialog
