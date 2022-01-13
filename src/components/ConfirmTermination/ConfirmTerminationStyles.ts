@@ -13,7 +13,10 @@ export const BackDropStyle = styled.div<Props>`
 	top: 0;
 	left: 0;
 	position: absolute;
-	z-index: ${({ zIndexOffset }) => (zIndexOffset ? 21 + zIndexOffset : 21)};
+	z-index: ${({ zIndexOffset }) =>
+		zIndexOffset
+			? 21 + zIndexOffset
+			: 21}; /* The default z-index for the ASC Modal is 20. 21 puts it on top of another modal by default. */
 	background-color: ${({ backdropOpacity, theme }) =>
 		transparentize(backdropOpacity || 0.3, themeColor('tint', 'level7')({ theme }))};
 `;

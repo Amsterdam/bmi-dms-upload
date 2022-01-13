@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { confirm } from '@amsterdam/bmi-component-library';
 import ConfirmTermination from './ConfirmTermination';
+import { MODAL_SIZES } from '../../enums/MODAL_SIZES';
 
 const empty = () =>
 	confirm({
@@ -59,7 +60,7 @@ storiesOf('ConfirmTermination', module)
 	.add('Different Dialog Size', () => (
 		<>
 			{landingPage(props)}
-			<ConfirmTermination size={'md'} />
+			<ConfirmTermination size={MODAL_SIZES.MD} />
 		</>
 	))
 	.add('With Custom Buttons', () => (

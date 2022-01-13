@@ -171,7 +171,6 @@ describe('<Wizard />', () => {
 		fireEvent.click(screen.getByTestId('cancel-wizard'));
 		expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
 	});
-
 	test('should go to navigate to previous step when clicking previousbutton', () => {
 		const pushSpy = jest.fn();
 		(useHistory as jest.Mock).mockReturnValue({
