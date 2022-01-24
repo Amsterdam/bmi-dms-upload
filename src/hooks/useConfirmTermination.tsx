@@ -7,10 +7,9 @@ function useConfirmTermination(onTerminate: () => void): { isOpen: boolean; conf
 		setIsOpen(true);
 		dialogConfirm({
 			title: 'Annuleer uploaden',
-			message:
-				'U gaat het uploaden van de bestanden annuleren. De geuploade bestanden zullen uit het systeem worden verwijderd',
+			message: 'U annuleert het uploaden. Eventueel zojuist toegevoegde bestanden zullen worden verwijderd',
 			textCancelButton: 'Terug',
-			textConfirmButton: 'Oke',
+			textConfirmButton: 'Akkoord',
 			onCancel: () => {
 				setIsOpen(false);
 			},
