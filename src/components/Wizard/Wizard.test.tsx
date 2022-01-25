@@ -86,7 +86,7 @@ describe('<Wizard />', () => {
 		customProps: Partial<ComponentProps<typeof Wizard>> = {},
 	) => {
 		renderWithProviders(<Wizard<MetadataExample> {...Object.assign({}, props, customProps)} />, {
-			initialState: storeState,
+			initialState: { upload: storeState },
 			initialRoute: url,
 		});
 		cancelButton = screen.getByText('Annuleren');
@@ -109,7 +109,9 @@ describe('<Wizard />', () => {
 		(useHistory as jest.Mock).mockReturnValue({
 			push: pushSpy,
 		});
-		renderComponent({ file: mockFile, metadata: { mockData } });
+		act(() => {
+			renderComponent({ file: mockFile, metadata: { mockData } });
+		});
 		const nextButton = screen.getByText('Volgende');
 		expect(nextButton).toBeInTheDocument();
 		fireEvent.click(nextButton);

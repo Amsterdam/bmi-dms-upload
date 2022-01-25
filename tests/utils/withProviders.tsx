@@ -7,12 +7,12 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { DMSUpload } from '../../src/store/store';
+import { Store } from '../../src/store/store';
 import theme from '../../src/theme';
 import { CustomContext } from '../../src/store/CustomProvider';
 
 type ProviderOptions = {
-	initialState?: DMSUpload;
+	initialState?: Partial<Store>;
 	initialRoute?: string;
 };
 
