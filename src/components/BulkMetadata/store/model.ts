@@ -16,5 +16,5 @@ export interface IBulkMetadataState {
 	currentStep: 'upload' | 'selectFields' | 'editFile'
 	files: IBulkMetadataFile[];
 	fields: IBulkMetadataField[];
-	selectedFileId: string | null;
+	selectedFileId?: string;
 }

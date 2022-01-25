@@ -1,9 +1,15 @@
 import React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook, TypedUseSelectorHook } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { reducer } from './dataSlice';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { reducer as upload } from './dataSlice';
+import { reducer as bulk } from '../components/BulkMetadata/store/slice'
 
 export const CustomContext = React.createContext<any>(null);
+
+const reducer = combineReducers({
+	upload,
+	bulk
+})
 
 export const useStore = createStoreHook(CustomContext);
 export const useDispatch = createDispatchHook<AppDispatch>(CustomContext);

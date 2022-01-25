@@ -1,12 +1,12 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
 import { createSelector } from 'reselect';
-import { DMSUpload } from './store';
+import { Store } from './store';
 
-export const getState = (state: DMSUpload) => state;
+export const getState = (state: Store) => state.upload;
 
-export const getFileFromStore = createSelector([getState], (state: DMSUpload): CustomFile | undefined => state?.file);
+export const getFileFromStore = createSelector([getState], (state): CustomFile | undefined => state?.file);
 
 export const getMetadataFromStore = createSelector(
 	[getState],
-	(state: DMSUpload): DMSUpload['metadata'] => state.metadata,
+	(state): Store['upload']['metadata'] => state.metadata,
 );

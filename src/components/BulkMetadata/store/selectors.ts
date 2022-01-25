@@ -1,38 +1,11 @@
-import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import { IBulkMetadataState, IBulkMetadataField, IBulkMetadataFile } from '../types';
-import { CustomFile } from '@amsterdam/bmi-component-library';
+import { createSelector } from '@reduxjs/toolkit';
+import { IBulkMetadataState, IBulkMetadataField, IBulkMetadataFile } from './model';
 
 export const initialState: IBulkMetadataState = {
 	currentStep: 'upload',
 	files: [],
 	fields: [],
-	selectedFileId: null,
 };
-
-/**
- * Slice (State and reducers)
- */
-
-export const slice = createSlice({
-	name: 'dmsbulkupload',
-	initialState,
-	reducers: {
-		setFiles: (state: IBulkMetadataState, action: PayloadAction<CustomFile>) => {
-			const newFile: IBulkMetadataFile = {
-				uploadedFile: action.payload,
-			};
-			state.files = [...state.files, newFile];
-		},
-	},
-});
-
-export const { setFiles } = slice.actions;
-
-export const { reducer } = slice;
-
-/**
- * Selectors
- */
 
 export const getState = (state: IBulkMetadataState) => state;
 
