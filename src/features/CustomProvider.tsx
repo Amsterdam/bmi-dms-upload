@@ -1,8 +1,8 @@
 import React from 'react';
 import { Provider, createStoreHook, createDispatchHook, createSelectorHook, TypedUseSelectorHook } from 'react-redux';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducer as upload } from './dataSlice';
-import { reducer as bulk } from '../components/BulkMetadata/store/slice'
+import { reducer as upload } from './single-file/store/dataSlice';
+import { reducer as bulk } from './bulk/store/slice'
 
 export const CustomContext = React.createContext<any>(null);
 

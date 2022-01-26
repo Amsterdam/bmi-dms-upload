@@ -5,12 +5,12 @@ import { FileRejection } from 'react-dropzone';
 import { CustomFile } from '@amsterdam/bmi-component-library';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
-import { DMSUpload } from '../../store/store';
+import { DMSUpload } from '../../../store';
 import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
-import { MetadataExample } from '../../types';
+import { MetadataExample } from 'src/types';
 import { asset, schema, uischema } from './__stubs__';
-import MetadataForm from '../MetadataForm/MetadataForm';
+import MetadataForm from '../../../..//components/MetadataForm/MetadataForm';
 import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
@@ -18,7 +18,7 @@ import { getMetadataFromStore } from '../../store/selectors';
 type CustomFileOrRejection = CustomFile & FileRejection;
 
 jest.mock('./Step1');
-jest.mock('../MetadataForm/MetadataForm');
+jest.mock('../../../../components/MetadataForm/MetadataForm');
 
 const mockHistoryPush = jest.fn();
 

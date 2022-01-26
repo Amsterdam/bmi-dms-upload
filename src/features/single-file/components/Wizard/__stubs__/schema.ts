@@ -1,4 +1,4 @@
-import { CustomJsonSchema } from '../../../types';
+import { CustomJsonSchema } from '../../../../../types';
 
 export const schema: CustomJsonSchema = {
 	type: 'object',

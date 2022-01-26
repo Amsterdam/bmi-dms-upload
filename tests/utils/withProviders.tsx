@@ -7,9 +7,9 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { Store } from '../../src/store/store';
+import { Store } from 'src/features/store';
+import { CustomContext } from '../../src/features/CustomProvider';
 import theme from '../../src/theme';
-import { CustomContext } from '../../src/store/CustomProvider';
 
 type ProviderOptions = {
 	initialState?: Partial<Store>;

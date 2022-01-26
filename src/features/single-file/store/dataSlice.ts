@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DMSUpload } from './store';
+import { DMSUpload } from '../../store';
 import { CustomFile } from '@amsterdam/bmi-component-library';
-import { MetadataGenericType } from '../types';
+import { MetadataGenericType } from '../../../types';
 
 export const initialState: DMSUpload = {
 	file: undefined,

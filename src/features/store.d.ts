@@ -1,5 +1,5 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
-import { IBulkMetadataState } from 'src/components/BulkMetadata/store/model';
+import { IBulkMetadataState } from 'src/features/bulk/store/model';
 import { MetadataGenericType } from '../types';
 
 export interface DMSUpload {
