@@ -1,5 +1,7 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
 
+type IBulkMetadataFieldId = string;
+
 export interface IBulkMetadataFile {
 	id: string;
 	url: string;
@@ -12,7 +14,6 @@ export interface IBulkMetadataFileMetadata {
 	value: string | number | boolean;
 }
 
-type IBulkMetadataFieldId = string;
 export interface IBulkMetadataField {
 	id: IBulkMetadataFieldId;
 	label: string;
