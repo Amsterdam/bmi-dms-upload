@@ -1,5 +1,5 @@
-import { setFiles, reducer, initialState } from './slice';
-import { customFiles, stateWithFiles } from './__stubs__/state';
+import { setFile, reducer, initialState } from './slice';
+import { files } from './__stubs__/state';
 
 describe('BulkMetadata Slice', (): void => {
 	describe('reducers', (): void => {
@@ -7,9 +7,20 @@ describe('BulkMetadata Slice', (): void => {
 			expect(reducer(undefined, { type: '@@INIT' })).toEqual(initialState);
 		});
 
-		describe('setFiles', (): void => {
-			it('should set files', (): void => {
-				expect(reducer(initialState, setFiles(customFiles))).toEqual(stateWithFiles);
+		describe('setFile', (): void => {
+			it('should set file', (): void => {
+				const file = files[0];
+
+				expect(reducer(initialState, setFile({
+					id: file.id,
+					url: file.url,
+					uploadedFile: file.uploadedFile,
+					metadata: file.metadata,
+				}))).toEqual({
+					currentStep: 'upload',
+					files: [file],
+					fields: [],
+				});
 			});
 		})
 	});

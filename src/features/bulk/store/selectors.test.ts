@@ -3,28 +3,54 @@ import {
 	getFieldsFromStore,
 	getChangeIndividualFieldsFromStore,
 	getDefaultFieldsFromStore,
+	getFieldsForFile,
 } from './selectors';
-import { files, fields, fieldsDefault, fieldsChangeIndividual, stateWithFiles, stateWithFields } from './__stubs__/state';
+import {
+	files,
+	fields,
+	fieldsDefault,
+	fieldsChangeIndividual,
+} from './__stubs__/state';
 
 describe('BulkMetadata Selectors', () => {
 	describe('getFilesFromStore', () => {
 		it('should get files from store', () => {
-			expect(getFilesFromStore(stateWithFiles)).toEqual(files)
-		})
-	})
+			expect(
+				getFilesFromStore.resultFunc({
+					currentStep: 'upload',
+					files,
+					fields: [],
+				}),
+			).toEqual(files);
+		});
+	});
 	describe('getFieldsFromStore', () => {
 		it('should get fields from store', () => {
-			expect(getFieldsFromStore(stateWithFields)).toEqual(fields)
-		})
-	})
+			expect(
+				getFieldsFromStore.resultFunc({
+					currentStep: 'upload',
+					files: [],
+					fields,
+				}),
+			).toEqual(fields);
+		});
+	});
 	describe('getChangeIndividualFieldsFromStore', () => {
-		it('should get', () => {
-			expect(getChangeIndividualFieldsFromStore(stateWithFields)).toEqual(fieldsChangeIndividual)
-		})
-	})
+		it('should get changeIndividual fields from store', () => {
+			expect(getChangeIndividualFieldsFromStore.resultFunc(fields)).toEqual(fieldsChangeIndividual);
+		});
+	});
 	describe('getDefaultFieldsFromStore', () => {
-		it('should get', () => {
-			expect(getDefaultFieldsFromStore(stateWithFields)).toEqual(fieldsDefault)
-		})
-	})
+		it('should get default (!changeIndividual) fields from store', () => {
+			expect(getDefaultFieldsFromStore.resultFunc(fields)).toEqual(fieldsDefault);
+		});
+	});
+	describe('getFieldsForFile', () => {
+		it('should get fields for a file from store', () => {
+			expect(getFieldsForFile.resultFunc(files[0], fields)).toEqual([
+				...(files[0].metadata ?? []),
+				...fields,
+			]);
+		});
+	});
 });

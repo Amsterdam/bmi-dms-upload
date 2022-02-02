@@ -9,6 +9,9 @@ export const initialState: IBulkMetadataState = {
 
 export const getState = (state: IBulkMetadataState) => state;
 
+export const getFileFromStore = (state: IBulkMetadataState, fileId: IBulkMetadataFile['id']) =>
+	state.files.find((file) => file.id === fileId);
+
 export const getFilesFromStore = createSelector(
 	[getState],
 	(state: IBulkMetadataState): IBulkMetadataFile[] | undefined => state.files,
@@ -19,10 +22,17 @@ export const getFieldsFromStore = createSelector(
 	(state: IBulkMetadataState): IBulkMetadataField[] | undefined => state.fields,
 );
 
-export const getChangeIndividualFieldsFromStore = createSelector([getState], (state: IBulkMetadataState):
+export const getChangeIndividualFieldsFromStore = createSelector([getFieldsFromStore], (fields):
 	| IBulkMetadataField[]
-	| undefined => state.fields.filter((field) => field.changeIndividual));
+	| undefined => fields?.filter((field) => field.changeIndividual));
 
-export const getDefaultFieldsFromStore = createSelector([getState], (state: IBulkMetadataState):
+export const getDefaultFieldsFromStore = createSelector([getFieldsFromStore], (fields):
 	| IBulkMetadataField[]
-	| undefined => state.fields.filter((field) => !field.changeIndividual));
+	| undefined => fields?.filter((field) => !field.changeIndividual));
+
+export const getFieldsForFile = createSelector(
+	[getFileFromStore, getFieldsFromStore],
+	(fileFromStore, fieldsFromStore) => {
+		return [...(fileFromStore?.metadata ?? []), ...(fieldsFromStore ?? [])];
+	},
+);

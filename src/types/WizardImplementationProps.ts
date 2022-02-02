@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { CustomFile, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { IBulkMetadataFile } from 'src/features/bulk/store/model';
 
 export type Asset = {
 	code: string;
@@ -21,7 +22,7 @@ export interface WizardImplementationProps<T> {
 	onFileSuccess?: FileUploadProps['onFileSuccess'];
 	onFileRemove?: FileUploadProps['onFileRemove'];
 
-	// Props for JsonForms component to render for capturing meta data
+	// Props for JsonForms component to render for capturing metadata
 	metadataForm: ComponentProps<typeof JsonForms>;
 
 	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
@@ -36,6 +37,6 @@ export interface WizardImplementationProps<T> {
 	uploadHTTPMethod?: SupportedHTTPMethods;
 }
 
-export interface BulkWizardImplementationProps<T> extends WizardImplementationProps<T> {
-	customField: string;
+export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "metadataForm" | "onMetadataSubmit">  {
+	getDocumentViewUrl: (metadataFile: IBulkMetadataFile) => Promise<string>;
 }

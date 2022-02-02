@@ -1,70 +1,65 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
-import { IBulkMetadataField, IBulkMetadataFile, IBulkMetadataState } from '../model'
+import { IBulkMetadataField, IBulkMetadataFile, IBulkMetadataFileMetadata, IBulkMetadataState } from '../model'
 
-export const customFileA = {
-	tmpId: 1,
-	progress: 33,
-	type: 'application/pdf',
-	name: 'Untitled #1',
-	lastModified: 0,
-	size: 10000,
-} as CustomFile;
+function makeFile(id: string, uploadedFile: CustomFile, metadata: IBulkMetadataFileMetadata[]): IBulkMetadataFile {
+	return {
+		id,
+		url: 'some-url',
+		uploadedFile,
+		metadata
+	}
+}
+function makeCustomFile(id: number, title: string, filetype?: string) {
+	return {
+		tmpId: id,
+		progress: 0,
+		type: filetype ?? 'application/pdf',
+		name: `some-title ${title}`,
+		lastModified: 0,
+		size: 20000,
+	} as CustomFile
+}
 
-export const customFileB = {
-	tmpId: 1,
-	progress: 0,
-	type: 'application/pdf',
-	name: 'Untitled #2',
-	lastModified: 0,
-	size: 20000,
-} as CustomFile;
+function makeField(id: string, changeIndividual: boolean): IBulkMetadataField {
+	return {
+		id: id,
+		label: `some-label ${id}`,
+		value: `some-value ${id}`,
+		changeIndividual: changeIndividual
+	}
+}
+function makeFields(fields: [string, boolean][]): IBulkMetadataField[] {
+	return fields.map(f => makeField(f[0], f[1]));
+}
 
+export const customFileA = makeCustomFile(1, 'A')
+export const customFileB = makeCustomFile(2, 'B')
 
 export const customFiles: CustomFile[] = [
 	customFileA,
 	customFileB
 ]
 
-export const fieldDefault: IBulkMetadataField = {
-	id: 'name',
-	label: 'Label',
-	value: 'foo',
-	changeIndividual: false
-}
+// export const fieldDefault: IBulkMetadataField = makeField('name', false)
+// export const fieldChangeIndividual: IBulkMetadataField = makeField('description', true)
 
-export const fieldChangeIndividual: IBulkMetadataField = {
-	id: 'description',
-	label: 'Omschrijving',
-	value: '',
-	changeIndividual: true
-}
 
+export const fieldsDefault: IBulkMetadataField[] = makeFields([['1', false], ['3', false]])
+export const fieldsChangeIndividual: IBulkMetadataField[] = makeFields([['2', true]])
 export const fields: IBulkMetadataField[] = [
-	fieldDefault,
-	fieldChangeIndividual,
-]
-
-export const fieldsDefault: IBulkMetadataField[] = [
-	fieldDefault
-]
-
-export const fieldsChangeIndividual: IBulkMetadataField[] = [
-	fieldChangeIndividual
+	...fieldsDefault,
+	...fieldsChangeIndividual
 ]
 
 export const files: IBulkMetadataFile[] = [
-	{
-		uploadedFile: customFileA,
-	},
-	{
-		uploadedFile: customFileB,
-	}
+	makeFile('1', customFileA, [{ id: '1', value: 'some-value-1'}]),
+	makeFile('2', customFileB, [{ id: '2', value: 'some-value-2'}]),
 ]
 
 export const stateWithFiles: IBulkMetadataState = {
 	currentStep: 'upload',
 	fields: [],
-	files: files,
+	files,
 }
 
 export const stateWithFields: IBulkMetadataState = {
@@ -73,17 +68,8 @@ export const stateWithFields: IBulkMetadataState = {
 	files: [],
 }
 
-export const stateWithFilesAndMetadata: IBulkMetadataState = {
+export const state: IBulkMetadataState = {
 	currentStep: 'upload',
 	fields,
-	files: [
-		{
-			uploadedFile: customFileA,
-			metadata: fieldDefault
-		},
-		{
-			uploadedFile: customFileB,
-			metadata: fieldChangeIndividual
-		},
-	],
+	files,
 }
