@@ -40,10 +40,6 @@ export const customFiles: CustomFile[] = [
 	customFileB
 ]
 
-// export const fieldDefault: IBulkMetadataField = makeField('name', false)
-// export const fieldChangeIndividual: IBulkMetadataField = makeField('description', true)
-
-
 export const fieldsDefault: IBulkMetadataField[] = makeFields([['1', false], ['3', false]])
 export const fieldsChangeIndividual: IBulkMetadataField[] = makeFields([['2', true]])
 export const fields: IBulkMetadataField[] = [
@@ -57,19 +53,19 @@ export const files: IBulkMetadataFile[] = [
 ]
 
 export const stateWithFiles: IBulkMetadataState = {
-	currentStep: 'upload',
+	currentStep: 0,
 	fields: [],
 	files,
 }
 
 export const stateWithFields: IBulkMetadataState = {
-	currentStep: 'upload',
+	currentStep: 0,
 	fields,
 	files: [],
 }
 
 export const state: IBulkMetadataState = {
-	currentStep: 'upload',
+	currentStep: 0,
 	fields,
 	files,
 }

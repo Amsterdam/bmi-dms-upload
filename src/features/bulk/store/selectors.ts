@@ -2,7 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { IBulkMetadataState, IBulkMetadataField, IBulkMetadataFile } from './model';
 
 export const initialState: IBulkMetadataState = {
-	currentStep: 'upload',
+	currentStep: 0,
 	files: [],
 	fields: [],
 };

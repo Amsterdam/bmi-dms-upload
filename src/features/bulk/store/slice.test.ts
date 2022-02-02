@@ -17,7 +17,7 @@ describe('BulkMetadata Slice', (): void => {
 					uploadedFile: file.uploadedFile,
 					metadata: file.metadata,
 				}))).toEqual({
-					currentStep: 'upload',
+					currentStep: 0,
 					files: [file],
 					fields: [],
 				});

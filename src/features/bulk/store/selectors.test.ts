@@ -17,7 +17,7 @@ describe('BulkMetadata Selectors', () => {
 		it('should get files from store', () => {
 			expect(
 				getFilesFromStore.resultFunc({
-					currentStep: 'upload',
+					currentStep: 0,
 					files,
 					fields: [],
 				}),
@@ -28,7 +28,7 @@ describe('BulkMetadata Selectors', () => {
 		it('should get fields from store', () => {
 			expect(
 				getFieldsFromStore.resultFunc({
-					currentStep: 'upload',
+					currentStep: 0,
 					files: [],
 					fields,
 				}),
