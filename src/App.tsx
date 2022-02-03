@@ -3,9 +3,9 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { muiTheme, CustomFile } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
-import AddDocumentButton from './components/AddDocumentButton/AddDocumentButton';
+import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
-import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './components/Wizard/Wizard';
+import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './types';
 import { schema, uischema } from './components/MetadataForm/__stubs__';
 
 type MetadataExample = {
