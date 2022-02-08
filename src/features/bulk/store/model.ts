@@ -5,13 +5,13 @@ type IBulkMetadataFieldId = string;
 enum CurrentStep {
 	'upload',
 	'selectFields',
-	'editFile'
+	'editFile',
 }
 
 export interface IBulkMetadataFile {
 	id: string;
 	url: string;
-	uploadedFile: CustomFile;
+	uploadedFile: Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type'>;
 	metadata?: IBulkMetadataFileMetadata[];
 }
 
@@ -28,7 +28,7 @@ export interface IBulkMetadataField {
 }
 
 export interface IBulkMetadataState {
-	currentStep: CurrentStep
+	currentStep: CurrentStep;
 	files: IBulkMetadataFile[];
 	fields: IBulkMetadataField[];
 	selectedFileId?: IBulkMetadataFieldId;

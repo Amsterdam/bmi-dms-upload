@@ -12,7 +12,7 @@ import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../single-file/components/Wizard/Step1';
 import { getCustomFilesFromStore } from '../../store/selectors';
-import { setFile } from '../../store/slice'
+import { setFile } from '../../store/slice';
 import { IBulkMetadataFile } from '../../store/model';
 
 export type Props<T> = {
@@ -57,15 +57,20 @@ export default function BulkUploadWizard<T>({
 
 	const getFile = React.useCallback(
 		(uploadedFile: CustomFile) => {
-			console.log('getFile', uploadedFile)
-			const file: IBulkMetadataFile = {
-				id: `${uploadedFile.tmpId}`,
-				url: 'some-url',
-				uploadedFile,
-			}
-			console.log('!!! getFile', file)
-			// onFileSuccess && onFileSuccess(files);
-			dispatch(setFile(file));
+			onFileSuccess && onFileSuccess(uploadedFile);
+			const { tmpId, name, size, type } = uploadedFile;
+			dispatch(
+				setFile({
+					id: `${tmpId}`,
+					url: 'some-url',
+					uploadedFile: {
+						tmpId,
+						name,
+						size,
+						type,
+					},
+				}),
+			);
 		},
 		[onFileSuccess],
 	);
@@ -93,7 +98,7 @@ export default function BulkUploadWizard<T>({
 										onFileSuccess={getFile}
 										storedFiles={!files ? [] : (files as FileUploadProps['storedFiles'])}
 										httpMethod={uploadHTTPMethod}
-										maxFiles={10}
+										maxFiles={0}
 									/>
 								)}
 							/>
