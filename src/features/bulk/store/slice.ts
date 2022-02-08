@@ -12,13 +12,16 @@ export const slice = createSlice({
 	initialState,
 	reducers: {
 		setFile: (state: IBulkMetadataState, action: PayloadAction<IBulkMetadataFile>) => {
+			console.log('setFile slice:', action.payload)
+			// @ts-ignore
 			const newFile: IBulkMetadataFile = {
 				id: action.payload.id,
 				url: action.payload.url,
-				uploadedFile: action.payload.uploadedFile,
+				// uploadedFile: action.payload.uploadedFile,
 				metadata: action.payload.metadata ?? undefined
 			};
 			state.files = [...state.files, newFile];
+			console.log('setFile state.files:', state.files)
 		},
 	},
 });

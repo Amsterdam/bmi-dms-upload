@@ -7,6 +7,7 @@ import AddDocumentButton from './features/single-file/components/AddDocumentButt
 import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './types';
 import { schema, uischema } from './components/MetadataForm/__stubs__';
+import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
 
 type MetadataExample = {
 	documentDescription: string;
@@ -77,6 +78,34 @@ const App: React.FC = () => {
 											console.log(':: onCancel', data);
 											// return Promise.resolve();
 										}}
+										basePath={basePath}
+									/>
+									<hr />
+									<BulkUploadButton
+										asset={
+											{
+												code: '1337',
+												name: 'some-name'
+											}
+										}
+										getDocumentViewUrl={() => {
+											console.log(':: getDocumentViewUrl')
+											return Promise.resolve('some-document-url');
+										}}
+										getPostUrl={(file: CustomFile) => {
+											console.log(':: getPostUrl', file);
+											return Promise.resolve('https://reqres.in/api/users');
+										}}
+										getHeaders={async () => {
+											const headers: { [key: string]: string } = {};
+											headers['some-token'] = '__TOKEN__';
+											console.log(':: getHeaders', headers)
+											return Promise.resolve(headers);
+										}}
+										onCancel={async function (data: CancelCallbackArg<MetadataExample>) {
+											console.log(':: onCancel', data);
+										}}
+										buttonText='Bestanden toevoegen'
 										basePath={basePath}
 									/>
 								</div>

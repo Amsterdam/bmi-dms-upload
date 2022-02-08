@@ -1,14 +1,26 @@
 import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
-import CustomProvider from '../../../CustomProvider';
-
 import BulkUploadWizard from '../BulkUploadWizard/BulkUploadWizard';
+import { BulkWizardImplementationProps } from '../../../../types';
+import CustomProvider from '../../../CustomProvider';
+import { appendTrailingSlash } from '../../../../utils';
 
-export type Props = {
+export type Props<T> = {
 	buttonText?: string;
-}; // & ImplementationProps<T>;
+} & BulkWizardImplementationProps<T>;
 
-export default function BulkUploadButton({ buttonText }: Props): ReactElement {
+export default function BulkUploadButton<T>({
+	asset,
+	buttonText = 'Bestand toevoegen',
+	getPostUrl,
+	getHeaders,
+	getDocumentViewUrl,
+	onFileSuccess,
+	onFileRemove,
+	onCancel,
+	basePath = '/',
+	uploadHTTPMethod = 'POST',
+}: Props<T>): ReactElement {
 	const [isWizardVisible, setWizardVisibility] = React.useState<boolean>(false);
 
 	const onHandleClick = () => {
@@ -21,7 +33,18 @@ export default function BulkUploadButton({ buttonText }: Props): ReactElement {
 				{buttonText}
 			</Button>
 			{isWizardVisible && (
-				<BulkUploadWizard />
+				<BulkUploadWizard<T>
+					asset={asset}
+					onClose={() => setWizardVisibility(false)}
+					getPostUrl={getPostUrl}
+					getHeaders={getHeaders}
+					onFileSuccess={onFileSuccess}
+					onFileRemove={onFileRemove}
+					onCancel={onCancel}
+					basePath={appendTrailingSlash(basePath)}
+					uploadHTTPMethod={uploadHTTPMethod}
+					getDocumentViewUrl={getDocumentViewUrl}
+				/>
 			)}
 		</CustomProvider>
 	);
