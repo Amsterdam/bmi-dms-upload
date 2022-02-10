@@ -81,13 +81,21 @@ const App: React.FC = () => {
 										basePath={basePath}
 									/>
 									<hr />
-									<BulkUploadButton
+									<BulkUploadButton<MetadataExample>
 										asset={
 											{
 												code: '1337',
 												name: 'some-name'
 											}
 										}
+										metadataForm={{
+											schema,
+											uischema,
+											data: {
+												documentDescription: '__DOCUMENT_DESCRIPTION__',
+											} as Partial<MetadataExample>,
+											renderers: [],
+										}}
 										getDocumentViewUrl={() => {
 											console.log(':: getDocumentViewUrl')
 											return Promise.resolve('some-document-url');
@@ -105,8 +113,12 @@ const App: React.FC = () => {
 										onCancel={async function (data: CancelCallbackArg<MetadataExample>) {
 											console.log(':: onCancel', data);
 										}}
+										onFileRemove={(file) => {
+											console.log(':: fileRemove', file);
+										}}
 										buttonText='Bestanden toevoegen'
 										basePath={basePath}
+
 									/>
 								</div>
 							)}

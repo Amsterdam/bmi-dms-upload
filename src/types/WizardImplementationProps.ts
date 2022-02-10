@@ -37,6 +37,7 @@ export interface WizardImplementationProps<T> {
 	uploadHTTPMethod?: SupportedHTTPMethods;
 }
 
-export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "metadataForm" | "onMetadataSubmit">  {
+export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "onMetadataSubmit">  {
 	getDocumentViewUrl: (metadataFile: IBulkMetadataFile) => Promise<string>;
+	onFileRemove?: (file: Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type'>) => void;
 }

@@ -1,3 +1,4 @@
+import { CustomFile } from '@amsterdam/bmi-component-library';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IBulkMetadataState, IBulkMetadataFile } from './model';
 
@@ -21,9 +22,14 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
+		removeFile: (state: IBulkMetadataState, action: PayloadAction<CustomFile>) => {
+			const newFiles = state.files.filter(file => file.uploadedFile.tmpId !== action.payload.tmpId)
+			state.files = newFiles;
+		},
+		resetState: (state: IBulkMetadataState) => initialState
 	},
 });
 
-export const { setFile } = slice.actions;
+export const { setFile, removeFile, resetState } = slice.actions;
 
 export const { reducer } = slice;

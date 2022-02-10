@@ -2,7 +2,9 @@ import { CustomFile } from '@amsterdam/bmi-component-library';
 
 type IBulkMetadataFieldId = string;
 
-enum CurrentStep {
+export type BulkCustomFile = Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type'>
+
+export enum CurrentStep {
 	'upload',
 	'selectFields',
 	'editFile',
@@ -11,7 +13,7 @@ enum CurrentStep {
 export interface IBulkMetadataFile {
 	id: string;
 	url: string;
-	uploadedFile: Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type'>;
+	uploadedFile: BulkCustomFile;
 	metadata?: IBulkMetadataFileMetadata[];
 }
 

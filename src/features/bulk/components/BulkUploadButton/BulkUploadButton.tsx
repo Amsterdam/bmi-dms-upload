@@ -12,6 +12,7 @@ export type Props<T> = {
 export default function BulkUploadButton<T>({
 	asset,
 	buttonText = 'Bestand toevoegen',
+	metadataForm,
 	getPostUrl,
 	getHeaders,
 	getDocumentViewUrl,
@@ -35,6 +36,7 @@ export default function BulkUploadButton<T>({
 			{isWizardVisible && (
 				<BulkUploadWizard<T>
 					asset={asset}
+					metadataForm={metadataForm}
 					onClose={() => setWizardVisibility(false)}
 					getPostUrl={getPostUrl}
 					getHeaders={getHeaders}

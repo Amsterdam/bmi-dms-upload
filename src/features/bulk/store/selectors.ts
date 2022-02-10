@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { IBulkMetadataState, IBulkMetadataField, IBulkMetadataFile } from './model';
+import { IBulkMetadataState, IBulkMetadataField, IBulkMetadataFile, BulkCustomFile } from './model';
 import { Store } from '../../store';
-import { CustomFile } from '@amsterdam/bmi-component-library';
 
 export const initialState: IBulkMetadataState = {
 	currentStep: 0,
@@ -21,7 +20,7 @@ export const getFilesFromStore = createSelector(
 
 export const getCustomFilesFromStore = createSelector(
 	[getState],
-	(state: IBulkMetadataState): CustomFile[] | undefined => state.files.map(file => file.uploadedFile),
+	(state: IBulkMetadataState): BulkCustomFile[] | undefined => state.files.map(file => file.uploadedFile),
 );
 
 export const getFieldsFromStore = createSelector(

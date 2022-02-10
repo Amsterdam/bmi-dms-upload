@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 
@@ -12,8 +12,7 @@ import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../single-file/components/Wizard/Step1';
 import { getCustomFilesFromStore } from '../../store/selectors';
-import { setFile } from '../../store/slice';
-import { IBulkMetadataFile } from '../../store/model';
+import { setFile, removeFile, resetState } from '../../store/slice';
 
 export type Props<T> = {
 	onClose: () => void;
@@ -21,6 +20,7 @@ export type Props<T> = {
 
 export default function BulkUploadWizard<T>({
 	asset: { name },
+	metadataForm,
 	onClose,
 	onCancel,
 	getHeaders,
@@ -38,8 +38,36 @@ export default function BulkUploadWizard<T>({
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
 
+	const getFile = React.useCallback(
+		(uploadedFile: CustomFile) => {
+			onFileSuccess && onFileSuccess(uploadedFile);
+			const { tmpId, name, size, type } = uploadedFile;
+			dispatch(
+				setFile({
+					id: `${tmpId}`,
+					url: 'some-url', // @TODO: replace with actual value, from what?
+					uploadedFile: {
+						tmpId,
+						name,
+						size,
+						type,
+					},
+				}),
+			);
+		},
+		[onFileSuccess],
+	);
+
+	const handleFileRemove = useCallback(
+		(file: CustomFile) => {
+			onFileRemove && onFileRemove(file);
+			dispatch(removeFile(file));
+		},
+		[onFileRemove],
+	);
+
 	function resetAndClose() {
-		// dispatch(resetState());
+		dispatch(resetState());
 		onClose();
 		history.push(basePath);
 	}
@@ -53,27 +81,6 @@ export default function BulkUploadWizard<T>({
 		resetAndClose();
 	}
 
-	const handleFileRemove = () => console.log('handleFileRemove');
-
-	const getFile = React.useCallback(
-		(uploadedFile: CustomFile) => {
-			onFileSuccess && onFileSuccess(uploadedFile);
-			const { tmpId, name, size, type } = uploadedFile;
-			dispatch(
-				setFile({
-					id: `${tmpId}`,
-					url: 'some-url',
-					uploadedFile: {
-						tmpId,
-						name,
-						size,
-						type,
-					},
-				}),
-			);
-		},
-		[onFileSuccess],
-	);
 
 	return (
 		<>
@@ -102,6 +109,24 @@ export default function BulkUploadWizard<T>({
 									/>
 								)}
 							/>
+							<Route
+								path={appendPathSegment(basePath, 'step2')}
+								render={() => (
+									<MetadataForm
+										{...metadataForm}
+										onChange={(data, valid) => {
+											// dispatch(setMetadata(data));
+											setIsValidForm(valid);
+										}}
+									/>
+								)}
+							/>
+							<Route
+								path={appendPathSegment(basePath, 'step3')}
+								render={() => (
+									<>Step3</>
+								)}
+							/>
 						</ModalContentStyle>
 					</Modal.Content>
 				</>
@@ -109,18 +134,39 @@ export default function BulkUploadWizard<T>({
 					cancel={{ visible: true, onClick: confirm, dataTestId: 'cancel-wizard' }}
 					previous={{
 						visible: appendTrailingSlash(location.pathname) !== basePath,
-						onClick: () => history.push(basePath),
+						onClick: () => {
+							switch (location.pathname) {
+								case `${basePath}step2`:
+									history.push(basePath)
+									break;
+									case `${basePath}step3`:
+									history.push(appendPathSegment(basePath, 'step2'))
+									break;
+								default:
+									break;
+							}
+						},
 						dataTestId: 'previous-button',
 					}}
 					next={{
-						visible: !!(appendTrailingSlash(location.pathname) === basePath),
-						onClick: () => history.push(appendPathSegment(basePath, 'step2')),
+						visible: appendTrailingSlash(location.pathname) !== `${basePath}step3/`,
+						onClick: () => {
+							switch (location.pathname) {
+								case `${basePath}`:
+									history.push(appendPathSegment(basePath, 'step2'))
+									break;
+								case `${basePath}step2`:
+									history.push(appendPathSegment(basePath, 'step3'))
+									break;
+								default:
+									break;
+							}
+						},
 						dataTestId: 'next-button',
 					}}
 					save={{
-						visible: appendTrailingSlash(location.pathname) !== basePath,
+						visible: (appendTrailingSlash(location.pathname) === `${basePath}step3/`),
 						disabled: !isValidForm,
-						onClick: () => console.log('save'),
 						dataTestId: 'save-button',
 					}}
 				/>
