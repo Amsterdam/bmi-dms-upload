@@ -1,7 +1,7 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
 import { IBulkMetadataField, IBulkMetadataFile, IBulkMetadataFileMetadata, IBulkMetadataState } from '../model'
 
-function makeFile(id: string, uploadedFile: CustomFile, metadata: IBulkMetadataFileMetadata[]): IBulkMetadataFile {
+export function makeFile(id: string, uploadedFile: CustomFile, metadata: IBulkMetadataFileMetadata[]): IBulkMetadataFile {
 	return {
 		id,
 		url: 'some-url',
@@ -9,7 +9,8 @@ function makeFile(id: string, uploadedFile: CustomFile, metadata: IBulkMetadataF
 		metadata
 	}
 }
-function makeCustomFile(id: number, title: string, filetype?: string) {
+
+export function makeCustomFile(id: number, title: string, filetype?: string) {
 	return {
 		tmpId: id,
 		progress: 0,
@@ -20,7 +21,7 @@ function makeCustomFile(id: number, title: string, filetype?: string) {
 	} as CustomFile
 }
 
-function makeField(id: string, changeIndividual: boolean): IBulkMetadataField {
+export function makeField(id: string, changeIndividual: boolean): IBulkMetadataField {
 	return {
 		id: id,
 		label: `some-label ${id}`,
@@ -28,7 +29,8 @@ function makeField(id: string, changeIndividual: boolean): IBulkMetadataField {
 		changeIndividual: changeIndividual
 	}
 }
-function makeFields(fields: [string, boolean][]): IBulkMetadataField[] {
+
+export function makeFields(fields: [string, boolean][]): IBulkMetadataField[] {
 	return fields.map(f => makeField(f[0], f[1]));
 }
 
