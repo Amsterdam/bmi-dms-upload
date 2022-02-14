@@ -30,11 +30,11 @@ const BulkMetadataForm: React.FC<Props> = ({
 					},
 					{
 						header: 'Default waarde',
-						width: 33,
+						width: 36,
 					},
 					{
 						header: 'Individueel wijzigen',
-						width: 33,
+						width: 30,
 						align: 'center',
 					},
 				]}

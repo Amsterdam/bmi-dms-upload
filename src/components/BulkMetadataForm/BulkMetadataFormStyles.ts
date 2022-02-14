@@ -43,6 +43,7 @@ const BulkMetadataFormStyles = styled.div`
 		> label {
 			display: flex !important;
 			align-items: center !important;
+			height: ${themeSpacing(11)};
 		}
 
 		> label,
