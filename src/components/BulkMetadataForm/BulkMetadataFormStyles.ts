@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { themeSpacing } from '@amsterdam/asc-ui';
 
 const BulkMetadataFormStyles = styled.div`
 	input[type='text'] {
-		margin: 3px 0 6px;
+		margin: ${themeSpacing(3, 0, 6)};
 	}
 
 	.MuiGrid-item {
@@ -24,10 +25,10 @@ const BulkMetadataFormStyles = styled.div`
 	}
 
 	.MuiGrid-spacing-xs-2 {
-		margin: 0 8px !important;
+		margin: ${themeSpacing(0, 2)} !important;
 
 		.MuiGrid-item {
-			padding: 4px 0 0;
+			padding: ${themeSpacing(1, 0, 0)};
 		}
 	}
 
@@ -51,10 +52,11 @@ const BulkMetadataFormStyles = styled.div`
 			flex: 1 1 auto;
 			align-self: auto;
 			order: 0;
+			margin-bottom: ${themeSpacing(1)};
 		}
 
 		> label + div:nth-of-type(2) {
-			margin-top: -3px !important;
+			margin-top: ${themeSpacing(-1)} !important;
 			text-align: left;
 		}
 	}
@@ -80,7 +82,7 @@ const BulkMetadataFormStyles = styled.div`
 	div[role='alert'] {
 		margin-top: 0;
 		text-align: left;
-		margin-bottom: 5px;
+		margin-bottom: ${themeSpacing(5)};
 	}
 `;
 
