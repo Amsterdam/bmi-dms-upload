@@ -80,9 +80,8 @@ const BulkMetadataFormStyles = styled.div`
 	}
 
 	div[role='alert'] {
-		margin-top: 0;
 		text-align: left;
-		margin-bottom: ${themeSpacing(5)};
+		margin: ${themeSpacing(1, 0)};
 	}
 `;
 
