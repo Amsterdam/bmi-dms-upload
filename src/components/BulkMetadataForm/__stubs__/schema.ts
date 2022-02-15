@@ -28,5 +28,3 @@ export const schema: CustomJsonSchema = {
 		{} as { [key: string]: CustomJsonSchema },
 	),
 };
-
-console.log(schema);
