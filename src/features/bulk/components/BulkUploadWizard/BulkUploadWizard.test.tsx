@@ -50,7 +50,7 @@ const MetadataFormMock = mocked(MetadataForm);
 const useHistoryMock = mocked(useHistory);
 
 const rawFile = makeCustomFile(1, 'some-title')
-const mockFile = makeFile('1', rawFile, []);
+const mockFile = makeFile('1', rawFile);
 
 const mockData: MetadataExample = {
 	documentDescription: 'test',
@@ -84,7 +84,7 @@ const props = {
 	getDocumentViewUrl: jest.fn()
 };
 
-describe('<Wizard />', () => {
+describe('<BulkUploadWizard />', () => {
 	const renderComponent = (
 		storeState: IBulkMetadataState,
 		url: string = '/',
@@ -123,27 +123,27 @@ describe('<Wizard />', () => {
 		expect(pushSpy).toHaveBeenCalledWith('/step2');
 	});
 
-	// test('setFile is called when file is uploaded successfully', () => {
-	// 	const setFileSpy = jest.spyOn(actions, 'setFile');
-	// 	renderComponent(storeState);
-	// 	const { onFileSuccess } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
-	// 	act(() => {
-	// 		onFileSuccess && onFileSuccess(mockFile.uploadedFile);
-	// 	});
-	// 	expect(setFileSpy).toHaveBeenCalledWith(mockFile);
-	// 	expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile);
-	// });
+	test('setFile is called when file is uploaded successfully', () => {
+		const setFileSpy = jest.spyOn(actions, 'setFile');
+		renderComponent(storeState);
+		const { onFileSuccess } =  mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileSuccess && onFileSuccess(mockFile.uploadedFile);
+		});
+		expect(setFileSpy).toHaveBeenCalledWith(mockFile);
+		expect(onFileSuccessMock).toHaveBeenCalledWith(mockFile.uploadedFile);
+	});
 
-	// test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
-	// 	const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFileFromStore');
-	// 	renderComponent({ file: mockFile, metadata: {} }, '/');
-	// 	const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
-	// 	act(() => {
-	// 		onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
-	// 	});
-	// 	expect(removeFileFromStoreSpy).toHaveBeenCalled();
-	// 	expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);
-	// });
+	test('removeFileFromStore is called when onFileRemove is removed successfully', () => {
+		const removeFileFromStoreSpy = jest.spyOn(actions, 'removeFile');
+		renderComponent(storeState);
+		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		act(() => {
+			onFileRemove && onFileRemove(mockFile.uploadedFile as CustomFileOrRejection);
+		});
+		expect(removeFileFromStoreSpy).toHaveBeenCalledWith(mockFile.uploadedFile);
+		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile.uploadedFile);
+	});
 
 	// test.each([['cancel-wizard'], ['modal-close-button']])(
 	// 	'should catch error when promise is rejected',

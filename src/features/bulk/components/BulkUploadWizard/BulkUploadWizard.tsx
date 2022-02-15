@@ -13,6 +13,7 @@ import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../single-file/components/Wizard/Step1';
 import { getCustomFilesFromStore } from '../../store/selectors';
 import { setFile, removeFile, resetState } from '../../store/slice';
+import { BulkCustomFile } from '../../store/model';
 
 export type Props<T> = {
 	onClose: () => void;
@@ -38,20 +39,15 @@ export default function BulkUploadWizard<T>({
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
 
-	const getFile = React.useCallback(
-		(uploadedFile: CustomFile) => {
+	const saveFile = React.useCallback(
+		(uploadedFile: BulkCustomFile) => {
 			onFileSuccess && onFileSuccess(uploadedFile);
-			const { tmpId, name, size, type } = uploadedFile;
+			const { tmpId } = uploadedFile;
 			dispatch(
 				setFile({
 					id: `${tmpId}`,
 					url: 'some-url', // @TODO: replace with actual value, from what?
-					uploadedFile: {
-						tmpId,
-						name,
-						size,
-						type,
-					},
+					uploadedFile,
 				}),
 			);
 		},
@@ -102,7 +98,7 @@ export default function BulkUploadWizard<T>({
 										getHeaders={getHeaders}
 										getPostUrl={getPostUrl}
 										onFileRemove={handleFileRemove}
-										onFileSuccess={getFile}
+										onFileSuccess={saveFile}
 										storedFiles={!files ? [] : (files as FileUploadProps['storedFiles'])}
 										httpMethod={uploadHTTPMethod}
 										maxFiles={0}

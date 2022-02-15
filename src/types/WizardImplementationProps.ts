@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { CustomFile, FileUploadProps } from '@amsterdam/bmi-component-library';
-import { IBulkMetadataFile } from 'src/features/bulk/store/model';
+import { BulkCustomFile, IBulkMetadataFile } from 'src/features/bulk/store/model';
 
 export type Asset = {
 	code: string;
@@ -39,5 +39,6 @@ export interface WizardImplementationProps<T> {
 
 export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "onMetadataSubmit">  {
 	getDocumentViewUrl: (metadataFile: IBulkMetadataFile) => Promise<string>;
-	onFileRemove?: (file: Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type'>) => void;
+	onFileRemove?: (file: BulkCustomFile) => void;
+	onFileSuccess?: (file: BulkCustomFile) => void;
 }

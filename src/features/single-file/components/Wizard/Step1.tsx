@@ -1,6 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
+import { BulkCustomFile } from 'src/features/bulk/store/model';
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
@@ -9,7 +10,7 @@ type FileUploadProps = ComponentProps<typeof FileUpload>;
 type Props = {
 	getPostUrl: FileUploadProps['getPostUrl'];
 	getHeaders: FileUploadProps['getHeaders'];
-	onFileSuccess?: FileUploadProps['onFileSuccess'];
+	onFileSuccess?: (file: BulkCustomFile) => void;
 	onFileRemove?: FileUploadProps['onFileRemove'];
 	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
