@@ -1,4 +1,4 @@
-import { fields } from './schema';
+import { MetadataProperties as fields } from '../../../types';
 
 export const uischema = {
 	type: 'Group',

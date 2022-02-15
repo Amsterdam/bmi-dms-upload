@@ -1,35 +1,9 @@
-import { CustomJsonSchema } from '../../../types';
-
-type MetadataProperty = {
-	key: string;
-	scope: string;
-	type: 'string' | 'date';
-	label: string;
-	'bmi-isNotEmpty'?: boolean;
-	'bmi-errorMessage'?: string;
-};
-
-export const fields: MetadataProperty[] = [
-	{
-		key: 'year',
-		scope: 'string',
-		type: 'string',
-		label: 'Jaar',
-		'bmi-isNotEmpty': true,
-		'bmi-errorMessage': 'Dit is een verplicht veld',
-	},
-	{
-		key: 'documentDescription',
-		scope: 'string',
-		type: 'string',
-		label: 'Documentomschrijving',
-	},
-];
+import { CustomJsonSchema, MetadataProperties as fields } from '../../../types';
 
 export const schema: CustomJsonSchema = {
 	type: 'object',
 	properties: fields.reduce(
-		(acc, { key, scope, type, 'bmi-isNotEmpty': isNotEmpty, 'bmi-errorMessage': customErrorMessage }) => {
+		(acc, { key, scope, type, format, 'bmi-isNotEmpty': isNotEmpty, 'bmi-errorMessage': customErrorMessage }) => {
 			acc[key] = {
 				type: 'object',
 				properties: {
@@ -38,9 +12,10 @@ export const schema: CustomJsonSchema = {
 					},
 					value: {
 						type,
+						format,
 						'bmi-isNotEmpty': isNotEmpty,
 						errorMessage: {
-							'bmi-isNotEmpty': customErrorMessage ?? 'Default Error',
+							'bmi-isNotEmpty': customErrorMessage ?? 'Dit is een verplicht veld',
 						},
 					},
 					changeIndividual: {
@@ -53,3 +28,5 @@ export const schema: CustomJsonSchema = {
 		{} as { [key: string]: CustomJsonSchema },
 	),
 };
+
+console.log(schema);

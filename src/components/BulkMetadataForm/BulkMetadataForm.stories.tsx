@@ -36,15 +36,41 @@ const Template: Story<Props> = ({
 };
 
 export const Default = Template.bind({});
+
 Default.args = {
 	data: {
 		year: {
-			name: 'Jaar',
 			value: '2021',
-			changeIndividual: true,
 		},
 		documentDescription: {
-			name: 'Document Omschrijving',
+			value: 'Lorem Ipsum',
+			changeIndividual: true,
+		},
+		repetitionMeter: {
+			value: 'Lorem Ipsum',
+		},
+		ils3: {
+			value: 'Lorem Ipsum',
+			changeIndividual: true,
+		},
+		monitoring: {},
+		objectType: {
+			value: 'Lorem Ipsum',
+		},
+		contract: {
+			value: 'Lorem Ipsum',
+			changeIndividual: true,
+		},
+		carUse: {
+			value: 'Lorem Ipsum',
+		},
+		executionDate: {},
+		source: {},
+		engineeringOffice: {
+			value: 'Lorem Ipsum',
+		},
+		ils2: {
+			value: '123456789',
 		},
 	},
 };

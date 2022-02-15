@@ -11,7 +11,6 @@ const TextField = (props: ControlProps) => {
 	return (
 		<>
 			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
-
 			<div>
 				<ASCTextField
 					id={path}

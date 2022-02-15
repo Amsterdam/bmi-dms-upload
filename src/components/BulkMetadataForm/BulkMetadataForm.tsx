@@ -25,7 +25,7 @@ const BulkMetadataForm: React.FC<Props> = ({
 			<MetadataColumnHeaders
 				columns={[
 					{
-						header: 'Metadataveld',
+						header: 'Metadata veld',
 						width: 34,
 					},
 					{
