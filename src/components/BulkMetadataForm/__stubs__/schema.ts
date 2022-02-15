@@ -18,6 +18,7 @@ export const schema: CustomJsonSchema = {
 						format,
 						'bmi-isNotEmpty': isNotEmpty,
 						errorMessage: {
+							format: customErrorMessage ?? "Het format voor '" + label + "' is ongeldig",
 							'bmi-isNotEmpty': customErrorMessage ?? "Geef de default waarde voor '" + label + "' op",
 						},
 					},
