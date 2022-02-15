@@ -68,20 +68,30 @@ describe('<BulkMetadataForm />', () => {
 		render();
 		expect(
 			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.carUse.properties.value.errorMessage,
-		).toEqual({
-			'bmi-isNotEmpty': "Geef de default waarde voor 'Gebruik auto' op",
-		});
+			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.carUse.properties.value.errorMessage[
+				'bmi-isNotEmpty'
+			],
+		).toEqual("Geef de default waarde voor 'Gebruik auto' op");
+	});
+
+	test('Should have default formatting error message', () => {
+		render();
+		// @ts-ignore
+		const executionDate = mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.executionDate
+			.properties.value;
+		// @ts-ignore
+		const { errorMessage } = executionDate;
+		expect(errorMessage.format).toEqual("Het format voor 'Uitvoeringsdatum' is ongeldig");
 	});
 
 	test('Should have custom error message', () => {
 		render();
 		expect(
 			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.year.properties.value.errorMessage,
-		).toEqual({
-			'bmi-isNotEmpty': 'Jaartal mag niet leeg zijn (custom error message)',
-		});
+			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.year.properties.value.errorMessage[
+				'bmi-isNotEmpty'
+			],
+		).toEqual('Jaartal mag niet leeg zijn (custom error message)');
 	});
 
 	test('Should detect if required', () => {
