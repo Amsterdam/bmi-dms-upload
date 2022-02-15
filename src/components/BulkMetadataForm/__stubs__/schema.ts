@@ -3,7 +3,10 @@ import { CustomJsonSchema, MetadataProperties as fields } from '../../../types';
 export const schema: CustomJsonSchema = {
 	type: 'object',
 	properties: fields.reduce(
-		(acc, { key, scope, type, format, 'bmi-isNotEmpty': isNotEmpty, 'bmi-errorMessage': customErrorMessage }) => {
+		(
+			acc,
+			{ key, scope, type, format, 'bmi-isNotEmpty': isNotEmpty, 'bmi-errorMessage': customErrorMessage, label },
+		) => {
 			acc[key] = {
 				type: 'object',
 				properties: {
@@ -15,7 +18,7 @@ export const schema: CustomJsonSchema = {
 						format,
 						'bmi-isNotEmpty': isNotEmpty,
 						errorMessage: {
-							'bmi-isNotEmpty': customErrorMessage ?? 'Dit is een verplicht veld',
+							'bmi-isNotEmpty': customErrorMessage ?? "Geef de default waarde voor '" + label + "' op",
 						},
 					},
 					changeIndividual: {

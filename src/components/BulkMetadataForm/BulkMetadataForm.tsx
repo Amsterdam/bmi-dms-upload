@@ -9,17 +9,7 @@ export type Props = Omit<ComponentProps<typeof JsonForms>, 'onChange'> & {
 	onChange: OnChangeCallback;
 };
 
-const BulkMetadataForm: React.FC<Props> = ({
-	ajv,
-	i18n,
-	schema,
-	uischema,
-	renderers,
-	data = {},
-	cells,
-	validationMode = 'ValidateAndShow',
-	onChange,
-}) => {
+const BulkMetadataForm: React.FC<Props> = ({ schema, uischema, renderers, data = {}, cells, onChange }) => {
 	return (
 		<BulkMetadataFormStyles data-testid={'bulk-metadata-form'}>
 			<MetadataColumnHeaders

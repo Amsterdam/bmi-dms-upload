@@ -15,7 +15,7 @@ export const MetadataProperties: MetadataProperty[] = [
 		type: 'string',
 		label: 'Jaar',
 		'bmi-isNotEmpty': true,
-		'bmi-errorMessage': 'Jaartal mag niet leeg zijn',
+		'bmi-errorMessage': 'Jaartal mag niet leeg zijn (custom error message)',
 	},
 	{
 		key: 'documentDescription',
@@ -23,6 +23,20 @@ export const MetadataProperties: MetadataProperty[] = [
 		type: 'string',
 		label: 'Document omschrijving',
 		'bmi-isNotEmpty': true,
+	},
+	{
+		key: 'contract',
+		scope: 'string',
+		type: 'string',
+		'bmi-isNotEmpty': true,
+		label: 'Contract',
+	},
+	{
+		key: 'carUse',
+		scope: 'string',
+		type: 'string',
+		'bmi-isNotEmpty': true,
+		label: 'Gebruik auto',
 	},
 	{
 		key: 'repetitionMeter',
@@ -47,20 +61,6 @@ export const MetadataProperties: MetadataProperty[] = [
 		scope: 'string',
 		type: 'string',
 		label: 'Object type',
-	},
-	{
-		key: 'contract',
-		scope: 'string',
-		type: 'string',
-		'bmi-isNotEmpty': true,
-		label: 'Contract',
-	},
-	{
-		key: 'carUse',
-		scope: 'string',
-		type: 'string',
-		'bmi-isNotEmpty': true,
-		label: 'Gebruik auto',
 	},
 	{
 		key: 'executionDate',
