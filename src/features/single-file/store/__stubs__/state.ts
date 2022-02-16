@@ -1,4 +1,4 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
+import { BulkCustomFile } from 'src/features/bulk/store/model';
 import { DMSUpload } from '../../../store';
 
 export const file = {
@@ -8,7 +8,7 @@ export const file = {
 	name: 'Untitled',
 	lastModified: 0,
 	size: 10000,
-} as CustomFile;
+} as BulkCustomFile;
 
 export const metadata = { foo: 'bar' };
 

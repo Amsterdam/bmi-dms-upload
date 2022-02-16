@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../../CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
@@ -12,6 +12,7 @@ import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import { WizardImplementationProps } from '../../../../types'
+import { BulkCustomFile } from 'src/features/bulk/store/model';
 
 export type Props<T> = {
 	onClose: () => void;
@@ -39,7 +40,7 @@ export default function Wizard<T>({
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
 
 	const getFile = React.useCallback(
-		(file: CustomFile) => {
+		(file: BulkCustomFile) => {
 			onFileSuccess && onFileSuccess(file);
 			dispatch(setFile(file));
 		},

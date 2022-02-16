@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
-import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
@@ -55,7 +55,7 @@ export default function BulkUploadWizard<T>({
 	);
 
 	const handleFileRemove = useCallback(
-		(file: CustomFile) => {
+		(file: BulkCustomFile) => {
 			onFileRemove && onFileRemove(file);
 			dispatch(removeFile(file));
 		},

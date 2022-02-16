@@ -2,6 +2,8 @@ import React, { ComponentProps } from 'react';
 import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
 import { BulkCustomFile } from 'src/features/bulk/store/model';
+import { CustomFileOrRejection } from 'src/features/bulk/components/BulkUploadWizard/BulkUploadWizard.test';
+
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
@@ -11,14 +13,15 @@ type Props = {
 	getPostUrl: FileUploadProps['getPostUrl'];
 	getHeaders: FileUploadProps['getHeaders'];
 	onFileSuccess?: (file: BulkCustomFile) => void;
-	onFileRemove?: FileUploadProps['onFileRemove'];
+	onFileRemove?: (file: CustomFileOrRejection) => void;
+	// onFileRemove?: FileUploadProps['onFileRemove'];
 	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
 	placeholder?: string;
 	maxFiles?: number;
 };
 
-const Step1: React.FC<Props> = ({
+export default function Step1({
 	getPostUrl,
 	getHeaders,
 	onFileRemove,
@@ -27,7 +30,7 @@ const Step1: React.FC<Props> = ({
 	httpMethod = 'POST',
 	placeholder = 'Sleep een bestand in dit vlak of',
 	maxFiles = 1,
-}) => {
+}: Props) {
 	return (
 		<Step1Styles>
 			<FileUpload
@@ -48,6 +51,5 @@ const Step1: React.FC<Props> = ({
 			/>
 		</Step1Styles>
 	);
-};
+}
 
-export default Step1;

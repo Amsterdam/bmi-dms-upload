@@ -1,6 +1,5 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBulkMetadataState, IBulkMetadataFile } from './model';
+import { BulkCustomFile, IBulkMetadataState, IBulkMetadataFile } from './model';
 
 export const initialState: IBulkMetadataState = {
 	currentStep: 0,
@@ -22,7 +21,7 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
-		removeFile: (state: IBulkMetadataState, action: PayloadAction<CustomFile>) => {
+		removeFile: (state: IBulkMetadataState, action: PayloadAction<BulkCustomFile>) => {
 			const newFiles = state.files.filter(file => file.uploadedFile.tmpId !== action.payload.tmpId)
 			state.files = newFiles;
 		},

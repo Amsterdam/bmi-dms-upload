@@ -2,7 +2,6 @@ import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { FileRejection } from 'react-dropzone';
-import { CustomFile } from '@amsterdam/bmi-component-library';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/slice';
 import { DMSUpload } from '../../../store';
@@ -14,12 +13,12 @@ import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import Step1 from '../../../single-file/components/Wizard/Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getState } from '../../store/selectors';
-import { IBulkMetadataState } from '../../store/model';
+import { BulkCustomFile, IBulkMetadataState } from '../../store/model';
 
 import { state, makeFile, makeCustomFile, fields as mockFields, files as mockFiles} from "../../store/__stubs__/state";
 import { metadata } from 'src/features/single-file/store/__stubs__/state';
 
-type CustomFileOrRejection = CustomFile & FileRejection;
+export type CustomFileOrRejection = BulkCustomFile & FileRejection;
 
 jest.mock('../../../single-file/components/Wizard/Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');

@@ -2,7 +2,6 @@ import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { FileRejection } from 'react-dropzone';
-import { CustomFile } from '@amsterdam/bmi-component-library';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../../store';
@@ -14,8 +13,9 @@ import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import Step1 from './Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
+import { BulkCustomFile } from 'src/features/bulk/store/model';
 
-type CustomFileOrRejection = CustomFile & FileRejection;
+type CustomFileOrRejection = BulkCustomFile & FileRejection;
 
 jest.mock('./Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');
@@ -46,7 +46,8 @@ const getMetadataFromStoreMock = mocked(getMetadataFromStore);
 const useHistoryMock = mocked(useHistory);
 
 const rawFile = new File(['there'], 'there.png', { type: 'image/png' });
-const mockFile = Object.assign(rawFile, { tmpId: 100 });
+// const mockFile = Object.assign(rawFile, { tmpId: 100 });
+const mockFile = Object.assign(rawFile, { tmpId: 100, file: rawFile, errors: [] });
 
 const mockData: MetadataExample = {
 	documentDescription: 'test',

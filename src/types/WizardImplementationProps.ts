@@ -1,26 +1,29 @@
 import { ComponentProps } from 'react';
 import { JsonForms } from '@jsonforms/react';
-import { CustomFile, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { FileUploadProps } from '@amsterdam/bmi-component-library';
 import { BulkCustomFile, IBulkMetadataFile } from 'src/features/bulk/store/model';
+import { CustomFileOrRejection } from '@amsterdam/bmi-component-library/lib/form/FileUpload/hooks';
 
 export type Asset = {
 	code: string;
 	name: string;
 };
 
-export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
-export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
+export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: BulkCustomFile };
+export type CancelCallbackArg<T> = { file?: BulkCustomFile; metadata?: T };
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
 export interface WizardImplementationProps<T> {
 	asset: Asset;
 	// Dynamically get URL to upload file to
-	getPostUrl: FileUploadProps['getPostUrl'];
+	getPostUrl: (file: BulkCustomFile) => Promise<string>;
+	// getPostUrl: FileUploadProps['getPostUrl'];
 	// Allows for authentication with a token header
 	getHeaders: FileUploadProps['getHeaders'];
 	// Callback if file was successfully uploaded
-	onFileSuccess?: FileUploadProps['onFileSuccess'];
-	onFileRemove?: FileUploadProps['onFileRemove'];
+	onFileSuccess?: (file: BulkCustomFile) => void;
+	onFileRemove?: (file: BulkCustomFile & CustomFileOrRejection) => void
+	// onFileRemove?: FileUploadProps['onFileRemove'];
 
 	// Props for JsonForms component to render for capturing metadata
 	metadataForm: ComponentProps<typeof JsonForms>;

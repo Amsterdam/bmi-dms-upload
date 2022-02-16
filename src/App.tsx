@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { muiTheme, CustomFile } from '@amsterdam/bmi-component-library';
+import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
@@ -8,6 +8,7 @@ import theme from './theme';
 import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './types';
 import { schema, uischema } from './components/MetadataForm/__stubs__';
 import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
+import { BulkCustomFile } from './features/bulk/store/model';
 
 type MetadataExample = {
 	documentDescription: string;
@@ -32,7 +33,7 @@ const App: React.FC = () => {
 											code: 'BRU0004',
 											name: 'BRU0004 Heibrug',
 										}}
-										getPostUrl={(file: CustomFile) => {
+										getPostUrl={(file: BulkCustomFile) => {
 											console.log(':: getPostUrl', file);
 											return Promise.resolve('https://reqres.in/api/users');
 										}}
@@ -100,7 +101,7 @@ const App: React.FC = () => {
 											console.log(':: getDocumentViewUrl')
 											return Promise.resolve('some-document-url');
 										}}
-										getPostUrl={(file: CustomFile) => {
+										getPostUrl={(file: BulkCustomFile) => {
 											console.log(':: getPostUrl', file);
 											return Promise.resolve('https://reqres.in/api/users');
 										}}

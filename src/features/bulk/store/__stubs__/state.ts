@@ -1,4 +1,3 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
 import {
 	BulkCustomFile,
 	IBulkMetadataField,
@@ -51,7 +50,7 @@ export function makeFields(fields: [string, boolean][]): IBulkMetadataField[] {
 export const customFileA = makeCustomFile(1, 'A');
 export const customFileB = makeCustomFile(2, 'B');
 
-export const customFiles: CustomFile[] = [customFileA, customFileB];
+export const customFiles: BulkCustomFile[] = [customFileA, customFileB];
 
 export const fieldsDefault: IBulkMetadataField[] = makeFields([
 	['1', false],
