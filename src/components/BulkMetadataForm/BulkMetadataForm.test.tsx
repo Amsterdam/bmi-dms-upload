@@ -6,6 +6,8 @@ import { schema, uischema } from './__stubs__';
 import { mockComponentProps, mocked } from '~/tests/helpers';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
+import { JsonSchema7 } from '@jsonforms/core';
+import { MetadataProperty } from '../../types';
 
 jest.mock('../MetadataColumnHeaders/MetadataColumnHeaders');
 jest.mock('../Form/Form');
@@ -28,16 +30,19 @@ describe('<BulkMetadataForm />', () => {
 
 	test('Should render the component', () => {
 		render();
+
 		expect(screen.getByTestId('bulk-metadata-form')).toBeInTheDocument();
 	});
 
 	test('Renders form', () => {
 		render();
+
 		expect(Form).toHaveBeenCalledWith(props, {});
 	});
 
 	test('Renders column headers', () => {
 		render();
+
 		expect(mockComponentProps<ComponentProps<typeof MetadataColumnHeaders>>(MetadadataColumnHeadersMock)).toEqual({
 			columns: [
 				{ header: 'Metadata veld', width: 34 },
@@ -64,53 +69,30 @@ describe('<BulkMetadataForm />', () => {
 		expect(mockComponentProps<ComponentProps<typeof Form>>(FormMock).data).toEqual(customProps.data);
 	});
 
-	test('Should have default error message', () => {
+	test.each([
+		['default', 'carUse', 'bmi-isNotEmpty', "Geef de default waarde voor 'Gebruik auto' op"],
+		['custom', 'year', 'bmi-isNotEmpty', 'Jaartal mag niet leeg zijn (custom error message)'],
+		['default formatting', 'executionDate', 'format', "Het format voor 'Uitvoeringsdatum' is ongeldig"],
+	])('Should have %s error message', (testCase, property, errorType, errorMessage) => {
 		render();
-		expect(
-			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.carUse.properties.value.errorMessage[
-				'bmi-isNotEmpty'
-			],
-		).toEqual("Geef de default waarde voor 'Gebruik auto' op");
+		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);
+		const val = schema?.properties?.[property].properties?.value as JsonSchema7;
+
+		expect(val.errorMessage[errorType]).toBe(errorMessage);
 	});
 
-	test('Should have default formatting error message', () => {
+	test.each([
+		['required', 'year'],
+		['not required', 'ils3'],
+	])('Should detect if %s', (testCase, property) => {
 		render();
-		// @ts-ignore
-		const executionDate = mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.executionDate
-			.properties.value;
-		// @ts-ignore
-		const { errorMessage } = executionDate;
-		expect(errorMessage.format).toEqual("Het format voor 'Uitvoeringsdatum' is ongeldig");
-	});
+		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);
+		const val = schema?.properties?.[property].properties?.value as MetadataProperty;
 
-	test('Should have custom error message', () => {
-		render();
-		expect(
-			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.year.properties.value.errorMessage[
-				'bmi-isNotEmpty'
-			],
-		).toEqual('Jaartal mag niet leeg zijn (custom error message)');
-	});
-
-	test('Should detect if required', () => {
-		render();
-		expect(
-			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.year.properties.value[
-				'bmi-isNotEmpty'
-			],
-		).toBeTruthy();
-	});
-
-	test('Should detect if not required', () => {
-		render();
-		expect(
-			// @ts-ignore
-			mockComponentProps<ComponentProps<typeof Form>>(FormMock).schema.properties.ils3.properties.value[
-				'bmi-isNotEmpty'
-			],
-		).toBeUndefined();
+		if (testCase === 'required') {
+			expect(val['bmi-isNotEmpty']).toBeTruthy();
+		} else {
+			expect(val['bmi-isNotEmpty']).toBeUndefined();
+		}
 	});
 });

@@ -1,4 +1,4 @@
-type MetadataProperty = {
+export type MetadataProperty = {
 	key: string;
 	scope: string;
 	type: 'string' | 'date';
