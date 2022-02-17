@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import BulkUploadButton, { Props } from './BulkUploadButton';
-import renderWithProviders from '~/tests/utils/withProviders';
+import renderWithProviders from '../../../../tests/utils/withProviders';
 import Step1, { SupportedHTTPMethods } from '../../../../components/Step1/Step1';
 import { MetadataExample } from 'src/types';
 import { asset } from '../BulkUploadWizard/__stubs__';

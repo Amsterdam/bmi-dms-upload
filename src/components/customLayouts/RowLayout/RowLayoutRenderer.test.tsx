@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import { schema, uischema } from '../../MetadataForm/__stubs__';
 import RowLayoutRenderer from './RowLayoutRenderer';
 import { LayoutProps } from '@jsonforms/core';
-import renderWithTheme from '../../../../tests/utils/withTheme';
+import renderWithTheme from '../../../tests/utils/withTheme';
 import { screen } from '@testing-library/react';
 import { DEFAULT_RENDERERS } from '../../Form/Form';
 

@@ -23,9 +23,6 @@
 		"noImplicitAny": true,
 		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
-		"paths": {
-			"~/tests/*": ["tests/*"],
-		},
 		"rootDir": "./",
 		"outDir": "./lib",
 		"sourceMap": true,
@@ -33,6 +30,6 @@
 		"declarationMap": true
 	},
 	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["build/**/*", "node_modules"]
 }

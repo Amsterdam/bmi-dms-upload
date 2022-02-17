@@ -8,8 +8,8 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { Store } from 'src/features/store';
-import { CustomContext } from '../../src/features/CustomProvider';
-import theme from '../../src/theme';
+import { CustomContext } from '../../features/CustomProvider';
+import theme from '../../theme';
 
 type ProviderOptions = {
 	initialState?: Partial<Store>;

@@ -1,11 +1,11 @@
 import React, { ComponentProps } from 'react';
-import renderWithTheme from '~/tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
 import MetadataForm, { Props } from './MetadataForm';
 import { schema, uischema } from './__stubs__';
 import { screen } from '@testing-library/react';
 import MetdadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
-import { mockComponentProps, mocked } from '~/tests/helpers';
+import { mockComponentProps, mocked } from '../../tests/helpers';
 
 jest.mock('../MetadataColumnHeaders/MetadataColumnHeaders');
 jest.mock('../Form/Form');
