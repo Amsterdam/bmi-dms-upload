@@ -1,4 +1,4 @@
-import { BulkCustomFile } from 'src/features/bulk/store/model';
+import { CustomFileLight } from '../../../../types';
 import { DMSUpload } from '../../../store';
 
 export const file = {
@@ -8,7 +8,7 @@ export const file = {
 	name: 'Untitled',
 	lastModified: 0,
 	size: 10000,
-} as BulkCustomFile;
+} as CustomFileLight;
 
 export const metadata = { foo: 'bar' };
 

@@ -1,21 +1,17 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { FileRejection } from 'react-dropzone';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../../store';
 import { initialState as storeState } from '../../store/dataSlice';
 import Wizard from './Wizard';
-import { MetadataExample } from 'src/types';
+import { CustomFileLightOrRejection, MetadataExample } from '../../../../types';
 import { asset, schema, uischema } from './__stubs__';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import Step1 from '../../../../components/Step1/Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
-import { BulkCustomFile } from 'src/features/bulk/store/model';
-
-type CustomFileOrRejection = BulkCustomFile & FileRejection;
 
 jest.mock('../../../../components/Step1/Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');
@@ -135,7 +131,7 @@ describe('<Wizard />', () => {
 		renderComponent({ file: mockFile, metadata: {} }, '/');
 		const { onFileRemove } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 		act(() => {
-			onFileRemove && onFileRemove(mockFile as CustomFileOrRejection);
+			onFileRemove && onFileRemove(mockFile as CustomFileLightOrRejection);
 		});
 		expect(removeFileFromStoreSpy).toHaveBeenCalled();
 		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile);

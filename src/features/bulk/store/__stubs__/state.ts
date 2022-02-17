@@ -1,5 +1,5 @@
+import { CustomFileLight } from '../../../../types';
 import {
-	BulkCustomFile,
 	IBulkMetadataField,
 	IBulkMetadataFile,
 	IBulkMetadataFileMetadata,
@@ -8,7 +8,7 @@ import {
 
 export function makeFile(
 	id: string,
-	uploadedFile: BulkCustomFile,
+	uploadedFile: CustomFileLight,
 	metadata?: IBulkMetadataFileMetadata[],
 ): IBulkMetadataFile {
 	const obj = {
@@ -25,7 +25,7 @@ export function makeFile(
 	};
 }
 
-export function makeCustomFile(id: number, title: string, filetype?: string): BulkCustomFile {
+export function makeCustomFile(id: number, title: string, filetype?: string): CustomFileLight {
 	return {
 		tmpId: id,
 		type: filetype ?? 'application/pdf',
@@ -50,7 +50,7 @@ export function makeFields(fields: [string, boolean][]): IBulkMetadataField[] {
 export const customFileA = makeCustomFile(1, 'A');
 export const customFileB = makeCustomFile(2, 'B');
 
-export const customFiles: BulkCustomFile[] = [customFileA, customFileB];
+export const customFiles: CustomFileLight[] = [customFileA, customFileB];
 
 export const fieldsDefault: IBulkMetadataField[] = makeFields([
 	['1', false],
