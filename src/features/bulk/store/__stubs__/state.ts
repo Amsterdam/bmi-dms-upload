@@ -21,6 +21,7 @@ export function makeFile(
 		? {
 				...obj,
 				metadata,
+				// eslint-disable-next-line no-mixed-spaces-and-tabs
 		  }
 		: obj;
 }
