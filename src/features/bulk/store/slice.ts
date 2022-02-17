@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BulkCustomFile, IBulkMetadataState, IBulkMetadataFile } from './model';
+import { CustomFileLight } from '../../../types';
+import { IBulkMetadataState, IBulkMetadataFile } from './model';
 
 export const initialState: IBulkMetadataState = {
 	currentStep: 0,
@@ -21,7 +22,7 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
-		removeFile: (state: IBulkMetadataState, action: PayloadAction<BulkCustomFile>) => {
+		removeFile: (state: IBulkMetadataState, action: PayloadAction<CustomFileLight>) => {
 			const newFiles = state.files.filter(file => file.uploadedFile.tmpId !== action.payload.tmpId)
 			state.files = newFiles;
 		},

@@ -1,8 +1,6 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
+import { CustomFileLight } from "../../../types";
 
 type IBulkMetadataFieldId = string;
-
-export type BulkCustomFile = Pick<CustomFile, 'name' | 'size' | 'tmpId' | 'type' | 'response'>
 
 export enum CurrentStep {
 	'upload',
@@ -13,7 +11,7 @@ export enum CurrentStep {
 export interface IBulkMetadataFile {
 	id: string;
 	url: string;
-	uploadedFile: BulkCustomFile;
+	uploadedFile: CustomFileLight;
 	metadata?: IBulkMetadataFileMetadata[];
 }
 

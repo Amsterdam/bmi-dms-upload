@@ -3,11 +3,11 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import BulkUploadButton, { Props } from './BulkUploadButton';
 import renderWithProviders from '../../../../tests/utils/withProviders';
-import Step1, { SupportedHTTPMethods } from '../../../single-file/components/Wizard/Step1';
+import Step1, { SupportedHTTPMethods } from '../../../../components/Step1/Step1';
 import { MetadataExample } from 'src/types';
 import { asset } from '../BulkUploadWizard/__stubs__';
 
-jest.mock('../../../single-file/components/Wizard/Step1');
+jest.mock('../../../../components/Step1/Step1');
 
 describe('<AddDocumentButton />', () => {
 	const renderComponent = (props: Partial<Props<MetadataExample>> = {}) => {

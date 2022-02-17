@@ -3,11 +3,11 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddDocumentButton, { Props } from './AddDocumentButton';
 import renderWithProviders from '../../../../tests/utils/withProviders';
-import Step1, { SupportedHTTPMethods } from '../Wizard/Step1';
+import Step1, { SupportedHTTPMethods } from '../../../../components/Step1/Step1';
 import { MetadataExample } from 'src/types';
 import { asset } from '../Wizard/__stubs__';
 
-jest.mock('../Wizard/Step1');
+jest.mock('../../../../components/Step1/Step1');
 
 describe('<AddDocumentButton />', () => {
 	const renderComponent = (props: Partial<Props<MetadataExample>> = {}) => {

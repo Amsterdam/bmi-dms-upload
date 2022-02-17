@@ -4,15 +4,14 @@ import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../../CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
-import Step1 from './Step1';
+import Step1 from '../../../../components/Step1/Step1';
 import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
-import { WizardImplementationProps } from '../../../../types'
-import { BulkCustomFile } from 'src/features/bulk/store/model';
+import { CustomFileLight, WizardImplementationProps } from '../../../../types'
 
 export type Props<T> = {
 	onClose: () => void;
@@ -40,7 +39,7 @@ export default function Wizard<T>({
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
 
 	const getFile = React.useCallback(
-		(file: BulkCustomFile) => {
+		(file: CustomFileLight) => {
 			onFileSuccess && onFileSuccess(file);
 			dispatch(setFile(file));
 		},
