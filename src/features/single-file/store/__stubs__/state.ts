@@ -1,5 +1,5 @@
 import { CustomFile } from '@amsterdam/bmi-component-library';
-import { DMSUpload } from '../store';
+import { DMSUpload } from '../../../store';
 
 export const file = {
 	tmpId: 1,

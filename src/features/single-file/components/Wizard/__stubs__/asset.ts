@@ -1,4 +1,4 @@
-import { Asset } from '../Wizard';
+import { Asset } from '../../../../../types';
 
 export const asset: Asset = {
 	code: 'BRU0004',

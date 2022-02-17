@@ -1,52 +1,21 @@
-import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
+import React, { SyntheticEvent, useCallback, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { CustomFile, Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
-import { useDispatch, useSelector } from '../../store/CustomProvider';
+import { useDispatch, useSelector } from '../../../CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
-import Step1, { SupportedHTTPMethods } from './Step1';
+import Step1 from './Step1';
 import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
-import { appendTrailingSlash, appendPathSegment } from '../../utils';
-import { JsonForms } from '@jsonforms/react';
-import MetadataForm from '../MetadataForm/MetadataForm';
-import WizardFooter from '../WizardFooter/WizardFooter';
-import ConfirmTermination from '../ConfirmTermination/ConfirmTermination';
-import useConfirmTermination from '../../hooks/useConfirmTermination';
-
-export type Asset = {
-	code: string;
-	name: string;
-};
-export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFile };
-export type CancelCallbackArg<T> = { file?: CustomFile; metadata?: T };
-export type ImplementationProps<T> = {
-	asset: Asset;
-	// Dynamically get URL to upload file to
-	getPostUrl: FileUploadProps['getPostUrl'];
-	// Allows for authentication with a token header
-	getHeaders: FileUploadProps['getHeaders'];
-	// Callback if file was successfully uploaded
-	onFileSuccess?: FileUploadProps['onFileSuccess'];
-	onFileRemove?: FileUploadProps['onFileRemove'];
-
-	// Props for JsonForms component to render for capturing meta data
-	metadataForm: ComponentProps<typeof JsonForms>;
-
-	// At the end of the wizard when all metadata is captured, this callback should be called with the collected data
-	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
-
-	// The uploaded document should have the possibility of deletion again if the wizard were to be cancelled prior
-	// to persistence of the metadata
-	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
-
-	// Defaults to '/' or base path of page where this wizard is implemented from
-	basePath?: string;
-	uploadHTTPMethod?: SupportedHTTPMethods;
-};
+import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
+import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
+import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
+import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
+import useConfirmTermination from '../../../../hooks/useConfirmTermination';
+import { WizardImplementationProps } from '../../../../types'
 
 export type Props<T> = {
 	onClose: () => void;
-} & ImplementationProps<T>;
+} & WizardImplementationProps<T>;
 
 export default function Wizard<T>({
 	asset: { name },
