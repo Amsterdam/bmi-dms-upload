@@ -10,14 +10,14 @@ import Wizard from './Wizard';
 import { MetadataExample } from 'src/types';
 import { asset, schema, uischema } from './__stubs__';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
-import Step1 from './Step1';
+import Step1 from '../../../../components/Step1/Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
 import { BulkCustomFile } from 'src/features/bulk/store/model';
 
 type CustomFileOrRejection = BulkCustomFile & FileRejection;
 
-jest.mock('./Step1');
+jest.mock('../../../../components/Step1/Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');
 
 const mockHistoryPush = jest.fn();

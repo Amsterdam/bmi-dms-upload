@@ -10,7 +10,7 @@ import ConfirmTermination from '../../../../components/ConfirmTermination/Confir
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
-import Step1 from '../../../single-file/components/Wizard/Step1';
+import Step1 from '../../../../components/Step1/Step1';
 import { getCustomFilesFromStore } from '../../store/selectors';
 import { setFile, removeFile, resetState } from '../../store/slice';
 import { BulkCustomFile } from '../../store/model';

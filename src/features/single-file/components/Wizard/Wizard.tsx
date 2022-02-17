@@ -4,7 +4,7 @@ import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useDispatch, useSelector } from '../../../CustomProvider';
 import { setFile, setMetadata, resetState, removeFileFromStore } from '../../store/dataSlice';
 import { getFileFromStore, getMetadataFromStore } from '../../store/selectors';
-import Step1 from './Step1';
+import Step1 from '../../../../components/Step1/Step1';
 import { ModalContentStyle, ModalTopBarStyle } from './WizardStyles';
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';

@@ -1,9 +1,8 @@
 import React, { ComponentProps } from 'react';
 import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
-import { BulkCustomFile } from 'src/features/bulk/store/model';
-import { CustomFileOrRejection } from 'src/features/bulk/components/BulkUploadWizard/BulkUploadWizard.test';
-
+import { BulkCustomFile } from '../../features/bulk/store/model';
+import { CustomFileOrRejection } from '../../features/bulk/components/BulkUploadWizard/BulkUploadWizard.test';
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
@@ -14,7 +13,6 @@ type Props = {
 	getHeaders: FileUploadProps['getHeaders'];
 	onFileSuccess?: (file: BulkCustomFile) => void;
 	onFileRemove?: (file: CustomFileOrRejection) => void;
-	// onFileRemove?: FileUploadProps['onFileRemove'];
 	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
 	placeholder?: string;

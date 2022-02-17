@@ -1,26 +1,22 @@
 import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import { FileRejection } from 'react-dropzone';
 import renderWithProviders from '~/tests/utils/withProviders';
 import * as actions from '../../store/slice';
-import { DMSUpload } from '../../../store';
 import { initialState as storeState } from '../../store/slice';
 import BulkUploadWizard from './BulkUploadWizard';
 import { MetadataExample } from 'src/types';
 import { asset, schema, uischema } from './__stubs__';
-import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
-import Step1 from '../../../single-file/components/Wizard/Step1';
+import Step1 from '../../../../components/Step1/Step1';
 import { mocked, mockComponentProps } from '~/tests/helpers';
-import { getState } from '../../store/selectors';
 import { BulkCustomFile, IBulkMetadataState } from '../../store/model';
 
-import { state, makeFile, makeCustomFile, fields as mockFields, files as mockFiles} from "../../store/__stubs__/state";
-import { metadata } from 'src/features/single-file/store/__stubs__/state';
+import { makeFile, makeCustomFile, fields as mockFields, files as mockFiles} from "../../store/__stubs__/state";
 
 export type CustomFileOrRejection = BulkCustomFile & FileRejection;
 
-jest.mock('../../../single-file/components/Wizard/Step1');
+jest.mock('../../../../components/Step1/Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');
 
 const mockHistoryPush = jest.fn();
@@ -44,10 +40,6 @@ jest.mock('../../store/selectors', () => ({
 }));
 
 const Step1Mock = mocked(Step1);
-const MetadataFormMock = mocked(MetadataForm);
-// const getMetadataFromStoreMock = mocked(getMetadataFromStore);
-const useHistoryMock = mocked(useHistory);
-
 const rawFile = makeCustomFile(1, 'some-title')
 const mockFile = makeFile('1', rawFile);
 

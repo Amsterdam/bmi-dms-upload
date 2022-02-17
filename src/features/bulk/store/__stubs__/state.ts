@@ -17,12 +17,12 @@ export function makeFile(
 		uploadedFile,
 	};
 
-	return metadata
-		? {
-				...obj,
-				metadata,
-		  }
-		: obj;
+	if (!metadata) return obj;
+
+	return {
+		...obj,
+		metadata,
+	};
 }
 
 export function makeCustomFile(id: number, title: string, filetype?: string): BulkCustomFile {
