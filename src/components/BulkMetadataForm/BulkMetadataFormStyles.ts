@@ -27,9 +27,6 @@ const BulkMetadataFormStyles = styled.div`
 
 	.MuiGrid-container {
 		flex-wrap: nowrap;
-	}
-
-	.MuiGrid-container {
 		text-align: center;
 		margin: ${themeSpacing(0, 2)};
 
@@ -68,6 +65,7 @@ const BulkMetadataFormStyles = styled.div`
 
 			&:first-of-type label {
 				flex-grow: 2;
+
 				&:first-of-type {
 					display: flex;
 					align-items: flex-start;
