@@ -1,4 +1,4 @@
-import { createMockComponent } from '~/tests/helpers/createMockComponent';
+import { createMockComponent } from '../../../tests/helpers/createMockComponent';
 
 const MetdadataColumnHeaders = createMockComponent('MetadataColumnHeaders', 'metadata-column-headers');
 

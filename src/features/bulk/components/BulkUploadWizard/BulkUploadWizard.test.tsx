@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { FileRejection } from 'react-dropzone';
-import renderWithProviders from '~/tests/utils/withProviders';
+import renderWithProviders from '../../../../tests/utils/withProviders';
 import * as actions from '../../store/slice';
 import { DMSUpload } from '../../../store';
 import { initialState as storeState } from '../../store/slice';
@@ -11,11 +11,11 @@ import { MetadataExample } from 'src/types';
 import { asset, schema, uischema } from './__stubs__';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import Step1 from '../../../single-file/components/Wizard/Step1';
-import { mocked, mockComponentProps } from '~/tests/helpers';
+import { mocked, mockComponentProps } from '../../../../tests/helpers';
 import { getState } from '../../store/selectors';
 import { BulkCustomFile, IBulkMetadataState } from '../../store/model';
 
-import { state, makeFile, makeCustomFile, fields as mockFields, files as mockFiles} from "../../store/__stubs__/state";
+import { state, makeFile, makeCustomFile, fields as mockFields, files as mockFiles } from '../../store/__stubs__/state';
 import { metadata } from 'src/features/single-file/store/__stubs__/state';
 
 export type CustomFileOrRejection = BulkCustomFile & FileRejection;
@@ -48,7 +48,7 @@ const MetadataFormMock = mocked(MetadataForm);
 // const getMetadataFromStoreMock = mocked(getMetadataFromStore);
 const useHistoryMock = mocked(useHistory);
 
-const rawFile = makeCustomFile(1, 'some-title')
+const rawFile = makeCustomFile(1, 'some-title');
 const mockFile = makeFile('1', rawFile);
 
 const mockData: MetadataExample = {
@@ -80,7 +80,7 @@ const props = {
 	onMetadataSubmit: onMetadataSubmitMock,
 	onCancel: onCancelMock,
 	basePath: '/',
-	getDocumentViewUrl: jest.fn()
+	getDocumentViewUrl: jest.fn(),
 };
 
 describe('<BulkUploadWizard />', () => {
@@ -125,7 +125,7 @@ describe('<BulkUploadWizard />', () => {
 	test('setFile is called when file is uploaded successfully', () => {
 		const setFileSpy = jest.spyOn(actions, 'setFile');
 		renderComponent(storeState);
-		const { onFileSuccess } =  mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
+		const { onFileSuccess } = mockComponentProps<ComponentProps<typeof Step1>>(Step1Mock);
 		act(() => {
 			onFileSuccess && onFileSuccess(mockFile.uploadedFile);
 		});

@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import { useHistory } from 'react-router-dom';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { FileRejection } from 'react-dropzone';
-import renderWithProviders from '~/tests/utils/withProviders';
+import renderWithProviders from '../../../../tests/utils/withProviders';
 import * as actions from '../../store/dataSlice';
 import { DMSUpload } from '../../../store';
 import { initialState as storeState } from '../../store/dataSlice';
@@ -11,7 +11,7 @@ import { MetadataExample } from 'src/types';
 import { asset, schema, uischema } from './__stubs__';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import Step1 from './Step1';
-import { mocked, mockComponentProps } from '~/tests/helpers';
+import { mocked, mockComponentProps } from '../../../../tests/helpers';
 import { getMetadataFromStore } from '../../store/selectors';
 import { BulkCustomFile } from 'src/features/bulk/store/model';
 

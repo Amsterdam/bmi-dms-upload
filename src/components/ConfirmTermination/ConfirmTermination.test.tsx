@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
-import renderWithTheme from '~/tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
 import { confirm } from '@amsterdam/bmi-component-library';
 import ConfirmTermination, { Props } from './ConfirmTermination';
 

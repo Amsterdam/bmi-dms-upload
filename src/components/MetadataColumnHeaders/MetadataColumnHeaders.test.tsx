@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import renderWithTheme from '../../../tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
 import MetadataColumnHeaders from './MetadataColumnHeaders';
 import { twoColumns, threeColumns } from './__stubs__/columns';
 
