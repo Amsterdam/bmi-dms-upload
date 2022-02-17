@@ -19,67 +19,59 @@ const BulkMetadataFormStyles = styled.div`
 
 	.MuiPaper-elevation1 {
 		box-shadow: none;
+	}
 
-		.MuiCardContent-root {
-			padding: 0;
+	.MuiCardContent-root {
+		padding: 0;
+	}
 
-			.MuiGrid-container {
-				flex-wrap: nowrap;
+	.MuiGrid-container {
+		flex-wrap: nowrap;
+	}
 
-				.MuiGrid-item {
-					.MuiGrid-container {
-						text-align: center;
-						margin: ${themeSpacing(0, 2)};
+	.MuiGrid-container {
+		text-align: center;
+		margin: ${themeSpacing(0, 2)};
 
-						div {
-							&:nth-of-type(2) {
-								label span {
-									width: 100%;
-								}
-							}
-						}
+		div:nth-of-type(2) label span {
+			width: 100%;
+		}
 
-						.MuiGrid-item {
-							display: flex;
-							flex-flow: row nowrap;
-							justify-content: normal;
-							align-items: normal;
-							align-content: normal;
-							border-bottom: 1px solid #e6e6e6;
-							padding: ${themeSpacing(0)};
+		.MuiGrid-item {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: normal;
+			align-items: normal;
+			align-content: normal;
+			border-bottom: 1px solid #e6e6e6;
+			padding: ${themeSpacing(0)};
 
-							label,
-							label + div {
-								&:first-of-type {
-									width: 50%;
-									display: block;
-									flex: 1 1 auto;
-									align-self: auto;
-									order: 0;
-									margin: ${themeSpacing(1)};
-								}
+			label,
+			label + div:first-of-type {
+				width: 50%;
+				display: block;
+				flex: 1 1 auto;
+				align-self: auto;
+				order: 0;
+				margin: ${themeSpacing(1)};
+			}
 
-								&:nth-of-type(2) {
-									margin-top: ${themeSpacing(-1)};
-									text-align: left;
-								}
-							}
+			label + div:nth-of-type(2) {
+				margin-top: ${themeSpacing(-1)};
+				text-align: left;
+			}
 
-							&:nth-of-type(2) div:first-of-type {
-								width: 100%;
-								padding-top: ${themeSpacing(2)};
-							}
+			&:nth-of-type(2) div:first-of-type {
+				width: 100%;
+				padding-top: ${themeSpacing(2)};
+			}
 
-							&:first-of-type label {
-								&:first-of-type {
-									display: flex;
-									align-items: flex-start;
-									overflow: hidden;
-								}
-								flex-grow: 2;
-							}
-						}
-					}
+			&:first-of-type label {
+				flex-grow: 2;
+				&:first-of-type {
+					display: flex;
+					align-items: flex-start;
+					overflow: hidden;
 				}
 			}
 		}
