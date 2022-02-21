@@ -48,7 +48,7 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 		onClick: onCancelClick,
 		label: cancelLabel,
 		dataTestId: cancelTestId,
-	} = useButtonConfig(cancel, 'Annuleren');
+	} = useButtonConfig(cancel, 'Annuleer');
 
 	const {
 		visible: showNextButton,

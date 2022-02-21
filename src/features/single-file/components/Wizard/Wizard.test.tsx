@@ -89,7 +89,7 @@ describe('<Wizard />', () => {
 			initialState: { upload: storeState },
 			initialRoute: url,
 		});
-		cancelButton = screen.getByText('Annuleren');
+		cancelButton = screen.getByText('Annuleer');
 	};
 
 	afterEach(() => {

@@ -4,7 +4,7 @@ import renderWithTheme from '../../../tests/utils/withTheme';
 import WizardFooter from './WizardFooter';
 
 const defaultAndCustomButtons = [
-	['cancel', 'default', 'Annuleren'],
+	['cancel', 'default', 'Annuleer'],
 	['cancel', 'custom', 'Cancel', 'Cancel'],
 	['previous', 'default', 'Vorige'],
 	['previous', 'custom', 'Previous', 'Previous'],
@@ -19,7 +19,7 @@ const disabledButtons = [
 	['next', 'Volgende'],
 ];
 
-const clickableButtons = [['cancel', 'Annuleren'], ['previous', 'Vorige'], ...disabledButtons];
+const clickableButtons = [['cancel', 'Annuleer'], ['previous', 'Vorige'], ...disabledButtons];
 
 describe('<WizardFooter />', () => {
 	// Renders buttons with default and custom labels
