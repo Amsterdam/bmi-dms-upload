@@ -5,7 +5,7 @@ import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
 import { useDispatch, useSelector } from '../../../CustomProvider';
-import { BulkWizardImplementationProps, CustomFileLight } from '../../../../types';
+import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection } from '../../../../types';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
 import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
@@ -54,7 +54,7 @@ export default function BulkUploadWizard<T>({
 	);
 
 	const handleFileRemove = useCallback(
-		(file: CustomFileLight) => {
+		(file: CustomFileLightOrRejection) => {
 			onFileRemove && onFileRemove(file);
 			dispatch(removeFile(file));
 		},

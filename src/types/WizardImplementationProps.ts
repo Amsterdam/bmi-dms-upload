@@ -40,6 +40,4 @@ export interface WizardImplementationProps<T> {
 
 export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "onMetadataSubmit">  {
 	getDocumentViewUrl: (metadataFile: IBulkMetadataFile) => Promise<string>;
-	onFileRemove?: (file: CustomFileLight) => void;
-	onFileSuccess?: (file: CustomFileLight) => void;
 }
