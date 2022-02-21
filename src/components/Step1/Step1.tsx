@@ -3,8 +3,6 @@ import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
 import { CustomFileLight, CustomFileLightOrRejection } from '../../types';
 
-
-
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
 type FileUploadProps = ComponentProps<typeof FileUpload>;
