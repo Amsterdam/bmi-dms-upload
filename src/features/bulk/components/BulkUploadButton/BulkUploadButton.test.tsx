@@ -1,18 +1,18 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddDocumentButton, { Props } from './AddDocumentButton';
+import BulkUploadButton, { Props } from './BulkUploadButton';
 import renderWithProviders from '../../../../tests/utils/withProviders';
 import Step1, { SupportedHTTPMethods } from '../../../../components/Step1/Step1';
 import { MetadataExample } from 'src/types';
-import { asset } from '../Wizard/__stubs__';
+import { asset } from '../BulkUploadWizard/__stubs__';
 
 jest.mock('../../../../components/Step1/Step1');
 
 describe('<AddDocumentButton />', () => {
 	const renderComponent = (props: Partial<Props<MetadataExample>> = {}) => {
 		return renderWithProviders(
-			<AddDocumentButton<MetadataExample>
+			<BulkUploadButton<MetadataExample>
 				asset={asset}
 				buttonText="Upload"
 				getPostUrl={jest.fn()}
@@ -20,8 +20,8 @@ describe('<AddDocumentButton />', () => {
 				onFileSuccess={jest.fn()}
 				onFileRemove={jest.fn}
 				metadataForm={{} as Props<MetadataExample>['metadataForm']}
-				onMetadataSubmit={jest.fn()}
 				onCancel={jest.fn()}
+				getDocumentViewUrl={jest.fn()}
 				{...props}
 			/>,
 			{},

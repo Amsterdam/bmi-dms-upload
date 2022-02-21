@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CustomFileLight } from '../../../types';
 import { IBulkMetadataState, IBulkMetadataFile } from './model';
 
 export const initialState: IBulkMetadataState = {
@@ -12,17 +13,23 @@ export const slice = createSlice({
 	initialState,
 	reducers: {
 		setFile: (state: IBulkMetadataState, action: PayloadAction<IBulkMetadataFile>) => {
+			const { id, url, uploadedFile, metadata } = action.payload;
 			const newFile: IBulkMetadataFile = {
-				id: action.payload.id,
-				url: action.payload.url,
-				uploadedFile: action.payload.uploadedFile,
-				metadata: action.payload.metadata ?? undefined
+				id,
+				url,
+				uploadedFile,
+				metadata,
 			};
 			state.files = [...state.files, newFile];
 		},
+		removeFile: (state: IBulkMetadataState, action: PayloadAction<CustomFileLight>) => {
+			const newFiles = state.files.filter(file => file.uploadedFile.tmpId !== action.payload.tmpId)
+			state.files = newFiles;
+		},
+		resetState: (state: IBulkMetadataState) => initialState
 	},
 });
 
-export const { setFile } = slice.actions;
+export const { setFile, removeFile, resetState } = slice.actions;
 
 export const { reducer } = slice;

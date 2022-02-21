@@ -1,9 +1,8 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
 import { IBulkMetadataState } from 'src/features/bulk/store/model';
-import { MetadataGenericType } from '../types';
+import { CustomFileLight, MetadataGenericType } from '../types';
 
 export interface DMSUpload {
-	file?: CustomFile;
+	file?: CustomFileLight;
 	metadata: MetadataGenericType;
 }
 

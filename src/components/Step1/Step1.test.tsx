@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import Step1 from './Step1';
-import renderWithProviders from '~/tests/utils/withProviders';
+import renderWithProviders from '../../tests/utils/withProviders';
 
 function renderComponent() {
 	return renderWithProviders(

@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DMSUpload } from '../../store';
-import { CustomFile } from '@amsterdam/bmi-component-library';
-import { MetadataGenericType } from '../../../types';
+import { CustomFileLight, MetadataGenericType } from '../../../types';
 
 export const initialState: DMSUpload = {
 	file: undefined,
@@ -12,7 +11,7 @@ export const slice = createSlice({
 	name: 'dmsupload',
 	initialState,
 	reducers: {
-		setFile: (state: DMSUpload, action: PayloadAction<CustomFile>) => {
+		setFile: (state: DMSUpload, action: PayloadAction<CustomFileLight>) => {
 			state.file = action.payload;
 		},
 		setMetadata: (state: DMSUpload, action: PayloadAction<MetadataGenericType>) => {

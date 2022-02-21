@@ -1,6 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { FileUpload } from '@amsterdam/bmi-component-library';
 import { Step1Styles } from './Step1Styles';
+import { CustomFileLight, CustomFileLightOrRejection } from '../../types';
 
 export type SupportedHTTPMethods = 'POST' | 'PUT';
 
@@ -9,15 +10,15 @@ type FileUploadProps = ComponentProps<typeof FileUpload>;
 type Props = {
 	getPostUrl: FileUploadProps['getPostUrl'];
 	getHeaders: FileUploadProps['getHeaders'];
-	onFileSuccess?: FileUploadProps['onFileSuccess'];
-	onFileRemove?: FileUploadProps['onFileRemove'];
+	onFileSuccess?: (file: CustomFileLight) => void;
+	onFileRemove?: (file: CustomFileLightOrRejection) => void;
 	storedFiles?: FileUploadProps['storedFiles'];
 	httpMethod?: SupportedHTTPMethods;
 	placeholder?: string;
 	maxFiles?: number;
 };
 
-const Step1: React.FC<Props> = ({
+export default function Step1({
 	getPostUrl,
 	getHeaders,
 	onFileRemove,
@@ -26,7 +27,7 @@ const Step1: React.FC<Props> = ({
 	httpMethod = 'POST',
 	placeholder = 'Sleep een bestand in dit vlak of',
 	maxFiles = 1,
-}) => {
+}: Props) {
 	return (
 		<Step1Styles>
 			<FileUpload
@@ -47,6 +48,5 @@ const Step1: React.FC<Props> = ({
 			/>
 		</Step1Styles>
 	);
-};
+}
 
-export default Step1;

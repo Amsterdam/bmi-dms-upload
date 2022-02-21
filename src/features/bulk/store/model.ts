@@ -1,17 +1,17 @@
-import { CustomFile } from '@amsterdam/bmi-component-library';
+import { CustomFileLight } from "../../../types";
 
 type IBulkMetadataFieldId = string;
 
-enum CurrentStep {
+export enum CurrentStep {
 	'upload',
 	'selectFields',
-	'editFile'
+	'editFile',
 }
 
 export interface IBulkMetadataFile {
 	id: string;
 	url: string;
-	uploadedFile: CustomFile;
+	uploadedFile: CustomFileLight;
 	metadata?: IBulkMetadataFileMetadata[];
 }
 
@@ -28,7 +28,7 @@ export interface IBulkMetadataField {
 }
 
 export interface IBulkMetadataState {
-	currentStep: CurrentStep
+	currentStep: CurrentStep;
 	files: IBulkMetadataFile[];
 	fields: IBulkMetadataField[];
 	selectedFileId?: IBulkMetadataFieldId;
