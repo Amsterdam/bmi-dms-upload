@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
@@ -9,6 +9,8 @@ import { CancelCallbackArg, CustomFileLight, MetadataDataSubmitCallbackArg } fro
 import { schema, uischema } from './components/MetadataForm/__stubs__';
 import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
 
+import { useEffect } from 'react';
+
 type MetadataExample = {
 	documentDescription: string;
 	executionDate: string;
@@ -17,6 +19,38 @@ type MetadataExample = {
 const basePath = '/base/path';
 
 const App: React.FC = () => {
+	const [sessionId, setSessionId] = useState<any | undefined>(undefined);
+
+	useEffect(() => {
+		const doGetSessionId = async () => {
+			const result = await getSessionId();
+			setSessionId(result)
+		}
+
+		doGetSessionId();
+	}, [])
+
+	async function getSessionId() {
+		if (sessionId) return sessionId;
+
+		const formdata = new FormData();
+		formdata.append('dmsAsset', '8');
+		formdata.append('dmsCategoryTheme', '9');
+
+		const response = await fetch('https://acc.bmidms.amsterdam.nl/api/v1.0/upload-session', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				"x-api-token": "<token>"
+			},
+			body: new URLSearchParams(formdata as any)
+		})
+
+		const id = await response.json()
+
+		return id;
+	}
+
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
@@ -82,12 +116,10 @@ const App: React.FC = () => {
 									/>
 									<hr />
 									<BulkUploadButton<MetadataExample>
-										asset={
-											{
-												code: '1337',
-												name: 'some-name'
-											}
-										}
+										asset={{
+											code: '1337',
+											name: 'some-name',
+										}}
 										metadataForm={{
 											schema,
 											uischema,
@@ -97,17 +129,19 @@ const App: React.FC = () => {
 											renderers: [],
 										}}
 										getDocumentViewUrl={() => {
-											console.log(':: getDocumentViewUrl')
+											console.log(':: getDocumentViewUrl');
 											return Promise.resolve('some-document-url');
 										}}
-										getPostUrl={(file: CustomFileLight) => {
-											console.log(':: getPostUrl', file);
+										getPostUrl={async (file: CustomFileLight) => {
+											const sessionObj = await getSessionId();
+											console.log(':: getPostUrl: sessionId', sessionObj);
+											console.log(':: getPostUrl: file', file);
 											return Promise.resolve('https://reqres.in/api/users');
 										}}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
 											headers['some-token'] = '__TOKEN__';
-											console.log(':: getHeaders', headers)
+											console.log(':: getHeaders', headers);
 											return Promise.resolve(headers);
 										}}
 										onCancel={async function (data: CancelCallbackArg<MetadataExample>) {
@@ -116,9 +150,8 @@ const App: React.FC = () => {
 										onFileRemove={(file) => {
 											console.log(':: fileRemove', file);
 										}}
-										buttonText='Bestanden toevoegen'
+										buttonText="Bestanden toevoegen"
 										basePath={basePath}
-
 									/>
 								</div>
 							)}
