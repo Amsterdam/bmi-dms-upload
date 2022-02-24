@@ -129,11 +129,11 @@ export default function BulkUploadWizard<T>({
 					previous={{
 						visible: appendTrailingSlash(location.pathname) !== basePath,
 						onClick: () => {
-							switch (location.pathname) {
-								case `${basePath}step2`:
+							switch (appendTrailingSlash(location.pathname)) {
+								case `${basePath}step2/`:
 									history.push(basePath)
 									break;
-									case `${basePath}step3`:
+								case `${basePath}step3/`:
 									history.push(appendPathSegment(basePath, 'step2'))
 									break;
 								default:
@@ -145,11 +145,11 @@ export default function BulkUploadWizard<T>({
 					next={{
 						visible: appendTrailingSlash(location.pathname) !== `${basePath}step3/`,
 						onClick: () => {
-							switch (location.pathname) {
+							switch (appendTrailingSlash(location.pathname)) {
 								case `${basePath}`:
 									history.push(appendPathSegment(basePath, 'step2'))
 									break;
-								case `${basePath}step2`:
+								case `${basePath}step2/`:
 									history.push(appendPathSegment(basePath, 'step3'))
 									break;
 								default:
