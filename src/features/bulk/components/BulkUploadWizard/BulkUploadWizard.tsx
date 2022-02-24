@@ -7,7 +7,7 @@ import { ModalContentStyle, ModalTopBarStyle } from './styles';
 import { useDispatch, useSelector } from '../../../CustomProvider';
 import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection } from '../../../../types';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
-import MetadataForm from '../../../../components/MetadataForm/MetadataForm';
+import BulkMetadataForm from '../../../../components/BulkMetadataForm/BulkMetadataForm';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../../components/Step1/Step1';
@@ -106,7 +106,7 @@ export default function BulkUploadWizard<T>({
 							<Route
 								path={appendPathSegment(basePath, 'step2')}
 								render={() => (
-									<MetadataForm
+									<BulkMetadataForm
 										{...metadataForm}
 										onChange={(data, valid) => {
 											// dispatch(setMetadata(data));

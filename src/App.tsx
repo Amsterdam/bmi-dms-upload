@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
@@ -6,7 +6,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, CustomFileLight, MetadataDataSubmitCallbackArg } from './types';
-import { schema, uischema } from './components/MetadataForm/__stubs__';
+import { schema, uischema } from './components/BulkMetadataForm/__stubs__';
 import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
 
 import { useEffect } from 'react';
@@ -16,39 +16,84 @@ type MetadataExample = {
 	executionDate: string;
 };
 
+interface IDmsAsset {
+	id: number
+	name: string
+	code: string
+}
+
+interface IDynamicFormField {
+	id: number,
+	placeholder: string,
+	required: boolean,
+	defaultValue: string,
+	userValue: string,
+	changeIndividual: boolean,
+	type: string,
+	options: any[]
+}
+
+interface IUploadSession {
+	id: string
+	finished: boolean
+    dmsAsset: IDmsAsset
+	dynamicFormFields: IDynamicFormField[]
+}
+
+async function fetchSession(): Promise<IUploadSession> {
+	const formdata = new FormData();
+	formdata.append('dmsAsset', '8');
+	formdata.append('dmsCategoryTheme', '9');
+
+	const response = await fetch('https://acc.bmidms.amsterdam.nl/api/v1.0/upload-session', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			"x-api-token": "sQRNkdEC8JSXF5"
+		},
+		body: new URLSearchParams(formdata as any)
+	})
+
+	const data = await response.json() as IUploadSession;
+
+	return data
+}
+
 const basePath = '/base/path';
 
 const App: React.FC = () => {
+	const mounted = useRef(false);
+	const [hasFiles, setHasFiles] = useState<boolean>(false);
 	const [sessionId, setSessionId] = useState<any | undefined>(undefined);
+	const [session, setSession] = useState<IUploadSession | undefined>(undefined);
 
 	useEffect(() => {
-		const doGetSessionId = async () => {
-			const result = await getSessionId();
-			setSessionId(result)
+        mounted.current = true;
+
+        return () => {
+            mounted.current = false;
+        };
+    }, []);
+
+	useEffect(() => {
+		const doGetSession = async () => {
+			if (!hasFiles) return false
+			setSessionId(await getSessionId())
+			setSession(await getSession())
 		}
 
-		doGetSessionId();
-	}, [])
+		doGetSession();
+	}, [hasFiles])
+
+	async function getSession() {
+		if (session) return session;
+		return await fetchSession();
+	}
 
 	async function getSessionId() {
 		if (sessionId) return sessionId;
-
-		const formdata = new FormData();
-		formdata.append('dmsAsset', '8');
-		formdata.append('dmsCategoryTheme', '9');
-
-		const response = await fetch('https://acc.bmidms.amsterdam.nl/api/v1.0/upload-session', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				"x-api-token": "<token>"
-			},
-			body: new URLSearchParams(formdata as any)
-		})
-
-		const id = await response.json()
-
-		return id;
+		const response = await fetchSession();
+		return response?.id;
 	}
 
 	return (
@@ -133,9 +178,8 @@ const App: React.FC = () => {
 											return Promise.resolve('some-document-url');
 										}}
 										getPostUrl={async (file: CustomFileLight) => {
-											const sessionObj = await getSessionId();
-											console.log(':: getPostUrl: sessionId', sessionObj);
 											console.log(':: getPostUrl: file', file);
+
 											return Promise.resolve('https://reqres.in/api/users');
 										}}
 										getHeaders={async () => {
@@ -149,6 +193,10 @@ const App: React.FC = () => {
 										}}
 										onFileRemove={(file) => {
 											console.log(':: fileRemove', file);
+										}}
+										onFileSuccess={(file) => {
+											console.log(':: onFileSuccess: file', file);
+											setHasFiles(true)
 										}}
 										buttonText="Bestanden toevoegen"
 										basePath={basePath}
