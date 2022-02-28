@@ -20,11 +20,11 @@ const BulkMetadataForm: React.FC<Props> = ({ schema, uischema, renderers, data =
 					},
 					{
 						header: 'Default waarde',
-						width: 36,
+						width: 34,
 					},
 					{
 						header: 'Individueel wijzigen',
-						width: 30,
+						width: 32,
 						align: 'center',
 					},
 				]}
