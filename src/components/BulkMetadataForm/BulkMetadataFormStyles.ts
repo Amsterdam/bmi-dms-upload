@@ -29,6 +29,16 @@ const BulkMetadataFormStyles = styled.div`
 		padding: ${themeSpacing(1, 0)};
 	}
 
+	div[id*='-listbox'],
+	div[class*='-control'] {
+		margin-left: ${themeSpacing(1)};
+		width: 100%;
+	}
+
+	div[class*='-option-'] {
+		margin-left: ${themeSpacing(-1)};
+	}
+
 	.MuiGrid-spacing-xs-2 {
 		.MuiGrid-item {
 			border-bottom: 1px solid #e6e6e6;
