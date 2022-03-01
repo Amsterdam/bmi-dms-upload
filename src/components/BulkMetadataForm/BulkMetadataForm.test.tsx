@@ -95,4 +95,17 @@ describe('<BulkMetadataForm />', () => {
 			expect(val['bmi-isNotEmpty']).toBeUndefined();
 		}
 	});
+
+	test('Should have dropdown', () => {
+		render();
+		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);
+		const val = schema?.properties?.['objectType'].properties?.value as MetadataProperty;
+		const oneOfValues = [
+			{ const: '1', title: 'Brug' },
+			{ const: '2', title: 'Kademuur' },
+			{ const: '3', title: 'Sondering' },
+		];
+
+		expect(val.oneOf).toEqual(oneOfValues);
+	});
 });

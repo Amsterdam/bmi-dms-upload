@@ -6,4 +6,6 @@ export type MetadataProperty = {
 	label: string;
 	'bmi-isNotEmpty'?: boolean;
 	'bmi-errorMessage'?: string;
+	oneOf?: { const: string; title: string }[];
+	customFormat?: 'creatable';
 };

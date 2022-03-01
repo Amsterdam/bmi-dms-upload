@@ -53,6 +53,21 @@ export const metadataProperties: MetadataProperty[] = [
 		scope: 'string',
 		type: 'string',
 		label: 'Object type',
+		oneOf: [
+			{
+				const: '1',
+				title: 'Brug',
+			},
+			{
+				const: '2',
+				title: 'Kademuur',
+			},
+			{
+				const: '3',
+				title: 'Sondering',
+			},
+		],
+		customFormat: 'creatable',
 	},
 	{
 		key: 'executionDate',

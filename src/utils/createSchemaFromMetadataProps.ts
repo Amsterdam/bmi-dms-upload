@@ -6,7 +6,17 @@ export default function createSchemaFromMetadataProps(metadataProperties: Metada
 		properties: metadataProperties.reduce(
 			(
 				acc,
-				{ key, scope, type, format, 'bmi-isNotEmpty': isNotEmpty, 'bmi-errorMessage': customErrorMessage, label },
+				{
+					key,
+					scope,
+					type,
+					format,
+					'bmi-isNotEmpty': isNotEmpty,
+					'bmi-errorMessage': customErrorMessage,
+					label,
+					oneOf,
+					customFormat,
+				},
 			) => {
 				acc[key] = {
 					type: 'object',
@@ -17,7 +27,6 @@ export default function createSchemaFromMetadataProps(metadataProperties: Metada
 						value: {
 							type,
 							format,
-							'bmi-isNotEmpty': isNotEmpty,
 							errorMessage: {
 								format: customErrorMessage ?? `Het format voor '${label}' is ongeldig`,
 								'bmi-isNotEmpty': customErrorMessage ?? `Geef de default waarde voor '${label}' op`,
@@ -28,6 +37,16 @@ export default function createSchemaFromMetadataProps(metadataProperties: Metada
 						},
 					},
 				};
+
+				if (isNotEmpty !== undefined) {
+					acc[key].properties!.value['bmi-isNotEmpty'] = isNotEmpty;
+				}
+
+				if (oneOf !== undefined) {
+					acc[key].properties!.value.oneOf = oneOf;
+					acc[key].properties!.value.customFormat = customFormat;
+				}
+
 				return acc;
 			},
 			{} as { [key: string]: CustomJsonSchema },
