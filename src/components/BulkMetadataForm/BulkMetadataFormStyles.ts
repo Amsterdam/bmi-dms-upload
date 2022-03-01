@@ -36,7 +36,7 @@ const BulkMetadataFormStyles = styled.div`
 	}
 
 	div[class*='-option-'] {
-		margin-left: -4px;
+		margin-left: ${themeSpacing(-1)};
 	}
 
 	.MuiGrid-spacing-xs-2 {
