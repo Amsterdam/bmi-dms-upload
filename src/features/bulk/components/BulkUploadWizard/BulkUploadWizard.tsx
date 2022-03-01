@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Route, useLocation, useHistory } from 'react-router-dom';
 import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
 import { useDispatch, useSelector } from '../../../CustomProvider';
-import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection } from '../../../../types';
+import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection, CustomJsonSchema } from '../../../../types';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
 import BulkMetadataForm from '../../../../components/BulkMetadataForm/BulkMetadataForm';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../../components/Step1/Step1';
-import { getCustomFilesFromStore } from '../../store/selectors';
-import { setFile, removeFile, resetState } from '../../store/slice';
+import { getCustomFilesFromStore, getFieldsFromStore } from '../../store/selectors';
+import { setFile, setFields, removeFile, resetState, setFieldData } from '../../store/slice';
 
 export type Props<T> = {
 	onClose: () => void;
@@ -21,6 +21,7 @@ export type Props<T> = {
 export default function BulkUploadWizard<T>({
 	asset: { name },
 	metadataForm,
+	metadataFields,
 	onClose,
 	onCancel,
 	getHeaders,
@@ -34,9 +35,17 @@ export default function BulkUploadWizard<T>({
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const files = useSelector(getCustomFilesFromStore);
-	// const metadata = useSelector(getMetadataFromStore) as T;
+	const fields = useSelector(getFieldsFromStore);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
+
+	useEffect(() => {
+		if (!metadataFields) return;
+
+		dispatch(
+			setFields(metadataFields),
+		)
+	}, [metadataFields])
 
 	const saveFile = React.useCallback(
 		(uploadedFile: CustomFileLight) => {
@@ -52,6 +61,11 @@ export default function BulkUploadWizard<T>({
 		},
 		[onFileSuccess],
 	);
+
+	const handleOnChange = (data: CustomJsonSchema, valid: boolean) => {
+		dispatch(setFieldData(data))
+		setIsValidForm(valid);
+	}
 
 	const handleFileRemove = useCallback(
 		(file: CustomFileLightOrRejection) => {
@@ -108,10 +122,7 @@ export default function BulkUploadWizard<T>({
 								render={() => (
 									<BulkMetadataForm
 										{...metadataForm}
-										onChange={(data, valid) => {
-											// dispatch(setMetadata(data));
-											setIsValidForm(valid);
-										}}
+										onChange={handleOnChange}
 									/>
 								)}
 							/>

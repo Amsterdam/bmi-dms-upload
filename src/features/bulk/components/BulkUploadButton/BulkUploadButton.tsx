@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import BulkUploadWizard from '../BulkUploadWizard/BulkUploadWizard';
 import { BulkWizardImplementationProps } from '../../../../types';
@@ -13,6 +13,7 @@ export default function BulkUploadButton<T>({
 	asset,
 	buttonText = 'Bestand toevoegen',
 	metadataForm,
+	metadataFields,
 	getPostUrl,
 	getHeaders,
 	getDocumentViewUrl,
@@ -37,6 +38,7 @@ export default function BulkUploadButton<T>({
 				<BulkUploadWizard<T>
 					asset={asset}
 					metadataForm={metadataForm}
+					metadataFields={metadataFields}
 					onClose={() => setWizardVisibility(false)}
 					getPostUrl={getPostUrl}
 					getHeaders={getHeaders}

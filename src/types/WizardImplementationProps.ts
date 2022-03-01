@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { JsonForms } from '@jsonforms/react';
 import { FileUploadProps } from '@amsterdam/bmi-component-library';
-import { IBulkMetadataFile } from '../features/bulk/store/model';
+import { IBulkMetadataField, IBulkMetadataFile } from '../features/bulk/store/model';
 import { CustomFileLight, CustomFileLightOrRejection } from '../types'
 
 export type Asset = {
@@ -40,4 +40,5 @@ export interface WizardImplementationProps<T> {
 
 export interface BulkWizardImplementationProps<T> extends Omit<WizardImplementationProps<T>, "onMetadataSubmit">  {
 	getDocumentViewUrl: (metadataFile: IBulkMetadataFile) => Promise<string>;
+	metadataFields?: IBulkMetadataField[]
 }

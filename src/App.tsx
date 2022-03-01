@@ -1,64 +1,25 @@
-import React, { useRef, useState } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from 'react';
+import { BrowserRouter, Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { UISchemaElement } from '@jsonforms/core';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
 import { CancelCallbackArg, CustomFileLight, CustomJsonSchema, MetadataDataSubmitCallbackArg, MetadataProperty } from './types';
-import { uischema } from './components/BulkMetadataForm/__stubs__';
 import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
-
-import { useEffect } from 'react';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
+import { convertDmsDynamicFormFieldsToBulkMetadataFields, convertDmsDynamicFormFieldsToMetadataProperty, IDmsUploadSession } from './features/bulk/utils';
+import { useDispatch } from './features/CustomProvider';
+import { setFields } from './features/bulk/store/slice';
+import { IBulkMetadataField } from './features/bulk/store/model';
 
 type MetadataExample = {
 	documentDescription: string;
 	executionDate: string;
 };
 
-interface IDmsAsset {
-	id: number
-	name: string
-	code: string
-}
-
-interface IDynamicFormField {
-	id: number,
-	placeholder: string,
-	required: boolean,
-	defaultValue: string,
-	userValue: string,
-	changeIndividual: boolean,
-	type: string,
-	options: any[]
-}
-
-interface IUploadSession {
-	id: string
-	finished: boolean
-    dmsAsset: IDmsAsset
-	dynamicFormFields: IDynamicFormField[]
-}
-
-function convertDmsAssetsToMetadataProperty(dmsAssets: IDynamicFormField[]): MetadataProperty[] {
-	const metadataProperties: MetadataProperty[] = [];
-
-	dmsAssets.forEach(field => {
-		metadataProperties.push({
-			key: field.placeholder.toLowerCase().replace(' ', '_'),
-			scope: 'string',
-			type: 'string',
-			label: field.placeholder,
-			'bmi-isNotEmpty': field.required,
-			'bmi-errorMessage': '',
-		})
-	});
-
-	return metadataProperties;
-}
-
-async function fetchSession(): Promise<IUploadSession> {
+async function fetchSession(): Promise<IDmsUploadSession> {
 	const formdata = new FormData();
 	formdata.append('dmsAsset', '8');
 	formdata.append('dmsCategoryTheme', '9');
@@ -72,7 +33,7 @@ async function fetchSession(): Promise<IUploadSession> {
 		body: new URLSearchParams(formdata as any)
 	})
 
-	const data = await response.json() as IUploadSession;
+	const data = await response.json() as IDmsUploadSession;
 
 	return data
 }
@@ -82,10 +43,10 @@ const basePath = '/base/path';
 const App: React.FC = () => {
 	const mounted = useRef(false);
 	const [hasFiles, setHasFiles] = useState<boolean>(false);
-	const [sessionId, setSessionId] = useState<any | undefined>(undefined);
-	const [session, setSession] = useState<IUploadSession | undefined>(undefined);
+	const [session, setSession] = useState<IDmsUploadSession | undefined>(undefined);
+	const [metadataFields, setMetadataFields] = useState<IBulkMetadataField[] | undefined>(undefined);
 	const [schema, setSchema] = useState<CustomJsonSchema | undefined>(undefined);
-	const [uischema, setUischema] = useState<CustomJsonSchema | undefined>(undefined);
+	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
 
 	useEffect(() => {
         mounted.current = true;
@@ -98,7 +59,6 @@ const App: React.FC = () => {
 	useEffect(() => {
 		const doGetSession = async () => {
 			if (!hasFiles) return false
-			setSessionId(await getSessionId())
 			setSession(await getSession())
 		}
 
@@ -107,17 +67,17 @@ const App: React.FC = () => {
 
 	useEffect(() => {
 		if (!session) return;
-		const metadataProperties = convertDmsAssetsToMetadataProperty(session.dynamicFormFields)
-		console.log('convertDmsAssetsToMetadataProperty', metadataProperties)
+		const metadataProperties = convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields)
 
 		const newSchema = createSchemaFromMetadataProps(metadataProperties);
-		console.log('createSchemaFromMetadataProps', newSchema)
+		setSchema(newSchema)
 
 		const newUischema = createUISchemaFromMetadataProps(metadataProperties);
-		console.log('createUISchemaFromMetadataProps', newUischema)
-
-		setSchema(newSchema)
 		setUischema(newUischema)
+
+		const fields = convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields)
+		setMetadataFields(fields)
+
 	}, [session])
 
 	async function getSession() {
@@ -125,11 +85,6 @@ const App: React.FC = () => {
 		return await fetchSession();
 	}
 
-	async function getSessionId() {
-		if (sessionId) return sessionId;
-		const response = await fetchSession();
-		return response?.id;
-	}
 
 	return (
 		<MUIThemeProvider theme={muiTheme}>
@@ -208,6 +163,7 @@ const App: React.FC = () => {
 											} as Partial<MetadataExample>,
 											renderers: [],
 										}}
+										metadataFields={metadataFields}
 										getDocumentViewUrl={() => {
 											console.log(':: getDocumentViewUrl');
 											return Promise.resolve('some-document-url');

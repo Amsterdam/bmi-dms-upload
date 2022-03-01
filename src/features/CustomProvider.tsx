@@ -22,7 +22,7 @@ const store = configureStore({
 			serializableCheck: {
 				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
 				// Ignore these action types
-				ignoredActions: ['dmsupload/setFile', 'dmsbulkupload/setFile'],
+				ignoredActions: ['dmsupload/setFile', 'dmsbulkupload/setFile', 'dmsbulkupload/setFields', 'dmsbulkupload/setFieldData'],
 				ignoredPaths: ['file'],
 			},
 		}),
