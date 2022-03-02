@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CustomFileLight, CustomJsonSchema } from '../../../types';
+import { CustomFileLight } from '../../../types';
 import { IBulkMetadataState, IBulkMetadataFile, IBulkMetadataField } from './model';
 
 export const initialState: IBulkMetadataState = {

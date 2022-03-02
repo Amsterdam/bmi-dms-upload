@@ -1,91 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { UISchemaElement } from '@jsonforms/core';
+import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
 import theme from './theme';
-import { CancelCallbackArg, CustomFileLight, CustomJsonSchema, MetadataDataSubmitCallbackArg, MetadataProperty } from './types';
+import { CancelCallbackArg, CustomFileLight, MetadataDataSubmitCallbackArg } from './types';
 import BulkUploadButton from './features/bulk/components/BulkUploadButton/BulkUploadButton';
-import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
-import { convertDmsDynamicFormFieldsToBulkMetadataFields, convertDmsDynamicFormFieldsToMetadataProperty, IDmsUploadSession } from './features/bulk/utils';
-import { useDispatch } from './features/CustomProvider';
-import { setFields } from './features/bulk/store/slice';
-import { IBulkMetadataField } from './features/bulk/store/model';
+import { schema, uischema } from './features/single-file/components/Wizard/__stubs__';
+import { metadataFields as bulkMetadataFields } from './features/bulk/components/BulkUploadWizard/__stubs__'
+import {
+	schema as bulkSchema,
+	uischema as bulkUischema,
+} from './components/BulkMetadataForm/__stubs__';
 
 type MetadataExample = {
 	documentDescription: string;
 	executionDate: string;
 };
 
-async function fetchSession(): Promise<IDmsUploadSession> {
-	const formdata = new FormData();
-	formdata.append('dmsAsset', '8');
-	formdata.append('dmsCategoryTheme', '9');
-
-	const response = await fetch('https://acc.bmidms.amsterdam.nl/api/v1.0/upload-session', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			"x-api-token": "sQRNkdEC8JSXF5"
-		},
-		body: new URLSearchParams(formdata as any)
-	})
-
-	const data = await response.json() as IDmsUploadSession;
-
-	return data
-}
-
 const basePath = '/base/path';
 
 const App: React.FC = () => {
-	const mounted = useRef(false);
-	const hasFiles = useRef(false)
-	const [session, setSession] = useState<IDmsUploadSession | undefined>(undefined);
-	const [metadataFields, setMetadataFields] = useState<IBulkMetadataField[] | undefined>(undefined);
-	const [schema, setSchema] = useState<CustomJsonSchema | undefined>(undefined);
-	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
-
-	useEffect(() => {
-        mounted.current = true;
-
-        return () => {
-            mounted.current = false;
-        };
-    }, []);
-
-	useEffect(() => {
-		const doGetSession = async () => {
-			if (!hasFiles) return false
-			setSession(await getSession())
-		}
-
-		doGetSession();
-	}, [hasFiles])
-
-	useEffect(() => {
-		if (!session) return;
-		const metadataProperties = convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields)
-
-		const newSchema = createSchemaFromMetadataProps(metadataProperties);
-		setSchema(newSchema)
-
-		const newUischema = createUISchemaFromMetadataProps(metadataProperties);
-		setUischema(newUischema)
-
-		const fields = convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields)
-		setMetadataFields(fields)
-
-	}, [session])
-
-	async function getSession() {
-		if (session) return session;
-		return await fetchSession();
-	}
-
-
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
@@ -103,7 +39,7 @@ const App: React.FC = () => {
 										}}
 										getPostUrl={(file: CustomFileLight) => {
 											console.log(':: getPostUrl', file);
-											return Promise.resolve('https://reqres.in/api/users');
+											return Promise.resolve('http://localhost:3000/files');
 										}}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
@@ -156,12 +92,12 @@ const App: React.FC = () => {
 											name: 'some-name',
 										}}
 										metadataForm={{
-											schema,
-											uischema,
+											schema: bulkSchema,
+											uischema: bulkUischema,
 											data: {} as Partial<MetadataExample>,
 											renderers: [],
 										}}
-										metadataFields={metadataFields}
+										metadataFields={bulkMetadataFields}
 										getDocumentViewUrl={() => {
 											console.log(':: getDocumentViewUrl');
 											return Promise.resolve('some-document-url');
@@ -169,7 +105,7 @@ const App: React.FC = () => {
 										getPostUrl={async (file: CustomFileLight) => {
 											console.log(':: getPostUrl: file', file);
 
-											return Promise.resolve('https://reqres.in/api/users');
+											return Promise.resolve('http://localhost:3000/files');
 										}}
 										getHeaders={async () => {
 											const headers: { [key: string]: string } = {};
@@ -185,7 +121,6 @@ const App: React.FC = () => {
 										}}
 										onFileSuccess={(file) => {
 											console.log(':: onFileSuccess: file', file);
-											hasFiles.current = true;
 										}}
 										buttonText="Bestanden toevoegen"
 										basePath={basePath}

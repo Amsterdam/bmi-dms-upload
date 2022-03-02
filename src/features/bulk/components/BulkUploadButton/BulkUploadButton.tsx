@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { Button } from '@amsterdam/asc-ui';
 import BulkUploadWizard from '../BulkUploadWizard/BulkUploadWizard';
 import { BulkWizardImplementationProps } from '../../../../types';
