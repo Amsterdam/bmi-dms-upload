@@ -29,8 +29,6 @@ export const slice = createSlice({
 			const obj = { ...action.payload };
 			const newFields = [...state.fields ];
 
-			if (obj.documentDescription) delete obj.documentDescription;
-
 			Object.keys(obj).forEach(key => {
 				const item = obj[key];
 				const index = newFields.findIndex(field => field.id === key)

@@ -29,50 +29,62 @@ function convertStringToKey(string: string): string {
 	return string.toLowerCase().replace(' ', '_')
 }
 
-export function convertDmsDynamicFormFieldsToMetadataProperty(dynamicFormFields: IDmsDynamicFormField[]): MetadataProperty[] {
+export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynamicFormField[]): MetadataProperty[] {
 	const list: MetadataProperty[] = [];
 
-	dynamicFormFields.forEach(field => {
-		list.push({
+	fields.forEach(field => {
+		const item: MetadataProperty = {
 			key: convertStringToKey(field.placeholder),
 			scope: 'string',
 			type: 'string',
 			label: field.placeholder,
 			'bmi-isNotEmpty': field.required,
 			'bmi-errorMessage': '',
-		})
+		}
+
+		if (field.type === 'ChoiceType') {
+			item.oneOf = field.options.map(fieldOption => ({
+				const: fieldOption,
+				title: fieldOption
+			}))
+			item.customFormat = 'creatable';
+		}
+
+		list.push(item)
 	});
 
 	return list;
 }
 
-export function convertDmsDynamicFormFieldsToBulkMetadataFields(dynamicFormFields: IDmsDynamicFormField[]): IBulkMetadataField[] {
+export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkMetadataField[] {
 	const list: IBulkMetadataField[] = [];
 
-	dynamicFormFields.forEach(field => {
-		list.push({
+	fields.forEach(field => {
+		const item: IBulkMetadataField = {
 			id: convertStringToKey(field.placeholder),
 			label: field.placeholder,
-			value: '',
+			value: field.userValue,
 			changeIndividual: false
-		})
+		}
+		list.push(item)
 	});
 
 	return list;
 }
 
-export function convertBulkMetadataFieldToMetadataProperties(dynamicFormFields: IBulkMetadataField[]): MetadataProperty[] {
+export function convertBulkMetadataFieldToMetadataProperties(fields: IBulkMetadataField[]): MetadataProperty[] {
 	const list: MetadataProperty[] = [];
 
-	dynamicFormFields.forEach(field => {
-		list.push({
+	fields.forEach(field => {
+		const item: MetadataProperty = {
 			key: convertStringToKey(field.id),
 			scope: 'string',
 			type: 'string',
 			label: field.label,
 			'bmi-isNotEmpty': false,
 			'bmi-errorMessage': '',
-		})
+		}
+		list.push(item)
 	});
 
 	return list;

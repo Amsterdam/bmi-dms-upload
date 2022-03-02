@@ -11,7 +11,7 @@ import BulkMetadataForm from '../../../../components/BulkMetadataForm/BulkMetada
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
 import WizardFooter from '../../../../components/WizardFooter/WizardFooter';
 import Step1 from '../../../../components/Step1/Step1';
-import { getCustomFilesFromStore, getFieldsFromStore } from '../../store/selectors';
+import { getCustomFilesFromStore } from '../../store/selectors';
 import { setFile, setFields, removeFile, resetState, setFieldData } from '../../store/slice';
 
 export type Props<T> = {
@@ -35,9 +35,10 @@ export default function BulkUploadWizard<T>({
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const files = useSelector(getCustomFilesFromStore);
-	const fields = useSelector(getFieldsFromStore);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const { isOpen, confirm } = useConfirmTermination(() => terminate());
+
+	const [localData, setLocalData] = useState<CustomJsonSchema>(metadataForm.data)
 
 	useEffect(() => {
 		if (!metadataFields) return;
@@ -62,10 +63,11 @@ export default function BulkUploadWizard<T>({
 		[onFileSuccess],
 	);
 
-	const handleOnChange = (data: CustomJsonSchema, valid: boolean) => {
+	const handleOnChange = useCallback((data: CustomJsonSchema, valid: boolean) => {
 		dispatch(setFieldData(data))
+		setLocalData(data);
 		setIsValidForm(valid);
-	}
+	}, [metadataFields, metadataForm])
 
 	const handleFileRemove = useCallback(
 		(file: CustomFileLightOrRejection) => {
@@ -121,7 +123,10 @@ export default function BulkUploadWizard<T>({
 								path={appendPathSegment(basePath, 'step2')}
 								render={() => (
 									<BulkMetadataForm
-										{...metadataForm}
+										schema={metadataForm.schema}
+										uischema={metadataForm.uischema}
+										renderers={metadataForm.renderers}
+										data={localData}
 										onChange={handleOnChange}
 									/>
 								)}

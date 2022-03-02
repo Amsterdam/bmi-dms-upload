@@ -1,4 +1,4 @@
-import { CustomFileLight } from "../../../types";
+import { CustomFileLight } from '../../../types';
 
 type IBulkMetadataFieldId = string;
 

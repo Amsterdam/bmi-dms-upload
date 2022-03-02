@@ -42,7 +42,7 @@ const basePath = '/base/path';
 
 const App: React.FC = () => {
 	const mounted = useRef(false);
-	const [hasFiles, setHasFiles] = useState<boolean>(false);
+	const hasFiles = useRef(false)
 	const [session, setSession] = useState<IDmsUploadSession | undefined>(undefined);
 	const [metadataFields, setMetadataFields] = useState<IBulkMetadataField[] | undefined>(undefined);
 	const [schema, setSchema] = useState<CustomJsonSchema | undefined>(undefined);
@@ -158,9 +158,7 @@ const App: React.FC = () => {
 										metadataForm={{
 											schema,
 											uischema,
-											data: {
-												documentDescription: '__DOCUMENT_DESCRIPTION__',
-											} as Partial<MetadataExample>,
+											data: {} as Partial<MetadataExample>,
 											renderers: [],
 										}}
 										metadataFields={metadataFields}
@@ -187,7 +185,7 @@ const App: React.FC = () => {
 										}}
 										onFileSuccess={(file) => {
 											console.log(':: onFileSuccess: file', file);
-											setHasFiles(true)
+											hasFiles.current = true;
 										}}
 										buttonText="Bestanden toevoegen"
 										basePath={basePath}
