@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CustomFileLight } from '../../../types';
 import { IBulkMetadataState, IBulkMetadataFile, IBulkMetadataField } from './model';
 
 export const initialState: IBulkMetadataState = {
@@ -25,19 +24,29 @@ export const slice = createSlice({
 		setFields: (state: IBulkMetadataState, action: PayloadAction<IBulkMetadataField[]>) => {
 			state.fields = action.payload;
 		},
+
+		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
 		setFieldData: (state: IBulkMetadataState, action: PayloadAction<any>) => {
 			const obj = { ...action.payload };
 			const newFields = [...state.fields ];
 
-			Object.keys(obj).forEach(key => {
+			Object.keys(action.payload).forEach(key => {
 				const item = obj[key];
-				const index = newFields.findIndex(field => field.id === key)
-				newFields[index] = { ...newFields[index], ...item }
+				const index = newFields.findIndex(field => field.id === key);
+
+				if (index !== -1) {
+					newFields[index] = {
+						...newFields[index],
+						...item
+					};
+				}
 			})
 
 			state.fields = [ ...newFields ]
 		},
-		removeFile: (state: IBulkMetadataState, action: PayloadAction<CustomFileLight>) => {
+
+		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
+		removeFile: (state: IBulkMetadataState, action: PayloadAction<any>) => {
 			const newFiles = state.files.filter(file => file.uploadedFile.tmpId !== action.payload.tmpId)
 			state.files = newFiles;
 		},

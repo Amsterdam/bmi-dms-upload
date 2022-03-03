@@ -36,7 +36,7 @@ export function makeCustomFile(id: number, title: string, filetype?: string): Cu
 
 export function makeField(id: string, changeIndividual: boolean): IBulkMetadataField {
 	return {
-		id: id,
+		id: `some-id-${id}`,
 		label: `some-label ${id}`,
 		value: `some-value ${id}`,
 		changeIndividual: changeIndividual,
@@ -58,6 +58,7 @@ export const fieldsDefault: IBulkMetadataField[] = makeFields([
 ]);
 export const fieldsChangeIndividual: IBulkMetadataField[] = makeFields([['2', true]]);
 export const fields: IBulkMetadataField[] = [...fieldsDefault, ...fieldsChangeIndividual];
+export const field: IBulkMetadataField = makeField("1", true);
 
 export const files: IBulkMetadataFile[] = [
 	makeFile('1', customFileA, [{ id: '1', value: 'some-value-1' }]),
@@ -70,9 +71,27 @@ export const stateWithFiles: IBulkMetadataState = {
 	files,
 };
 
+export const stateWithFilesRemoved: IBulkMetadataState = {
+	currentStep: 0,
+	fields: [],
+	files: [
+		files[1]
+	]
+};
+
 export const stateWithFields: IBulkMetadataState = {
 	currentStep: 0,
 	fields,
+	files: [],
+};
+
+export const stateWithFieldsUpdated: IBulkMetadataState = {
+	currentStep: 0,
+	fields: [
+		field,
+		fields[1],
+		fields[2]
+	],
 	files: [],
 };
 

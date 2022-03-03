@@ -5,7 +5,7 @@ import { Modal, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { appendTrailingSlash, appendPathSegment } from '../../../../utils';
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
 import { useDispatch, useSelector } from '../../../CustomProvider';
-import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection, CustomJsonSchema } from '../../../../types';
+import { BulkWizardImplementationProps, CustomFileLight, CustomFileLightOrRejection, CustomJsonSchema, MetadataGenericType } from '../../../../types';
 import ConfirmTermination from '../../../../components/ConfirmTermination/ConfirmTermination';
 import BulkMetadataForm from '../../../../components/BulkMetadataForm/BulkMetadataForm';
 import useConfirmTermination from '../../../../hooks/useConfirmTermination';
@@ -63,7 +63,7 @@ export default function BulkUploadWizard<T>({
 		[onFileSuccess],
 	);
 
-	const handleOnChange = useCallback((data: CustomJsonSchema, valid: boolean) => {
+	const handleOnChange = useCallback((data: MetadataGenericType, valid: boolean) => {
 		dispatch(setFieldData(data))
 		setLocalData(data);
 		setIsValidForm(valid);

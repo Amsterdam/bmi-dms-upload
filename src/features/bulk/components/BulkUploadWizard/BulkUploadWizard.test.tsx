@@ -10,7 +10,7 @@ import { asset, schema, uischema } from './__stubs__';
 import Step1 from '../../../../components/Step1/Step1';
 import { mocked, mockComponentProps } from '../../../../tests/helpers';
 import { IBulkMetadataState } from '../../store/model';
-import { makeFile, makeCustomFile, fields as mockFields, files as mockFiles} from "../../store/__stubs__/state";
+import { makeFile, makeCustomFile, fields as mockFields, files as mockFiles } from '../../store/__stubs__/state';
 
 jest.mock('../../../../components/Step1/Step1');
 jest.mock('../../../../components/MetadataForm/MetadataForm');
@@ -36,7 +36,7 @@ jest.mock('../../store/selectors', () => ({
 }));
 
 const Step1Mock = mocked(Step1);
-const rawFile = makeCustomFile(1, 'some-title')
+const rawFile = makeCustomFile(1, 'some-title');
 const mockFile = makeFile('1', rawFile);
 
 const mockData: MetadataExample = {
@@ -132,58 +132,52 @@ describe('<BulkUploadWizard />', () => {
 		expect(onFileRemoveMock).toHaveBeenCalledWith(mockFile.uploadedFile);
 	});
 
-	// test.each([['cancel-wizard'], ['modal-close-button']])(
-	// 	'should catch error when promise is rejected',
-	// 	(dataTestId) => {
-	// 		//to turn off error logging
-	// 		jest.spyOn(console, 'error').mockImplementation(jest.fn());
+	test.each([['cancel-wizard'], ['modal-close-button']])(
+		'should catch error when promise is rejected',
+		(dataTestId) => {
+			//to turn off error logging
+			jest.spyOn(console, 'error').mockImplementation(jest.fn());
 
-	// 		const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
-	// 		renderComponent({ file: mockFile, metadata: {} }, '/', {
-	// 			onCancel: onCancelMockRejected,
-	// 		});
-	// 		fireEvent.click(screen.getByTestId(dataTestId));
-	// 		expect(onCancelMockRejected).rejects.toThrow();
-	// 	},
-	// );
+			const onCancelMockRejected = jest.fn().mockImplementation(() => Promise.reject(Error('my error')));
+			renderComponent(storeState, '/', {
+				onCancel: onCancelMockRejected,
+			});
+			fireEvent.click(screen.getByTestId(dataTestId));
+			expect(onCancelMockRejected).rejects.toThrow();
+		},
+	);
 
-	// test('Clicking modal close button triggers resetState and terminates the wizard', () => {
-	// 	const pushSpy = jest.fn();
-	// 	mocked(useHistory as jest.Mock).mockReturnValue({
-	// 		push: pushSpy,
-	// 	});
-	// 	const spy = jest.spyOn(actions, 'resetState');
-	// 	renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-	// 	fireEvent.click(screen.getByTestId('modal-close-button'));
-	// 	expect(spy).toHaveBeenCalled();
-	// 	expect(onCloseMock).toHaveBeenCalled();
-	// 	expect(pushSpy).toHaveBeenCalledWith('/');
-	// });
+	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
+		const pushSpy = jest.fn();
+		mocked(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		const spy = jest.spyOn(actions, 'resetState');
+		renderComponent(storeState, '/');
+		fireEvent.click(screen.getByTestId('modal-close-button'));
+		expect(spy).toHaveBeenCalled();
+		expect(onCloseMock).toHaveBeenCalled();
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
 
-	// test('should open a confirm termination dialog', () => {
-	// 	renderComponent({ file: mockFile, metadata: { mockData } }, '/');
-	// 	fireEvent.click(screen.getByTestId('cancel-wizard'));
-	// 	expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
-	// });
+	test('should open a confirm termination dialog', () => {
+		renderComponent(storeState, '/');
+		fireEvent.click(screen.getByTestId('cancel-wizard'));
+		expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
+	});
 
-	// test('should go to navigate to previous step when clicking previousbutton', () => {
-	// 	const pushSpy = jest.fn();
-	// 	(useHistory as jest.Mock).mockReturnValue({
-	// 		push: pushSpy,
-	// 	});
-	// 	renderComponent(
-	// 		{
-	// 			file: mockFile,
-	// 			metadata: { mockData },
-	// 		},
-	// 		'/step2',
-	// 	);
-	// 	const previousButton = screen.getByTestId('previous-button');
-	// 	expect(screen.getByTestId('previous-button')).toBeInTheDocument();
-	// 	fireEvent.click(previousButton);
+	test('should go to navigate to previous step when clicking previousbutton', () => {
+		const pushSpy = jest.fn();
+		(useHistory as jest.Mock).mockReturnValue({
+			push: pushSpy,
+		});
+		renderComponent(storeState, '/step2');
+		const previousButton = screen.getByTestId('previous-button');
+		expect(screen.getByTestId('previous-button')).toBeInTheDocument();
+		fireEvent.click(previousButton);
 
-	// 	expect(pushSpy).toHaveBeenCalledWith('/');
-	// });
+		expect(pushSpy).toHaveBeenCalledWith('/');
+	});
 
 	// describe('onMetadataSubmit()', () => {
 	// 	test('is called when saving while <MetaDataForm /> is valid', async () => {
