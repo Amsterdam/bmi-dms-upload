@@ -95,10 +95,10 @@ export default function BulkUploadWizard<T>({
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
-			<Modal id="dms-bulk-upload-wizard" open onClose={() => terminate()} closeOnBackdropClick={false}>
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => terminate()}>
+			<Modal id="dms-bulk-upload-wizard" open onClose={() => confirm()} closeOnBackdropClick={false}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
-						Bestand uploaden voor {name}
+						Bestanden uploaden voor {name}
 					</ModalTopBarStyle>
 				</Modal.TopBar>
 				<>

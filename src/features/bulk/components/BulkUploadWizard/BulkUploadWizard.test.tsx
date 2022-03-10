@@ -147,17 +147,10 @@ describe('<BulkUploadWizard />', () => {
 		},
 	);
 
-	test('Clicking modal close button triggers resetState and terminates the wizard', () => {
-		const pushSpy = jest.fn();
-		mocked(useHistory as jest.Mock).mockReturnValue({
-			push: pushSpy,
-		});
-		const spy = jest.spyOn(actions, 'resetState');
+	test('Clicking modal close button triggers confirm termination dialog', () => {
 		renderComponent(storeState, '/');
 		fireEvent.click(screen.getByTestId('modal-close-button'));
-		expect(spy).toHaveBeenCalled();
-		expect(onCloseMock).toHaveBeenCalled();
-		expect(pushSpy).toHaveBeenCalledWith('/');
+		expect(screen.getByText('Annuleer uploaden')).toBeInTheDocument();
 	});
 
 	test('should open a confirm termination dialog', () => {
