@@ -1,4 +1,4 @@
-import { CustomJsonSchema, MetadataProperty } from "../../../types";
+import { MetadataProperty } from "../../../types";
 import { IBulkMetadataField } from "../store/model";
 
 export interface IDmsAsset {
