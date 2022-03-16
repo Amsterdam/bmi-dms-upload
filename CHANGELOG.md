@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.7](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.6...v0.0.3-alpha.7) (2022-03-16)
+
+
+### Features
+
+* **bulk-upload:** Duplicated wizard into bulkUploadWizard ([65226de](https://github.com/Amsterdam/bmi-dms-upload/commit/65226dee814087088f1b8858361bde239ad211be))
+* **bulk-upload:** moved Step1 from feature folder to shared components folder ([a2cd409](https://github.com/Amsterdam/bmi-dms-upload/commit/a2cd409f8fa680b316b0c1359952acc7034ccf67))
+* **bulk-upload:** refactor single file upload to BulkCustomFile and fixed tests, linting ([958675d](https://github.com/Amsterdam/bmi-dms-upload/commit/958675d08fe4a7e028e7873a53888ac8dc2c7cf6))
+* **bulk-upload:** refactored BulkCustomFile to CustomFileLight and made CustomFileLightOrRejection ([92121f3](https://github.com/Amsterdam/bmi-dms-upload/commit/92121f337ff1779d24cdfc063197573f122140e6))
+* **bulk-upload:** wip bulk upload tests ([fc3dabc](https://github.com/Amsterdam/bmi-dms-upload/commit/fc3dabc72ff94bd49df01a1e4dc1d0c6a2f1e41a))
+* **bulk-upload:** wip tests ([fa91d73](https://github.com/Amsterdam/bmi-dms-upload/commit/fa91d7388f9fe009acf6b93b3fad7146b5e555d5))
+* **bulk-upload:** Workaround for redux serialization errors when adding array of CustomFile to store ([e815bd9](https://github.com/Amsterdam/bmi-dms-upload/commit/e815bd9dd0e820622c922eb6101455442c1c92ff))
+* **bulkmetadata:** make title/column headers optional ([acae38a](https://github.com/Amsterdam/bmi-dms-upload/commit/acae38a1ee389597770d3884b8ecdc3eca778b38))
+* **bulkmetadata:** make title/column headers optional ([fcf4452](https://github.com/Amsterdam/bmi-dms-upload/commit/fcf44526e23a33fd9342526529ca1915e3de7502))
+* **bulkmetadata:** update by review ([3d153d6](https://github.com/Amsterdam/bmi-dms-upload/commit/3d153d6e3d34791f61c087e3993851c12b90ef6a))
+* **bulkmetadata:** update by review ([c3bb742](https://github.com/Amsterdam/bmi-dms-upload/commit/c3bb74293d90b7e65d5f3b28557a93737e495cda))
+* **bulkmetadata:** update tests ([d863c60](https://github.com/Amsterdam/bmi-dms-upload/commit/d863c60ccd31af6f27b8bdbb951ce06a92804d59))
+* **bulkmetadata:** update tests ([c67de71](https://github.com/Amsterdam/bmi-dms-upload/commit/c67de7196fb28d2bbc8062a9c764f45ad83765ad))
+* **bulkmetadataform:** updated utility to be able to handle SELECT input types ([966b81e](https://github.com/Amsterdam/bmi-dms-upload/commit/966b81e373d1431c65cfd5444aa0ae73db541e27))
+
+
+### Bug Fixes
+
+* **bulk-meta:** get session id from api ([0c8847b](https://github.com/Amsterdam/bmi-dms-upload/commit/0c8847bdae3360494ca6940c09bb12d9db9be8d9))
+* **bulk-upload:** make single and bulk upload more compatible ([655b9ac](https://github.com/Amsterdam/bmi-dms-upload/commit/655b9acb83a5798f6afd8e705a5df3b2a62d72b6))
+* **bulk-upload:** pr feedback from Rick fixed ([5d77aa8](https://github.com/Amsterdam/bmi-dms-upload/commit/5d77aa8c131bade71c6265f18823c33b74bd67fc))
+* **bulk-upload:** refactored store after PR feedback ([f6acf80](https://github.com/Amsterdam/bmi-dms-upload/commit/f6acf80fc027690459fde0872658cc8e7109e9e6))
+* **bulk-wizard:** show confirmation window ([56552a8](https://github.com/Amsterdam/bmi-dms-upload/commit/56552a81a144701efcdbdcbc17f987049fa72a1b))
+* **creatable:** Ensure that the react-select dropdown is on top in case it is present inside a modal ([03ea749](https://github.com/Amsterdam/bmi-dms-upload/commit/03ea749a559e6827585106736e3bb924bbed795b))
+* **creatable:** Special treatment when validating a new option coming from <Creatable /> ([e2fcab2](https://github.com/Amsterdam/bmi-dms-upload/commit/e2fcab24a43e28095a55207c8b67e43adb40aa44))
+* **creatable:** z-index can now be controlled via a prop ([ab84eb4](https://github.com/Amsterdam/bmi-dms-upload/commit/ab84eb4a7a22e04e03b7efa1b9391ea4fc8a8701))
+* **dms-integration:** alpha release to test dms integration ([26d38a7](https://github.com/Amsterdam/bmi-dms-upload/commit/26d38a7c76e0f851d7e82c2ddd5c2551a7499c16))
+* **metadata-form:** added local mock api ([48d1d3c](https://github.com/Amsterdam/bmi-dms-upload/commit/48d1d3ce35cac370aeef94c71516a9adf7309bb9))
+* **metadata-form:** fix and add tests ([152a650](https://github.com/Amsterdam/bmi-dms-upload/commit/152a650138867ab9805c00bc8d2ffea877e42fdf))
+
 ### [0.0.3-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.5...v0.0.3-alpha.6) (2022-01-10)
 
 
