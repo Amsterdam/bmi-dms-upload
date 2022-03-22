@@ -1,47 +1,21 @@
 import React from 'react';
-import { Provider, createStoreHook, createDispatchHook, createSelectorHook, TypedUseSelectorHook } from 'react-redux';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { reducer as upload } from './single-file/store/dataSlice';
-import { reducer as bulk } from './bulk/store/slice'
-
-export const CustomContext = React.createContext<any>(null);
-
-const reducer = combineReducers({
-	upload,
-	bulk
-})
-
-export const useStore = createStoreHook(CustomContext);
-export const useDispatch = createDispatchHook<AppDispatch>(CustomContext);
-export const useSelector: TypedUseSelectorHook<RootState> = createSelectorHook(CustomContext);
-
-const store = configureStore({
-	reducer,
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			serializableCheck: {
-				// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
-				// Ignore these action types
-				ignoredActions: ['dmsupload/setFile', 'dmsbulkupload/setFile', 'dmsbulkupload/setFields', 'dmsbulkupload/setFieldData'],
-				ignoredPaths: ['file'],
-			},
-		}),
-	// devTools: process.env.NODE_ENV !== 'production', disable on production??
-});
+import { Provider } from 'react-redux';
+import { HistoryRouter as Router } from 'redux-first-history/rr6';
+import { store, history } from './store';
 
 type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
 };
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 const CustomProvider: React.FC<Props> = ({ children }: Props) => {
 	return (
-		<Provider context={CustomContext} store={store}>
-			{children}
+		<Provider store={store}>
+			<Router history={history}>{children}</Router>
 		</Provider>
 	);
 };
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 
 export default CustomProvider;
