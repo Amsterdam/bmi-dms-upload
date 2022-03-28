@@ -5,10 +5,10 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { UISchemaElement } from '@jsonforms/core';
 
 import CustomProvider from './features/CustomProvider';
-import Single from './features/singleNew/single/Single';
-import Bulk from './features/bulkNew/bulk/Bulk';
-import { IBulkField, IDmsUploadSession } from './features/bulkNew/bulk/model';
-import { schema as singleSchema, uischema as singleUischema } from './features/singleNew/single/__stubs__';
+import Single from './features/single/single/Single';
+import Bulk from './features/bulk/bulk/Bulk';
+import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/model';
+import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
 import theme from './theme';
 import {
 	CancelCallbackArg,
@@ -18,7 +18,7 @@ import {
 	MetadataDataSubmitCallbackArg,
 	MetadataExample,
 } from './types';
-import * as utils from './features/bulkNew/bulk/utils';
+import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 import { AppStyles } from './AppStyles';
 
