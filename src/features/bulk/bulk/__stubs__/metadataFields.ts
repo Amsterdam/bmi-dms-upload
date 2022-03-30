@@ -1,6 +1,6 @@
-import { IBulkMetadataField } from 'src/features/bulk/store/model';
+import { IBulkField } from '../model';
 
-export const metadataFields: IBulkMetadataField[] = [
+export const metadataFields: IBulkField[] = [
 	{
 		id: 'year',
 		value: '',

@@ -21,7 +21,7 @@ export default function Bulk<T>(props: Props<T>) {
 	const handleOnChange = useCallback((data: MetadataGenericType, valid: boolean) => {
 		dispatch(setFieldData(data))
 		setLocalData(data);
-		// setIsValidForm(valid);
+		// setIsValidForm(valid); @todo
 	}, [metadataFields, metadataForm])
 
 	return (

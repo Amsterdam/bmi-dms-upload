@@ -1,4 +1,4 @@
-import { CustomJsonSchema } from '../../../../../types';
+import { CustomJsonSchema } from '../../../../types';
 
 export const schema: CustomJsonSchema = {
 	type: 'object',
@@ -11,7 +11,6 @@ export const schema: CustomJsonSchema = {
 				},
 				value: {
 					type: 'string',
-					format: 'string',
 					errorMessage: {
 						format: 'invalid',
 						'bmi-isNotEmpty': 'Dit is een verplicht veld',

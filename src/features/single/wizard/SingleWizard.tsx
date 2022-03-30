@@ -1,16 +1,14 @@
 import React, { SyntheticEvent, useCallback } from 'react';
 import { Modal } from '@amsterdam/bmi-component-library';
-import { push } from 'redux-first-history';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import useConfirmTermination from '../../../hooks/useConfirmTermination';
 import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTermination';
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
-import { STEP0 } from '../single/constants';
 import { CurrentStep } from '../single/model';
 import { getCurrentStepFromStore, getFileFromStore, getMetadataFromStore } from '../single/selectors';
-import { resetState, setCurrentStep, setCurrentStepNext, setCurrentStepPrev } from '../single/slice';
+import { resetState, setCurrentStepNext, setCurrentStepPrev } from '../single/slice';
 import { Props } from '../single/types';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';

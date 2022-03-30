@@ -25,6 +25,7 @@ import { bulkSaga } from '../../features/bulk/bulk/sagas';
 type TRenderOptions = {
 	store: any;
 	reduxHistory: History
+	[key: string]: any
 };
 
 interface StoreOverrides {
@@ -41,7 +42,8 @@ interface StoreOverrides {
 	};
 }
 
-function render(ui: React.ReactElement, {store, reduxHistory }: TRenderOptions) {
+function render(ui: React.ReactElement, {store, reduxHistory, ...rest }: TRenderOptions) {
+
 	function Wrapper({ children }: { children?: React.ReactNode }) {
 		return (
 			<Provider store={store}>
@@ -57,7 +59,7 @@ function render(ui: React.ReactElement, {store, reduxHistory }: TRenderOptions) 
 		);
 	}
 
-	return rtlRender(ui, { wrapper: Wrapper });
+	return rtlRender(ui, { wrapper: Wrapper, ...rest });
 }
 
 const createTestEnv = (storeOverrides?: StoreOverrides) => {

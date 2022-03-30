@@ -2,11 +2,11 @@ import React from 'react';
 import { screen, fireEvent, act } from '@testing-library/react';
 import { render, createTestEnv } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
-import { asset, file, schema, uischema } from './__stubs__';
+import { asset, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
 import { CurrentStep } from './model';
 import { STEP1, STEP2 } from './constants'
-import Single from './Single';
+import Bulk from './Bulk';
 
 const onCloseMock = jest.fn();
 const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
@@ -42,27 +42,27 @@ afterEach(() => {
 	jest.restoreAllMocks();
 });
 
-describe('<Single />', () => {
+describe('<Bulk />', () => {
 	describe('Button', () => {
 		test('is rendered', () => {
 			const { store, reduxHistory } = createTestEnv();
-			render(<Single {...defaultProps} />, { store, reduxHistory });
-			expect(screen.getByText('Upload bestand')).toBeInTheDocument();
+			render(<Bulk {...defaultProps} />, { store, reduxHistory });
+			expect(screen.getByText('Upload bestanden')).toBeInTheDocument();
 		});
 
 		test('changes route on click', () => {
 			const { store, reduxHistory } = createTestEnv();
 
 			act(() => {
-				render(<Single {...defaultProps} />, { store, reduxHistory });
+				render(<Bulk {...defaultProps} />, { store, reduxHistory });
 			});
 
-			const button = screen.getByText('Upload bestand');
+			const button = screen.getByText('Upload bestanden');
 			act(() => {
 				fireEvent.click(button);
 			});
 
-			const modalTitle = screen.queryByText(`Bestand uploaden voor ${asset.name}`);
+			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
 			expect(modalTitle).toBeInTheDocument();
 		});
 	});
@@ -72,28 +72,29 @@ describe('<Single />', () => {
 			const { store, reduxHistory } = createTestEnv();
 
 			act(() => {
-				render(<Single {...defaultProps} />, { store, reduxHistory });
+				render(<Bulk {...defaultProps} />, { store, reduxHistory });
 				reduxHistory.push(STEP1)
 			});
 
-			const modalTitle = screen.queryByText(`Bestand uploaden voor ${asset.name}`);
+			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
 			expect(modalTitle).toBeInTheDocument();
 		});
 
 		test('Step2 is rendered for step2 route', () => {
 			const { store, reduxHistory } = createTestEnv({
-				single: {
+				bulk: {
 					currentStep: CurrentStep.Upload,
-					file: file,
+					files: filesMock,
+					fields: fieldsMock,
 				}
 			});
 
 			act(() => {
-				render(<Single {...defaultProps} />, { store, reduxHistory });
+				render(<Bulk {...defaultProps} />, { store, reduxHistory });
 				reduxHistory.push(STEP2)
 			});
 
-			expect(screen.queryByText(`Metadata toevoegen`)).toBeInTheDocument();
+			expect(screen.queryByText(`Metadata veld`)).toBeInTheDocument();
 		});
 	});
 });

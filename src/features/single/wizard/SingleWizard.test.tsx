@@ -1,28 +1,10 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
-
+import { screen, fireEvent, act } from '@testing-library/react';
 import { MetadataExample } from '../../../types';
+import { createTestEnv, render } from '../../../tests/utils/testUtils';
 import { CurrentStep } from '../single/model';
+import { asset, schema, uischema } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
-import { initialState as singleInitialState } from '../single/slice';
-import * as actions from '../single/slice';
-import { asset, schema, uischema, file as fileMock, metadataFields as metadataMock} from '../single/__stubs__';
-
-import { initialState as bulkInitialState } from '../../bulk/bulk/slice';
-import { render } from '../../../tests/utils/testUtils';
-
-const mockHistoryPush = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-	...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-	useHistory: jest.fn().mockImplementation(() => ({
-		push: mockHistoryPush,
-	})),
-}));
-
-jest.mock('../single/selectors', () => ({
-	...(jest.requireActual('../single/selectors') as Record<string, unknown>),
-}));
 
 const onCloseMock = jest.fn();
 const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
@@ -60,99 +42,138 @@ afterEach(() => {
 });
 
 describe('<SingleWizard />', () => {
-	function renderComponent(singleStateOverrides?: any, props?: any) {
-		render(<SingleWizard {...defaultProps} {...props} />, {
-			preloadedState: {
-				single: {
-					...singleInitialState,
-					...singleStateOverrides,
-				},
-				bulk: bulkInitialState,
-			},
-		});
-	}
-
 	describe('Cancel button', () => {
 		test('is rendered', () => {
-			renderComponent();
+			act(() => {
+				const { store, reduxHistory } = createTestEnv();
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.getByText('Annuleer')).toBeDefined();
 		});
 
 		test('triggers onCancel', async () => {
-			renderComponent();
-			fireEvent.click(screen.getByText('Annuleer'))
-			const buttonAccept = await screen.getByText('Akkoord')
-			fireEvent.click(buttonAccept);
+			act(() => {
+				const { store, reduxHistory } = createTestEnv();
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				fireEvent.click(screen.getByText('Annuleer'));
+			});
+			const buttonAccept = screen.getByText('Akkoord');
+			act(() => {
+				fireEvent.click(buttonAccept);
+			});
+
 			expect(onCancelMock).toHaveBeenCalled();
 		});
 
-		test('triggers resetState', async () => {
-			const resetStateSpy = jest.spyOn(actions, 'resetState');
-			renderComponent();
-			fireEvent.click(screen.getByText('Annuleer'))
-			const buttonAccept = await screen.getByText('Akkoord')
-			fireEvent.click(buttonAccept);
-			expect(resetStateSpy).toHaveBeenCalled();
+		test('closes modal on accept', async () => {
+			act(() => {
+				const { store, reduxHistory } = createTestEnv();
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				fireEvent.click(screen.getByText('Annuleer'));
+			});
+
+			const buttonAccept = screen.getByText('Akkoord');
+			act(() => {
+				fireEvent.click(buttonAccept);
+			});
+
+			expect(buttonAccept).not.toBeInTheDocument();
 		});
 	});
 
 	describe('Previous button', () => {
 		test('is not rendered on the first step', () => {
-			renderComponent();
+			const { store, reduxHistory } = createTestEnv();
+
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Vorige')).toBeNull();
 		});
 
-		test('is rendered on steps after the first', () => {
-			renderComponent({ currentStep: CurrentStep.SelectFields });
+		test('is rendered on steps after the first step', () => {
+			const { store, reduxHistory } = createTestEnv({
+				single: {
+					currentStep: CurrentStep.SelectFields,
+				},
+			});
+
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Vorige')).toBeDefined();
-		});
-
-		test('dispatches setCurrentStepPrev on click', () => {
-			const setCurrentStepPrevSpy = jest.spyOn(actions, 'setCurrentStepPrev');
-			renderComponent({ currentStep: CurrentStep.SelectFields });
-
-			fireEvent.click(screen.getByText('Vorige'))
-			expect(setCurrentStepPrevSpy).toHaveBeenCalled();
 		});
 	});
 
 	describe('Next button', () => {
 		test('is not rendered on the last step', () => {
-			renderComponent({ currentStep: CurrentStep.SelectFields });
+			const { store, reduxHistory } = createTestEnv({
+				single: {
+					currentStep: CurrentStep.SelectFields,
+				},
+			});
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Volgende')).toBeNull();
 		});
 
 		test('is rendered on steps before the last', () => {
-			renderComponent({ currentStep: CurrentStep.Upload });
+			const { store, reduxHistory } = createTestEnv({
+				single: {
+					currentStep: CurrentStep.Upload,
+				},
+			});
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Volgende')).toBeDefined();
-		});
-
-		test('dispatches setCurrentStepNext on click', () => {
-			const setCurrentStepNextSpy = jest.spyOn(actions, 'setCurrentStepNext');
-			renderComponent({ currentStep: CurrentStep.Upload });
-
-			fireEvent.click(screen.getByText('Volgende'))
-			expect(setCurrentStepNextSpy).toHaveBeenCalled();
 		});
 	});
 
 	describe('Save button', () => {
 		test('is disabled on steps before the last', () => {
-			renderComponent();
+			const { store, reduxHistory } = createTestEnv();
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Opslaan')).toBeDisabled();
 		});
 
 		test('is enabled on last step', () => {
-			renderComponent({ currentStep: CurrentStep.SelectFields });
+			const { store, reduxHistory } = createTestEnv({
+				single: {
+					currentStep: CurrentStep.SelectFields,
+				},
+			});
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
 		});
 
-		test('triggers onMetadataSubmit', async () => {
-			renderComponent({ currentStep: CurrentStep.SelectFields, file: fileMock, metadata: metadataMock }, { isValidForm: true });
-			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
+		test.todo('closes modal')
 
-			fireEvent.click(screen.getByText('Opslaan'))
-			expect(onMetadataSubmitMock).toHaveBeenCalled();
-		});
+		// test.only('triggers onMetadataSubmit', async () => {
+		// 	const { store, reduxHistory } = createTestEnv({
+		// 		single: {
+		// 			currentStep: CurrentStep.SelectFields,
+		// 			file: fileMock,
+		// 			metadata: metadataMock,
+		// 		},
+		// 	});
+
+		// 	act(() => {
+		// 		render(<SingleWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
+		// 	});
+
+		// 	const button = screen.getByText('Opslaan');
+
+		// 	act(() => {
+		// 		fireEvent.click(button);
+		// 	});
+
+		// 	expect(onMetadataSubmitMock).toHaveBeenCalled();
+		// });
 	});
 });

@@ -43,7 +43,7 @@ export default function BulkWizard<T>({ children, onCancel, asset }: BulkWizardP
 			<Modal id="dms-upload-wizard" open onClose={() => confirm()} closeOnBackdropClick={false}>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
-						Bestanden uploaden voor {asset.name} - { currentStep }
+						Bestanden uploaden voor {asset.name}
 					</ModalTopBarStyle>
 				</Modal.TopBar>
 				<>

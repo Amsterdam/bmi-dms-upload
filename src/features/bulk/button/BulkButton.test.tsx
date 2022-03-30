@@ -2,18 +2,18 @@ import React from 'react';
 import { screen, act } from '@testing-library/react';
 
 import { createTestEnv, render } from '../../../tests/utils/testUtils';
-import SingleButton from './SingleButton'
+import BulkButton from './BulkButton'
 
 afterEach(() => {
 	jest.restoreAllMocks();
 });
 
-describe('<SingleButton  />', () => {
+describe('<BulkButton  />', () => {
 	test('is rendered', () => {
 		act(() => {
 			const { store, reduxHistory } = createTestEnv();
-			render(<SingleButton />, { store, reduxHistory });
+			render(<BulkButton />, { store, reduxHistory });
 		});
-		expect(screen.getByText('Upload bestand')).toBeDefined();
+		expect(screen.getByText('Upload bestanden')).toBeDefined();
 	});
 });
