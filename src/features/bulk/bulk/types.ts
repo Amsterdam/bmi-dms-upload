@@ -17,7 +17,7 @@ export interface Props<T> {
 	onClose: () => void;
 	onFileSuccess?: (file: CustomFileLight) => void;
 	onFileRemove?: (file: CustomFileLightOrRejection) => void
-	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
+	onMetadataSubmit: (data: any) => Promise<void>; // @todo correct typing!
 
 	getPostUrl: (file: CustomFileLight) => Promise<string>;
 	getHeaders: FileUploadProps['getHeaders'];

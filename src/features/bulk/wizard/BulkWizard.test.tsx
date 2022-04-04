@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { createTestEnv, render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { CurrentStep  } from '../bulk/model';
-import { asset, schema, uischema } from '../bulk/__stubs__';
+import { asset, files as filesMock, schema, uischema } from '../bulk/__stubs__';
 import BulkWizard from './BulkWizard';
 
 const onCloseMock = jest.fn();
@@ -144,6 +144,7 @@ describe('<BulkWizard />', () => {
 			const { store, reduxHistory } = createTestEnv({
 				bulk: {
 					currentStep: CurrentStep.EditFields,
+					files: filesMock
 				},
 			});
 			act(() => {
@@ -152,7 +153,25 @@ describe('<BulkWizard />', () => {
 			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
 		});
 
-		test.todo('closes modal')
-		test.todo('?? triggers saveState')
+		test('triggers onMetadataSubmit after save', async () => {
+			const { store, reduxHistory } = createTestEnv({
+				bulk: {
+					currentStep: CurrentStep.EditFields,
+					files: filesMock
+				},
+			});
+
+			act(() => {
+				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+			});
+
+			const button = screen.getByText('Opslaan')
+			expect(button).not.toBeDisabled();
+
+			await waitFor(() => {
+				fireEvent.click(button);
+				expect(onMetadataSubmitMock).toHaveBeenCalled();
+			});
+		});
 	});
 });

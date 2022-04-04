@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CustomFileLight, MetadataGenericType } from '../../../types';
+import { SingleRoutesToSteps } from './constants';
 import { CurrentStep, ISingleState } from './model';
 
 export const initialState: ISingleState = {
@@ -16,11 +17,16 @@ export const slice = createSlice({
 			state.file = undefined;
 		},
 		resetState: () => initialState,
+		initCurrentStep: (state: ISingleState, action: PayloadAction<string>) => {
+			const currentStep = state.currentStep;
+			const newCurrentStep = SingleRoutesToSteps[action.payload];
+			if (newCurrentStep !== currentStep) {
+				state.currentStep = newCurrentStep;
+			}
+		},
 		setCurrentStep: (state: ISingleState, action: PayloadAction<CurrentStep>) => {
 			state.currentStep = action.payload;
 		},
-		setCurrentStepNext: (state: ISingleState) => state,
-		setCurrentStepPrev: (state: ISingleState) => state,
 		setFile: (state: ISingleState, action: PayloadAction<CustomFileLight>) => {
 			state.file = action.payload;
 		},
@@ -30,14 +36,6 @@ export const slice = createSlice({
 	},
 });
 
-export const {
-	removeFileFromStore,
-	resetState,
-	setCurrentStep,
-	setCurrentStepNext,
-	setCurrentStepPrev,
-	setFile,
-	setMetadata,
-} = slice.actions;
+export const { removeFileFromStore, resetState, initCurrentStep, setCurrentStep, setFile, setMetadata } = slice.actions;
 
 export const { reducer } = slice;

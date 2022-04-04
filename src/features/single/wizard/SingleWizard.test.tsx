@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { MetadataExample } from '../../../types';
 import { createTestEnv, render } from '../../../tests/utils/testUtils';
 import { CurrentStep } from '../single/model';
-import { asset, schema, uischema } from '../single/__stubs__';
+import { asset, schema, uischema, file as fileMock } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
 
 const onCloseMock = jest.fn();
@@ -144,36 +144,36 @@ describe('<SingleWizard />', () => {
 			const { store, reduxHistory } = createTestEnv({
 				single: {
 					currentStep: CurrentStep.SelectFields,
+					file: fileMock,
 				},
 			});
 			act(() => {
 				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
 			});
-			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
+
+			expect(screen.queryByText('Opslaan')).toBeEnabled();
 		});
 
-		test.todo('closes modal')
+		test('triggers onMetadataSubmit after save', async () => {
+			const { store, reduxHistory } = createTestEnv({
+				single: {
+					currentStep: CurrentStep.SelectFields,
+					file: fileMock,
+				},
+			});
 
-		// test.only('triggers onMetadataSubmit', async () => {
-		// 	const { store, reduxHistory } = createTestEnv({
-		// 		single: {
-		// 			currentStep: CurrentStep.SelectFields,
-		// 			file: fileMock,
-		// 			metadata: metadataMock,
-		// 		},
-		// 	});
+			act(() => {
+				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+			});
 
-		// 	act(() => {
-		// 		render(<SingleWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
-		// 	});
+			const button = screen.getByText('Opslaan')
 
-		// 	const button = screen.getByText('Opslaan');
+			expect(button).not.toBeDisabled();
 
-		// 	act(() => {
-		// 		fireEvent.click(button);
-		// 	});
-
-		// 	expect(onMetadataSubmitMock).toHaveBeenCalled();
-		// });
+			await waitFor(() => {
+				fireEvent.click(button);
+				expect(onMetadataSubmitMock).toHaveBeenCalled();
+			});
+		});
 	});
 });

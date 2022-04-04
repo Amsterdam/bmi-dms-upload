@@ -8,17 +8,19 @@ import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { CurrentStep } from '../single/model';
 import { getCurrentStepFromStore, getFileFromStore, getMetadataFromStore } from '../single/selectors';
-import { resetState, setCurrentStepNext, setCurrentStepPrev } from '../single/slice';
+import { resetState } from '../single/slice';
 import { Props } from '../single/types';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
+import { push } from 'redux-first-history';
+import { SingleStepsToRoutes, STEP0 } from '../single/constants';
 
 type SingleWizardProps<T> = {
 	children?: React.ReactNode;
 	isValidForm: boolean;
 } & Props<T>;
 
-export default function BulkWizard<T>({
+export default function SingleWizard<T>({
 	asset,
 	children,
 	isValidForm,
@@ -26,22 +28,37 @@ export default function BulkWizard<T>({
 	onMetadataSubmit,
 }: SingleWizardProps<T>) {
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
-
 	const dispatch = useAppDispatch();
-
 	const currentStep = useAppSelector(getCurrentStepFromStore);
 	const file = useAppSelector(getFileFromStore);
 	const metadata = useAppSelector(getMetadataFromStore) as T;
 
-	const handlePrev = useCallback(() => dispatch(setCurrentStepPrev()), []);
-	const handleNext = useCallback(() => dispatch(setCurrentStepNext()), []);
+	const handlePrev = useCallback(() => {
+		switch (currentStep) {
+			case CurrentStep.SelectFields:
+				dispatch(push(SingleStepsToRoutes[CurrentStep.Upload]));
+				break;
+			case CurrentStep.Upload:
+				dispatch(push(SingleStepsToRoutes[CurrentStep.Button]));
+				break;
+		}
+	}, [currentStep]);
+	const handleNext = useCallback(() => {
+		switch (currentStep) {
+			case CurrentStep.Upload:
+				if (file) dispatch(push(SingleStepsToRoutes[CurrentStep.SelectFields]));
+				break;
+		}
+	}, [currentStep, file]);
 
 	const close = useCallback(() => {
 		dispatch(resetState());
+		dispatch(push(STEP0));
 	}, []);
+
 	const resetAndClose = useCallback(() => {
 		dispatch(resetState());
-
+		dispatch(push(STEP0));
 		onCancel({}).catch((err) => {
 			console.error(err); // @TODO handle error gracefully
 		});
@@ -51,7 +68,7 @@ export default function BulkWizard<T>({
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 
-			if (file && isValidForm) {
+			if (file) {
 				onMetadataSubmit({ file, metadata })
 					.then(() => close())
 					.catch((err) => {
@@ -85,13 +102,14 @@ export default function BulkWizard<T>({
 					}}
 					next={{
 						visible: currentStep <= CurrentStep.Upload,
+						disabled: !file,
 						onClick: handleNext,
 						dataTestId: 'next-button',
 					}}
 					save={{
 						visible: true,
 						onClick: handleSubmit,
-						disabled: currentStep !== CurrentStep.SelectFields,
+						disabled: (!file && !isValidForm) || currentStep !== CurrentStep.SelectFields,
 						dataTestId: 'save-button',
 					}}
 				/>

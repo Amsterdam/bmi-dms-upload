@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CurrentStep, IBulkField, IBulkFile, IBulkState } from "./model";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BulkRoutesToSteps } from './constants';
+import { CurrentStep, IBulkField, IBulkFile, IBulkState } from './model';
 
 export const initialState: IBulkState = {
 	currentStep: CurrentStep.Button,
@@ -17,17 +18,22 @@ export const slice = createSlice({
 			state.files = newFiles;
 		},
 		resetState: () => initialState,
+		initCurrentStep: (state: IBulkState, action: PayloadAction<string>) => {
+			const currentStep = state.currentStep;
+			const newCurrentStep = BulkRoutesToSteps[action.payload];
+			if (newCurrentStep !== currentStep) {
+				state.currentStep = newCurrentStep;
+			}
+		},
 		setCurrentStep: (state: IBulkState, action: PayloadAction<CurrentStep>) => {
 			state.currentStep = action.payload;
 		},
-		setCurrentStepNext: (state: IBulkState) => state,
-		setCurrentStepPrev: (state: IBulkState) => state,
 		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
 		setFieldData: (state: IBulkState, action: PayloadAction<any>) => {
 			const obj = { ...action.payload };
 			const newFields = [...state.fields];
 
-			Object.keys(action.payload).forEach((key) => {
+			Object.keys(obj).forEach((key) => {
 				const item = obj[key];
 				const index = newFields.findIndex((field) => field.id === key);
 
@@ -54,18 +60,17 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
-	}
-})
+	},
+});
 
 export const {
 	removeFile,
 	resetState,
 	setCurrentStep,
-	setCurrentStepNext,
-	setCurrentStepPrev,
-	setFieldData,
+    setFieldData,
 	setFields,
 	setFile,
+	initCurrentStep,
 } = slice.actions;
 
 export const { reducer } = slice;

@@ -24,8 +24,8 @@ import { bulkSaga } from '../../features/bulk/bulk/sagas';
 
 type TRenderOptions = {
 	store: any;
-	reduxHistory: History
-	[key: string]: any
+	reduxHistory: History;
+	[key: string]: any;
 };
 
 interface StoreOverrides {
@@ -40,10 +40,19 @@ interface StoreOverrides {
 		fields?: IBulkField[];
 		selectedFileId?: IBulkField;
 	};
+	router?: {
+		location?: {
+			hash?: string;
+			key?: string;
+			pathname?: string;
+			search?: string;
+			state?: any;
+		};
+		action?: string;
+	};
 }
 
-function render(ui: React.ReactElement, {store, reduxHistory, ...rest }: TRenderOptions) {
-
+function render(ui: React.ReactElement, { store, reduxHistory, ...rest }: TRenderOptions) {
 	function Wrapper({ children }: { children?: React.ReactNode }) {
 		return (
 			<Provider store={store}>
@@ -87,12 +96,9 @@ const createTestEnv = (storeOverrides?: StoreOverrides) => {
 			single: singleReducer,
 			bulk: bulkReducer,
 		}),
-		middleware: (getDefaultMiddleware) => [
-			sagaMiddleware,
-			routerMiddleware,
-		],
+		middleware: (getDefaultMiddleware) => [sagaMiddleware, routerMiddleware],
 		preloadedState: {
-			...storeOverrides
+			...storeOverrides,
 		},
 	});
 
@@ -104,9 +110,9 @@ const createTestEnv = (storeOverrides?: StoreOverrides) => {
 	return {
 		store,
 		history,
-		reduxHistory
-	}
-}
+		reduxHistory,
+	};
+};
 
 export * from '@testing-library/react';
 export { render, createTestEnv };
