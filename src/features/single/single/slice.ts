@@ -13,7 +13,7 @@ export const slice = createSlice({
 	name: 'dms_single',
 	initialState,
 	reducers: {
-		removeFileFromStore: (state: ISingleState) => {
+		removeFile: (state: ISingleState) => {
 			state.file = undefined;
 		},
 		resetState: () => initialState,
@@ -36,6 +36,6 @@ export const slice = createSlice({
 	},
 });
 
-export const { removeFileFromStore, resetState, initCurrentStep, setCurrentStep, setFile, setMetadata } = slice.actions;
+export const { removeFile, resetState, initCurrentStep, setCurrentStep, setFile, setMetadata } = slice.actions;
 
 export const { reducer } = slice;

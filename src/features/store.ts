@@ -37,9 +37,11 @@ export const store = configureStore({
 				// Ignore these action types
 				ignoredActions: [
 					'dms_single/setFile',
+					'dms_single/removeFile',
 					'dms_bulk/setFile',
 					'dms_bulk/setFields',
 					'dms_bulk/setFieldData',
+					'dms_bulk/removeFile',
 				],
 				ignoredPaths: ['single.file', 'bulk.files'],
 			},

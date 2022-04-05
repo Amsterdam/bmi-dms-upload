@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import SingleWizard from '../wizard/SingleWizard';
 import { getFileFromStore } from '../single/selectors';
-import { setFile, removeFileFromStore } from '../single/slice';
+import { setFile, removeFile } from '../single/slice';
 import { Step1Styles } from './styles';
 
 export default function Step1<T>(props: Props<T>) {
@@ -18,7 +18,7 @@ export default function Step1<T>(props: Props<T>) {
 	const handleFileRemove = useCallback(
 		(file: CustomFileLightOrRejection) => {
 			onFileRemove && onFileRemove(file);
-			dispatch(removeFileFromStore());
+			dispatch(removeFile());
 		},
 		[onFileRemove],
 	);
