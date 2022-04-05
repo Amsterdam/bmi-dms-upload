@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.7...v0.0.3-alpha.8) (2022-04-05)
+
+
+### Bug Fixes
+
+* **bulk:** add more tests, fixed all test, fixed linting errors ([eb18aba](https://github.com/Amsterdam/bmi-dms-upload/commit/eb18aba259a71926c5ff894ae5d09c58e57ef534))
+* **bulk:** refactor route states, add more tests ([342879b](https://github.com/Amsterdam/bmi-dms-upload/commit/342879bba688f168ab493c4217d114f98cb74875))
+* **bulk:** test utils, test setup for new state with sagas ([14e49ca](https://github.com/Amsterdam/bmi-dms-upload/commit/14e49cab21c753c677756f0523a3f081b72f8f2a))
+
 ### [0.0.3-alpha.7](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.6...v0.0.3-alpha.7) (2022-03-16)
 
 
