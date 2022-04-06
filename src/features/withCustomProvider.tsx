@@ -7,7 +7,7 @@ function withCustomProvider<T>(Component: React.ComponentType<T>) {
 	const componentWithCustomProvider = (props: T) => {
 		return (
 			<CustomProvider>
-				<Component {...props} displayName={'test'} />
+				<Component {...props} />
 			</CustomProvider>
 		);
 	};
