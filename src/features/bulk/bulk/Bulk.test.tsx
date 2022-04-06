@@ -5,8 +5,8 @@ import { MetadataExample } from '../../../types';
 import { asset, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
 import { CurrentStep } from './model';
-import { STEP1, STEP2 } from './constants'
-import Bulk from './Bulk';
+import { STEP1, STEP2 } from './constants';
+import { Bulk } from './Bulk';
 
 const onCloseMock = jest.fn();
 const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
@@ -73,7 +73,7 @@ describe('<Bulk />', () => {
 
 			act(() => {
 				render(<Bulk {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP1)
+				reduxHistory.push(STEP1);
 			});
 
 			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
@@ -86,12 +86,12 @@ describe('<Bulk />', () => {
 					currentStep: CurrentStep.Upload,
 					files: filesMock,
 					fields: fieldsMock,
-				}
+				},
 			});
 
 			act(() => {
 				render(<Bulk {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP2)
+				reduxHistory.push(STEP2);
 			});
 
 			expect(screen.queryByText(`Metadata veld`)).toBeInTheDocument();

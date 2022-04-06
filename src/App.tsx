@@ -3,8 +3,6 @@ import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { UISchemaElement } from '@jsonforms/core';
-
-import CustomProvider from './features/CustomProvider';
 import Single from './features/single/single/Single';
 import Bulk from './features/bulk/bulk/Bulk';
 import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/model';
@@ -16,12 +14,10 @@ import {
 	CustomFileLightOrRejection,
 	CustomJsonSchema,
 	MetadataDataSubmitCallbackArg,
-	MetadataExample,
 } from './types';
 import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 import { AppStyles } from './AppStyles';
-
 
 function App() {
 	const mounted = useRef(false);
@@ -32,7 +28,7 @@ function App() {
 	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
 
 	async function fetchSession(): Promise<IDmsUploadSession> {
-		const response = await fetch(`http://localhost:3000/upload-session`)
+		const response = await fetch(`http://localhost:3000/upload-session`);
 		const data = (await response.json()) as IDmsUploadSession;
 		return data;
 	}
@@ -86,10 +82,10 @@ function App() {
 	};
 
 	const onClose = () => console.log(':: onClose');
-	const onCancel = async (data: CancelCallbackArg<MetadataExample>) => console.log(':: onCancel', data);
+	const onCancel = async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data); //<MetadataExample>
 	const onFileSuccess = (file: CustomFileLight) => console.log(':: onFileSuccess', file);
 	const onFileRemove = (file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file);
-	const onMetadataSubmit = async (data: MetadataDataSubmitCallbackArg<MetadataExample>) =>
+	const onMetadataSubmit = async (data: MetadataDataSubmitCallbackArg<any>) => // <MetadataExample>
 		console.log(':: onMetadataSubmit', data);
 	const getPostUrl = async (file: CustomFileLight) => 'http://localhost:3000/files';
 	const getHeaders = async () => ({ foo: 'bar' });
@@ -98,7 +94,7 @@ function App() {
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
-				<CustomProvider>
+
 					<AppStyles>
 						<div>
 							<Single
@@ -134,7 +130,6 @@ function App() {
 							/>
 						</div>
 					</AppStyles>
-				</CustomProvider>
 			</ThemeProvider>
 		</MUIThemeProvider>
 	);

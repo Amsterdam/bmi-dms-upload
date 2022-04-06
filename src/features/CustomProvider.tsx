@@ -10,12 +10,12 @@ export type Props = {
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-const CustomProvider: React.FC<Props> = ({ children }: Props) => {
+function CustomProvider({ children }: Props) {
 	return (
 		<Provider store={store}>
 			<Router history={history}>{children}</Router>
 		</Provider>
 	);
-};
+}
 
 export default CustomProvider;

@@ -5,8 +5,8 @@ import { MetadataExample } from '../../../types';
 import { asset, file, schema, uischema } from './__stubs__';
 import { Props } from './types';
 import { CurrentStep } from './model';
-import { STEP1, STEP2 } from './constants'
-import Single from './Single';
+import { STEP1, STEP2 } from './constants';
+import { Single } from './Single';
 
 const onCloseMock = jest.fn();
 const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
@@ -73,7 +73,7 @@ describe('<Single />', () => {
 
 			act(() => {
 				render(<Single {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP1)
+				reduxHistory.push(STEP1);
 			});
 
 			const modalTitle = screen.queryByText(`Bestand uploaden voor ${asset.name}`);
@@ -85,12 +85,12 @@ describe('<Single />', () => {
 				single: {
 					currentStep: CurrentStep.Upload,
 					file: file,
-				}
+				},
 			});
 
 			act(() => {
 				render(<Single {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP2)
+				reduxHistory.push(STEP2);
 			});
 
 			expect(screen.queryByText(`Metadata toevoegen`)).toBeInTheDocument();
