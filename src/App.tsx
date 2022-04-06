@@ -1,15 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { muiTheme } from '@amsterdam/bmi-component-library';
-import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { UISchemaElement } from '@jsonforms/core';
 
-import CustomProvider from './features/CustomProvider';
 import Single from './features/single/single/Single';
 import Bulk from './features/bulk/bulk/Bulk';
 import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/model';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
-import theme from './theme';
 import {
 	CancelCallbackArg,
 	CustomFileLight,
@@ -22,7 +17,6 @@ import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 import { AppStyles } from './AppStyles';
 
-
 function App() {
 	const mounted = useRef(false);
 	const hasFiles = useRef(false);
@@ -32,7 +26,7 @@ function App() {
 	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
 
 	async function fetchSession(): Promise<IDmsUploadSession> {
-		const response = await fetch(`http://localhost:3000/upload-session`)
+		const response = await fetch(`http://localhost:3000/upload-session`);
 		const data = (await response.json()) as IDmsUploadSession;
 		return data;
 	}
@@ -95,48 +89,41 @@ function App() {
 	const getHeaders = async () => ({ foo: 'bar' });
 
 	return (
-		<MUIThemeProvider theme={muiTheme}>
-			<ThemeProvider overrides={theme}>
-				<GlobalStyle />
-				<CustomProvider>
-					<AppStyles>
-						<div>
-							<Single
-								asset={asset}
-								basePath="/"
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataForm={{
-									...metadataForm,
-									uischema: singleUischema,
-									schema: singleSchema,
-								}}
-								onCancel={onCancel}
-								onClose={onClose}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccess}
-								onMetadataSubmit={onMetadataSubmit}
-							/>
-						</div>
-						<div>
-							<Bulk
-								asset={asset}
-								basePath="/"
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataFields={metadataFields}
-								metadataForm={metadataForm}
-								onCancel={onCancel}
-								onClose={onClose}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccess}
-								onMetadataSubmit={onMetadataSubmit}
-							/>
-						</div>
-					</AppStyles>
-				</CustomProvider>
-			</ThemeProvider>
-		</MUIThemeProvider>
+		<AppStyles>
+			<div>
+				<Single
+					asset={asset}
+					basePath="/"
+					getHeaders={getHeaders}
+					getPostUrl={getPostUrl}
+					metadataForm={{
+						...metadataForm,
+						uischema: singleUischema,
+						schema: singleSchema,
+					}}
+					onCancel={onCancel}
+					onClose={onClose}
+					onFileRemove={onFileRemove}
+					onFileSuccess={onFileSuccess}
+					onMetadataSubmit={onMetadataSubmit}
+				/>
+			</div>
+			<div>
+				<Bulk
+					asset={asset}
+					basePath="/"
+					getHeaders={getHeaders}
+					getPostUrl={getPostUrl}
+					metadataFields={metadataFields}
+					metadataForm={metadataForm}
+					onCancel={onCancel}
+					onClose={onClose}
+					onFileRemove={onFileRemove}
+					onFileSuccess={onFileSuccess}
+					onMetadataSubmit={onMetadataSubmit}
+				/>
+			</div>
+		</AppStyles>
 	);
 }
 
