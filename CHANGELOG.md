@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.8...v0.0.3-alpha.9) (2022-04-06)
+
+
+### Bug Fixes
+
+* **bulk:** add submit for bulk, add more test, add mock-api for upload-session ([7bb7895](https://github.com/Amsterdam/bmi-dms-upload/commit/7bb789574e5f731e6e1b05242896c85d776748e6))
+* **bulk:** few tweaks to removeFile callback ([f1338d8](https://github.com/Amsterdam/bmi-dms-upload/commit/f1338d8314dad3e1001ef2dd722bc7b42561402e))
+
 ### [0.0.3-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.7...v0.0.3-alpha.8) (2022-04-05)
 
 
