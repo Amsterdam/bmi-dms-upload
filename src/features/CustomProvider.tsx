@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { HistoryRouter as Router } from 'redux-first-history/rr6';
 import { store, history } from './store';
 
-type Props = {
+export type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
 };
 
