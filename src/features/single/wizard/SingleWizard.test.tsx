@@ -163,7 +163,7 @@ describe('<SingleWizard />', () => {
 			});
 
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
 			});
 
 			const button = screen.getByText('Opslaan')
@@ -172,8 +172,8 @@ describe('<SingleWizard />', () => {
 
 			await waitFor(() => {
 				fireEvent.click(button);
-				expect(onMetadataSubmitMock).toHaveBeenCalled();
 			});
+			expect(onMetadataSubmitMock).toHaveBeenCalled();
 		});
 	});
 });

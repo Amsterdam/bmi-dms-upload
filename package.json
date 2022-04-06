@@ -9,6 +9,7 @@
     "prebuild": "npm run build:ts:es && npm run build:ts",
     "start": "npm run storybook",
     "serve": "webpack serve --config webpack.dev.conf.js --open",
+    "serve:silent": "webpack serve --config webpack.dev.conf.js",
     "serve:mock-api": "json-server --watch db.json",
     "build": "webpack --config webpack.prod.conf.js",
     "build:ts": "tsc -b src/tsconfig.build.json",

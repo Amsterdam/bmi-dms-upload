@@ -34,6 +34,7 @@ const defaultProps = {
 	onMetadataSubmit: onMetadataSubmitMock,
 	onCancel: onCancelMock,
 	basePath: '/',
+	isValidForm: false,
 };
 
 afterEach(() => {
@@ -162,7 +163,7 @@ describe('<BulkWizard />', () => {
 			});
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
 			});
 
 			const button = screen.getByText('Opslaan')

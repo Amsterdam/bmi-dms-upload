@@ -68,7 +68,7 @@ export default function SingleWizard<T>({
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 
-			if (file) {
+			if (file && isValidForm) {
 				onMetadataSubmit({ file, metadata })
 					.then(() => close())
 					.catch((err) => {

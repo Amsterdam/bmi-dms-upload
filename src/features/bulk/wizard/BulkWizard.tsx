@@ -17,15 +17,15 @@ import { ModalContentStyle, ModalTopBarStyle } from './styles';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
+	isValidForm?: boolean;
 } & Props<T>;
 
-export default function BulkWizard<T>({ children, asset, onCancel, onMetadataSubmit }: BulkWizardProps<T>) {
+export default function BulkWizard<T>({ children, asset, isValidForm, onCancel, onMetadataSubmit }: BulkWizardProps<T>) {
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 
 	const dispatch = useAppDispatch();
 	const currentStep = useAppSelector(getCurrentStepFromStore);
 	const files = useAppSelector(getFilesFromStore);
-	const isValidForm = true;
 
 	const handlePrev = useCallback(() => {
 		switch (currentStep) {
@@ -69,7 +69,7 @@ export default function BulkWizard<T>({ children, asset, onCancel, onMetadataSub
 	const handleSubmit = useCallback(
 		(e: SyntheticEvent) => {
 			e.preventDefault();
-			if (files) {
+			if (files && isValidForm) {
 				onMetadataSubmit({ todo: true })
 					.then(() => close())
 					.catch((err) => {

@@ -22,6 +22,7 @@ import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 import { AppStyles } from './AppStyles';
 
+
 function App() {
 	const mounted = useRef(false);
 	const hasFiles = useRef(false);
@@ -31,21 +32,8 @@ function App() {
 	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
 
 	async function fetchSession(): Promise<IDmsUploadSession> {
-		const formdata = new FormData();
-		formdata.append('dmsAsset', '8');
-		formdata.append('dmsCategoryTheme', '9');
-
-		const response = await fetch('https://acc.bmidms.amsterdam.nl/api/v1.0/upload-session', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'x-api-token': 'sQRNkdEC8JSXF5',
-			},
-			body: new URLSearchParams(formdata as any),
-		});
-
+		const response = await fetch(`http://localhost:3000/upload-session`)
 		const data = (await response.json()) as IDmsUploadSession;
-
 		return data;
 	}
 
