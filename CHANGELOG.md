@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.10](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.9...v0.0.3-alpha.10) (2022-04-06)
+
+
+### Bug Fixes
+
+* **bulk:** export customprovider ([2415fd5](https://github.com/Amsterdam/bmi-dms-upload/commit/2415fd5183290a62da5e4676e0fee9c4df667ad6))
+
 ### [0.0.3-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.8...v0.0.3-alpha.9) (2022-04-06)
 
 
