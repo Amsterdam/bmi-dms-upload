@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.11](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.10...v0.0.3-alpha.11) (2022-04-06)
+
+
+### Bug Fixes
+
+* **bulk:** moving code to Single and Bulk components ([52b31ce](https://github.com/Amsterdam/bmi-dms-upload/commit/52b31ce60a99548e25f17572f561dff593059fef))
+* **bulk:** undo last commit, move code back to App.tsx ([3956832](https://github.com/Amsterdam/bmi-dms-upload/commit/3956832b6830ed62b12f2e4acddec28667f7cf63))
+
 ### [0.0.3-alpha.10](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.9...v0.0.3-alpha.10) (2022-04-06)
 
 
