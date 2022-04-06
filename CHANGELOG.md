@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.12](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.11...v0.0.3-alpha.12) (2022-04-06)
+
+
+### Bug Fixes
+
+* **bulk:** make connected Single/Bulk buttons for export ([f1d4453](https://github.com/Amsterdam/bmi-dms-upload/commit/f1d445366798ff6f34599f64cf167128262c737e))
+
 ### [0.0.3-alpha.11](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.10...v0.0.3-alpha.11) (2022-04-06)
 
 
