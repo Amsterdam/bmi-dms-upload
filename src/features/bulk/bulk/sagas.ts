@@ -6,7 +6,6 @@ import { BulkRoutesToSteps, STEP0} from './constants';
 function* pushLocationChange(action: any) {
 	try {
 		const { pathname } = action.payload.location;
-		console.log("BULK: ", BulkRoutesToSteps[pathname])
 		yield put(setCurrentStep(BulkRoutesToSteps[pathname]));
 	} catch (e: any) {
 		console.log('pushLocationChange fail: ', e);
