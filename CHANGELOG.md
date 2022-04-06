@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.13](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.12...v0.0.3-alpha.13) (2022-04-06)
+
+
+### Bug Fixes
+
+* **bulk:** moved depency from dev to normal dependencies ([d4f6d7f](https://github.com/Amsterdam/bmi-dms-upload/commit/d4f6d7f4a510ccd974dca8fcb6eae5d62993c6fa))
+* **bulk:** removed obsolete prop ([3f575b2](https://github.com/Amsterdam/bmi-dms-upload/commit/3f575b223c69eee5c45486bf2d9a789caa49e1a1))
+
 ### [0.0.3-alpha.12](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.11...v0.0.3-alpha.12) (2022-04-06)
 
 
