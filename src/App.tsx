@@ -85,8 +85,9 @@ function App() {
 	const onCancel = async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data); //<MetadataExample>
 	const onFileSuccess = (file: CustomFileLight) => console.log(':: onFileSuccess', file);
 	const onFileRemove = (file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file);
-	const onMetadataSubmit = async (data: MetadataDataSubmitCallbackArg<any>) => // <MetadataExample>
-		console.log(':: onMetadataSubmit', data);
+	const onMetadataSubmit = async (
+		data: MetadataDataSubmitCallbackArg<any>, // <MetadataExample>
+	) => console.log(':: onMetadataSubmit', data);
 	const getPostUrl = async (file: CustomFileLight) => 'http://localhost:3000/files';
 	const getHeaders = async () => ({ foo: 'bar' });
 
@@ -95,41 +96,41 @@ function App() {
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
 
-					<AppStyles>
-						<div>
-							<Single
-								asset={asset}
-								basePath="/"
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataForm={{
-									...metadataForm,
-									uischema: singleUischema,
-									schema: singleSchema,
-								}}
-								onCancel={onCancel}
-								onClose={onClose}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccess}
-								onMetadataSubmit={onMetadataSubmit}
-							/>
-						</div>
-						<div>
-							<Bulk
-								asset={asset}
-								basePath="/"
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataFields={metadataFields}
-								metadataForm={metadataForm}
-								onCancel={onCancel}
-								onClose={onClose}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccess}
-								onMetadataSubmit={onMetadataSubmit}
-							/>
-						</div>
-					</AppStyles>
+				<AppStyles>
+					<div>
+						<Single
+							asset={asset}
+							basePath="/documents/29/bulk-metadata"
+							getHeaders={getHeaders}
+							getPostUrl={getPostUrl}
+							metadataForm={{
+								...metadataForm,
+								uischema: singleUischema,
+								schema: singleSchema,
+							}}
+							onCancel={onCancel}
+							onClose={onClose}
+							onFileRemove={onFileRemove}
+							onFileSuccess={onFileSuccess}
+							onMetadataSubmit={onMetadataSubmit}
+						/>
+					</div>
+					<div>
+						<Bulk
+							asset={asset}
+							basePath="/documents/29/bulk-metadata"
+							getHeaders={getHeaders}
+							getPostUrl={getPostUrl}
+							metadataFields={metadataFields}
+							metadataForm={metadataForm}
+							onCancel={onCancel}
+							onClose={onClose}
+							onFileRemove={onFileRemove}
+							onFileSuccess={onFileSuccess}
+							onMetadataSubmit={onMetadataSubmit}
+						/>
+					</div>
+				</AppStyles>
 			</ThemeProvider>
 		</MUIThemeProvider>
 	);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, act } from '@testing-library/react';
-import { render, createTestEnv } from '../../../tests/utils/testUtils';
+import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { asset, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
@@ -45,16 +45,14 @@ afterEach(() => {
 describe('<Bulk />', () => {
 	describe('Button', () => {
 		test('is rendered', () => {
-			const { store, reduxHistory } = createTestEnv();
-			render(<Bulk {...defaultProps} />, { store, reduxHistory });
+
+			render(<Bulk {...defaultProps} />, {});
 			expect(screen.getByText('Upload bestanden')).toBeInTheDocument();
 		});
 
 		test('changes route on click', () => {
-			const { store, reduxHistory } = createTestEnv();
-
 			act(() => {
-				render(<Bulk {...defaultProps} />, { store, reduxHistory });
+				render(<Bulk {...defaultProps} />, {});
 			});
 
 			const button = screen.getByText('Upload bestanden');
@@ -69,11 +67,8 @@ describe('<Bulk />', () => {
 
 	describe('Steps', () => {
 		test('Step1 is rendered for step1 route', () => {
-			const { store, reduxHistory } = createTestEnv();
-
 			act(() => {
-				render(<Bulk {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP1);
+				render(<Bulk {...defaultProps} />, {}, [STEP1]);
 			});
 
 			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
@@ -81,17 +76,16 @@ describe('<Bulk />', () => {
 		});
 
 		test('Step2 is rendered for step2 route', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.Upload,
 					files: filesMock,
 					fields: fieldsMock,
 				},
-			});
+			};
 
 			act(() => {
-				render(<Bulk {...defaultProps} />, { store, reduxHistory });
-				reduxHistory.push(STEP2);
+				render(<Bulk {...defaultProps} />, { store }, [STEP2]);
 			});
 
 			expect(screen.queryByText(`Metadata veld`)).toBeInTheDocument();

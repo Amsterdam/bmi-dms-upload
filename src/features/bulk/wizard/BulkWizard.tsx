@@ -1,16 +1,15 @@
 import React, { SyntheticEvent, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from '@amsterdam/bmi-component-library';
-import { push } from 'redux-first-history';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import useConfirmTermination from '../../../hooks/useConfirmTermination';
 import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTermination';
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
-import { BulkStepsToRoutes, STEP0 } from '../bulk/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep } from '../bulk/model';
-import { getCurrentStepFromStore, getFilesFromStore } from '../bulk/selectors';
-import { resetState } from '../bulk/slice';
+import { getCurrentStep, getFiles } from '../bulk/selectors';
+import { resetState, stepBack, stepForward } from '../bulk/slice';
 import { Props } from '../bulk/types';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
@@ -20,47 +19,33 @@ type BulkWizardProps<T> = {
 	isValidForm?: boolean;
 } & Props<T>;
 
-export default function BulkWizard<T>({ children, asset, isValidForm, onCancel, onMetadataSubmit }: BulkWizardProps<T>) {
+export default function BulkWizard<T>({
+	children,
+	asset,
+	isValidForm,
+	onCancel,
+	onMetadataSubmit,
+}: BulkWizardProps<T>) {
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
-
+	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
-	const currentStep = useAppSelector(getCurrentStepFromStore);
-	const files = useAppSelector(getFilesFromStore);
+	const files = useAppSelector(getFiles);
+	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
-		switch (currentStep) {
-			case CurrentStep.EditFields:
-				dispatch(push(BulkStepsToRoutes[CurrentStep.SelectFields]));
-				break;
-			case CurrentStep.SelectFields:
-				dispatch(push(BulkStepsToRoutes[CurrentStep.Upload]));
-				break;
-			case CurrentStep.Upload:
-				dispatch(push(BulkStepsToRoutes[CurrentStep.Button]));
-				break;
-		}
-	}, [currentStep])
+		dispatch(stepBack({ navigate }));
+	}, [navigate]);
 
 	const handleNext = useCallback(() => {
-		switch (currentStep) {
-			case CurrentStep.Upload:
-				if (files) dispatch(push(BulkStepsToRoutes[CurrentStep.SelectFields]));
-				break;
-			case CurrentStep.SelectFields:
-				if (files) dispatch(push(BulkStepsToRoutes[CurrentStep.EditFields]));
-				break;
-		}
-	}, [currentStep, files]);
+		dispatch(stepForward({ navigate }));
+	}, [navigate]);
 
 	const close = useCallback(() => {
-		dispatch(resetState());
-		dispatch(push(STEP0));
-	}, []);
+		dispatch(resetState({ navigate }));
+	}, [navigate]);
 
 	function resetAndClose() {
-		dispatch(resetState());
-		push(STEP0);
-
+		dispatch(resetState({ navigate }));
 		onCancel({}).catch((err) => {
 			console.error(err); // @TODO handle error gracefully
 		});
@@ -76,7 +61,16 @@ export default function BulkWizard<T>({ children, asset, isValidForm, onCancel, 
 						console.error(err); // @TODO handle error gracefully
 					});
 			}
-		}, [files, isValidForm])
+		},
+		[files, isValidForm],
+	);
+
+	function isSaveDisabled() {
+		const hasFiles = files && files.length > 0;
+		const isSaveStep = currentStep === CurrentStep.EditFields;
+		const isAllValid = hasFiles && isValidForm && isSaveStep;
+		return !isAllValid;
+	}
 
 	return (
 		<>
@@ -108,7 +102,7 @@ export default function BulkWizard<T>({ children, asset, isValidForm, onCancel, 
 					save={{
 						visible: true,
 						onClick: handleSubmit,
-						disabled: (files?.length === 0 && !isValidForm) || currentStep !== CurrentStep.EditFields,
+						disabled: isSaveDisabled(),
 						dataTestId: 'save-button',
 					}}
 				/>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { MetadataExample } from '../../../types';
-import { createTestEnv, render } from '../../../tests/utils/testUtils';
+import { render } from '../../../tests/utils/testUtils';
 import { CurrentStep } from '../single/model';
 import { asset, schema, uischema, file as fileMock } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
@@ -45,16 +45,14 @@ describe('<SingleWizard />', () => {
 	describe('Cancel button', () => {
 		test('is rendered', () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, {});
 			});
 			expect(screen.getByText('Annuleer')).toBeDefined();
 		});
 
 		test('triggers onCancel', async () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, {});
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 			const buttonAccept = screen.getByText('Akkoord');
@@ -67,8 +65,7 @@ describe('<SingleWizard />', () => {
 
 		test('closes modal on accept', async () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, {});
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
@@ -83,23 +80,21 @@ describe('<SingleWizard />', () => {
 
 	describe('Previous button', () => {
 		test('is not rendered on the first step', () => {
-			const { store, reduxHistory } = createTestEnv();
-
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, {});
 			});
 			expect(screen.queryByText('Vorige')).toBeNull();
 		});
 
 		test('is rendered on steps after the first step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				single: {
 					currentStep: CurrentStep.SelectFields,
 				},
-			});
+			};
 
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Vorige')).toBeDefined();
 		});
@@ -107,25 +102,25 @@ describe('<SingleWizard />', () => {
 
 	describe('Next button', () => {
 		test('is not rendered on the last step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				single: {
 					currentStep: CurrentStep.SelectFields,
 				},
-			});
+			};
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Volgende')).toBeNull();
 		});
 
 		test('is rendered on steps before the last', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				single: {
 					currentStep: CurrentStep.Upload,
 				},
-			});
+			};
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Volgende')).toBeDefined();
 		});
@@ -133,40 +128,39 @@ describe('<SingleWizard />', () => {
 
 	describe('Save button', () => {
 		test('is disabled on steps before the last', () => {
-			const { store, reduxHistory } = createTestEnv();
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, {});
 			});
 			expect(screen.queryByText('Opslaan')).toBeDisabled();
 		});
 
 		test('is enabled on last step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				single: {
 					currentStep: CurrentStep.SelectFields,
 					file: fileMock,
 				},
-			});
+			};
 			act(() => {
-				render(<SingleWizard {...defaultProps} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} />, { store });
 			});
 
 			expect(screen.queryByText('Opslaan')).toBeEnabled();
 		});
 
 		test('triggers onMetadataSubmit after save', async () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				single: {
 					currentStep: CurrentStep.SelectFields,
 					file: fileMock,
 				},
-			});
+			};
 
 			act(() => {
-				render(<SingleWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
+				render(<SingleWizard {...defaultProps} isValidForm={true} />, { store });
 			});
 
-			const button = screen.getByText('Opslaan')
+			const button = screen.getByText('Opslaan');
 
 			expect(button).not.toBeDisabled();
 

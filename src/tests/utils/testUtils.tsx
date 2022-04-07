@@ -3,9 +3,6 @@ import { render as rtlRender } from '@testing-library/react';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { createBrowserHistory, History } from 'history';
-import { createReduxHistoryContext } from 'redux-first-history';
-import { HistoryRouter as Router } from 'redux-first-history/rr6';
 
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
@@ -21,10 +18,10 @@ import { singleSaga } from '../../features/single/single/sagas';
 import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../features/bulk/bulk/model';
 import { reducer as bulkReducer } from '../../features/bulk/bulk/slice';
 import { bulkSaga } from '../../features/bulk/bulk/sagas';
+import { MemoryRouter } from 'react-router-dom';
 
 type TRenderOptions = {
-	store: any;
-	reduxHistory: History;
+	store?: any;
 	[key: string]: any;
 };
 
@@ -40,30 +37,22 @@ interface StoreOverrides {
 		fields?: IBulkField[];
 		selectedFileId?: IBulkField;
 	};
-	router?: {
-		location?: {
-			hash?: string;
-			key?: string;
-			pathname?: string;
-			search?: string;
-			state?: any;
-		};
-		action?: string;
-	};
 }
 
-function render(ui: React.ReactElement, { store, reduxHistory, ...rest }: TRenderOptions) {
+function render(ui: React.ReactElement, { store, ...rest }: TRenderOptions, initialEntries: string[] = ['/']) {
+	const testStore = createTestStore(store)
+
 	function Wrapper({ children }: { children?: React.ReactNode }) {
 		return (
-			<Provider store={store}>
-				<Router history={reduxHistory}>
+			<Provider store={testStore}>
+				<MemoryRouter initialEntries={initialEntries}>
 					<MUIThemeProvider theme={muiTheme}>
 						<ThemeProvider overrides={theme}>
 							<GlobalStyle />
 							{children}
 						</ThemeProvider>
 					</MUIThemeProvider>
-				</Router>
+				</MemoryRouter>
 			</Provider>
 		);
 	}
@@ -71,48 +60,25 @@ function render(ui: React.ReactElement, { store, reduxHistory, ...rest }: TRende
 	return rtlRender(ui, { wrapper: Wrapper, ...rest });
 }
 
-const createTestEnv = (storeOverrides?: StoreOverrides) => {
-	const originalHistory = createBrowserHistory();
-
-	// ( https://github.com/salvoravida/redux-first-history/blob/master/__tests__/store.ts )
-	const history = {
-		...originalHistory,
-		go: jest.fn(originalHistory.go),
-		back: jest.fn(originalHistory.back),
-		forward: jest.fn(originalHistory.forward),
-		push: jest.fn(originalHistory.push),
-		replace: jest.fn(originalHistory.replace),
-	};
-
-	const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({
-		history,
-	});
-
+const createTestStore = (storeOverrides?: StoreOverrides) => {
 	const sagaMiddleware = createSagaMiddleware();
 
 	const store = configureStore({
 		reducer: combineReducers({
-			router: routerReducer,
 			single: singleReducer,
 			bulk: bulkReducer,
 		}),
-		middleware: (getDefaultMiddleware) => [sagaMiddleware, routerMiddleware],
+		middleware: (getDefaultMiddleware) => [sagaMiddleware],
 		preloadedState: {
 			...storeOverrides,
 		},
 	});
 
-	const reduxHistory = createReduxHistory(store);
-
 	sagaMiddleware.run(bulkSaga);
 	sagaMiddleware.run(singleSaga);
 
-	return {
-		store,
-		history,
-		reduxHistory,
-	};
+	return store;
 };
 
 export * from '@testing-library/react';
-export { render, createTestEnv };
+export { render };

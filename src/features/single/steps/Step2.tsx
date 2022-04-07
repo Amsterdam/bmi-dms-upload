@@ -5,14 +5,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { MetadataGenericType } from '../../../types';
 import MetadataForm from '../../../components/MetadataForm/MetadataForm';
 import { STEP1 } from '../single/constants';
-import { getFileFromStore } from '../single/selectors';
+import { getFile } from '../single/selectors';
 import { Props } from '../single/types';
 import SingleWizard from '../wizard/SingleWizard';
 import { setMetadata } from '../single/slice';
 
 export default function Step2<T>(props: Props<T>) {
 	const { metadataForm } = props;
-	const fileFromStore = useAppSelector(getFileFromStore);
+	const file = useAppSelector(getFile);
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ export default function Step2<T>(props: Props<T>) {
 	}, []);
 
 	// Redirect to step1 when state is not correct
-	if (!fileFromStore) {
+	if (!file) {
 		return <Navigate to={STEP1} />;
 	} else {
 		return (

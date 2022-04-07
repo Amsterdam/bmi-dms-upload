@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, act } from '@testing-library/react';
 
-import { createTestEnv, render } from '../../../tests/utils/testUtils';
+import { render } from '../../../tests/utils/testUtils';
 import BulkButton from './BulkButton'
 
 afterEach(() => {
@@ -11,8 +11,7 @@ afterEach(() => {
 describe('<BulkButton  />', () => {
 	test('is rendered', () => {
 		act(() => {
-			const { store, reduxHistory } = createTestEnv();
-			render(<BulkButton />, { store, reduxHistory });
+			render(<BulkButton />, {});
 		});
 		expect(screen.getByText('Upload bestanden')).toBeDefined();
 	});

@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { CurrentStep } from './model';
 import { reducer, initialState, setCurrentStep, resetState, setFile, setFieldData, setFields } from './slice';
 import { files as filesMock, fields as fieldsMock, state as stateMock } from './__stubs__';
+
+jest.mock('react-router-dom')
 
 describe('Bulk Slice', () => {
 	test('should return the initial state', () => {
@@ -8,6 +11,8 @@ describe('Bulk Slice', () => {
 	});
 
 	test('should reset to the initial state', () => {
+		const navigate = useNavigate();
+
 		expect(
 			reducer(
 				{
@@ -22,7 +27,7 @@ describe('Bulk Slice', () => {
 						},
 					],
 				},
-				resetState(),
+				resetState({navigate}),
 			),
 		).toEqual(initialState);
 	});

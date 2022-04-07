@@ -1,20 +1,58 @@
-import { put, takeEvery } from 'redux-saga/effects';
-import { setCurrentStep, resetState } from './slice';
-import { push, LOCATION_CHANGE } from 'redux-first-history';
-import { SingleRoutesToSteps, STEP0 } from './constants';
+import { select, takeEvery } from 'redux-saga/effects';
+import { resetState, stepForward, stepBack } from './slice';
+import { SingleStepsToRoutes } from './constants';
+import { getCurrentStep, getFile } from './selectors';
+import { CurrentStep } from './model';
+import { CustomFileLight } from '../../../types';
+import { NavigateFunction } from 'react-router-dom';
 
-function* pushLocationChange(action: any) {
+interface ActionType {
+	type: string;
+	payload: {
+		navigate: NavigateFunction;
+	};
+}
+
+function* back(action: ActionType) {
 	try {
-		const { pathname } = action.payload.location;
-		yield put(setCurrentStep(SingleRoutesToSteps[pathname]));
+		const currentStep: CurrentStep = yield select(getCurrentStep);
+		const { navigate } = action.payload;
+
+		switch (currentStep) {
+			case CurrentStep.SelectFields:
+				navigate(SingleStepsToRoutes[CurrentStep.Upload]);
+				break;
+			case CurrentStep.Upload:
+				navigate(SingleStepsToRoutes[CurrentStep.Button]);
+				break;
+		}
 	} catch (e: any) {
-		console.log('pushLocationChange fail: ', e);
+		console.log('back fail', e);
 	}
 }
 
-function* resetRoute() {
+function* forward(action: ActionType) {
 	try {
-		yield put(push(STEP0));
+		const currentStep: CurrentStep = yield select(getCurrentStep);
+		const file: CustomFileLight | undefined = yield select(getFile);
+
+		const { navigate } = action.payload;
+
+		switch (currentStep) {
+			case CurrentStep.Upload:
+				if (file) navigate(SingleStepsToRoutes[CurrentStep.SelectFields]);
+				break;
+		}
+	} catch (e: any) {
+		console.log('forward fail', e);
+	}
+}
+
+/* eslint-disable require-yield */
+function* resetRoute(action: ActionType) {
+	try {
+		const { navigate } = action.payload;
+		navigate(SingleStepsToRoutes[0])
 	} catch (e: any) {
 		console.log('resetRoute fail', e);
 	}
@@ -22,5 +60,6 @@ function* resetRoute() {
 
 export function* singleSaga() {
 	yield takeEvery(resetState.type, resetRoute);
-	yield takeEvery(LOCATION_CHANGE, pushLocationChange);
+	yield takeEvery(stepBack.type, back);
+	yield takeEvery(stepForward.type, forward);
 }

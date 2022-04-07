@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BulkRoutesToSteps } from './constants';
+import { NavigateFunction } from 'react-router-dom';
 import { CurrentStep, IBulkField, IBulkFile, IBulkState } from './model';
 
 export const initialState: IBulkState = {
@@ -17,14 +17,7 @@ export const slice = createSlice({
 			const newFiles = state.files.filter((file) => file.uploadedFile.tmpId !== action.payload.tmpId);
 			state.files = newFiles;
 		},
-		resetState: () => initialState,
-		initCurrentStep: (state: IBulkState, action: PayloadAction<string>) => {
-			const currentStep = state.currentStep;
-			const newCurrentStep = BulkRoutesToSteps[action.payload];
-			if (newCurrentStep !== currentStep) {
-				state.currentStep = newCurrentStep;
-			}
-		},
+		resetState: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => initialState,
 		setCurrentStep: (state: IBulkState, action: PayloadAction<CurrentStep>) => {
 			state.currentStep = action.payload;
 		},
@@ -60,6 +53,8 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
+		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
+		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 	},
 });
 
@@ -67,10 +62,11 @@ export const {
 	removeFile,
 	resetState,
 	setCurrentStep,
-    setFieldData,
+	setFieldData,
 	setFields,
 	setFile,
-	initCurrentStep,
+	stepBack,
+	stepForward,
 } = slice.actions;
 
 export const { reducer } = slice;

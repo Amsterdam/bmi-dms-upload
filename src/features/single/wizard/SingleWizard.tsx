@@ -1,19 +1,18 @@
 import React, { SyntheticEvent, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from '@amsterdam/bmi-component-library';
-import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import useConfirmTermination from '../../../hooks/useConfirmTermination';
 import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTermination';
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep } from '../single/model';
-import { getCurrentStepFromStore, getFileFromStore, getMetadataFromStore } from '../single/selectors';
-import { resetState } from '../single/slice';
+import { getCurrentStep, getFile, getMetadata } from '../single/selectors';
+import { resetState, stepBack, stepForward } from '../single/slice';
 import { Props } from '../single/types';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
-import { push } from 'redux-first-history';
-import { SingleStepsToRoutes, STEP0 } from '../single/constants';
 
 type SingleWizardProps<T> = {
 	children?: React.ReactNode;
@@ -28,37 +27,26 @@ export default function SingleWizard<T>({
 	onMetadataSubmit,
 }: SingleWizardProps<T>) {
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
+	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
-	const currentStep = useAppSelector(getCurrentStepFromStore);
-	const file = useAppSelector(getFileFromStore);
-	const metadata = useAppSelector(getMetadataFromStore) as T;
+	const file = useAppSelector(getFile);
+	const metadata = useAppSelector(getMetadata) as T;
+	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
-		switch (currentStep) {
-			case CurrentStep.SelectFields:
-				dispatch(push(SingleStepsToRoutes[CurrentStep.Upload]));
-				break;
-			case CurrentStep.Upload:
-				dispatch(push(SingleStepsToRoutes[CurrentStep.Button]));
-				break;
-		}
-	}, [currentStep]);
+		dispatch(stepBack({ navigate }));
+	}, [navigate]);
+
 	const handleNext = useCallback(() => {
-		switch (currentStep) {
-			case CurrentStep.Upload:
-				if (file) dispatch(push(SingleStepsToRoutes[CurrentStep.SelectFields]));
-				break;
-		}
-	}, [currentStep, file]);
+		dispatch(stepForward({ navigate }));
+	}, [navigate]);
 
 	const close = useCallback(() => {
-		dispatch(resetState());
-		dispatch(push(STEP0));
-	}, []);
+		dispatch(resetState({ navigate }));
+	}, [navigate]);
 
 	const resetAndClose = useCallback(() => {
-		dispatch(resetState());
-		dispatch(push(STEP0));
+		dispatch(resetState({ navigate }));
 		onCancel({}).catch((err) => {
 			console.error(err); // @TODO handle error gracefully
 		});

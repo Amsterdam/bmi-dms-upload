@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import SingleWizard from '../wizard/SingleWizard';
-import { getFileFromStore } from '../single/selectors';
+import { getFile } from '../single/selectors';
 import { setFile, removeFile } from '../single/slice';
 import { Step1Styles } from './styles';
 
@@ -13,7 +13,7 @@ export default function Step1<T>(props: Props<T>) {
 	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess } = props;
 
 	const dispatch = useAppDispatch();
-	const file = useAppSelector(getFileFromStore);
+	const file = useAppSelector(getFile);
 
 	const handleFileRemove = useCallback(
 		(file: CustomFileLightOrRejection) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { createTestEnv, render } from '../../../tests/utils/testUtils';
+import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { CurrentStep  } from '../bulk/model';
 import { asset, files as filesMock, schema, uischema } from '../bulk/__stubs__';
@@ -45,16 +45,14 @@ describe('<BulkWizard />', () => {
 	describe('Cancel button', () => {
 		test('is rendered', () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, {});
 			});
 			expect(screen.getByText('Annuleer')).toBeDefined();
 		});
 
 		test('triggers onCancel', async () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, {});
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
@@ -68,8 +66,7 @@ describe('<BulkWizard />', () => {
 
 		test('closes modal on accept', async () => {
 			act(() => {
-				const { store, reduxHistory } = createTestEnv();
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, {});
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
@@ -84,23 +81,22 @@ describe('<BulkWizard />', () => {
 
 	describe('Previous button', () => {
 		test('is not rendered on the first step', () => {
-			const { store, reduxHistory } = createTestEnv();
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, {});
 			});
 			expect(screen.queryByText('Vorige')).toBeNull();
 		});
 
 		test('is rendered on steps after the first step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.SelectFields,
 				},
-			});
+			};
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Vorige')).toBeDefined();
 		});
@@ -108,25 +104,25 @@ describe('<BulkWizard />', () => {
 
 	describe('Next button', () => {
 		test('is not rendered on the last step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.EditFields,
 				},
-			});
+			};
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Volgende')).toBeNull();
 		});
 
 		test('is rendered on steps before the last', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.Upload,
 				},
-			});
+			};
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Volgende')).toBeDefined();
 		});
@@ -134,36 +130,35 @@ describe('<BulkWizard />', () => {
 
 	describe('Save button', () => {
 		test('is disabled on steps before the last', () => {
-			const { store, reduxHistory } = createTestEnv();
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} />, {});
 			});
 			expect(screen.queryByText('Opslaan')).toBeDisabled();
 		});
 
 		test('is enabled on last step', () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.EditFields,
 					files: filesMock
 				},
-			});
+			};
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
 			});
 			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
 		});
 
 		test('triggers onMetadataSubmit after save', async () => {
-			const { store, reduxHistory } = createTestEnv({
+			const store = {
 				bulk: {
 					currentStep: CurrentStep.EditFields,
 					files: filesMock
 				},
-			});
+			};
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store, reduxHistory });
+				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
 			});
 
 			const button = screen.getByText('Opslaan')

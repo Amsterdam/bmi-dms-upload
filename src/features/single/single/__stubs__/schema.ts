@@ -14,7 +14,7 @@ export const schema: CustomJsonSchema = {
 			type: 'string',
 			format: 'date',
 			errorMessage: {
-				format: 'Dit is een verplicht veld',
+				format: 'Vul een correcte datum in',
 			},
 		},
 	},

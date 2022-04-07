@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NavigateFunction } from 'react-router-dom';
 import { CustomFileLight, MetadataGenericType } from '../../../types';
-import { SingleRoutesToSteps } from './constants';
 import { CurrentStep, ISingleState } from './model';
 
 export const initialState: ISingleState = {
@@ -16,14 +16,7 @@ export const slice = createSlice({
 		removeFile: (state: ISingleState) => {
 			state.file = undefined;
 		},
-		resetState: () => initialState,
-		initCurrentStep: (state: ISingleState, action: PayloadAction<string>) => {
-			const currentStep = state.currentStep;
-			const newCurrentStep = SingleRoutesToSteps[action.payload];
-			if (newCurrentStep !== currentStep) {
-				state.currentStep = newCurrentStep;
-			}
-		},
+		resetState: (state: ISingleState, action: PayloadAction<{ navigate: NavigateFunction }>) => initialState,
 		setCurrentStep: (state: ISingleState, action: PayloadAction<CurrentStep>) => {
 			state.currentStep = action.payload;
 		},
@@ -33,9 +26,19 @@ export const slice = createSlice({
 		setMetadata: (state: ISingleState, action: PayloadAction<MetadataGenericType>) => {
 			state.metadata = action.payload;
 		},
+		stepBack: (state: ISingleState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
+		stepForward: (state: ISingleState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 	},
 });
 
-export const { removeFile, resetState, initCurrentStep, setCurrentStep, setFile, setMetadata } = slice.actions;
+export const {
+	removeFile,
+	resetState,
+	setCurrentStep,
+	setFile,
+	setMetadata,
+	stepBack,
+	stepForward,
+} = slice.actions;
 
 export const { reducer } = slice;

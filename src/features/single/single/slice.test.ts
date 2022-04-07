@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router-dom';
+
 import { CurrentStep } from './model';
 import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata } from './slice';
 import { file } from './__stubs__';
+
+jest.mock('react-router-dom')
 
 describe('Single Slice', () => {
 	test('should return the initial state', () => {
@@ -8,6 +12,8 @@ describe('Single Slice', () => {
 	});
 
 	test('should reset to the initial state', () => {
+		const navigate = useNavigate();
+
 		expect(
 			reducer(
 				{
@@ -17,7 +23,7 @@ describe('Single Slice', () => {
 						foo: 'bar',
 					},
 				},
-				resetState(),
+				resetState({navigate}),
 			),
 		).toEqual(initialState);
 	});

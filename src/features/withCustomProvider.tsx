@@ -1,13 +1,22 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import CustomProvider from './CustomProvider';
 
-function withCustomProvider<T>(Component: React.ComponentType<T>) {
+export interface WithCustomProviderProps {
+	basePath: string;
+}
+
+const withCustomProvider = <P extends object>(
+	Component: React.ComponentType<P>,
+): React.FC<P & WithCustomProviderProps> => {
 	const displayName = Component.displayName || Component.name || 'Component';
 
-	const componentWithCustomProvider = (props: T) => {
+	const componentWithCustomProvider = ({ basePath, ...props }: WithCustomProviderProps) => {
 		return (
 			<CustomProvider>
-				<Component {...props} displayName={displayName} />
+				<BrowserRouter basename={basePath}>
+					<Component {...(props as P)} displayName={displayName} />
+				</BrowserRouter>
 			</CustomProvider>
 		);
 	};
@@ -15,6 +24,6 @@ function withCustomProvider<T>(Component: React.ComponentType<T>) {
 	componentWithCustomProvider.displayName = `withCustomProvider(${displayName})`;
 
 	return componentWithCustomProvider;
-}
+};
 
 export default withCustomProvider;

@@ -2,18 +2,20 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import withCustomProvider from '../../../features/withCustomProvider';
-
 import BulkButton from '../button/BulkButton';
-import { Props } from './types';
 import Step1 from '../steps/Step1';
 import Step2 from '../steps/Step2';
 import Step3 from '../steps/Step3';
+
+import { Props } from './types';
+import RouteDetect from './RouteDetect';
 
 const NoRoute = () => <></>;
 
 export function Bulk<T>(props: Props<T>) {
 	return (
 		<React.Fragment>
+			<RouteDetect />
 			<BulkButton />
 			<Routes>
 				<Route path="/bulk/step1" element={<Step1 {...props} />} />

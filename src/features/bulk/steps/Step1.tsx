@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import BulkWizard from '../wizard/BulkWizard';
 import { Props } from '../bulk/types';
-import { getCustomFilesFromStore } from '../bulk/selectors';
+import { getCustomFiles } from '../bulk/selectors';
 import { removeFile, setFields, setFile } from '../bulk/slice';
 import { IBulkField } from '../bulk/model';
 import { Step1Styles } from './styles';
@@ -19,7 +19,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 
 	const dispatch = useAppDispatch();
 
-	const files = useAppSelector(getCustomFilesFromStore);
+	const files = useAppSelector(getCustomFiles);
 
 	useEffect(() => {
 		if (!metadataFields) return;

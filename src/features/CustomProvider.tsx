@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HistoryRouter as Router } from 'redux-first-history/rr6';
-import { store, history } from './store';
+import { store } from './store';
 
 export type Props = {
 	children?: React.ReactNode | React.ReactNode[] | any;
@@ -13,7 +12,7 @@ export type AppDispatch = typeof store.dispatch;
 function CustomProvider({ children }: Props) {
 	return (
 		<Provider store={store}>
-			<Router history={history}>{children}</Router>
+			{children}
 		</Provider>
 	);
 }
