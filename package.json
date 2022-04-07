@@ -1,6 +1,6 @@
 {
   "name": "@amsterdam/bmi-dms-upload",
-  "version": "0.0.3-alpha.13",
+  "version": "0.0.3-alpha.14",
   "description": "A document upload flow that can be implemented in any BMI React application. Documents are stored in DMS. Metadata can be added in the flow.",
   "main": "lib/index.js",
   "module": "es/index.js",
