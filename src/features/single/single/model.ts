@@ -14,7 +14,3 @@ export interface ISingleState {
 	file?: CustomFileLight;
 	metadata: MetadataGenericType;
 }
-
-export interface DMSUpload {
-
-}

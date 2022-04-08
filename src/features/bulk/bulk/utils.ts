@@ -6,9 +6,7 @@ function convertStringToKey(string: string): string {
 }
 
 export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynamicFormField[]): MetadataProperty[] {
-	const list: MetadataProperty[] = [];
-
-	fields.forEach(field => {
+	return fields.map(field => {
 		const item: MetadataProperty = {
 			key: convertStringToKey(field.placeholder),
 			scope: 'string',
@@ -26,32 +24,24 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			item.customFormat = 'creatable';
 		}
 
-		list.push(item)
+		return item
 	});
-
-	return list;
 }
 
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
-	const list: IBulkField[] = [];
-
-	fields.forEach(field => {
+	return fields.map(field => {
 		const item: IBulkField = {
 			id: convertStringToKey(field.placeholder),
 			label: field.placeholder,
 			value: field.userValue,
 			changeIndividual: false
 		}
-		list.push(item)
+		return item
 	});
-
-	return list;
 }
 
 export function convertBulkMetadataFieldToMetadataProperties(fields: IBulkField[]): MetadataProperty[] {
-	const list: MetadataProperty[] = [];
-
-	fields.forEach(field => {
+	return fields.map(field => {
 		const item: MetadataProperty = {
 			key: convertStringToKey(field.id),
 			scope: 'string',
@@ -60,8 +50,6 @@ export function convertBulkMetadataFieldToMetadataProperties(fields: IBulkField[
 			'bmi-isNotEmpty': false,
 			'bmi-errorMessage': '',
 		}
-		list.push(item)
+		return item;
 	});
-
-	return list;
 }

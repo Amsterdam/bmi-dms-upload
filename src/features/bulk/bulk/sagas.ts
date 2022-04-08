@@ -46,7 +46,7 @@ function* forward(action: ActionType) {
 				if (files) navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
 				break;
 			case CurrentStep.SelectFields:
-				if (files) navigate(BulkStepsToRoutes[CurrentStep.EditFields]);
+				navigate(BulkStepsToRoutes[CurrentStep.EditFields]);
 				break;
 		}
 	} catch (e: any) {

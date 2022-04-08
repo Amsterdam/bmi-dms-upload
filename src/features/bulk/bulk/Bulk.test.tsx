@@ -2,22 +2,17 @@ import React from 'react';
 import { screen, fireEvent, act } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
-import { asset, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
+import { asset, data as mockData, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
 import { CurrentStep } from './model';
 import { STEP1, STEP2 } from './constants';
 import { Bulk } from './Bulk';
 
 const onCloseMock = jest.fn();
-const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileRemoveMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onCancelMock = jest.fn().mockImplementation(() => Promise.resolve());
-
-const mockData: MetadataExample = {
-	documentDescription: 'test',
-	executionDate: '12-10-2021',
-};
+const onMetadataSubmitMock = jest.fn().mockResolvedValue('some-value')
+const onFileSuccessMock = jest.fn().mockResolvedValue('some-value')
+const onFileRemoveMock = jest.fn().mockResolvedValue('some-value')
+const onCancelMock = jest.fn().mockResolvedValue('some-value')
 
 const defaultProps: Props<MetadataExample> = {
 	asset: asset,
@@ -45,7 +40,6 @@ afterEach(() => {
 describe('<Bulk />', () => {
 	describe('Button', () => {
 		test('is rendered', () => {
-
 			render(<Bulk {...defaultProps} />, {});
 			expect(screen.getByText('Upload bestanden')).toBeInTheDocument();
 		});

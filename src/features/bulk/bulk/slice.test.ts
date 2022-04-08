@@ -57,12 +57,12 @@ describe('Bulk Slice', () => {
 			reducer(
 				stateMock,
 				setFieldData({
-					'some-id-1': {
-						value: `some-value 1 updated`,
+					'1': {
+						value: `Field 1 Value updated`,
 						changeIndividual: true,
 					},
-					'some-id-2': {
-						value: `some-value 2 updated`,
+					'2': {
+						value: `Field 2 Value updated`,
 					},
 				}),
 			),
@@ -72,14 +72,14 @@ describe('Bulk Slice', () => {
 			fields: [
 				{
 					...fieldsMock[0],
-					value: `some-value 1 updated`,
+					value: `Field 1 Value updated`,
 					changeIndividual: true,
 				},
-				fieldsMock[1],
 				{
-					...fieldsMock[2],
-					value: `some-value 2 updated`,
+					...fieldsMock[1],
+					value: `Field 2 Value updated`,
 				},
+				fieldsMock[2],
 			],
 		});
 	});

@@ -1,99 +1,53 @@
 import { CustomFileLight } from '../../../../types';
-import {
-	IBulkField,
-	IBulkFile,
-	IBulkFileMetadata,
-	IBulkState,
-} from '../model';
+import { IBulkField, IBulkFile, IBulkState } from '../model';
 
-export function makeFile(
-	id: string,
-	uploadedFile: CustomFileLight,
-	metadata?: IBulkFileMetadata[],
-): IBulkFile {
-	const obj = {
-		id,
-		url: 'some-url',
-		uploadedFile,
-	};
+const customFile1: CustomFileLight = {
+	tmpId: 1,
+	type: 'application/pdf',
+	name: 'custom file 1',
+	size: 20000,
+};
 
-	if (!metadata) return obj;
+const customFile2: CustomFileLight = {
+	tmpId: 1,
+	type: 'application/pdf',
+	name: 'custom file 1',
+	size: 20000,
+};
 
-	return {
-		...obj,
-		metadata,
-	};
-}
-
-export function makeCustomFile(id: number, title: string, filetype?: string): CustomFileLight {
-	return {
-		tmpId: id,
-		type: filetype ?? 'application/pdf',
-		name: `${title}`,
-		size: 20000,
-	};
-}
-
-export function makeField(id: string, changeIndividual: boolean): IBulkField {
-	return {
-		id: `some-id-${id}`,
-		label: `some-label ${id}`,
-		value: `some-value ${id}`,
-		changeIndividual: changeIndividual,
-	};
-}
-
-export function makeFields(fields: [string, boolean][]): IBulkField[] {
-	return fields.map((f) => makeField(f[0], f[1]));
-}
-
-export const customFileA = makeCustomFile(1, 'A');
-export const customFileB = makeCustomFile(2, 'B');
-
-export const customFiles: CustomFileLight[] = [customFileA, customFileB];
-
-export const fieldsDefault: IBulkField[] = makeFields([
-	['1', false],
-	['3', false],
-]);
-export const fieldsChangeIndividual: IBulkField[] = makeFields([['2', true]]);
-export const fields: IBulkField[] = [...fieldsDefault, ...fieldsChangeIndividual];
-export const field: IBulkField = makeField("1", true);
+export const fields: IBulkField[] = [
+	{
+		id: '1',
+		label: 'Field 1',
+		value: 'Field 1 Value',
+		changeIndividual: false,
+	},
+	{
+		id: '2',
+		label: 'Field 2',
+		value: 'Field 2 Value',
+		changeIndividual: true,
+	},
+	{
+		id: '3',
+		label: 'Field 3',
+		value: 'Field 3 Value',
+		changeIndividual: false,
+	}
+]
 
 export const files: IBulkFile[] = [
-	makeFile('1', customFileA, [{ id: '1', value: 'some-value-1' }]),
-	makeFile('2', customFileB, [{ id: '2', value: 'some-value-2' }]),
-];
-
-export const stateWithFiles: IBulkState = {
-	currentStep: 0,
-	fields: [],
-	files,
-};
-
-export const stateWithFilesRemoved: IBulkState = {
-	currentStep: 0,
-	fields: [],
-	files: [
-		files[1]
-	]
-};
-
-export const stateWithFields: IBulkState = {
-	currentStep: 0,
-	fields,
-	files: [],
-};
-
-export const stateWithFieldsUpdated: IBulkState = {
-	currentStep: 0,
-	fields: [
-		field,
-		fields[1],
-		fields[2]
-	],
-	files: [],
-};
+	{
+		id: '1',
+		url: 'file-1-url',
+		uploadedFile: customFile1,
+	},
+	{
+		id: '2',
+		url: 'file-2-url',
+		uploadedFile: customFile2,
+	},
+]
 
 export const state: IBulkState = {
 	currentStep: 0,

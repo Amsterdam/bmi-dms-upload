@@ -1,4 +1,10 @@
+import { MetadataExample } from '../../../../types';
 import { IBulkField } from '../model';
+
+export const data: MetadataExample = {
+	documentDescription: 'test',
+	executionDate: '12-10-2021',
+};
 
 export const metadataFields: IBulkField[] = [
 	{

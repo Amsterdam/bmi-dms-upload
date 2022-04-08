@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
@@ -18,6 +18,11 @@ import {
 import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 import { AppStyles } from './AppStyles';
+
+const asset = {
+	code: '1337',
+	name: 'some-name',
+};
 
 function App() {
 	const mounted = useRef(false);
@@ -53,27 +58,15 @@ function App() {
 	useEffect(() => {
 		if (!session) return;
 		const metadataProperties = utils.convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields);
-
-		const newSchema = createSchemaFromMetadataProps(metadataProperties);
-		setSchema(newSchema);
-
-		const newUischema = createUISchemaFromMetadataProps(metadataProperties);
-		setUischema(newUischema);
-
-		const fields = utils.convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields);
-
-		setMetadataFields(fields);
+		setSchema(createSchemaFromMetadataProps(metadataProperties));
+		setUischema(createUISchemaFromMetadataProps(metadataProperties));
+		setMetadataFields(utils.convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields));
 	}, [session]);
 
 	async function getSession() {
-		if (session) return session;
-		return await fetchSession();
+		return session ? session : await fetchSession();
 	}
 
-	const asset = {
-		code: '1337',
-		name: 'some-name',
-	};
 	const metadataForm = {
 		schema,
 		uischema,
@@ -81,15 +74,18 @@ function App() {
 		renderers: [],
 	};
 
-	const onClose = () => console.log(':: onClose');
-	const onCancel = async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data); //<MetadataExample>
-	const onFileSuccess = (file: CustomFileLight) => console.log(':: onFileSuccess', file);
-	const onFileRemove = (file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file);
-	const onMetadataSubmit = async (
-		data: MetadataDataSubmitCallbackArg<any>, // <MetadataExample>
-	) => console.log(':: onMetadataSubmit', data);
-	const getPostUrl = async (file: CustomFileLight) => 'http://localhost:3000/files';
-	const getHeaders = async () => ({ foo: 'bar' });
+	const onClose = useCallback(() => console.log(':: onClose'), []);
+	const onCancel = useCallback(async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data), []); //<MetadataExample>
+	const onFileSuccess = useCallback((file: CustomFileLight) => console.log(':: onFileSuccess', file), []);
+	const onFileRemove = useCallback((file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file), []);
+	const onMetadataSubmit = useCallback(
+		async (
+			data: MetadataDataSubmitCallbackArg<any>, // <MetadataExample>
+		) => console.log(':: onMetadataSubmit', data),
+		[],
+	);
+	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
+	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
 
 	return (
 		<MUIThemeProvider theme={muiTheme}>

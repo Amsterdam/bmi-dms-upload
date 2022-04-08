@@ -9,7 +9,6 @@ import BulkWizard from '../wizard/BulkWizard';
 
 export default function Step3<T>(props: Props<T>) {
 	const files = useAppSelector(getFiles);
-	// const [isValidForm, setIsValidForm] = useState<boolean>(true);
 	const isValidForm = true; // @todo replate with useState above
 
 	// Redirect to step1 when state is not correct

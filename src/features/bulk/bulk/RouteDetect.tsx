@@ -10,10 +10,10 @@ function RouteDetect() {
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const location = useLocation();
-	const step = BulkRoutesToSteps[location.pathname];
+	const step = BulkRoutesToSteps.get(location.pathname);
 
 	useEffect(() => {
-		if (step !== currentStep) dispatch(setCurrentStep(step));
+		if (step && step !== currentStep) dispatch(setCurrentStep(step));
 	}, [currentStep, step]);
 
 	return <></>;
