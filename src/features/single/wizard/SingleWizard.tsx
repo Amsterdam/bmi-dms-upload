@@ -7,9 +7,9 @@ import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTe
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CurrentStep } from '../single/model';
-import { getCurrentStep, getFile, getMetadata } from '../single/selectors';
-import { resetState, stepBack, stepForward } from '../single/slice';
+import { CurrentStep } from '../single/store/model';
+import { getCurrentStep, getFile, getMetadata } from '../single/store/selectors';
+import { resetState, stepBack, stepForward } from '../single/store/slice';
 import { Props } from '../single/types';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';

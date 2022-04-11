@@ -1,4 +1,4 @@
-import { CustomFileLight } from '../../../types';
+import { CustomFileLight } from '../../../../types';
 
 type IBulkFieldId = string;
 
@@ -59,4 +59,9 @@ export interface IDmsUploadSession {
 	finished: boolean
     dmsAsset: IDmsAsset
 	dynamicFormFields: IDmsDynamicFormField[]
+}
+
+
+export interface IFieldData {
+	[key: string]: any;
 }

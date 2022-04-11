@@ -1,5 +1,5 @@
 import { CustomFileLight } from '../../../../types';
-import { IBulkField, IBulkFile, IBulkState } from '../model';
+import { IBulkField, IBulkFile, IBulkState } from '../store/model';
 
 const customFile1: CustomFileLight = {
 	tmpId: 1,

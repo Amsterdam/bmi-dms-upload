@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { CustomFileLight } from '../../../types';
-import { RootState } from '../../store';
+import { CustomFileLight } from '../../../../types';
+import { RootState } from '../../../store';
 import { ISingleState } from './model';
 
 export const getState = (state: RootState) => state.single;

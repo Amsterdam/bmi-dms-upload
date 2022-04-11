@@ -4,28 +4,23 @@ import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { asset, data as mockData, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
-import { CurrentStep } from './model';
+import { CurrentStep } from './store/model';
 import { STEP1, STEP2 } from './constants';
 import { Bulk } from './Bulk';
-
-const onCloseMock = jest.fn();
-const onMetadataSubmitMock = jest.fn().mockResolvedValue('some-value')
-const onFileSuccessMock = jest.fn().mockResolvedValue('some-value')
-const onFileRemoveMock = jest.fn().mockResolvedValue('some-value')
-const onCancelMock = jest.fn().mockResolvedValue('some-value')
+import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from './__mocks__/bulk';
 
 const defaultProps: Props<MetadataExample> = {
 	asset: asset,
 	onClose: () => onCloseMock(),
-	getPostUrl: jest.fn(),
-	getHeaders: jest.fn(),
+	getPostUrl: getPostUrlMock,
+	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,
 	onFileRemove: onFileRemoveMock,
 	metadataForm: {
 		schema,
 		uischema,
 		data: mockData,
-		onChange: jest.fn(),
+		onChange: onChangeMock,
 		renderers: [],
 	},
 	onMetadataSubmit: onMetadataSubmitMock,

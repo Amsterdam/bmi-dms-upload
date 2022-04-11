@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CurrentStep } from './model';
 import { reducer, initialState, setCurrentStep, resetState, setFile, setFieldData, setFields } from './slice';
-import { files as filesMock, fields as fieldsMock, state as stateMock } from './__stubs__';
+import { files as filesMock, fields as fieldsMock, state as stateMock } from '../__stubs__';
 
 jest.mock('react-router-dom')
 

@@ -1,34 +1,23 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
-import { MetadataExample } from '../../../types';
-import { CurrentStep  } from '../bulk/model';
-import { asset, files as filesMock, schema, uischema } from '../bulk/__stubs__';
+import { CurrentStep  } from '../bulk/store/model';
+import { asset, files as filesMock, mockData, schema, uischema } from '../bulk/__stubs__';
+import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from '../bulk/__mocks__/bulk';
 import BulkWizard from './BulkWizard';
-
-const onCloseMock = jest.fn();
-const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileRemoveMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onCancelMock = jest.fn().mockImplementation(() => Promise.resolve());
-
-const mockData: MetadataExample = {
-	documentDescription: 'test',
-	executionDate: '12-10-2021',
-};
 
 const defaultProps = {
 	asset: asset,
 	onClose: () => onCloseMock(),
-	getPostUrl: jest.fn(),
-	getHeaders: jest.fn(),
+	getPostUrl: getPostUrlMock,
+	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,
 	onFileRemove: onFileRemoveMock,
 	metadataForm: {
 		schema,
 		uischema,
 		data: mockData,
-		onChange: jest.fn(),
+		onChange: onChangeMock,
 		renderers: [],
 	},
 	onMetadataSubmit: onMetadataSubmitMock,

@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import SingleWizard from '../wizard/SingleWizard';
-import { getFile } from '../single/selectors';
-import { setFile, removeFile } from '../single/slice';
+import { getFile } from '../single/store/selectors';
+import { setFile, removeFile } from '../single/store/slice';
 import { Step1Styles } from './styles';
 
 export default function Step1<T>(props: Props<T>) {

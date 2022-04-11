@@ -1,10 +1,11 @@
 import { select, takeEvery } from 'redux-saga/effects';
-import { resetState, stepForward, stepBack } from './slice';
-import { SingleStepsToRoutes } from './constants';
-import { getCurrentStep, getFile } from './selectors';
-import { CurrentStep } from './model';
-import { CustomFileLight } from '../../../types';
 import { NavigateFunction } from 'react-router-dom';
+
+import { CustomFileLight } from '../../../../types';
+import { SingleStepsToRoutes } from '../constants';
+import { CurrentStep } from './model';
+import { resetState, stepForward, stepBack } from './slice';
+import { getCurrentStep, getFile } from './selectors';
 
 interface ActionType {
 	type: string;

@@ -4,11 +4,11 @@ import { Navigate } from 'react-router-dom';
 import { CustomJsonSchema, MetadataGenericType } from '../../../types';
 import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
 import { STEP1 } from '../bulk/constants';
-import { getFiles } from '../bulk/selectors';
+import { getFiles } from '../bulk/store/selectors';
+import { setFieldData } from '../bulk/store/slice';
 import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setFieldData } from '../bulk/slice';
 
 export interface Step2Props<T> extends Props<T> {}
 

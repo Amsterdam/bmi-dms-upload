@@ -1,4 +1,4 @@
-import { ISingleState } from '../model';
+import { ISingleState } from '../store/model';
 
 export const metadataFields: ISingleState['metadata'] = {
 	foo: 'bar'

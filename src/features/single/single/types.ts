@@ -1,6 +1,6 @@
+import { ComponentProps } from 'react';
 import { FileUploadProps } from '@amsterdam/bmi-component-library';
 import { JsonForms } from '@jsonforms/react';
-import { ComponentProps } from 'react';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 

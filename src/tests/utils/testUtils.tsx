@@ -11,13 +11,13 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import theme from '../../theme';
 import { CustomFileLight, MetadataGenericType } from '../../types';
 
-import { CurrentStep as CurrentStepSingle } from '../../features/single/single/model';
-import { reducer as singleReducer } from '../../features/single/single/slice';
-import { singleSaga } from '../../features/single/single/sagas';
+import { CurrentStep as CurrentStepSingle } from '../../features/single/single/store/model';
+import { reducer as singleReducer } from '../../features/single/single/store/slice';
+import { singleSaga } from '../../features/single/single/store/sagas';
 
-import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../features/bulk/bulk/model';
-import { reducer as bulkReducer } from '../../features/bulk/bulk/slice';
-import { bulkSaga } from '../../features/bulk/bulk/sagas';
+import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../features/bulk/bulk/store/model';
+import { reducer as bulkReducer } from '../../features/bulk/bulk/store/slice';
+import { bulkSaga } from '../../features/bulk/bulk/store/sagas';
 import { MemoryRouter } from 'react-router-dom';
 
 type TRenderOptions = {

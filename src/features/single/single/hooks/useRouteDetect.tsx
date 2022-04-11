@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCurrentStep } from './selectors';
-import { SingleRoutesToSteps } from './constants';
-import { setCurrentStep } from './slice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { getCurrentStep } from '../store/selectors';
+import { setCurrentStep } from '../store/slice';
+import { SingleRoutesToSteps } from '../constants';
 
-function RouteDetect() {
+export function useRouteDetect() {
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const location = useLocation();
@@ -16,7 +16,5 @@ function RouteDetect() {
 		if (step && step !== currentStep) dispatch(setCurrentStep(step));
 	}, [currentStep, step]);
 
-	return <></>;
+	return step;
 }
-
-export default RouteDetect;

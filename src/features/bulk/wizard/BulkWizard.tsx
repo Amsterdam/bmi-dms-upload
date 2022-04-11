@@ -7,10 +7,10 @@ import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTe
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CurrentStep } from '../bulk/model';
-import { getCurrentStep, getFiles } from '../bulk/selectors';
-import { resetState, stepBack, stepForward } from '../bulk/slice';
+import { CurrentStep } from '../bulk/store/model';
 import { Props } from '../bulk/types';
+import { getCurrentStep, getFiles } from '../bulk/store/selectors';
+import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
 

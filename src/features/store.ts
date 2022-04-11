@@ -1,12 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
-import { IBulkState } from './bulk/bulk/model'
-import { bulkSaga } from './bulk/bulk/sagas';
-import { reducer as bulkReducer } from './bulk/bulk/slice';
-import { ISingleState } from './single/single/model';
-import { singleSaga } from './single/single/sagas';
-import { reducer as singleReducer } from './single/single/slice';
+import { IBulkState } from './bulk/bulk/store/model'
+import { reducer as bulkReducer } from './bulk/bulk/store/slice';
+import { bulkSaga } from './bulk/bulk/store/sagas';
+
+import { ISingleState } from './single/single/store/model';
+import { reducer as singleReducer } from './single/single/store/slice';
+import { singleSaga } from './single/single/store/sagas';
 
 export interface Store {
 	single: ISingleState;

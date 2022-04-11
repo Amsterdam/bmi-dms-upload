@@ -1,5 +1,5 @@
 import { MetadataProperty } from "../../../types";
-import { IBulkField, IDmsDynamicFormField } from "./model";
+import { IBulkField, IDmsDynamicFormField } from "./store/model";
 
 function convertStringToKey(string: string): string {
 	return string.toLowerCase().replace(' ', '_')

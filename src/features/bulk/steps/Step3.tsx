@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { STEP1 } from '../bulk/constants';
 
-import { getFiles } from '../bulk/selectors';
+import { getFiles } from '../bulk/store/selectors';
 import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 

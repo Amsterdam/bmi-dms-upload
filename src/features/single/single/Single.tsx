@@ -7,14 +7,15 @@ import Step1 from '../steps/Step1';
 import Step2 from '../steps/Step2';
 
 import { Props } from './types';
-import RouteDetect from './RouteDetect';
+import { useRouteDetect } from './hooks/useRouteDetect';
 
 const NoRoute = () => <></>;
 
 export function Single<T>(props: Props<T>) {
+	useRouteDetect();
+
 	return (
 		<React.Fragment>
-			<RouteDetect />
 			<SingleButton />
 			<Routes>
 				<Route path="/single/step1" element={<Step1 {...props} />} />

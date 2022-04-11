@@ -5,7 +5,7 @@ import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { UISchemaElement } from '@jsonforms/core';
 import Single from './features/single/single/Single';
 import Bulk from './features/bulk/bulk/Bulk';
-import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/model';
+import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/store/model';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
 import theme from './theme';
 import {

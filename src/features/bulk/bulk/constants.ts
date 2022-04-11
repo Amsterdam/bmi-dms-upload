@@ -1,4 +1,4 @@
-import { CurrentStep } from "./model"
+import { CurrentStep } from "./store/model"
 
 export const STEP0 = '/'
 export const STEP1 = '/bulk/step1'

@@ -1,4 +1,4 @@
-import { CustomFileLight, MetadataGenericType } from '../../../types';
+import { CustomFileLight, MetadataGenericType } from '../../../../types';
 import { FileRejection } from 'react-dropzone';
 
 export enum CurrentStep {

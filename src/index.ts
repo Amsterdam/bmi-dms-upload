@@ -4,7 +4,7 @@ export { default as BulkUpload } from './features/bulk/bulk/Bulk';
 export { Props as BulkUploadProps } from './features/bulk/bulk/types';
 
 export { RowLayoutSchema, CustomJsonSchema, CustomFileLight, CancelCallbackArg } from './types';
-export { IBulkField } from './features/bulk/bulk/model';
+export { IBulkField } from './features/bulk/bulk/store/model';
 export { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 
 export * as utils from './features/bulk/bulk/utils';

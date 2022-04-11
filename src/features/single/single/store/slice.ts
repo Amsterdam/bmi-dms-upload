@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
-import { CustomFileLight, MetadataGenericType } from '../../../types';
+import { CustomFileLight, MetadataGenericType } from '../../../../types';
 import { CurrentStep, ISingleState } from './model';
 
 export const initialState: ISingleState = {

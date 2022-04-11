@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CurrentStep } from './model';
 import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata } from './slice';
-import { file } from './__stubs__';
+import { file } from '../__stubs__';
 
 jest.mock('react-router-dom')
 

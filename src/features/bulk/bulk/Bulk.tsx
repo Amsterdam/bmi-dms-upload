@@ -8,14 +8,15 @@ import Step2 from '../steps/Step2';
 import Step3 from '../steps/Step3';
 
 import { Props } from './types';
-import RouteDetect from './RouteDetect';
+import { useRouteDetect } from './hooks/useRouteDetect';
 
 const NoRoute = () => <></>;
 
 export function Bulk<T>(props: Props<T>) {
+	useRouteDetect();
+
 	return (
 		<React.Fragment>
-			<RouteDetect />
 			<BulkButton />
 			<Routes>
 				<Route path="/bulk/step1" element={<Step1 {...props} />} />

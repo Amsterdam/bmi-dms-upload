@@ -1,10 +1,11 @@
+import { NavigateFunction } from 'react-router-dom';
 import { select, takeEvery } from 'redux-saga/effects';
+
+import { CustomFileLight } from '../../../../types';
 import { resetState, stepForward, stepBack } from './slice';
-import { BulkStepsToRoutes } from './constants';
+import { BulkStepsToRoutes } from '../constants';
 import { getCurrentStep, getFiles } from './selectors';
 import { CurrentStep } from './model';
-import { CustomFileLight } from '../../../types';
-import { NavigateFunction } from 'react-router-dom';
 
 interface ActionType {
 	type: string;

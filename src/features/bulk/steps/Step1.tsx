@@ -5,9 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import BulkWizard from '../wizard/BulkWizard';
 import { Props } from '../bulk/types';
-import { getCustomFiles } from '../bulk/selectors';
-import { removeFile, setFields, setFile } from '../bulk/slice';
-import { IBulkField } from '../bulk/model';
+import { IBulkField } from '../bulk/store/model';
+import { getCustomFiles } from '../bulk/store/selectors';
+import { removeFile, setFields, setFile } from '../bulk/store/slice';
 import { Step1Styles } from './styles';
 
 export interface Step1Props<T> extends Props<T> {

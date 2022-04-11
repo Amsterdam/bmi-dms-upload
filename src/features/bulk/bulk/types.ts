@@ -3,7 +3,7 @@ import { JsonForms } from '@jsonforms/react';
 import { ComponentProps } from 'react';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
-import { IBulkField } from './model';
+import { IBulkField } from './store/model';
 
 export type Asset = {
 	code: string;

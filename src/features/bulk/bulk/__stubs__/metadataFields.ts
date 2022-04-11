@@ -1,5 +1,5 @@
 import { MetadataExample } from '../../../../types';
-import { IBulkField } from '../model';
+import { IBulkField } from '../store/model';
 
 export const data: MetadataExample = {
 	documentDescription: 'test',

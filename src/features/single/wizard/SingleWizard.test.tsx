@@ -1,34 +1,23 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { MetadataExample } from '../../../types';
 import { render } from '../../../tests/utils/testUtils';
-import { CurrentStep } from '../single/model';
-import { asset, schema, uischema, file as fileMock } from '../single/__stubs__';
+import { CurrentStep } from '../single/store/model';
+import { asset, schema, uischema, file as fileMock, mockData } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
-
-const onCloseMock = jest.fn();
-const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onFileRemoveMock = jest.fn().mockImplementation(() => Promise.resolve());
-const onCancelMock = jest.fn().mockImplementation(() => Promise.resolve());
-
-const mockData: MetadataExample = {
-	documentDescription: 'test',
-	executionDate: '12-10-2021',
-};
+import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from '../single/__mocks__/single';
 
 const defaultProps = {
 	asset: asset,
 	onClose: () => onCloseMock(),
-	getPostUrl: jest.fn(),
-	getHeaders: jest.fn(),
+	getPostUrl: getPostUrlMock,
+	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,
 	onFileRemove: onFileRemoveMock,
 	metadataForm: {
 		schema,
 		uischema,
 		data: mockData,
-		onChange: jest.fn(),
+		onChange: onChangeMock,
 		renderers: [],
 	},
 	onMetadataSubmit: onMetadataSubmitMock,
