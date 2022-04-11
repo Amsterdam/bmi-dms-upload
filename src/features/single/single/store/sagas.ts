@@ -15,48 +15,36 @@ interface ActionType {
 }
 
 function* back(action: ActionType) {
-	try {
-		const currentStep: CurrentStep = yield select(getCurrentStep);
-		const { navigate } = action.payload;
+	const currentStep: CurrentStep = yield select(getCurrentStep);
+	const { navigate } = action.payload;
 
-		switch (currentStep) {
-			case CurrentStep.SelectFields:
-				navigate(SingleStepsToRoutes[CurrentStep.Upload]);
-				break;
-			case CurrentStep.Upload:
-				navigate(SingleStepsToRoutes[CurrentStep.Button]);
-				break;
-		}
-	} catch (e: any) {
-		console.log('back fail', e);
+	switch (currentStep) {
+		case CurrentStep.SelectFields:
+			navigate(SingleStepsToRoutes[CurrentStep.Upload]);
+			break;
+		case CurrentStep.Upload:
+			navigate(SingleStepsToRoutes[CurrentStep.Button]);
+			break;
 	}
 }
 
 function* forward(action: ActionType) {
-	try {
-		const currentStep: CurrentStep = yield select(getCurrentStep);
-		const file: CustomFileLight | undefined = yield select(getFile);
+	const currentStep: CurrentStep = yield select(getCurrentStep);
+	const file: CustomFileLight | undefined = yield select(getFile);
 
-		const { navigate } = action.payload;
+	const { navigate } = action.payload;
 
-		switch (currentStep) {
-			case CurrentStep.Upload:
-				if (file) navigate(SingleStepsToRoutes[CurrentStep.SelectFields]);
-				break;
-		}
-	} catch (e: any) {
-		console.log('forward fail', e);
+	switch (currentStep) {
+		case CurrentStep.Upload:
+			if (file) navigate(SingleStepsToRoutes[CurrentStep.SelectFields]);
+			break;
 	}
 }
 
 /* eslint-disable require-yield */
 function* resetRoute(action: ActionType) {
-	try {
-		const { navigate } = action.payload;
-		navigate(SingleStepsToRoutes[0])
-	} catch (e: any) {
-		console.log('resetRoute fail', e);
-	}
+	const { navigate } = action.payload;
+	navigate(SingleStepsToRoutes[0]);
 }
 
 export function* singleSaga() {

@@ -15,54 +15,42 @@ interface ActionType {
 }
 
 function* back(action: ActionType) {
-	try {
-		const currentStep: CurrentStep = yield select(getCurrentStep);
-		const { navigate } = action.payload;
+	const currentStep: CurrentStep = yield select(getCurrentStep);
+	const { navigate } = action.payload;
 
-		switch (currentStep) {
-			case CurrentStep.EditFields:
-				navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
-				break;
-			case CurrentStep.SelectFields:
-				navigate(BulkStepsToRoutes[CurrentStep.Upload]);
-				break;
-			case CurrentStep.Upload:
-				navigate(BulkStepsToRoutes[CurrentStep.Button]);
-				break;
-		}
-	} catch (e: any) {
-		console.log('back fail', e);
+	switch (currentStep) {
+		case CurrentStep.EditFields:
+			navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
+			break;
+		case CurrentStep.SelectFields:
+			navigate(BulkStepsToRoutes[CurrentStep.Upload]);
+			break;
+		case CurrentStep.Upload:
+			navigate(BulkStepsToRoutes[CurrentStep.Button]);
+			break;
 	}
 }
 
 function* forward(action: ActionType) {
-	try {
-		const currentStep: CurrentStep = yield select(getCurrentStep);
-		const files: CustomFileLight | undefined = yield select(getFiles);
+	const currentStep: CurrentStep = yield select(getCurrentStep);
+	const files: CustomFileLight | undefined = yield select(getFiles);
 
-		const { navigate } = action.payload;
+	const { navigate } = action.payload;
 
-		switch (currentStep) {
-			case CurrentStep.Upload:
-				if (files) navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
-				break;
-			case CurrentStep.SelectFields:
-				navigate(BulkStepsToRoutes[CurrentStep.EditFields]);
-				break;
-		}
-	} catch (e: any) {
-		console.log('forward fail', e);
+	switch (currentStep) {
+		case CurrentStep.Upload:
+			if (files) navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
+			break;
+		case CurrentStep.SelectFields:
+			navigate(BulkStepsToRoutes[CurrentStep.EditFields]);
+			break;
 	}
 }
 
 /* eslint-disable require-yield */
 function* resetRoute(action: ActionType) {
-	try {
-		const { navigate } = action.payload;
-		navigate(BulkStepsToRoutes[0])
-	} catch (e: any) {
-		console.log('resetRoute fail', e);
-	}
+	const { navigate } = action.payload;
+	navigate(BulkStepsToRoutes[0]);
 }
 
 export function* bulkSaga() {
