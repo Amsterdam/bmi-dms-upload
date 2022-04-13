@@ -10,6 +10,7 @@ import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { convertBulkMetadataFieldToMetadataGenericType } from '../bulk/utils';
+import debounce from 'debounce';
 
 export interface Step2Props<T> extends Props<T> {}
 
@@ -22,11 +23,11 @@ export default function Step2<T>(props: Step2Props<T>) {
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	const handleOnChange = useCallback(
-		(data: MetadataGenericType, valid: boolean) => {
+		debounce((data: MetadataGenericType, valid: boolean) => {
 			if (JSON.stringify(data) !== JSON.stringify(convertBulkMetadataFieldToMetadataGenericType(fields)))
 				dispatch(setFieldData(data));
 			setIsValidForm(valid);
-		},
+		}, 500),
 		[fields],
 	);
 
