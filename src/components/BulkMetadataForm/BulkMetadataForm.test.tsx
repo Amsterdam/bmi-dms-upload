@@ -1,9 +1,9 @@
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/react';
 import BulkMetadataForm, { Props } from './BulkMetadataForm';
-import renderWithTheme from '~/tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
+import { mockComponentProps, mocked } from '../../tests/helpers';
 import { schema, uischema } from './__stubs__';
-import { mockComponentProps, mocked } from '~/tests/helpers';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
 import { JsonSchema7 } from '@jsonforms/core';
@@ -46,8 +46,8 @@ describe('<BulkMetadataForm />', () => {
 		expect(mockComponentProps<ComponentProps<typeof MetadataColumnHeaders>>(MetadadataColumnHeadersMock)).toEqual({
 			columns: [
 				{ header: 'Metadata veld', width: 34 },
-				{ header: 'Default waarde', width: 36 },
-				{ align: 'center', header: 'Individueel wijzigen', width: 30 },
+				{ header: 'Default waarde', width: 34 },
+				{ align: 'center', header: 'Individueel wijzigen', width: 32 },
 			],
 		});
 	});
@@ -94,5 +94,18 @@ describe('<BulkMetadataForm />', () => {
 		} else {
 			expect(val['bmi-isNotEmpty']).toBeUndefined();
 		}
+	});
+
+	test('Should have dropdown', () => {
+		render();
+		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);
+		const val = schema?.properties?.['objectType'].properties?.value as MetadataProperty;
+		const oneOfValues = [
+			{ const: '1', title: 'Brug' },
+			{ const: '2', title: 'Kademuur' },
+			{ const: '3', title: 'Sondering' },
+		];
+
+		expect(val.oneOf).toEqual(oneOfValues);
 	});
 });

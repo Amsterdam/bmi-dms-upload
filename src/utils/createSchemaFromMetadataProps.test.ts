@@ -162,10 +162,25 @@ describe('utils/createSchemaFromMetadataProps', () => {
 							type: 'string',
 						},
 						value: {
+							customFormat: 'creatable',
 							errorMessage: {
 								'bmi-isNotEmpty': "Geef de default waarde voor 'Object type' op",
 								format: "Het format voor 'Object type' is ongeldig",
 							},
+							oneOf: [
+								{
+									const: '1',
+									title: 'Brug',
+								},
+								{
+									const: '2',
+									title: 'Kademuur',
+								},
+								{
+									const: '3',
+									title: 'Sondering',
+								},
+							],
 							type: 'string',
 						},
 					},

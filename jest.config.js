@@ -72,7 +72,7 @@ module.exports = {
 
 	// A map from regular expressions to module names that allow to stub out resources with a single module
 	moduleNameMapper: {
-		'~/tests/(.*)$': '<rootDir>/src/tests/$1',
+		'~/tests/(.*)$': '<rootDir>/tests/$1',
 		'~/(.*)$': '<rootDir>/src/$1',
 		'^.+\\.(css|scss)$': '<rootDir>/src/tests/jest-cssstub.js',
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/src/tests/jest-imagestub.js',
