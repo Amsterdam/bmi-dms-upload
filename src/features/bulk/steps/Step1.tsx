@@ -6,7 +6,7 @@ import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import BulkWizard from '../wizard/BulkWizard';
 import { Props } from '../bulk/types';
 import { IBulkField } from '../bulk/store/model';
-import { getCustomFiles } from '../bulk/store/selectors';
+import { getCustomFiles, getFields } from '../bulk/store/selectors';
 import { removeFile, setFields, setFile } from '../bulk/store/slice';
 import { Step1Styles } from './styles';
 
@@ -20,14 +20,12 @@ export default function Step1<T>(props: Step1Props<T>) {
 	const dispatch = useAppDispatch();
 
 	const files = useAppSelector(getCustomFiles);
+	const fields = useAppSelector(getFields);
 
 	useEffect(() => {
 		if (!metadataFields) return;
-
-		dispatch(
-			setFields(metadataFields),
-		)
-	}, [metadataFields])
+		if (!fields?.length) dispatch(setFields(metadataFields))
+	}, [metadataFields, fields])
 
 	const handleFileRemove = React.useCallback(
 		(file: CustomFileLightOrRejection) => {

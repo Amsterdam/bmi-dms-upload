@@ -7,7 +7,7 @@ import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock
 import { Props } from './types';
 import { CurrentStep } from './store/model';
 import { Single } from './Single';
-import { STEP1, STEP2 } from './constants';
+import { SingleStepsToRoutes } from './constants';
 
 const defaultProps: Props<MetadataExample> = {
 	asset: asset,
@@ -57,7 +57,7 @@ describe('<Single />', () => {
 	describe('Steps', () => {
 		test('Step1 is rendered for step1 route', () => {
 			act(() => {
-				render(<Single {...defaultProps} />, {}, [STEP1]);
+				render(<Single {...defaultProps} />, {}, [SingleStepsToRoutes[1]]);
 			});
 
 			const modalTitle = screen.queryByText(`Bestand uploaden voor ${asset.name}`);
@@ -73,7 +73,7 @@ describe('<Single />', () => {
 			};
 
 			act(() => {
-				render(<Single {...defaultProps} />, { store }, [STEP2]);
+				render(<Single {...defaultProps} />, { store }, [SingleStepsToRoutes[2]]);
 			});
 
 			expect(screen.queryByText(`Metadata toevoegen`)).toBeInTheDocument();

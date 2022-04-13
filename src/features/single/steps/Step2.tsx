@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { MetadataGenericType } from '../../../types';
 import MetadataForm from '../../../components/MetadataForm/MetadataForm';
-import { STEP1 } from '../single/constants';
+import { SingleStepsToRoutes } from '../single/constants';
 import { Props } from '../single/types';
 import { getFile } from '../single/store/selectors';
 import { setMetadata } from '../single/store/slice';
@@ -24,7 +24,7 @@ export default function Step2<T>(props: Props<T>) {
 
 	// Redirect to step1 when state is not correct
 	if (!file) {
-		return <Navigate to={STEP1} />;
+		return <Navigate to={SingleStepsToRoutes[1]} />;
 	} else {
 		return (
 			<SingleWizard {...props} isValidForm={isValidForm}>

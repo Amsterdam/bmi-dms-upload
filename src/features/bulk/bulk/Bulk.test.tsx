@@ -5,7 +5,7 @@ import { MetadataExample } from '../../../types';
 import { asset, data as mockData, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { Props } from './types';
 import { CurrentStep } from './store/model';
-import { STEP1, STEP2 } from './constants';
+import { BulkStepsToRoutes } from './constants';
 import { Bulk } from './Bulk';
 import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from './__mocks__/bulk';
 
@@ -57,7 +57,7 @@ describe('<Bulk />', () => {
 	describe('Steps', () => {
 		test('Step1 is rendered for step1 route', () => {
 			act(() => {
-				render(<Bulk {...defaultProps} />, {}, [STEP1]);
+				render(<Bulk {...defaultProps} />, {}, [BulkStepsToRoutes[1]]);
 			});
 
 			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
@@ -74,7 +74,7 @@ describe('<Bulk />', () => {
 			};
 
 			act(() => {
-				render(<Bulk {...defaultProps} />, { store }, [STEP2]);
+				render(<Bulk {...defaultProps} />, { store }, [BulkStepsToRoutes[2]]);
 			});
 
 			expect(screen.queryByText(`Metadata veld`)).toBeInTheDocument();

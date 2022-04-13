@@ -1,4 +1,4 @@
-import { MetadataProperty } from "../../../types";
+import { MetadataGenericType, MetadataProperty } from "../../../types";
 import { IBulkField, IDmsDynamicFormField } from "./store/model";
 
 function convertStringToKey(string: string): string {
@@ -52,4 +52,21 @@ export function convertBulkMetadataFieldToMetadataProperties(fields: IBulkField[
 		}
 		return item;
 	});
+}
+
+export function convertBulkMetadataFieldToMetadataGenericType(fields: IBulkField[] | undefined): MetadataGenericType {
+	if (!fields) return {};
+
+	const newFields: MetadataGenericType = {};
+
+	fields.forEach(field => {
+		newFields[field.id] = {
+			id: field.id,
+			label: field.label,
+			value: field.value,
+			changeIndividual: field.changeIndividual
+		}
+	});
+
+	return newFields;
 }
