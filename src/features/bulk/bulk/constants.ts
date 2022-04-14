@@ -13,3 +13,5 @@ export const BulkRoutesToSteps = new Map([
 	[BulkStepsToRoutes[2], CurrentStep.SelectFields],
 	[BulkStepsToRoutes[3], CurrentStep.EditFields],
 ])
+
+export const DEFAULT_DEBOUNCE = 500;

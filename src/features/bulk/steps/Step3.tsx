@@ -1,5 +1,8 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { Heading } from '@amsterdam/asc-ui';
+
+import FileViewer from '../../FileViewer/FileViewer';
 import { useAppSelector } from '../../hooks';
 import { BulkStepsToRoutes } from '../bulk/constants';
 
@@ -17,7 +20,8 @@ export default function Step3<T>(props: Props<T>) {
 	} else {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
-				Edit fields here
+				<Heading forwardedAs="h2">Individueel metadateren</Heading>
+				<FileViewer />
 			</BulkWizard>
 		);
 	}

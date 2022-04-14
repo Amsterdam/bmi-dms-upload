@@ -20,3 +20,19 @@ export default function createUISchemaFromMetadataProps(metadataProperties: Meta
 		})),
 	};
 }
+
+export function createUISchemaLightFromMetadataProps(metadataProperties: MetadataProperty[]) {
+	return {
+		type: 'VerticalLayout',
+		elements: metadataProperties.map(({ key, scope, label }): any => ({
+			type: 'HorizontalLayout',
+			elements: [
+				{
+					type: 'Control',
+					label,
+					scope: `#/properties/${key}/properties/value`,
+				},
+			],
+		})),
+	};
+}
