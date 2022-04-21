@@ -3,7 +3,7 @@ import { JsonForms } from '@jsonforms/react';
 import { ComponentProps } from 'react';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
-import { IBulkField } from './store/model';
+import { IBulkField, IBulkFile } from './store/model';
 
 export type Asset = {
 	code: string;
@@ -12,6 +12,7 @@ export type Asset = {
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFileLight };
 export type CancelCallbackArg<T> = { file?: CustomFileLight; metadata?: T };
 export type SupportedHTTPMethods = 'POST' | 'PUT';
+export type TGetDocumentViewUrl = (id: string) => Promise<string>;;
 export interface Props<T> {
 	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
 	onClose: () => void;
@@ -21,6 +22,9 @@ export interface Props<T> {
 
 	getPostUrl: (file: CustomFileLight) => Promise<string>;
 	getHeaders: FileUploadProps['getHeaders'];
+
+	setFileData: (file: CustomFileLight) => Promise<Omit<IBulkFile, 'uploadedFile'>>;
+	getDocumentViewUrl: TGetDocumentViewUrl
 
 	asset: Asset;
 	metadataForm: ComponentProps<typeof JsonForms>;

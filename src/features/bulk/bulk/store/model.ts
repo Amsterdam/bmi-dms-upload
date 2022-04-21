@@ -16,9 +16,11 @@ export interface IBulkFile {
 	metadata?: IBulkFileMetadata[];
 }
 
-export interface IBulkFileMetadata {
-	id: IBulkFieldId;
-	value: string | number | boolean;
+// export interface IBulkFileMetadata {
+// 	id: IBulkFieldId;
+// 	value: string | number | boolean;
+// }
+export interface IBulkFileMetadata extends Omit<IBulkField, 'changeIndividual'> {
 }
 
 export interface IBulkField {
@@ -26,6 +28,8 @@ export interface IBulkField {
 	label: string;
 	value: string | number | boolean;
 	changeIndividual: boolean;
+	type: 'text' | 'date' | 'select' | 'checkbox';
+	values?: any[];
 }
 
 export interface IBulkState {
@@ -34,33 +38,6 @@ export interface IBulkState {
 	fields: IBulkField[];
 	selectedFileId?: IBulkFieldId;
 }
-
-
-// DMS Upload Session
-export interface IDmsAsset {
-	id: number
-	name: string
-	code: string
-}
-
-export interface IDmsDynamicFormField {
-	id: number,
-	placeholder: string,
-	required: boolean,
-	defaultValue: string,
-	userValue: string,
-	changeIndividual: boolean,
-	type: string,
-	options: any[]
-}
-
-export interface IDmsUploadSession {
-	id: string
-	finished: boolean
-    dmsAsset: IDmsAsset
-	dynamicFormFields: IDmsDynamicFormField[]
-}
-
 
 export interface IFieldData {
 	[key: string]: any;

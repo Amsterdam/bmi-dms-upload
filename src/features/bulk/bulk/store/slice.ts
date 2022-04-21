@@ -7,23 +7,6 @@ export const initialState: IBulkState = {
 	files: [],
 	fields: [],
 };
-const reduceFieldData = (fieldData: IFieldData, stateFields: IBulkField[]) => {
-	return stateFields.reduce((fields: IBulkField[], currentField: IBulkField) => {
-		const fieldDataKey = Object.keys(fieldData).find((key) => key === currentField.id);
-		const fieldDataItem = fieldDataKey && fieldData[fieldDataKey];
-
-		let updatedField = currentField;
-
-		if (fieldDataItem) {
-			updatedField = {
-				...updatedField,
-				...fieldDataItem,
-			};
-		}
-
-		return [...fields, updatedField];
-	}, []);
-};
 
 export const slice = createSlice({
 	name: 'dms_bulk',
@@ -40,7 +23,7 @@ export const slice = createSlice({
 		},
 		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
 		setFieldData: (state: IBulkState, action: PayloadAction<any>) => {
-			state.fields = reduceFieldData({ ...action.payload }, state.fields);
+			state.fields = action.payload;
 		},
 		setFields: (state: IBulkState, action: PayloadAction<IBulkField[]>) => {
 			state.fields = action.payload;
@@ -55,6 +38,13 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
+		setFilesMetadata: (state: IBulkState, action: PayloadAction<IBulkField[]>) => {
+			const individualFields = action.payload.filter(field => field.changeIndividual)
+			state.files = state.files.map(file => {
+				file.metadata = individualFields
+				return file;
+			});
+		},
 		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 	},
@@ -67,6 +57,7 @@ export const {
 	setFieldData,
 	setFields,
 	setFile,
+	setFilesMetadata,
 	stepBack,
 	stepForward,
 } = slice.actions;

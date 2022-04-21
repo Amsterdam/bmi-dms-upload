@@ -21,7 +21,7 @@ export default function createUISchemaFromMetadataProps(metadataProperties: Meta
 	};
 }
 
-export function createUISchemaLightFromMetadataProps(metadataProperties: MetadataProperty[]) {
+export function createUISchemaCompactFromMetadataProps(metadataProperties: MetadataProperty[]) {
 	return {
 		type: 'VerticalLayout',
 		elements: metadataProperties.map(({ key, scope, label }): any => ({

@@ -1,72 +1,65 @@
-import { MetadataGenericType, MetadataProperty } from "../../../types";
-import { IBulkField, IDmsDynamicFormField } from "./store/model";
+import { MetadataGenericType, MetadataProperty } from '../../../types';
+import { IBulkField, IFieldData } from './store/model';
 
 function convertStringToKey(string: string): string {
-	return string.toLowerCase().replace(' ', '_')
+	return string.toLowerCase().replace(' ', '_');
 }
 
-export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynamicFormField[]): MetadataProperty[] {
-	return fields.map(field => {
-		const item: MetadataProperty = {
-			key: convertStringToKey(field.placeholder),
-			scope: 'string',
-			type: 'string',
-			label: field.placeholder,
-			'bmi-isNotEmpty': field.required,
-			'bmi-errorMessage': '',
-		}
-
-		if (field.type === 'ChoiceType') {
-			item.oneOf = field.options.map(fieldOption => ({
-				const: fieldOption,
-				title: fieldOption
-			}))
-			item.customFormat = 'creatable';
-		}
-
-		return item
-	});
-}
-
-export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
-	return fields.map(field => {
-		const item: IBulkField = {
-			id: convertStringToKey(field.placeholder),
-			label: field.placeholder,
-			value: field.userValue,
-			changeIndividual: false
-		}
-		return item
-	});
-}
-
-export function convertBulkMetadataFieldToMetadataProperties(fields: IBulkField[]): MetadataProperty[] {
-	return fields.map(field => {
+export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): MetadataProperty[] {
+	return fields.map((field) => {
 		const item: MetadataProperty = {
 			key: convertStringToKey(field.id),
 			scope: 'string',
 			type: 'string',
+			format: field.type,
 			label: field.label,
-			'bmi-isNotEmpty': false,
-			'bmi-errorMessage': '',
+			'bmi-isNotEmpty': field.changeIndividual,
+			'bmi-errorMessage': undefined,
+		};
+
+		if (field.type === 'select' && field.values) {
+			item.oneOf = field.values.map((fieldOption) => ({
+				const: fieldOption,
+				title: fieldOption,
+			}));
+			item.customFormat = 'creatable';
 		}
+
 		return item;
 	});
 }
 
-export function convertBulkMetadataFieldToMetadataGenericType(fields: IBulkField[] | undefined): MetadataGenericType {
+export function convertBulkFieldsToMetadataGenericTypes(fields: IBulkField[] | undefined): MetadataGenericType {
 	if (!fields) return {};
 
 	const newFields: MetadataGenericType = {};
 
-	fields.forEach(field => {
+	fields.forEach((field) => {
 		newFields[field.id] = {
 			id: field.id,
 			label: field.label,
 			value: field.value,
-			changeIndividual: field.changeIndividual
-		}
+			changeIndividual: field.changeIndividual,
+		};
 	});
 
 	return newFields;
 }
+
+export const reduceFieldData = (fieldData: IFieldData, stateFields: IBulkField[]) => {
+	return stateFields.reduce((fields: IBulkField[], currentField: IBulkField) => {
+		const fieldDataKey = Object.keys(fieldData).find((key) => key === currentField.id);
+		const fieldDataItem = fieldDataKey && fieldData[fieldDataKey];
+
+		let updatedField = currentField;
+
+		if (fieldDataItem) {
+			updatedField = {
+				...updatedField,
+				...fieldDataItem,
+			};
+		}
+
+		return [...fields, updatedField];
+	}, []);
+};

@@ -1,7 +1,7 @@
 export type MetadataProperty = {
 	key: string;
 	scope: string;
-	type: 'string' | 'date';
+	type: string;
 	format?: string;
 	label: string;
 	'bmi-isNotEmpty'?: boolean;

@@ -6,5 +6,4 @@ export { Props as BulkUploadProps } from './features/bulk/bulk/types';
 export { RowLayoutSchema, CustomJsonSchema, CustomFileLight, CancelCallbackArg } from './types';
 export { IBulkField } from './features/bulk/bulk/store/model';
 export { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
-
-export * as utils from './features/bulk/bulk/utils';
+export * as dmsIntegration from './dms-integration'

@@ -3,11 +3,13 @@ import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
 import { UISchemaElement } from '@jsonforms/core';
+
 import Single from './features/single/single/Single';
-import Bulk from './features/bulk/bulk/Bulk';
-import { IBulkField, IDmsUploadSession } from './features/bulk/bulk/store/model';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
-import theme from './theme';
+import Bulk from './features/bulk/bulk/Bulk';
+import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
+import GlobalAppStyle from './GlobalStyle'
+
 import {
 	CancelCallbackArg,
 	CustomFileLight,
@@ -15,9 +17,10 @@ import {
 	CustomJsonSchema,
 	MetadataDataSubmitCallbackArg,
 } from './types';
-import * as utils from './features/bulk/bulk/utils';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
+import { convertDmsDynamicFormFieldsToBulkMetadataFields, convertDmsDynamicFormFieldsToMetadataProperty, IDmsUploadSession } from './dms-integration';
 import { AppStyles } from './AppStyles';
+import theme from './theme';
 
 const asset = {
 	code: '1337',
@@ -34,8 +37,7 @@ function App() {
 
 	async function fetchSession(): Promise<IDmsUploadSession> {
 		const response = await fetch(`http://localhost:3000/upload-session`);
-		const data = (await response.json()) as IDmsUploadSession;
-		return data;
+		return await response.json() as IDmsUploadSession;
 	}
 
 	useEffect(() => {
@@ -57,10 +59,10 @@ function App() {
 
 	useEffect(() => {
 		if (!session) return;
-		const metadataProperties = utils.convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields);
+		const metadataProperties = convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields);
 		setSchema(createSchemaFromMetadataProps(metadataProperties));
 		setUischema(createUISchemaFromMetadataProps(metadataProperties));
-		setMetadataFields(utils.convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields));
+		setMetadataFields(convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields));
 	}, [session]);
 
 	async function getSession() {
@@ -86,12 +88,30 @@ function App() {
 	);
 	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
 	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
+	const setFileData = useCallback(async (file: CustomFileLight) => {
+		console.log(':: setFileData', file)
+
+		const updatedFile: Omit<IBulkFile, 'uploadedFile'> = {
+			id: `new-${file.tmpId}`,
+			url: `new-url-${file.tmpId}`,
+		}
+
+		console.log(':: setFileData :: updatedFile', updatedFile)
+
+		return updatedFile
+	}, []);
+
+	const getDocumentViewUrl = useCallback(async (id: string) => {
+		console.log(':: getDocumentViewUrl', id)
+		// do some stuff here, return the file url.
+		return `/some-fake-url-${id}`;
+	}, [])
 
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
-
+				<GlobalAppStyle />
 				<AppStyles>
 					<div>
 						<Single
@@ -124,6 +144,8 @@ function App() {
 							onFileRemove={onFileRemove}
 							onFileSuccess={onFileSuccess}
 							onMetadataSubmit={onMetadataSubmit}
+							setFileData={setFileData}
+							getDocumentViewUrl={getDocumentViewUrl}
 						/>
 					</div>
 				</AppStyles>

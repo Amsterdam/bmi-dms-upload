@@ -15,7 +15,7 @@ export interface Step1Props<T> extends Props<T> {
 }
 
 export default function Step1<T>(props: Step1Props<T>) {
-	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields } = props;
+	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, setFileData } = props;
 
 	const dispatch = useAppDispatch();
 
@@ -36,13 +36,14 @@ export default function Step1<T>(props: Step1Props<T>) {
 	);
 
 	const handleFileSuccess = React.useCallback(
-		(uploadedFile: CustomFileLight) => {
-			onFileSuccess && onFileSuccess(uploadedFile);
-			const { tmpId } = uploadedFile;
+		async (uploadedFile: CustomFileLight) => {
+			onFileSuccess && await onFileSuccess(uploadedFile);
+			const file = await setFileData(uploadedFile);
+
 			dispatch(
 				setFile({
-					id: `${tmpId}`,
-					url: 'some-url', // @TODO: replace with actual value, from what?
+					id: file.id,
+					url: file.url, // @TODO: replace with actual value, from what?
 					uploadedFile,
 				}),
 			);
