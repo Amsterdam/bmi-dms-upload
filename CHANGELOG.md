@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.16](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.16) (2022-04-28)
+
+
+### Features
+
+* **bulk:** step3, wip ([09947fa](https://github.com/Amsterdam/bmi-dms-upload/commit/09947fa070840892e8d40164b9451d9f1bcf3aa0))
+
+
+### Bug Fixes
+
+* **bulk:** add metadata per file in step3, store in state correctly ([2ead469](https://github.com/Amsterdam/bmi-dms-upload/commit/2ead4691f05ea4e2a6e91d5010a617a6ec754522))
+* **bulk:** debounce setFieldData ([11c47b4](https://github.com/Amsterdam/bmi-dms-upload/commit/11c47b49384ad13e7bed97bb48ab3e16f904ed88))
+* **bulk:** first round of PR feedback ([d6dc138](https://github.com/Amsterdam/bmi-dms-upload/commit/d6dc138744caa0b8b30c7d21ba009504e448ccd1))
+* **bulk:** fourth round of PR feedback, fix bug with saving form data between navigating wizard ([7a1d5b1](https://github.com/Amsterdam/bmi-dms-upload/commit/7a1d5b1daf81d924d98bdcc6d45e55452083a329))
+* **bulk:** second round of PR feedback ([8416d61](https://github.com/Amsterdam/bmi-dms-upload/commit/8416d616c418a05e20037d70c325e33a94169858))
+* **bulk:** third round of PR feedback ([e1c4f80](https://github.com/Amsterdam/bmi-dms-upload/commit/e1c4f8088dc5f2f142f194b3a2ad09c3f738df99))
+
 ### [0.0.3-alpha.14](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.13...v0.0.3-alpha.14) (2022-04-07)
 
 ### [0.0.3-alpha.13](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.12...v0.0.3-alpha.13) (2022-04-06)
