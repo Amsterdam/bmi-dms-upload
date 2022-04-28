@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { CurrentStep } from './model';
-import { reducer, initialState, setCurrentStep, resetState, setFile, setFieldData, setFields } from './slice';
-import { files as filesMock, fields as fieldsMock, state as stateMock } from '../__stubs__';
+import { reducer, initialState, setCurrentStep, resetState, setFile, setFields } from './slice';
+import { files as filesMock, fields as fieldsMock } from '../__stubs__';
 
 jest.mock('react-router-dom')
 
@@ -24,6 +24,7 @@ describe('Bulk Slice', () => {
 							label: 'some-label',
 							value: 'some-value',
 							changeIndividual: false,
+							type: 'text'
 						},
 					],
 				},
@@ -52,35 +53,7 @@ describe('Bulk Slice', () => {
 			fields: fieldsMock,
 		});
 	});
-	test('should handle field data being set', () => {
-		expect(
-			reducer(
-				stateMock,
-				setFieldData({
-					'1': {
-						value: `Field 1 Value updated`,
-						changeIndividual: true,
-					},
-					'2': {
-						value: `Field 2 Value updated`,
-					},
-				}),
-			),
-		).toEqual({
-			...initialState,
-			files: filesMock,
-			fields: [
-				{
-					...fieldsMock[0],
-					value: `Field 1 Value updated`,
-					changeIndividual: true,
-				},
-				{
-					...fieldsMock[1],
-					value: `Field 2 Value updated`,
-				},
-				fieldsMock[2],
-			],
-		});
-	});
+
+	test.todo('removeFile')
+	test.todo('setFileMetadata')
 });

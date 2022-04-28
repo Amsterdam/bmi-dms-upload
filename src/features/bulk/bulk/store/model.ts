@@ -16,12 +16,13 @@ export interface IBulkFile {
 	metadata?: IBulkFileMetadata[];
 }
 
-// export interface IBulkFileMetadata {
-// 	id: IBulkFieldId;
-// 	value: string | number | boolean;
-// }
-export interface IBulkFileMetadata extends Omit<IBulkField, 'changeIndividual'> {
+export interface IBulkFileMetadata {
+	id: IBulkFieldId;
+	value: string | number | boolean;
 }
+
+// export interface IBulkFileMetadata extends Omit<IBulkField, 'changeIndividual'> {
+// }
 
 export interface IBulkField {
 	id: IBulkFieldId;

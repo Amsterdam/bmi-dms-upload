@@ -21,18 +21,21 @@ export const fields: IBulkField[] = [
 		label: 'Field 1',
 		value: 'Field 1 Value',
 		changeIndividual: false,
+		type: 'text'
 	},
 	{
 		id: '2',
 		label: 'Field 2',
 		value: 'Field 2 Value',
 		changeIndividual: true,
+		type: 'text'
 	},
 	{
 		id: '3',
 		label: 'Field 3',
 		value: 'Field 3 Value',
 		changeIndividual: false,
+		type: 'text'
 	}
 ]
 

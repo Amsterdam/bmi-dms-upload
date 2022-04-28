@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
-import { CurrentStep, IBulkField, IBulkFile, IBulkState, IFieldData } from './model';
+
+import { CustomFileLightOrRejection } from '../../../../types';
+import { CurrentStep, IBulkField, IBulkFile, IBulkState } from './model';
 
 export const initialState: IBulkState = {
 	currentStep: CurrentStep.Button,
@@ -13,17 +15,13 @@ export const slice = createSlice({
 	initialState,
 	reducers: {
 		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
-		removeFile: (state: IBulkState, action: PayloadAction<any>) => {
+		removeFile: (state: IBulkState, action: PayloadAction<CustomFileLightOrRejection>) => {
 			const newFiles = state.files.filter((file) => file.uploadedFile.tmpId !== action.payload.tmpId);
 			state.files = newFiles;
 		},
 		resetState: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => initialState,
 		setCurrentStep: (state: IBulkState, action: PayloadAction<CurrentStep>) => {
 			state.currentStep = action.payload;
-		},
-		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
-		setFieldData: (state: IBulkState, action: PayloadAction<any>) => {
-			state.fields = action.payload;
 		},
 		setFields: (state: IBulkState, action: PayloadAction<IBulkField[]>) => {
 			state.fields = action.payload;
@@ -38,12 +36,10 @@ export const slice = createSlice({
 			};
 			state.files = [...state.files, newFile];
 		},
-		setFilesMetadata: (state: IBulkState, action: PayloadAction<IBulkField[]>) => {
-			const individualFields = action.payload.filter(field => field.changeIndividual)
-			state.files = state.files.map(file => {
-				file.metadata = individualFields
-				return file;
-			});
+		setFileMetadata: (state: IBulkState, action: PayloadAction<{ fileId: IBulkFile['id'], metadata: IBulkFile['metadata']}>) => {
+			const file = state.files.find(file => file.id === action.payload.fileId)
+			if (!file) return;
+			file.metadata = action.payload.metadata
 		},
 		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
@@ -54,10 +50,9 @@ export const {
 	removeFile,
 	resetState,
 	setCurrentStep,
-	setFieldData,
 	setFields,
 	setFile,
-	setFilesMetadata,
+	setFileMetadata,
 	stepBack,
 	stepForward,
 } = slice.actions;

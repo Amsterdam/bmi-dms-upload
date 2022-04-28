@@ -17,17 +17,18 @@ export const getFiles = createSelector([getState], (state: IBulkState): IBulkFil
 
 export const getFields = createSelector([getState], (state: IBulkState): IBulkField[] => state.fields);
 
+export const getFieldsForFile = createSelector(
+	[getState, (state: IBulkState, fileId: IBulkFile['id']) => fileId],
+	(state: IBulkState, fileId: IBulkFile['id']) => {
+		const file = state.files.find((file) => file.id === fileId);
+		return file?.metadata;
+	},
+);
+
 export const getChangeIndividualFields = createSelector([getFields], (fields): IBulkField[] => {
-	console.log('getChangeIndividualFields', fields)
-	return fields.filter((field) => field.changeIndividual)
+	return fields.filter((field) => field.changeIndividual);
 });
 
 export const getDefaultFields = createSelector([getFields], (fields): IBulkField[] => {
-	console.log('getDefaultFields', fields)
-	return fields.filter((field) => !field.changeIndividual)
-});
-
-// export const getFieldsForFile = createSelector([getFile, getFields], (file, fields): IBulkField[] => {
-export const getFieldsForFile = createSelector([getFile, getFields], (file, fields): any => {
-	console.log('getFieldsForFile', file, fields)
+	return fields.filter((field) => !field.changeIndividual);
 });

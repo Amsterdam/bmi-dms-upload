@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Heading, Pagination } from '@amsterdam/asc-ui';
+import { Heading } from '@amsterdam/asc-ui';
 
 import { MetadataGenericType } from '../../../types';
 import { useAppSelector } from '../../hooks';
@@ -32,8 +32,16 @@ export default function Step3<T>(props: Props<T>) {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
 				<Heading forwardedAs="h2">Individueel metadateren</Heading>
-				{files && <FileViewer file={files[currentFileIndex]} getDocumentViewUrl={getDocumentViewUrl} onChange={handleOnFormChange} />}
-				{files && <StyledPagination collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />}
+				{files && (
+					<FileViewer
+						file={files[currentFileIndex]}
+						getDocumentViewUrl={getDocumentViewUrl}
+						onChange={handleOnFormChange}
+					/>
+				)}
+				{files && (
+					<StyledPagination collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
+				)}
 			</BulkWizard>
 		);
 	}
