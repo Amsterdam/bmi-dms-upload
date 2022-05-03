@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.17](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.16...v0.0.3-alpha.17) (2022-05-03)
+
+
+### Features
+
+* **metadata:** edit metadata per file ([3ea1930](https://github.com/Amsterdam/bmi-dms-upload/commit/3ea193027ef924e22e0123863308c163d8536384))
+
 ### [0.0.3-alpha.16](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.16) (2022-04-28)
 
 
