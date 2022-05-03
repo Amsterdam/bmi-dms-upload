@@ -16,14 +16,12 @@ export type TGetDocumentViewUrl = (id: string) => Promise<string>;
 export interface Props<T> {
 	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
 	onClose: () => void;
-	onFileSuccess?: (file: CustomFileLight) => void;
+	onFileSuccess: (file: CustomFileLight) => Promise<IBulkFile>;
 	onFileRemove?: (file: CustomFileLightOrRejection) => void;
 	onMetadataSubmit: (data: any) => Promise<void>; // @todo correct typing!
 
 	getPostUrl: (file: CustomFileLight) => Promise<string>;
 	getHeaders: FileUploadProps['getHeaders'];
-
-	setFileData: (file: CustomFileLight) => Promise<Omit<IBulkFile, 'uploadedFile'>>;
 	getDocumentViewUrl: TGetDocumentViewUrl;
 
 	asset: Asset;

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
@@ -11,11 +11,13 @@ import { removeFile, setFields, setFile } from '../bulk/store/slice';
 import { Step1Styles } from './styles';
 
 export interface Step1Props<T> extends Props<T> {
-	metadataFields?: IBulkField[]
+	metadataFields?: IBulkField[];
 }
 
 export default function Step1<T>(props: Step1Props<T>) {
-	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, setFileData } = props;
+	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, uploadHTTPMethod } = props;
+
+	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	const dispatch = useAppDispatch();
 
@@ -24,8 +26,16 @@ export default function Step1<T>(props: Step1Props<T>) {
 
 	useEffect(() => {
 		if (!metadataFields) return;
-		if (!fields?.length) dispatch(setFields(metadataFields))
-	}, [metadataFields, fields])
+		if (!fields?.length) dispatch(setFields(metadataFields));
+	}, [metadataFields, fields]);
+
+	useEffect(() => {
+		if (files && files.length !== 0) {
+			setIsValidForm(true);
+		} else {
+			setIsValidForm(false);
+		}
+	}, [files])
 
 	const handleFileRemove = React.useCallback(
 		(file: CustomFileLightOrRejection) => {
@@ -37,14 +47,12 @@ export default function Step1<T>(props: Step1Props<T>) {
 
 	const handleFileSuccess = React.useCallback(
 		async (uploadedFile: CustomFileLight) => {
-			onFileSuccess && await onFileSuccess(uploadedFile);
-			const file = await setFileData(uploadedFile);
+			const file = await onFileSuccess(uploadedFile);
 
 			dispatch(
 				setFile({
 					id: file.id,
-					url: file.url, // @TODO: replace with actual value, from what?
-					uploadedFile,
+					uploadedFile: file.uploadedFile,
 				}),
 			);
 		},
@@ -52,7 +60,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 	);
 
 	return (
-		<BulkWizard {...props}>
+		<BulkWizard {...props} isValidForm={isValidForm}>
 			<Step1Styles>
 				<FileUpload
 					cancelLabel="Annuleren"
@@ -61,7 +69,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 					fileUploadInProgressLabel="wordt geupload"
 					getHeaders={getHeaders}
 					getPostUrl={getPostUrl}
-					httpMethod='POST'
+					httpMethod={uploadHTTPMethod}
 					onFileRemove={handleFileRemove}
 					onFileSuccess={handleFileSuccess}
 					options={{ noClick: true, noKeyboard: true, maxFiles: 0 }}

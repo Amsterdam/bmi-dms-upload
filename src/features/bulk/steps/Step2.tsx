@@ -24,6 +24,7 @@ export default function Step2<T>(props: Step2Props<T>) {
 
 	const handleOnChange = useCallback(
 		debounce((data: MetadataGenericType, valid: boolean) => {
+			console.log('handleOnChange', valid)
 			if (fields && !identicalObjects(data, convertBulkFieldsToMetadataGenericTypes(fields))) {
 				const newFields = reduceFieldData(data, fields);
 				dispatch(setFields(newFields));

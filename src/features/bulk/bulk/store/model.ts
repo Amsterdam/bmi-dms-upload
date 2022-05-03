@@ -11,18 +11,14 @@ export enum CurrentStep {
 
 export interface IBulkFile {
 	id: string;
-	url: string;
-	uploadedFile: CustomFileLight;
 	metadata?: IBulkFileMetadata[];
+	uploadedFile: CustomFileLight;
 }
 
 export interface IBulkFileMetadata {
 	id: IBulkFieldId;
 	value: string | number | boolean;
 }
-
-// export interface IBulkFileMetadata extends Omit<IBulkField, 'changeIndividual'> {
-// }
 
 export interface IBulkField {
 	id: IBulkFieldId;

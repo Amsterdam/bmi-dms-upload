@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 import { Heading } from '@amsterdam/asc-ui';
 
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../utils';
-import { MetadataGenericType } from '../../types';
-import Form, { Props as FormProps } from '../../components/Form/Form';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../../utils';
+import { MetadataGenericType } from '../../../types';
+import Form, { Props as FormProps } from '../../../components/Form/Form';
 
-import { IBulkField, IBulkFile, IBulkFileMetadata } from '../bulk/bulk/store/model';
+import { IBulkField, IBulkFile, IBulkFileMetadata } from '../bulk/store/model';
 import {
 	convertBulkFieldsToBulkFileMetadata,
 	convertBulkFieldsToMetadataProperties,
 	convertBulkFileMetadataToMetadataGenericTypes,
 	identicalObjects,
 	reduceMetadata,
-} from '../bulk/bulk/utils';
+} from '../bulk/utils';
 import { IndividualFieldsFormStyle } from './styles';
-import { setFileMetadata } from '../bulk/bulk/store/slice';
-import { getFieldsForFile } from '../bulk/bulk/store/selectors';
+import { setFileMetadata } from '../bulk/store/slice';
+import { getFieldsForFile } from '../bulk/store/selectors';
 
 export type Props = {
-	fields: IBulkField[];
-	onChange: (data: MetadataGenericType, valid: boolean) => void;
 	fieldData: any;
+	fields: IBulkField[];
 	file: IBulkFile;
+	onChange: (data: MetadataGenericType, valid: boolean) => void;
 };
+
+const getMergedData = (fields: IBulkField[], fileFields: IBulkFileMetadata[] | undefined) =>
+	convertBulkFileMetadataToMetadataGenericTypes(
+		reduceMetadata(convertBulkFieldsToBulkFileMetadata(fields), fileFields),
+	);
 
 export default function IndividualFieldsForm({ ...props }: Props) {
 	const { fields, onChange, file } = props;
@@ -35,11 +40,6 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 	const uischema: FormProps['uischema'] = createUISchemaCompactFromMetadataProps(metadataProperties);
 
 	const [data, setData] = useState<MetadataGenericType>({});
-
-	const getMergedData = () =>
-		convertBulkFileMetadataToMetadataGenericTypes(
-			reduceMetadata(convertBulkFieldsToBulkFileMetadata(fields), fileFields),
-		);
 
 	const handleOnChange = (newData: MetadataGenericType, valid: boolean) => {
 		if (!identicalObjects(data, newData)) {
@@ -65,8 +65,8 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 
 	return (
 		<IndividualFieldsFormStyle>
-			<Heading forwardedAs="h3">Archiefgegevens-brug</Heading>
-			<Form schema={schema} uischema={uischema} data={getMergedData()} onChange={handleOnChange} renderers={[]} />
+			<Heading forwardedAs="h3">Bestand: {file.id}</Heading>
+			<Form schema={schema} uischema={uischema} data={getMergedData(fields, fileFields)} onChange={handleOnChange} renderers={[]} />
 		</IndividualFieldsFormStyle>
 	);
 }

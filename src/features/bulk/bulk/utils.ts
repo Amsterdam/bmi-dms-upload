@@ -11,7 +11,7 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 			key: convertStringToKey(field.id),
 			scope: 'string',
 			type: 'string',
-			format: field.type,
+			format: field.type === 'date' ? 'date' : undefined,
 			label: field.label,
 			'bmi-isNotEmpty': field.changeIndividual,
 			'bmi-errorMessage': undefined,

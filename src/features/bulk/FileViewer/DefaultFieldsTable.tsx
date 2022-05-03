@@ -1,7 +1,7 @@
 import React from 'react';
 import { DescriptionList, DescriptionListItem } from '@amsterdam/asc-ui';
 
-import { IBulkField } from '../bulk/bulk/store/model';
+import { IBulkField } from '../bulk/store/model';
 
 export type Props = {
 	fields: IBulkField[] | undefined;

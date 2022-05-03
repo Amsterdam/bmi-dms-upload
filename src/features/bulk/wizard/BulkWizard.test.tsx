@@ -3,7 +3,7 @@ import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
 import { CurrentStep  } from '../bulk/store/model';
 import { asset, files as filesMock, mockData, schema, uischema } from '../bulk/__stubs__';
-import { getDocumentViewUrlMock, getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock, setFileDataMock } from '../bulk/__mocks__/bulk';
+import { getDocumentViewUrlMock, getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from '../bulk/__mocks__/bulk';
 import BulkWizard from './BulkWizard';
 
 const defaultProps = {
@@ -14,7 +14,6 @@ const defaultProps = {
 	getDocumentViewUrl: getDocumentViewUrlMock,
 	onFileSuccess: onFileSuccessMock,
 	onFileRemove: onFileRemoveMock,
-	setFileData: setFileDataMock,
 	metadataForm: {
 		schema,
 		uischema,

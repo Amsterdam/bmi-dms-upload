@@ -27,10 +27,12 @@ export const slice = createSlice({
 			state.fields = action.payload;
 		},
 		setFile: (state: IBulkState, action: PayloadAction<IBulkFile>) => {
-			const { id, url, uploadedFile, metadata } = action.payload;
+			state.files = [...state.files, action.payload];
+		},
+		setFile2: (state: IBulkState, action: PayloadAction<IBulkFile>) => {
+			const { id, uploadedFile, metadata } = action.payload;
 			const newFile: IBulkFile = {
 				id,
-				url,
 				uploadedFile,
 				metadata,
 			};

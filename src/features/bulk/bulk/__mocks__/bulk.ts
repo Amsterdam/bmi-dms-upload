@@ -7,4 +7,3 @@ export const onCloseMock = jest.fn();
 export const onFileRemoveMock = jest.fn().mockResolvedValue('some-value')
 export const onFileSuccessMock = jest.fn().mockResolvedValue('some-value')
 export const onMetadataSubmitMock = jest.fn().mockResolvedValue('some-value')
-export const setFileDataMock = jest.fn();

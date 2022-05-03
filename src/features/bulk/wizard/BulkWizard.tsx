@@ -16,13 +16,13 @@ import { ModalContentStyle, ModalTopBarStyle } from './styles';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
-	isValidForm?: boolean;
+	isValidForm: boolean;
 } & Props<T>;
 
 export default function BulkWizard<T>({
 	children,
 	asset,
-	isValidForm,
+	isValidForm = false,
 	onCancel,
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
@@ -65,7 +65,7 @@ export default function BulkWizard<T>({
 		[files, isValidForm],
 	);
 
-	function isSaveDisabled() {
+	function isSaveDisabled(): boolean {
 		const hasFiles = files && files.length > 0;
 		const isSaveStep = currentStep === CurrentStep.EditFields;
 		const isAllValid = hasFiles && isValidForm && isSaveStep;
@@ -102,7 +102,7 @@ export default function BulkWizard<T>({
 					}}
 					next={{
 						visible: currentStep < CurrentStep.EditFields,
-						disabled: files?.length === 0,
+						disabled: !isValidForm,
 						onClick: handleNext,
 						dataTestId: 'next-button',
 					}}

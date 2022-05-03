@@ -4,7 +4,7 @@ import { Heading } from '@amsterdam/asc-ui';
 
 import { MetadataGenericType } from '../../../types';
 import { useAppSelector } from '../../hooks';
-import FileViewer from '../../FileViewer/FileViewer';
+import FileViewer from '../FileViewer/FileViewer';
 
 import { BulkStepsToRoutes } from '../bulk/constants';
 import { getFiles } from '../bulk/store/selectors';

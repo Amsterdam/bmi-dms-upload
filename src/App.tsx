@@ -7,8 +7,8 @@ import { UISchemaElement } from '@jsonforms/core';
 import Single from './features/single/single/Single';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
 import Bulk from './features/bulk/bulk/Bulk';
-import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
-import GlobalAppStyle from './GlobalStyle'
+import { IBulkField } from './features/bulk/bulk/store/model';
+import GlobalAppStyle from './GlobalStyle';
 
 import {
 	CancelCallbackArg,
@@ -18,7 +18,11 @@ import {
 	MetadataDataSubmitCallbackArg,
 } from './types';
 import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
-import { convertDmsDynamicFormFieldsToBulkMetadataFields, convertDmsDynamicFormFieldsToMetadataProperty, IDmsUploadSession } from './dms-integration';
+import {
+	convertDmsDynamicFormFieldsToBulkMetadataFields,
+	convertDmsDynamicFormFieldsToMetadataProperty,
+	IDmsUploadSession,
+} from './dms-integration';
 import { AppStyles } from './AppStyles';
 import theme from './theme';
 
@@ -37,7 +41,7 @@ function App() {
 
 	async function fetchSession(): Promise<IDmsUploadSession> {
 		const response = await fetch(`http://localhost:3000/upload-session`);
-		return await response.json() as IDmsUploadSession;
+		return (await response.json()) as IDmsUploadSession;
 	}
 
 	useEffect(() => {
@@ -78,7 +82,15 @@ function App() {
 
 	const onClose = useCallback(() => console.log(':: onClose'), []);
 	const onCancel = useCallback(async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data), []); //<MetadataExample>
-	const onFileSuccess = useCallback((file: CustomFileLight) => console.log(':: onFileSuccess', file), []);
+	const onFileSuccessBulk = useCallback(async (file: CustomFileLight) => {
+		console.log(':: onFileSuccessBulk', file)
+		return {
+			id: `new-${file.tmpId}`,
+			uploadedFile: file
+		};
+	}, []);
+
+	const onFileSuccessSingle = useCallback((file: CustomFileLight) => console.log(':: onFileSuccess', file), []);
 	const onFileRemove = useCallback((file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file), []);
 	const onMetadataSubmit = useCallback(
 		async (
@@ -88,24 +100,11 @@ function App() {
 	);
 	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
 	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
-	const setFileData = useCallback(async (file: CustomFileLight) => {
-		console.log(':: setFileData', file)
-
-		const updatedFile: Omit<IBulkFile, 'uploadedFile'> = {
-			id: `new-${file.tmpId}`,
-			url: `new-url-${file.tmpId}`,
-		}
-
-		console.log(':: setFileData :: updatedFile', updatedFile)
-
-		return updatedFile
-	}, []);
-
 	const getDocumentViewUrl = useCallback(async (id: string) => {
-		console.log(':: getDocumentViewUrl', id)
+		console.log(':: getDocumentViewUrl', id);
 		// do some stuff here, return the file url.
 		return `/some-fake-url-${id}`;
-	}, [])
+	}, []);
 
 	return (
 		<MUIThemeProvider theme={muiTheme}>
@@ -127,8 +126,9 @@ function App() {
 							onCancel={onCancel}
 							onClose={onClose}
 							onFileRemove={onFileRemove}
-							onFileSuccess={onFileSuccess}
+							onFileSuccess={onFileSuccessSingle}
 							onMetadataSubmit={onMetadataSubmit}
+							uploadHTTPMethod={'POST'}
 						/>
 					</div>
 					<div>
@@ -142,10 +142,10 @@ function App() {
 							onCancel={onCancel}
 							onClose={onClose}
 							onFileRemove={onFileRemove}
-							onFileSuccess={onFileSuccess}
+							onFileSuccess={onFileSuccessBulk}
 							onMetadataSubmit={onMetadataSubmit}
-							setFileData={setFileData}
 							getDocumentViewUrl={getDocumentViewUrl}
+							uploadHTTPMethod={'POST'}
 						/>
 					</div>
 				</AppStyles>

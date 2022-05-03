@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { DocumentViewer } from '@amsterdam/bmi-component-library';
 import debounce from 'debounce';
 
-import { MetadataGenericType } from '../../types';
-import { useAppSelector } from '../hooks';
-import { getChangeIndividualFields, getDefaultFields, getFields } from '../bulk/bulk/store/selectors';
-import { IBulkFile } from '../bulk/bulk/store/model';
-import { TGetDocumentViewUrl } from '../bulk/bulk/types';
+import { MetadataGenericType } from '../../../types';
+import { useAppSelector } from '../../hooks';
+import { getChangeIndividualFields, getDefaultFields, getFields } from '../bulk/store/selectors';
+import { IBulkFile } from '../bulk/store/model';
+import { TGetDocumentViewUrl } from '../bulk/types';
 
 import DefaultFieldsTable from './DefaultFieldsTable';
 import IndividualFieldsForm from './IndividualFieldsForm';
@@ -16,7 +16,7 @@ import {
 	FileViewerFieldsStyle,
 	FileViewerStyle,
 } from './styles';
-import { DEFAULT_DEBOUNCE } from '../bulk/bulk/constants';
+import { DEFAULT_DEBOUNCE } from '../bulk/constants';
 
 export type Props = {
 	file: IBulkFile;
@@ -53,7 +53,7 @@ export default function FileViewer(props: Props) {
 				{changeIndividualFields && (
 					<IndividualFieldsForm fields={changeIndividualFields} file={file} fieldData={{}} onChange={handleOnChange} />
 				)}
-				<DefaultFieldsTable fields={defaultFields} />
+				{defaultFields && <DefaultFieldsTable fields={defaultFields} />}
 			</FileViewerFieldsStyle>
 
 			<FileViewerDocumentStyle>
