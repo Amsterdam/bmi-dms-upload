@@ -9,10 +9,16 @@ export type Asset = {
 	code: string;
 	name: string;
 };
+
+export type TDocumentUrlToken = {
+	documentUrl: string;
+	documentToken: string | undefined;
+}
+
 export type MetadataDataSubmitCallbackArg<T> = { metadata: T; file: CustomFileLight };
 export type CancelCallbackArg<T> = { file?: CustomFileLight; metadata?: T };
 export type SupportedHTTPMethods = 'POST' | 'PUT';
-export type TGetDocumentViewUrl = (id: string) => Promise<string>;
+export type TGetDocumentViewUrl = (id: string) => Promise<TDocumentUrlToken>;
 export interface Props<T> {
 	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
 	onClose: () => void;

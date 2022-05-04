@@ -25,6 +25,7 @@ import {
 } from './dms-integration';
 import { AppStyles } from './AppStyles';
 import theme from './theme';
+import { TDocumentUrlToken } from './features/bulk/bulk/types';
 
 const asset = {
 	code: '1337',
@@ -83,10 +84,10 @@ function App() {
 	const onClose = useCallback(() => console.log(':: onClose'), []);
 	const onCancel = useCallback(async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data), []); //<MetadataExample>
 	const onFileSuccessBulk = useCallback(async (file: CustomFileLight) => {
-		console.log(':: onFileSuccessBulk', file)
+		console.log(':: onFileSuccessBulk', file);
 		return {
 			id: `new-${file.tmpId}`,
-			uploadedFile: file
+			uploadedFile: file,
 		};
 	}, []);
 
@@ -100,10 +101,13 @@ function App() {
 	);
 	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
 	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
-	const getDocumentViewUrl = useCallback(async (id: string) => {
+	const getDocumentViewUrl = useCallback(async (id: string): Promise<TDocumentUrlToken> => {
 		console.log(':: getDocumentViewUrl', id);
-		// do some stuff here, return the file url.
-		return `/some-fake-url-${id}`;
+
+		return {
+			documentUrl: `/some-fake-url-${id}`,
+			documentToken: `Bearer some-fake-token-${id}`
+		}
 	}, []);
 
 	return (
