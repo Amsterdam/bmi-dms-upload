@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.18](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.17...v0.0.3-alpha.18) (2022-05-04)
+
+
+### Bug Fixes
+
+* **metadata:** add token to getDocumentViewUrl, fix tests ([1ed4d20](https://github.com/Amsterdam/bmi-dms-upload/commit/1ed4d209faf28e37cb78bf2ed7fa6ff7ede30901))
+
 ### [0.0.3-alpha.17](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.16...v0.0.3-alpha.17) (2022-05-03)
 
 
