@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { Label, ErrorMessage } from '@amsterdam/asc-ui';
 import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
-import { ControlProps } from '@jsonforms/core';
+import { ControlProps, JsonSchema7 } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 
 type SchemaOptionType = {
@@ -40,14 +40,15 @@ const CreatableSelect = (props: ControlProps) => {
 		errors,
 		schema: { oneOf: options = [] },
 	} = props;
-	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange } = useCustomControl(props);
+	const filteredOptions = (options as JsonSchema7[]).filter((option: JsonSchema7) => option.const !== '')
+	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 	const [selected, setSelected] = useState<SelectOptionType | undefined>(
-		getOptionForValue(options as SchemaOptionType[], value),
+		getOptionForValue(filteredOptions as SchemaOptionType[], value),
 	);
 
 	return (
 		<>
-			{label && <Label htmlFor={path} label={label} />}
+			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
 			<div>
 				<Creatable
 					inputId={path}
@@ -55,13 +56,13 @@ const CreatableSelect = (props: ControlProps) => {
 					// @ts-ignore
 					onChange={(option: any) => {
 						const val = option ? (option.value ? (option.value === 'null' ? null : option.value) : null) : null;
-						const opt = getOptionForValue(options as SchemaOptionType[], val);
+						const opt = getOptionForValue(filteredOptions as SchemaOptionType[], val);
 						// Emulate onChange event object
 						onChange({ currentTarget: { value: opt?.value ?? '' } });
 						setSelected(opt);
 					}}
 					isClearable
-					options={options.map(({ const: value, title: label }) => ({
+					options={filteredOptions.map(({ const: value, title: label }) => ({
 						value,
 						label,
 					}))}

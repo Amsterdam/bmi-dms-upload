@@ -106,8 +106,8 @@ function App() {
 
 		return {
 			documentUrl: `/some-fake-url-${id}`,
-			documentToken: `Bearer some-fake-token-${id}`
-		}
+			documentToken: `Bearer some-fake-token-${id}`,
+		};
 	}, []);
 
 	return (

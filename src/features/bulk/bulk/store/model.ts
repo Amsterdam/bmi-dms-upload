@@ -26,6 +26,7 @@ export interface IBulkField {
 	value: string | number | boolean;
 	changeIndividual: boolean;
 	type: 'text' | 'date' | 'select' | 'checkbox';
+	required?: boolean;
 	values?: any[];
 }
 

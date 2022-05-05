@@ -10,6 +10,13 @@ export interface CustomJsonSchema extends JsonSchema7 {
 		[property: string]: JsonSchema7 & {
 			'bmi-isNotEmpty'?: boolean;
 			customFormat?: 'creatable';
+
+			properties?: {
+				[property: string]: JsonSchema7 & {
+					'bmi-isNotEmpty'?: boolean;
+					customFormat?: 'creatable';
+				}
+			}
 		};
 	};
 }

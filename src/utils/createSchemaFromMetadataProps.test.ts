@@ -242,6 +242,7 @@ describe('utils/createSchemaFromMetadataProps', () => {
 					type: 'object',
 				},
 			},
+			required: ['year', 'documentDescription', 'contract', 'carUse'],
 			type: 'object',
 		});
 	});

@@ -29,7 +29,7 @@ describe('<RowLayoutRenderer />', () => {
 	test('Should render Labels', () => {
 		render();
 		expect(screen.getByText('Dummy date')).toBeInTheDocument();
-		expect(screen.getByText('Documentomschrijving')).toBeInTheDocument();
+		expect(screen.getByText('Documentomschrijving *')).toBeInTheDocument();
 	});
 
 	test('Should not render when visible set to false', () => {

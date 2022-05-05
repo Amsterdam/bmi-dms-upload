@@ -12,11 +12,17 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			key: convertStringToKey(field.placeholder),
 			scope: 'string',
 			type: 'string',
-			format: undefined,
 			label: field.placeholder,
-			'bmi-isNotEmpty': field.required,
-			'bmi-errorMessage': undefined, // @todo field.error.message? ask Rick/Johan
 		};
+
+		if (field.required) {
+			item['bmi-isNotEmpty'] = field.required;
+		}
+
+		// @todo: is there an error string from DMS?
+		// if (field.error.message) {
+		// 	item['bmi-errorMessage'] = field.error.message;
+		// }
 
 		if (field.type === 'DateType') {
 			item.format = 'date';
@@ -27,6 +33,11 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 				const: fieldOption,
 				title: fieldOption,
 			}));
+
+			item.oneOf.unshift({
+				const: '',
+				title: 'No Value',
+			})
 			item.customFormat = 'creatable';
 		}
 
@@ -35,17 +46,15 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 }
 
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
-	return fields.map((field) => {
-		const item: IBulkField = {
-			id: convertStringToKey(field.placeholder),
-			label: field.placeholder,
-			value: field.userValue ?? '',
-			changeIndividual: false,
-			type: convertDmsTypeToBulkFieldType(field.type),
-			values: field.options,
-		};
-		return item;
-	});
+	return fields.map((field) => ({
+		id: convertStringToKey(field.placeholder),
+		label: field.placeholder,
+		value: field.userValue ?? '',
+		changeIndividual: false,
+		type: convertDmsTypeToBulkFieldType(field.type),
+		values: field.options,
+		required: field.required,
+	}));
 }
 
 const convertDmsTypeToBulkFieldType = (type: string): IBulkField['type'] => {

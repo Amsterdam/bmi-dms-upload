@@ -28,7 +28,8 @@ export const fields: IBulkField[] = [
 		label: 'Field 2',
 		value: 'Field 2 Value',
 		changeIndividual: true,
-		type: 'text'
+		type: 'text',
+		required: true,
 	},
 	{
 		id: 'field-3',

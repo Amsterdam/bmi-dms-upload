@@ -13,9 +13,12 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 			type: 'string',
 			format: field.type === 'date' ? 'date' : undefined,
 			label: field.label,
-			'bmi-isNotEmpty': field.changeIndividual,
 			'bmi-errorMessage': undefined,
 		};
+
+		if (field.required) {
+			item['bmi-isNotEmpty'] = field.required
+		}
 
 		if (field.type === 'select' && field.values) {
 			item.oneOf = field.values.map((fieldOption) => ({
@@ -36,11 +39,14 @@ export function convertBulkFieldsToMetadataGenericTypes(fields: IBulkField[] | u
 
 	fields.forEach((field) => {
 		newFields[field.id] = {
-			id: field.id,
-			label: field.label,
-			value: field.value,
-			changeIndividual: field.changeIndividual,
+			value: field.value
 		};
+
+		const newField = newFields[field.id] as MetadataGenericType;
+
+		if (field.changeIndividual) {
+			newField.changeIndividual = field.changeIndividual
+		}
 	});
 
 	return newFields;

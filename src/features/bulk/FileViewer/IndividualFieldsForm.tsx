@@ -4,7 +4,7 @@ import { Heading } from '@amsterdam/asc-ui';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../../utils';
 import { MetadataGenericType } from '../../../types';
-import Form, { Props as FormProps } from '../../../components/Form/Form';
+import Form from '../../../components/Form/Form';
 
 import { IBulkField, IBulkFile, IBulkFileMetadata } from '../bulk/store/model';
 import {
@@ -36,8 +36,8 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 
 	const fileFields = useAppSelector((state) => getFieldsForFile(state, file.id));
 	const metadataProperties = convertBulkFieldsToMetadataProperties(fields);
-	const schema: FormProps['schema'] = createSchemaFromMetadataProps(metadataProperties, false);
-	const uischema: FormProps['uischema'] = createUISchemaCompactFromMetadataProps(metadataProperties);
+	const schema = createSchemaFromMetadataProps(metadataProperties, false);
+	const uischema = createUISchemaCompactFromMetadataProps(metadataProperties);
 
 	const [data, setData] = useState<MetadataGenericType>({});
 
@@ -66,7 +66,13 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 	return (
 		<IndividualFieldsFormStyle>
 			<Heading forwardedAs="h3">Bestand: {file.id}</Heading>
-			<Form schema={schema} uischema={uischema} data={getMergedData(fields, fileFields)} onChange={handleOnChange} renderers={[]} />
+			<Form
+				schema={schema}
+				uischema={uischema}
+				data={getMergedData(fields, fileFields)}
+				onChange={handleOnChange}
+				renderers={[]}
+			/>
 		</IndividualFieldsFormStyle>
 	);
 }

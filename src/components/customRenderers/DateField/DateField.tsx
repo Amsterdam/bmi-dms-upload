@@ -6,11 +6,11 @@ import useCustomControl from '../../../hooks/useCustomControl';
 
 const DateField = (props: ControlProps) => {
 	const { data: value = '', path, label, errors } = props;
-	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange } = useCustomControl(props);
+	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 
 	return (
 		<>
-			{label && <Label htmlFor={path} label={label} />}
+			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
 			<div>
 				<ASCTextField
 					id={path}
