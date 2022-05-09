@@ -1,5 +1,5 @@
 import React from 'react';
-import { DescriptionList, DescriptionListItem } from '@amsterdam/asc-ui';
+import { StyledDescriptionList, StyledDescriptionListItem } from './styles';
 
 import { IBulkField } from '../bulk/store/model';
 
@@ -10,13 +10,13 @@ export type Props = {
 export default function DefaultFieldsTable({ ...props }: Props) {
 	const { fields } = props;
 	return (
-		<DescriptionList>
+		<StyledDescriptionList>
 			{fields &&
 				fields.map((field) => (
-					<DescriptionListItem term={field.label} key={field.id}>
+					<StyledDescriptionListItem term={field.label} key={field.id}>
 						{field.value}
-					</DescriptionListItem>
+					</StyledDescriptionListItem>
 				))}
-		</DescriptionList>
+		</StyledDescriptionList>
 	);
 }
