@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.19](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.18...v0.0.3-alpha.19) (2022-05-05)
+
+
+### Features
+
+* **metadata:** add ui for required fields ([8b4d527](https://github.com/Amsterdam/bmi-dms-upload/commit/8b4d527636541c0e4d93c2ae2d597ed6d11d1495))
+
 ### [0.0.3-alpha.18](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.17...v0.0.3-alpha.18) (2022-05-04)
 
 
