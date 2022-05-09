@@ -1,9 +1,6 @@
 export const getHeadersMock = jest.fn();
 export const getPostUrlMock = jest.fn();
-export const getDocumentViewUrlMock = jest.fn().mockResolvedValue({
-	documentUrl: 'mock-url',
-	documentToken: 'mock-token'
-})
+export const getDocumentViewUrlMock = jest.fn().mockResolvedValue('mock-url')
 export const onCancelMock = jest.fn().mockResolvedValue('some-value')
 export const onChangeMock = jest.fn();
 export const onCloseMock = jest.fn();

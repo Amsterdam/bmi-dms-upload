@@ -25,7 +25,6 @@ import {
 } from './dms-integration';
 import { AppStyles } from './AppStyles';
 import theme from './theme';
-import { TDocumentUrlToken } from './features/bulk/bulk/types';
 
 const asset = {
 	code: '1337',
@@ -101,13 +100,9 @@ function App() {
 	);
 	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
 	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
-	const getDocumentViewUrl = useCallback(async (id: string): Promise<TDocumentUrlToken> => {
+	const getDocumentViewUrl = useCallback(async (id: string): Promise<string> => {
 		console.log(':: getDocumentViewUrl', id);
-
-		return {
-			documentUrl: `/some-fake-url-${id}`,
-			documentToken: `Bearer some-fake-token-${id}`,
-		};
+		return `/some-fake-url-${id}`
 	}, []);
 
 	return (

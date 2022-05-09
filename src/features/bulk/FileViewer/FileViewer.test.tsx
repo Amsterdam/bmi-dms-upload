@@ -82,6 +82,5 @@ describe('<FileViewer />', () => {
 
 		const DocumentViewerMock = mocked(DocumentViewer);
 		expect(mockComponentProps<ComponentProps<typeof DocumentViewer>>(DocumentViewerMock).uri).toEqual('mock-url')
-		expect(mockComponentProps<ComponentProps<typeof DocumentViewer>>(DocumentViewerMock).authorizationHeader).toEqual('mock-token')
 	});
 });

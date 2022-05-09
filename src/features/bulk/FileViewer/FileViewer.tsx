@@ -6,7 +6,7 @@ import { MetadataGenericType } from '../../../types';
 import { useAppSelector } from '../../hooks';
 import { getChangeIndividualFields, getDefaultFields, getFields } from '../bulk/store/selectors';
 import { IBulkFile } from '../bulk/store/model';
-import { TDocumentUrlToken, TGetDocumentViewUrl } from '../bulk/types';
+import { TGetDocumentViewUrl } from '../bulk/types';
 
 import DefaultFieldsTable from './DefaultFieldsTable';
 import IndividualFieldsForm from './IndividualFieldsForm';
@@ -26,17 +26,14 @@ export type Props = {
 
 export default function FileViewer(props: Props) {
 	const { file, getDocumentViewUrl, onChange } = props;
-	const [{ documentUrl, documentToken }, setDocumentUrlToken] = useState<TDocumentUrlToken>({
-		documentUrl: '',
-		documentToken: undefined,
-	});
+	const [documentUrl, setDocumentUrl] = useState<string>('');
 	const fields = useAppSelector(getFields);
 	const changeIndividualFields = useAppSelector(getChangeIndividualFields);
 	const defaultFields = useAppSelector(getDefaultFields);
 
 	useEffect(() => {
 		const asyncGetDocumentViewUrl = async () => {
-			setDocumentUrlToken(await getDocumentViewUrl(file.id));
+			setDocumentUrl(await getDocumentViewUrl(file.id));
 		};
 		asyncGetDocumentViewUrl();
 	}, [file]);
@@ -61,7 +58,7 @@ export default function FileViewer(props: Props) {
 
 			<FileViewerDocumentStyle>
 				<FileViewerDocumentInnerStyle>
-					{documentUrl && <DocumentViewer uri={documentUrl} authorizationHeader={documentToken} />}
+					{documentUrl && <DocumentViewer uri={documentUrl} />}
 				</FileViewerDocumentInnerStyle>
 			</FileViewerDocumentStyle>
 		</FileViewerStyle>
