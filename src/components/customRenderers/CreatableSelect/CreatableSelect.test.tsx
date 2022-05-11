@@ -1,14 +1,11 @@
 import React from 'react';
-import { fireEvent, getDefaultNormalizer, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import Form, { Props } from '../../Form/Form';
 import { schema as schemaStub, options } from './__stubs__/schema';
 import { uischema, uischema as uischemaStub } from './__stubs__/uischema';
-import { act } from 'react-dom/test-utils';
 
-const label = uischema.elements[0]?.label ?? '';
-
-const labelNormalizer = (str: string) => getDefaultNormalizer()(str).replace('*', '').replace('required', '')
+const label = `${uischema.elements[0]?.label} *` ?? '';
 
 describe('customRenderers / CreatableSelect', () => {
 	const renderForm = ({
@@ -22,27 +19,22 @@ describe('customRenderers / CreatableSelect', () => {
 	};
 
 	test('Renders input with label', () => {
-		const { getByText } = renderForm({});
-		expect(
-			getByText(label, { normalizer: labelNormalizer }),
-		).toBeInTheDocument();
+		const { getByLabelText } = renderForm({});
+		expect(getByLabelText(label)).toBeInTheDocument();
 	});
 
-	test.only('Is connected to JsonForms state', async () => {
+	test('Is connected to JsonForms state', async () => {
 		const onChangeMock = jest.fn();
-		await act(async () => {
-			const { getByText } = renderForm({ onChange: onChangeMock });
-			const input = getByText(label, { normalizer: labelNormalizer }).closest('label');
-			console.log('input', input)
-			await selectEvent.select(input!, options[3]);
-		})
-		// expect(onChangeMock).toHaveBeenLastCalledWith(
-		// 	{
-		// 		documentDescription: 'Bouwkundig onderzoek',
-		// 	},
-		// 	true,
-		// 	[],
-		// );
+		const { getByLabelText } = renderForm({ onChange: onChangeMock });
+		const input = getByLabelText(label);
+		await selectEvent.select(input, options[3]);
+		expect(onChangeMock).toHaveBeenLastCalledWith(
+			{
+				documentDescription: 'Bouwkundig onderzoek',
+			},
+			true,
+			[],
+		);
 	});
 
 	test('Produces error onBlur when dirty', async () => {

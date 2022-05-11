@@ -7,8 +7,7 @@ export type Props = {
 	fields: IBulkField[] | undefined;
 };
 
-export default function DefaultFieldsTable({ ...props }: Props) {
-	const { fields } = props;
+export default function DefaultFieldsTable({ fields }: Props) {
 	return (
 		<StyledDescriptionList>
 			{fields &&
