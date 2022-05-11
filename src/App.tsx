@@ -31,6 +31,11 @@ const asset = {
 	name: 'some-name',
 };
 
+async function fetchSession(): Promise<IDmsUploadSession> {
+	const response = await fetch(`http://localhost:3000/upload-session`);
+	return (await response.json()) as IDmsUploadSession;
+}
+
 function App() {
 	const mounted = useRef(false);
 	const hasFiles = useRef(false);
@@ -38,11 +43,6 @@ function App() {
 	const [session, setSession] = useState<IDmsUploadSession | undefined>(undefined);
 	const [schema, setSchema] = useState<CustomJsonSchema | undefined>(undefined);
 	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
-
-	async function fetchSession(): Promise<IDmsUploadSession> {
-		const response = await fetch(`http://localhost:3000/upload-session`);
-		return (await response.json()) as IDmsUploadSession;
-	}
 
 	useEffect(() => {
 		mounted.current = true;
@@ -55,7 +55,7 @@ function App() {
 	useEffect(() => {
 		const doGetSession = async () => {
 			if (!hasFiles) return false;
-			setSession(await getSession());
+			setSession(session ? session : await fetchSession());
 		};
 
 		doGetSession();
@@ -68,10 +68,6 @@ function App() {
 		setUischema(createUISchemaFromMetadataProps(metadataProperties));
 		setMetadataFields(convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields));
 	}, [session]);
-
-	async function getSession() {
-		return session ? session : await fetchSession();
-	}
 
 	const metadataForm = {
 		schema,

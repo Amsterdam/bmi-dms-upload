@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { Label, ErrorMessage } from '@amsterdam/asc-ui';
+import { ErrorMessage } from '@amsterdam/asc-ui';
 import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps, JsonSchema7 } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
+import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
 
 type SchemaOptionType = {
 	const: string;
@@ -48,7 +49,7 @@ const CreatableSelect = (props: ControlProps) => {
 
 	return (
 		<>
-			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
+			{label && <AccessibleLabel htmlFor={path} label={label} isRequired={isRequired} />}
 			<div>
 				<Creatable
 					inputId={path}

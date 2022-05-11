@@ -24,8 +24,7 @@ export type Props = {
 	onChange: (data: MetadataGenericType, valid: boolean) => void;
 };
 
-export default function FileViewer(props: Props) {
-	const { file, getDocumentViewUrl, onChange } = props;
+export default function FileViewer({ file, getDocumentViewUrl, onChange }: Props) {
 	const [documentUrl, setDocumentUrl] = useState<string>('');
 	const fields = useAppSelector(getFields);
 	const changeIndividualFields = useAppSelector(getChangeIndividualFields);
@@ -37,6 +36,12 @@ export default function FileViewer(props: Props) {
 		};
 		asyncGetDocumentViewUrl();
 	}, [file.id]);
+
+	useEffect(() => {
+		if (changeIndividualFields.length === 0) {
+			onChange({}, true);
+		}
+	}, [changeIndividualFields]);
 
 	const handleOnChange = useCallback(
 		debounce((data: MetadataGenericType, valid: boolean) => {
@@ -56,7 +61,7 @@ export default function FileViewer(props: Props) {
 
 			<FileViewerDocumentStyle>
 				<FileViewerDocumentInnerStyle>
-					{documentUrl &&  <DocumentViewer uri={documentUrl} />}
+					{documentUrl && <DocumentViewer uri={documentUrl} />}
 				</FileViewerDocumentInnerStyle>
 			</FileViewerDocumentStyle>
 		</FileViewerStyle>

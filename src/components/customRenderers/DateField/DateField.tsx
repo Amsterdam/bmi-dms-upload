@@ -1,8 +1,9 @@
 import React from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { ErrorMessage, Label, TextField as ASCTextField } from '@amsterdam/asc-ui';
+import { ErrorMessage, TextField as ASCTextField } from '@amsterdam/asc-ui';
 import { ControlProps } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
+import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
 
 const DateField = (props: ControlProps) => {
 	const { data: value = '', path, label, errors } = props;
@@ -10,7 +11,7 @@ const DateField = (props: ControlProps) => {
 
 	return (
 		<>
-			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
+			{label && <AccessibleLabel htmlFor={path} label={label} isRequired={isRequired} />}
 			<div>
 				<ASCTextField
 					id={path}

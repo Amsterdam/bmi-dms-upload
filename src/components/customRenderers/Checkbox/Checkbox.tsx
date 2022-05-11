@@ -1,8 +1,9 @@
 import React from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
-import { Label, Checkbox as ASCCheckbox, ErrorMessage } from '@amsterdam/asc-ui';
+import { Checkbox as ASCCheckbox, ErrorMessage } from '@amsterdam/asc-ui';
 import { ControlProps } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
+import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
 
 const Checkbox = (props: ControlProps) => {
 	const { data: value = '', path, label, errors, handleChange } = props;
@@ -10,7 +11,7 @@ const Checkbox = (props: ControlProps) => {
 
 	return (
 		<>
-			{label && <Label htmlFor={path} label={label + (isRequired ? ' *' : '')} />}
+			{label && <AccessibleLabel htmlFor={path} label={label} isRequired={isRequired} />}
 
 			<div>
 				<ASCCheckbox
