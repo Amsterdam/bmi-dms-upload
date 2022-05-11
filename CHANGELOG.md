@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.21](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.20...v0.0.3-alpha.21) (2022-05-11)
+
+
+### Bug Fixes
+
+* **metadata:** fix onMetadataSubmit ([e0f2c59](https://github.com/Amsterdam/bmi-dms-upload/commit/e0f2c59baf4ba9a91944ac793fa99f5f618c5cee))
+* **metadata:** fix reload documentviewer on each change in form ([6b11cec](https://github.com/Amsterdam/bmi-dms-upload/commit/6b11cec62fbca0fe0a06f870687bf62f3960fef4))
+* **metadata:** linting ([fe688df](https://github.com/Amsterdam/bmi-dms-upload/commit/fe688dfe20f0f2108fc298303e4e5ca5fcf62fb8))
+* **metadata:** onMetadataSubmit submits actual data ([5ce8063](https://github.com/Amsterdam/bmi-dms-upload/commit/5ce8063b556cd9adcf76fb435999b8e56587cf7d))
+* **metadata:** remove console.log ([1d648de](https://github.com/Amsterdam/bmi-dms-upload/commit/1d648de2d8398e5f59a177f1f087bd8ccb60ad70))
+* **metadata:** remove duplicate header filename ([125c6f1](https://github.com/Amsterdam/bmi-dms-upload/commit/125c6f15cd1b117b855f7484fbdd645ccaab8e70))
+* **metadata:** small layout tweaks to fileviewer ([dcc999f](https://github.com/Amsterdam/bmi-dms-upload/commit/dcc999f0edc1e0a0ee6c65be21f4bdd3dbe2f067))
+
+### [0.0.3-alpha.15](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.15) (2022-04-13)
+
 ### [0.0.3-alpha.20](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.19...v0.0.3-alpha.20) (2022-05-09)
 
 
