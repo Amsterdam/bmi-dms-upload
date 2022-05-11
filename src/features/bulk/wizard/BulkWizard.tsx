@@ -9,7 +9,7 @@ import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep } from '../bulk/store/model';
 import { Props } from '../bulk/types';
-import { getCurrentStep, getFiles } from '../bulk/store/selectors';
+import { getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
@@ -26,6 +26,7 @@ export default function BulkWizard<T>({
 	onCancel,
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
+	const state = useAppSelector(getState)
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
@@ -55,7 +56,7 @@ export default function BulkWizard<T>({
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 			if (files && isValidForm) {
-				onMetadataSubmit({ todo: true })
+				onMetadataSubmit(state)
 					.then(() => close())
 					.catch((err) => {
 						console.error(err); // @TODO handle error gracefully
