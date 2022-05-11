@@ -36,9 +36,7 @@ export default function FileViewer(props: Props) {
 			setDocumentUrl(await getDocumentViewUrl(file.id));
 		};
 		asyncGetDocumentViewUrl();
-	}, [file]);
-
-	// @todo save
+	}, [file.id]);
 
 	const handleOnChange = useCallback(
 		debounce((data: MetadataGenericType, valid: boolean) => {
@@ -58,7 +56,7 @@ export default function FileViewer(props: Props) {
 
 			<FileViewerDocumentStyle>
 				<FileViewerDocumentInnerStyle>
-					{documentUrl && <DocumentViewer uri={documentUrl} />}
+					{documentUrl &&  <DocumentViewer uri={documentUrl} />}
 				</FileViewerDocumentInnerStyle>
 			</FileViewerDocumentStyle>
 		</FileViewerStyle>

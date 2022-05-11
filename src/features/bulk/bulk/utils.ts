@@ -100,6 +100,7 @@ export const reduceMetadata = (
 	currentFields: IBulkFileMetadata[],
 	newFields?: IBulkFileMetadata[],
 ): IBulkFileMetadata[] => {
+	if (!currentFields) return []
 	if (!newFields) return currentFields;
 
 	return currentFields.reduce((acc: IBulkFileMetadata[], currentField: IBulkFileMetadata) => {

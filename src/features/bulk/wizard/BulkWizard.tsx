@@ -7,17 +7,26 @@ import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTe
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CurrentStep } from '../bulk/store/model';
+import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
 import { Props } from '../bulk/types';
-import { getCurrentStep, getFiles } from '../bulk/store/selectors';
+import { getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
+import { reduceMetadata } from '../bulk/utils';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
 	isValidForm: boolean;
 } & Props<T>;
+
+const makeMetadataObject = (state: IBulkState): IBulkFile[] => {
+	return state.files.map((file) => ({
+		id: file.id,
+		metadata: reduceMetadata(state.fields, file.metadata),
+		uploadedFile: file.uploadedFile,
+	}));
+};
 
 export default function BulkWizard<T>({
 	children,
@@ -26,6 +35,7 @@ export default function BulkWizard<T>({
 	onCancel,
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
+	const state = useAppSelector(getState);
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
@@ -55,7 +65,7 @@ export default function BulkWizard<T>({
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 			if (files && isValidForm) {
-				onMetadataSubmit({ todo: true })
+				onMetadataSubmit(makeMetadataObject(state))
 					.then(() => close())
 					.catch((err) => {
 						console.error(err); // @TODO handle error gracefully

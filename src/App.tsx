@@ -7,7 +7,7 @@ import { UISchemaElement } from '@jsonforms/core';
 import Single from './features/single/single/Single';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
 import Bulk from './features/bulk/bulk/Bulk';
-import { IBulkField } from './features/bulk/bulk/store/model';
+import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
 import GlobalAppStyle from './GlobalStyle';
 
 import {
@@ -94,11 +94,12 @@ function App() {
 		) => console.log(':: onMetadataSubmit', data),
 		[],
 	);
+	const onMetadataSubmitBulk = useCallback(async (data: IBulkFile[]) => console.log(':: onMetadataSubmit', data), []);
 	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
 	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
 	const getDocumentViewUrl = useCallback(async (id: string): Promise<string> => {
 		console.log(':: getDocumentViewUrl', id);
-		return `/some-fake-url-${id}`
+		return `/some-fake-url-${id}`;
 	}, []);
 
 	return (
@@ -138,7 +139,7 @@ function App() {
 							onClose={onClose}
 							onFileRemove={onFileRemove}
 							onFileSuccess={onFileSuccessBulk}
-							onMetadataSubmit={onMetadataSubmit}
+							onMetadataSubmit={onMetadataSubmitBulk}
 							getDocumentViewUrl={getDocumentViewUrl}
 							uploadHTTPMethod={'POST'}
 						/>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Heading } from '@amsterdam/asc-ui';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../../utils';
@@ -65,7 +64,6 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 
 	return (
 		<IndividualFieldsFormStyle>
-			<Heading forwardedAs="h3">Bestand: {file.id}</Heading>
 			<Form
 				schema={schema}
 				uischema={uischema}
