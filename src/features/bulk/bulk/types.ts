@@ -3,7 +3,7 @@ import { JsonForms } from '@jsonforms/react';
 import { ComponentProps } from 'react';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
-import { IBulkField, IBulkFile, IBulkState } from './store/model';
+import { IBulkField, IBulkFile } from './store/model';
 
 export type Asset = {
 	code: string;
@@ -19,7 +19,7 @@ export interface Props<T> {
 	onClose: () => void;
 	onFileSuccess: (file: CustomFileLight) => Promise<IBulkFile>;
 	onFileRemove?: (file: CustomFileLightOrRejection) => void;
-	onMetadataSubmit: (data: IBulkState) => Promise<void>;
+	onMetadataSubmit: (data: IBulkFile[]) => Promise<void>;
 
 	getPostUrl: (file: CustomFileLight) => Promise<string>;
 	getHeaders: FileUploadProps['getHeaders'];

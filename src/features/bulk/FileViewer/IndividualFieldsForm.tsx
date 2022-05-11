@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Heading } from '@amsterdam/asc-ui';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../../utils';
