@@ -65,7 +65,6 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 
 	return (
 		<IndividualFieldsFormStyle>
-			<Heading forwardedAs="h3">Bestand: {file.id}</Heading>
 			<Form
 				schema={schema}
 				uischema={uischema}
