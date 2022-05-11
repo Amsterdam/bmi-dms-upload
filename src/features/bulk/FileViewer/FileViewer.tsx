@@ -32,7 +32,6 @@ export default function FileViewer(props: Props) {
 	const defaultFields = useAppSelector(getDefaultFields);
 
 	useEffect(() => {
-		console.log('file id changed')
 		const asyncGetDocumentViewUrl = async () => {
 			setDocumentUrl(await getDocumentViewUrl(file.id));
 		};
