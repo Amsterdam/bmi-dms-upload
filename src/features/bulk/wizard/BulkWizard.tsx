@@ -12,7 +12,7 @@ import { Props } from '../bulk/types';
 import { getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
-import { ModalContentStyle, ModalTopBarStyle } from './styles';
+import { ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { reduceMetadata } from '../bulk/utils';
 
 type BulkWizardProps<T> = {
@@ -85,7 +85,7 @@ export default function BulkWizard<T>({
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
-			<Modal
+			<ModalStyle
 				id="dms-upload-wizard"
 				open
 				onClose={() => confirm()}
@@ -123,7 +123,7 @@ export default function BulkWizard<T>({
 						dataTestId: 'save-button',
 					}}
 				/>
-			</Modal>
+			</ModalStyle>
 		</>
 	);
 }

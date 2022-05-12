@@ -20,7 +20,7 @@ jest.mock('@amsterdam/bmi-component-library', () => ({
 }));
 
 // Mock IndividualFieldsForm because <Form> doesn't return anything
-jest.mock('./IndividualFieldsForm', () => {
+jest.mock('./IndividualFieldsForm/IndividualFieldsForm', () => {
 	return jest.fn().mockImplementation(({ fields }) => {
 		return (
 			<div data-testid="form">
@@ -36,17 +36,17 @@ afterEach(() => {
 	jest.restoreAllMocks();
 });
 
+const defaultStore = {
+	bulk: {
+		files: filesMock,
+		fields: fieldsMock,
+	},
+};
+
 describe('<FileViewer />', () => {
 	test('Default fields are rendered', async () => {
-		const store = {
-			bulk: {
-				files: filesMock,
-				fields: fieldsMock,
-			},
-		};
-
 		await act( async () => {
-			render(<FileViewer {...defaultProps} />, { store });
+			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
 		expect(screen.getByText('Field 1')).toBeDefined();
@@ -54,30 +54,16 @@ describe('<FileViewer />', () => {
 	});
 
 	test('Individual fields are rendered', async () => {
-		const store = {
-			bulk: {
-				files: filesMock,
-				fields: fieldsMock,
-			},
-		};
-
 		await act( async () => {
-			render(<FileViewer {...defaultProps} />, { store });
+			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
 		expect(screen.getByText('Field 2')).toBeDefined();
 	});
 
 	test('DocumentViewer is called with correct data', async () => {
-		const store = {
-			bulk: {
-				files: filesMock,
-				fields: fieldsMock,
-			},
-		};
-
 		await act( async () => {
-			render(<FileViewer {...defaultProps} />, { store });
+			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
 		const DocumentViewerMock = mocked(DocumentViewer);

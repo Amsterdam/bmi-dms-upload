@@ -1,4 +1,4 @@
-import { CurrentStep } from "./store/model"
+import { CurrentStep } from './store/model';
 
 export enum BulkStepsToRoutes {
 	'/',
@@ -12,6 +12,6 @@ export const BulkRoutesToSteps = new Map([
 	[BulkStepsToRoutes[1], CurrentStep.Upload],
 	[BulkStepsToRoutes[2], CurrentStep.SelectFields],
 	[BulkStepsToRoutes[3], CurrentStep.EditFields],
-])
+]);
 
-export const DEFAULT_DEBOUNCE = 500;
+export const DEFAULT_DEBOUNCE: number = 500;

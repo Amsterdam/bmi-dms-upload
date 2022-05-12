@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyledDescriptionList, StyledDescriptionListItem } from './styles';
 
-import { IBulkField } from '../bulk/store/model';
+import { IBulkField } from '../../bulk/store/model';
 
 export type Props = {
-	fields: IBulkField[] | undefined;
+	fields?: IBulkField[];
 };
 
 export default function DefaultFieldsTable({ fields }: Props) {

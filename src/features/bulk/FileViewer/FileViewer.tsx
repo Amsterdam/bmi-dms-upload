@@ -8,8 +8,8 @@ import { getChangeIndividualFields, getDefaultFields, getFields } from '../bulk/
 import { IBulkFile } from '../bulk/store/model';
 import { TGetDocumentViewUrl } from '../bulk/types';
 
-import DefaultFieldsTable from './DefaultFieldsTable';
-import IndividualFieldsForm from './IndividualFieldsForm';
+import DefaultFieldsTable from './DefaultFieldsTable/DefaultFieldsTable';
+import IndividualFieldsForm from './IndividualFieldsForm/IndividualFieldsForm';
 import {
 	FileViewerDocumentInnerStyle,
 	FileViewerDocumentStyle,

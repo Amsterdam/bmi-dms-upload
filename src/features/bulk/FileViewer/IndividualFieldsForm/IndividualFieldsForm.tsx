@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { createSchemaFromMetadataProps, createUISchemaCompactFromMetadataProps } from '../../../utils';
-import { MetadataGenericType } from '../../../types';
-import Form from '../../../components/Form/Form';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { createSchemaFromMetadataProps, createUISchemaIndividualFieldsFromMetadataProps } from '../../../../utils';
+import { MetadataGenericType } from '../../../../types';
+import Form from '../../../../components/Form/Form';
 
-import { IBulkField, IBulkFile, IBulkFileMetadata } from '../bulk/store/model';
+import { IBulkField, IBulkFile, IBulkFileMetadata } from '../../bulk/store/model';
 import {
 	convertBulkFieldsToBulkFileMetadata,
 	convertBulkFieldsToMetadataProperties,
 	convertBulkFileMetadataToMetadataGenericTypes,
 	identicalObjects,
 	reduceMetadata,
-} from '../bulk/utils';
+} from '../../bulk/utils';
 import { IndividualFieldsFormStyle } from './styles';
-import { setFileMetadata } from '../bulk/store/slice';
-import { getFieldsForFile } from '../bulk/store/selectors';
+import { setFileMetadata } from '../../bulk/store/slice';
+import { getFieldsForFile } from '../../bulk/store/selectors';
 
 export type Props = {
 	fieldData: any;
@@ -29,14 +29,13 @@ const getMergedData = (fields: IBulkField[], fileFields: IBulkFileMetadata[] | u
 		reduceMetadata(convertBulkFieldsToBulkFileMetadata(fields), fileFields),
 	);
 
-export default function IndividualFieldsForm({ ...props }: Props) {
-	const { fields, onChange, file } = props;
+export default function IndividualFieldsForm({ fields, onChange, file }: Props) {
 	const dispatch = useAppDispatch();
 
 	const fileFields = useAppSelector((state) => getFieldsForFile(state, file.id));
 	const metadataProperties = convertBulkFieldsToMetadataProperties(fields);
 	const schema = createSchemaFromMetadataProps(metadataProperties, false);
-	const uischema = createUISchemaCompactFromMetadataProps(metadataProperties);
+	const uischema = createUISchemaIndividualFieldsFromMetadataProps(metadataProperties);
 
 	const [data, setData] = useState<MetadataGenericType>({});
 
@@ -47,14 +46,13 @@ export default function IndividualFieldsForm({ ...props }: Props) {
 			dispatch(
 				setFileMetadata({
 					fileId: file.id,
-					metadata: Object.keys(newData).map((key) => {
-						const obj = newData[key] as MetadataGenericType;
-
-						return {
-							id: key,
-							value: obj['value'],
-						} as IBulkFileMetadata;
-					}),
+					metadata: Object.keys(newData).map(
+						(key) =>
+							({
+								id: key,
+								value: (newData[key] as MetadataGenericType).value,
+							} as IBulkFileMetadata),
+					),
 				}),
 			);
 
