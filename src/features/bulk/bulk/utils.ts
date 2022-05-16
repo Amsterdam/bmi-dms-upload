@@ -1,14 +1,10 @@
 import { MetadataGenericType, MetadataProperty } from '../../../types';
 import { IBulkField, IBulkFileMetadata, IFieldData } from './store/model';
 
-function convertStringToKey(string: string): string {
-	return string.toLowerCase().replace(' ', '_');
-}
-
 export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): MetadataProperty[] {
 	return fields.map((field) => {
 		const item: MetadataProperty = {
-			key: convertStringToKey(field.id),
+			key: field.id,
 			scope: 'string',
 			type: 'string',
 			format: field.type === 'date' ? 'date' : undefined,

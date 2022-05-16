@@ -2,14 +2,10 @@ import { MetadataProperty } from '../types';
 import { IDmsDynamicFormField } from './types';
 import { IBulkField } from '../features/bulk/bulk/store/model';
 
-function convertStringToKey(string: string): string {
-	return string.toLowerCase().replace(' ', '_');
-}
-
 export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynamicFormField[]): MetadataProperty[] {
 	return fields.map((field) => {
 		const item: MetadataProperty = {
-			key: convertStringToKey(field.placeholder),
+			key: `${field.id}`,
 			scope: 'string',
 			type: 'string',
 			label: field.placeholder,
@@ -18,11 +14,6 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		if (field.required) {
 			item['bmi-isNotEmpty'] = field.required;
 		}
-
-		// @todo: is there an error string from DMS?
-		// if (field.error.message) {
-		// 	item['bmi-errorMessage'] = field.error.message;
-		// }
 
 		if (field.type === 'DateType') {
 			item.format = 'date';
@@ -47,7 +38,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
 	return fields.map((field) => ({
-		id: convertStringToKey(field.placeholder),
+		id: `${field.id}`,
 		label: field.placeholder,
 		value: field.userValue ?? '',
 		changeIndividual: false,
