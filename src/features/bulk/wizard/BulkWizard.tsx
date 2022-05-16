@@ -9,7 +9,7 @@ import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
 import { Props } from '../bulk/types';
-import { getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
+import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
 import { ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
@@ -40,6 +40,7 @@ export default function BulkWizard<T>({
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const files = useAppSelector(getFiles);
+	const individualFields = useAppSelector(getChangeIndividualFields);
 	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
@@ -71,12 +72,29 @@ export default function BulkWizard<T>({
 		[files, isValidForm],
 	);
 
-	function isSaveDisabled(): boolean {
+	const isSaveDisabled = useCallback((): boolean => {
+		let isAllValid = false;
 		const hasFiles = files && files.length > 0;
-		const isSaveStep = currentStep === CurrentStep.EditFields;
-		const isAllValid = hasFiles && isValidForm && isSaveStep;
+		const hasIndividualFields = individualFields && individualFields.length > 0;
+
+		// Show save in step 2 when:
+		// - hasFiles = true
+		// - isValidForm = true
+		// - hasIndividualFields = false
+		if (currentStep === CurrentStep.SelectFields) {
+			isAllValid = hasFiles && !hasIndividualFields && isValidForm;
+		}
+
+		// Show save in step 3 when:
+		// - hasFiles = true
+		// - isValidForm = true
+		// - hasIndividualFields = true
+		else if (currentStep === CurrentStep.EditFields) {
+			isAllValid = hasFiles && hasIndividualFields && isValidForm;
+		}
+
 		return !isAllValid;
-	}
+	}, [files, individualFields, isValidForm]);
 
 	return (
 		<>
