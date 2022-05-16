@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.24](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.23...v0.0.3-alpha.24) (2022-05-16)
+
+
+### Bug Fixes
+
+* **metadata:** add more slice tests ([09734b9](https://github.com/Amsterdam/bmi-dms-upload/commit/09734b9e8706dbe1cfbecad311394e19702cdaae))
+* **metadata:** bug BDMS-3769 ([f8e1e72](https://github.com/Amsterdam/bmi-dms-upload/commit/f8e1e7282fc2c36a08f5b757bd537485bab10fbc))
+* **metadata:** use proper id in state for fields ([3e5384c](https://github.com/Amsterdam/bmi-dms-upload/commit/3e5384c20347d4b57cc8b0599f3cefe089108be1))
+
 ### [0.0.3-alpha.23](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.22...v0.0.3-alpha.23) (2022-05-12)
 
 
