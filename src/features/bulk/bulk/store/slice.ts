@@ -14,10 +14,8 @@ export const slice = createSlice({
 	name: 'dms_bulk',
 	initialState,
 	reducers: {
-		// PayloadAction<any> because issues with converting the type from uknown to something useful!!!
 		removeFile: (state: IBulkState, action: PayloadAction<CustomFileLightOrRejection>) => {
-			const newFiles = state.files.filter((file) => file.uploadedFile.tmpId !== action.payload.tmpId);
-			state.files = newFiles;
+			state.files = state.files.filter((file) => file.uploadedFile.tmpId !== action.payload.tmpId);
 		},
 		resetState: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => initialState,
 		setCurrentStep: (state: IBulkState, action: PayloadAction<CurrentStep>) => {
@@ -28,15 +26,6 @@ export const slice = createSlice({
 		},
 		setFile: (state: IBulkState, action: PayloadAction<IBulkFile>) => {
 			state.files = [...state.files, action.payload];
-		},
-		setFile2: (state: IBulkState, action: PayloadAction<IBulkFile>) => {
-			const { id, uploadedFile, metadata } = action.payload;
-			const newFile: IBulkFile = {
-				id,
-				uploadedFile,
-				metadata,
-			};
-			state.files = [...state.files, newFile];
 		},
 		setFileMetadata: (state: IBulkState, action: PayloadAction<{ fileId: IBulkFile['id'], metadata: IBulkFile['metadata']}>) => {
 			const file = state.files.find(file => file.id === action.payload.fileId)

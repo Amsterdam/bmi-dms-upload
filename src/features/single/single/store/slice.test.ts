@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
 import { CurrentStep } from './model';
-import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata } from './slice';
+import { state as stateMock } from '../__stubs__'
+import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata, removeFile } from './slice';
 import { file } from '../__stubs__';
 
 jest.mock('react-router-dom')
@@ -58,5 +59,12 @@ describe('Single Slice', () => {
 		});
 	});
 
-	test.todo('removeFile')
+	test('should handle file being removed', () => {
+		expect(
+			reducer(
+				stateMock,
+				removeFile()
+			),
+		).toEqual(initialState);
+	})
 });

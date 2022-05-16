@@ -1,9 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { CurrentStep } from './model';
-import { reducer, initialState, setCurrentStep, resetState, setFile, setFields } from './slice';
-import { files as filesMock, fields as fieldsMock } from '../__stubs__';
 
-jest.mock('react-router-dom')
+import { CustomFileLightOrRejection } from '../../../../types';
+import { files as filesMock, fields as fieldsMock, state as stateMock } from '../__stubs__';
+import {
+	reducer,
+	initialState,
+	setCurrentStep,
+	resetState,
+	setFile,
+	setFields,
+	removeFile,
+	setFileMetadata,
+} from './slice';
+import { CurrentStep } from './model';
+
+jest.mock('react-router-dom');
 
 describe('Bulk Slice', () => {
 	test('should return the initial state', () => {
@@ -24,11 +35,11 @@ describe('Bulk Slice', () => {
 							label: 'some-label',
 							value: 'some-value',
 							changeIndividual: false,
-							type: 'text'
+							type: 'text',
 						},
 					],
 				},
-				resetState({navigate}),
+				resetState({ navigate }),
 			),
 		).toEqual(initialState);
 	});
@@ -54,6 +65,17 @@ describe('Bulk Slice', () => {
 		});
 	});
 
-	test.todo('removeFile')
-	test.todo('setFileMetadata')
+	test('should handle file being removed', () => {
+		expect(stateMock.files.length).toBe(2);
+		expect(reducer(stateMock, removeFile(filesMock[0].uploadedFile as CustomFileLightOrRejection)).files.length).toBe(
+			1,
+		);
+	});
+
+	test('should handle file Metadata being set', () => {
+		const newValues = { id: 'field-1', value: 'New Field 1 value' };
+		expect(reducer(stateMock, setFileMetadata({ fileId: '1', metadata: [newValues] })).files[0].metadata).toStrictEqual(
+			[newValues],
+		);
+	});
 });

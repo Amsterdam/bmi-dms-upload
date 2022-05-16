@@ -50,10 +50,6 @@ export default function BulkWizard<T>({
 		dispatch(stepForward({ navigate }));
 	}, [navigate]);
 
-	const close = useCallback(() => {
-		dispatch(resetState({ navigate }));
-	}, [navigate]);
-
 	function resetAndClose() {
 		dispatch(resetState({ navigate }));
 		onCancel({}).catch((err) => {
@@ -66,7 +62,7 @@ export default function BulkWizard<T>({
 			e.preventDefault();
 			if (files && isValidForm) {
 				onMetadataSubmit(makeMetadataObject(state))
-					.then(() => close())
+					.then(() => resetAndClose())
 					.catch((err) => {
 						console.error(err); // @TODO handle error gracefully
 					});

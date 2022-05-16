@@ -9,9 +9,9 @@ const customFile1: CustomFileLight = {
 };
 
 const customFile2: CustomFileLight = {
-	tmpId: 1,
+	tmpId: 2,
 	type: 'application/pdf',
-	name: 'custom file 1',
+	name: 'custom file 2',
 	size: 20000,
 };
 
