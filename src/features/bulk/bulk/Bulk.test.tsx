@@ -7,11 +7,12 @@ import { Props } from './types';
 import { CurrentStep } from './store/model';
 import { BulkStepsToRoutes } from './constants';
 import { Bulk } from './Bulk';
-import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from './__mocks__/bulk';
+import { getDocumentViewUrlMock, getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from './__mocks__/bulk';
 
 const defaultProps: Props<MetadataExample> = {
 	asset: asset,
 	onClose: () => onCloseMock(),
+	getDocumentViewUrl: getDocumentViewUrlMock,
 	getPostUrl: getPostUrlMock,
 	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,

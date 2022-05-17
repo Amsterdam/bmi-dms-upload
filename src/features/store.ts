@@ -32,7 +32,6 @@ export const store = configureStore({
 				ignoredActions: [
 					'dms_bulk/removeFile',
 					'dms_bulk/resetState',
-					'dms_bulk/setFieldData',
 					'dms_bulk/setFields',
 					'dms_bulk/setFile',
 					'dms_bulk/stepBack',

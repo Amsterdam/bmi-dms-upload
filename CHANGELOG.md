@@ -2,11 +2,92 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.3-alpha.15](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.15) (2022-04-13)
+### [0.0.3-alpha.26](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.25...v0.0.3-alpha.26) (2022-05-17)
 
 
 ### Bug Fixes
 
+* **meteadata:** fix when to show save button in step 3 ([69c1a31](https://github.com/Amsterdam/bmi-dms-upload/commit/69c1a31153328a47dede8c5aa0d0d77c769e5538))
+
+### [0.0.3-alpha.25](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.24...v0.0.3-alpha.25) (2022-05-17)
+
+### [0.0.3-alpha.24](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.23...v0.0.3-alpha.24) (2022-05-16)
+
+
+### Bug Fixes
+
+* **metadata:** add more slice tests ([09734b9](https://github.com/Amsterdam/bmi-dms-upload/commit/09734b9e8706dbe1cfbecad311394e19702cdaae))
+* **metadata:** bug BDMS-3769 ([f8e1e72](https://github.com/Amsterdam/bmi-dms-upload/commit/f8e1e7282fc2c36a08f5b757bd537485bab10fbc))
+* **metadata:** use proper id in state for fields ([3e5384c](https://github.com/Amsterdam/bmi-dms-upload/commit/3e5384c20347d4b57cc8b0599f3cefe089108be1))
+
+### [0.0.3-alpha.23](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.22...v0.0.3-alpha.23) (2022-05-12)
+
+
+### Bug Fixes
+
+* **metadata:** fix pr feedback ([9bb899e](https://github.com/Amsterdam/bmi-dms-upload/commit/9bb899e9aaa08872cbcc57186b816075e192d918))
+
+### [0.0.3-alpha.22](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.21...v0.0.3-alpha.22) (2022-05-11)
+
+
+### Bug Fixes
+
+* **metadata:** pr feedback ([1484e08](https://github.com/Amsterdam/bmi-dms-upload/commit/1484e08ea771f2ffa12bf7e63fc51114e5ea7164))
+
+### [0.0.3-alpha.21](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.20...v0.0.3-alpha.21) (2022-05-11)
+
+
+### Bug Fixes
+
+* **metadata:** fix onMetadataSubmit ([e0f2c59](https://github.com/Amsterdam/bmi-dms-upload/commit/e0f2c59baf4ba9a91944ac793fa99f5f618c5cee))
+* **metadata:** fix reload documentviewer on each change in form ([6b11cec](https://github.com/Amsterdam/bmi-dms-upload/commit/6b11cec62fbca0fe0a06f870687bf62f3960fef4))
+* **metadata:** linting ([fe688df](https://github.com/Amsterdam/bmi-dms-upload/commit/fe688dfe20f0f2108fc298303e4e5ca5fcf62fb8))
+* **metadata:** onMetadataSubmit submits actual data ([5ce8063](https://github.com/Amsterdam/bmi-dms-upload/commit/5ce8063b556cd9adcf76fb435999b8e56587cf7d))
+* **metadata:** remove console.log ([1d648de](https://github.com/Amsterdam/bmi-dms-upload/commit/1d648de2d8398e5f59a177f1f087bd8ccb60ad70))
+* **metadata:** remove duplicate header filename ([125c6f1](https://github.com/Amsterdam/bmi-dms-upload/commit/125c6f15cd1b117b855f7484fbdd645ccaab8e70))
+* **metadata:** small layout tweaks to fileviewer ([dcc999f](https://github.com/Amsterdam/bmi-dms-upload/commit/dcc999f0edc1e0a0ee6c65be21f4bdd3dbe2f067))
+
+### [0.0.3-alpha.15](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.15) (2022-04-13)
+
+### [0.0.3-alpha.20](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.19...v0.0.3-alpha.20) (2022-05-09)
+
+
+### Bug Fixes
+
+* **metadata:** change documentviewer implementation ([1e6b13f](https://github.com/Amsterdam/bmi-dms-upload/commit/1e6b13f7247a46826c200bd0d9b703543a2dc188))
+
+### [0.0.3-alpha.19](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.18...v0.0.3-alpha.19) (2022-05-05)
+
+
+### Features
+
+* **metadata:** add ui for required fields ([8b4d527](https://github.com/Amsterdam/bmi-dms-upload/commit/8b4d527636541c0e4d93c2ae2d597ed6d11d1495))
+
+### [0.0.3-alpha.18](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.17...v0.0.3-alpha.18) (2022-05-04)
+
+
+### Bug Fixes
+
+* **metadata:** add token to getDocumentViewUrl, fix tests ([1ed4d20](https://github.com/Amsterdam/bmi-dms-upload/commit/1ed4d209faf28e37cb78bf2ed7fa6ff7ede30901))
+
+### [0.0.3-alpha.17](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.16...v0.0.3-alpha.17) (2022-05-03)
+
+
+### Features
+
+* **metadata:** edit metadata per file ([3ea1930](https://github.com/Amsterdam/bmi-dms-upload/commit/3ea193027ef924e22e0123863308c163d8536384))
+
+### [0.0.3-alpha.16](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.14...v0.0.3-alpha.16) (2022-04-28)
+
+
+### Features
+
+* **bulk:** step3, wip ([09947fa](https://github.com/Amsterdam/bmi-dms-upload/commit/09947fa070840892e8d40164b9451d9f1bcf3aa0))
+
+
+### Bug Fixes
+
+* **bulk:** add metadata per file in step3, store in state correctly ([2ead469](https://github.com/Amsterdam/bmi-dms-upload/commit/2ead4691f05ea4e2a6e91d5010a617a6ec754522))
 * **bulk:** debounce setFieldData ([11c47b4](https://github.com/Amsterdam/bmi-dms-upload/commit/11c47b49384ad13e7bed97bb48ab3e16f904ed88))
 * **bulk:** first round of PR feedback ([d6dc138](https://github.com/Amsterdam/bmi-dms-upload/commit/d6dc138744caa0b8b30c7d21ba009504e448ccd1))
 * **bulk:** fourth round of PR feedback, fix bug with saving form data between navigating wizard ([7a1d5b1](https://github.com/Amsterdam/bmi-dms-upload/commit/7a1d5b1daf81d924d98bdcc6d45e55452083a329))

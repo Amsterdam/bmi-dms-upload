@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import debounce from 'debounce';
 
 import { MetadataGenericType } from '../../../types';
 import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
-import { BulkStepsToRoutes } from '../bulk/constants';
+import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
 import { getFields, getFiles } from '../bulk/store/selectors';
-import { setFieldData } from '../bulk/store/slice';
+import { setFields } from '../bulk/store/slice';
 import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { convertBulkMetadataFieldToMetadataGenericType } from '../bulk/utils';
-import debounce from 'debounce';
+import { convertBulkFieldsToMetadataGenericTypes, identicalObjects, reduceFieldData } from '../bulk/utils';
 
 export interface Step2Props<T> extends Props<T> {}
 
@@ -24,10 +24,12 @@ export default function Step2<T>(props: Step2Props<T>) {
 
 	const handleOnChange = useCallback(
 		debounce((data: MetadataGenericType, valid: boolean) => {
-			if (JSON.stringify(data) !== JSON.stringify(convertBulkMetadataFieldToMetadataGenericType(fields)))
-				dispatch(setFieldData(data));
+			if (fields && !identicalObjects(data, convertBulkFieldsToMetadataGenericTypes(fields))) {
+				const newFields = reduceFieldData(data, fields);
+				dispatch(setFields(newFields));
+			}
 			setIsValidForm(valid);
-		}, 500),
+		}, DEFAULT_DEBOUNCE),
 		[fields],
 	);
 
@@ -41,7 +43,7 @@ export default function Step2<T>(props: Step2Props<T>) {
 					schema={metadataForm.schema}
 					uischema={metadataForm.uischema}
 					renderers={metadataForm.renderers}
-					data={convertBulkMetadataFieldToMetadataGenericType(fields)}
+					data={convertBulkFieldsToMetadataGenericTypes(fields)}
 					onChange={handleOnChange}
 				/>
 			</BulkWizard>

@@ -7,29 +7,40 @@ import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTe
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CurrentStep } from '../bulk/store/model';
+import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
 import { Props } from '../bulk/types';
-import { getCurrentStep, getFiles } from '../bulk/store/selectors';
+import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
-import { ModalContentStyle, ModalTopBarStyle } from './styles';
+import { ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
+import { reduceMetadata } from '../bulk/utils';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
-	isValidForm?: boolean;
+	isValidForm: boolean;
 } & Props<T>;
+
+const makeMetadataObject = (state: IBulkState): IBulkFile[] => {
+	return state.files.map((file) => ({
+		id: file.id,
+		metadata: reduceMetadata(state.fields, file.metadata),
+		uploadedFile: file.uploadedFile,
+	}));
+};
 
 export default function BulkWizard<T>({
 	children,
 	asset,
-	isValidForm,
+	isValidForm = false,
 	onCancel,
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
+	const state = useAppSelector(getState);
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const files = useAppSelector(getFiles);
+	const individualFields = useAppSelector(getChangeIndividualFields);
 	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
@@ -40,10 +51,6 @@ export default function BulkWizard<T>({
 		dispatch(stepForward({ navigate }));
 	}, [navigate]);
 
-	const close = useCallback(() => {
-		dispatch(resetState({ navigate }));
-	}, [navigate]);
-
 	function resetAndClose() {
 		dispatch(resetState({ navigate }));
 		onCancel({}).catch((err) => {
@@ -51,11 +58,15 @@ export default function BulkWizard<T>({
 		});
 	}
 
+	function close() {
+		dispatch(resetState({ navigate }));
+	}
+
 	const handleSubmit = useCallback(
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 			if (files && isValidForm) {
-				onMetadataSubmit({ todo: true })
+				onMetadataSubmit(makeMetadataObject(state))
 					.then(() => close())
 					.catch((err) => {
 						console.error(err); // @TODO handle error gracefully
@@ -65,17 +76,42 @@ export default function BulkWizard<T>({
 		[files, isValidForm],
 	);
 
-	function isSaveDisabled() {
+	const isSaveDisabled = useCallback((): boolean => {
+		let isAllValid = false;
 		const hasFiles = files && files.length > 0;
-		const isSaveStep = currentStep === CurrentStep.EditFields;
-		const isAllValid = hasFiles && isValidForm && isSaveStep;
+		const hasIndividualFields = individualFields && individualFields.length > 0;
+
+		// Show save in step 2 when:
+		// - hasFiles = true
+		// - isValidForm = true
+		// - hasIndividualFields = false
+		if (currentStep === CurrentStep.SelectFields) {
+			isAllValid = hasFiles && !hasIndividualFields && isValidForm;
+		}
+
+		// Show save in step 3 when:
+		// - hasIndividualFields = false
+		// else:
+		// - hasFiles = true
+		// - isValidForm = true
+		else if (currentStep === CurrentStep.EditFields) {
+			isAllValid = !hasIndividualFields ? true : hasFiles && isValidForm
+		}
+
 		return !isAllValid;
-	}
+	}, [files, individualFields, isValidForm]);
 
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
-			<Modal id="dms-upload-wizard" open onClose={() => confirm()} closeOnBackdropClick={false}>
+			<ModalStyle
+				id="dms-upload-wizard"
+				open
+				onClose={() => confirm()}
+				closeOnBackdropClick={false}
+				size="xl"
+				classnames="modal--bulk"
+			>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
 						Bestanden uploaden voor {asset.name}
@@ -95,7 +131,7 @@ export default function BulkWizard<T>({
 					}}
 					next={{
 						visible: currentStep < CurrentStep.EditFields,
-						disabled: files?.length === 0,
+						disabled: !isValidForm,
 						onClick: handleNext,
 						dataTestId: 'next-button',
 					}}
@@ -106,7 +142,7 @@ export default function BulkWizard<T>({
 						dataTestId: 'save-button',
 					}}
 				/>
-			</Modal>
+			</ModalStyle>
 		</>
 	);
 }

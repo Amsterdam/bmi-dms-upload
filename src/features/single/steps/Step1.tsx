@@ -10,7 +10,7 @@ import { setFile, removeFile } from '../single/store/slice';
 import { Step1Styles } from './styles';
 
 export default function Step1<T>(props: Props<T>) {
-	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess } = props;
+	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, uploadHTTPMethod } = props;
 
 	const dispatch = useAppDispatch();
 	const file = useAppSelector(getFile);
@@ -41,7 +41,7 @@ export default function Step1<T>(props: Props<T>) {
 					fileUploadInProgressLabel="wordt geupload"
 					getHeaders={getHeaders}
 					getPostUrl={getPostUrl}
-					httpMethod="POST"
+					httpMethod={uploadHTTPMethod}
 					onFileRemove={handleFileRemove}
 					onFileSuccess={handleFileSuccess}
 					options={{ noClick: true, noKeyboard: true, maxFiles: 1 }}

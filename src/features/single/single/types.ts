@@ -15,7 +15,7 @@ export interface Props<T> {
 	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
 	onClose: () => void;
 	onFileSuccess?: (file: CustomFileLight) => void;
-	onFileRemove?: (file: CustomFileLightOrRejection) => void
+	onFileRemove?: (file: CustomFileLightOrRejection) => void;
 	onMetadataSubmit: (data: MetadataDataSubmitCallbackArg<T>) => Promise<void>;
 
 	getPostUrl: (file: CustomFileLight) => Promise<string>;

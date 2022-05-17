@@ -9,43 +9,47 @@ const customFile1: CustomFileLight = {
 };
 
 const customFile2: CustomFileLight = {
-	tmpId: 1,
+	tmpId: 2,
 	type: 'application/pdf',
-	name: 'custom file 1',
+	name: 'custom file 2',
 	size: 20000,
 };
 
 export const fields: IBulkField[] = [
 	{
-		id: '1',
+		id: 'field-1',
 		label: 'Field 1',
 		value: 'Field 1 Value',
 		changeIndividual: false,
+		type: 'text'
 	},
 	{
-		id: '2',
+		id: 'field-2',
 		label: 'Field 2',
 		value: 'Field 2 Value',
 		changeIndividual: true,
+		type: 'text',
+		required: true,
 	},
 	{
-		id: '3',
+		id: 'field-3',
 		label: 'Field 3',
 		value: 'Field 3 Value',
 		changeIndividual: false,
+		type: 'text'
 	}
 ]
 
 export const files: IBulkFile[] = [
 	{
 		id: '1',
-		url: 'file-1-url',
 		uploadedFile: customFile1,
+		metadata: []
 	},
 	{
 		id: '2',
-		url: 'file-2-url',
 		uploadedFile: customFile2,
+		metadata: []
 	},
 ]
 

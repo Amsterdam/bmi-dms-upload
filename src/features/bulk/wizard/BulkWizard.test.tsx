@@ -1,9 +1,19 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
-import { CurrentStep  } from '../bulk/store/model';
-import { asset, files as filesMock, mockData, schema, uischema } from '../bulk/__stubs__';
-import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from '../bulk/__mocks__/bulk';
+import { CurrentStep } from '../bulk/store/model';
+import { asset, state as mockState, mockData, schema, uischema } from '../bulk/__stubs__';
+import {
+	getDocumentViewUrlMock,
+	getHeadersMock,
+	getPostUrlMock,
+	onCancelMock,
+	onChangeMock,
+	onCloseMock,
+	onFileRemoveMock,
+	onFileSuccessMock,
+	onMetadataSubmitMock,
+} from '../bulk/__mocks__/bulk';
 import BulkWizard from './BulkWizard';
 
 const defaultProps = {
@@ -11,6 +21,7 @@ const defaultProps = {
 	onClose: () => onCloseMock(),
 	getPostUrl: getPostUrlMock,
 	getHeaders: getHeadersMock,
+	getDocumentViewUrl: getDocumentViewUrlMock,
 	onFileSuccess: onFileSuccessMock,
 	onFileRemove: onFileRemoveMock,
 	metadataForm: {
@@ -45,7 +56,7 @@ describe('<BulkWizard />', () => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
-			const buttonAccept = await screen.getByText('Akkoord')
+			const buttonAccept = await screen.getByText('Akkoord');
 			act(() => {
 				fireEvent.click(buttonAccept);
 			});
@@ -70,7 +81,6 @@ describe('<BulkWizard />', () => {
 
 	describe('Previous button', () => {
 		test('is not rendered on the first step', () => {
-
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, {});
 			});
@@ -78,14 +88,8 @@ describe('<BulkWizard />', () => {
 		});
 
 		test('is rendered on steps after the first step', () => {
-			const store = {
-				bulk: {
-					currentStep: CurrentStep.SelectFields,
-				},
-			};
-
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, { store });
+				render(<BulkWizard {...defaultProps} />, { bulk: mockState });
 			});
 			expect(screen.queryByText('Vorige')).toBeDefined();
 		});
@@ -95,6 +99,7 @@ describe('<BulkWizard />', () => {
 		test('is not rendered on the last step', () => {
 			const store = {
 				bulk: {
+					...mockState,
 					currentStep: CurrentStep.EditFields,
 				},
 			};
@@ -107,6 +112,7 @@ describe('<BulkWizard />', () => {
 		test('is rendered on steps before the last', () => {
 			const store = {
 				bulk: {
+					...mockState,
 					currentStep: CurrentStep.Upload,
 				},
 			};
@@ -118,31 +124,65 @@ describe('<BulkWizard />', () => {
 	});
 
 	describe('Save button', () => {
-		test('is disabled on steps before the last', () => {
+		test('is disabled on step 2 when there are no files', () => {
+			const store = {
+				bulk: {
+					...mockState,
+					files: [],
+					currentStep: CurrentStep.SelectFields,
+				},
+			};
 			act(() => {
-				render(<BulkWizard {...defaultProps} />, {});
+				render(<BulkWizard {...defaultProps} />, { store });
 			});
 			expect(screen.queryByText('Opslaan')).toBeDisabled();
 		});
 
-		test('is enabled on last step', () => {
+		test('is disabled on step 2 when form is not valid', () => {
 			const store = {
 				bulk: {
-					currentStep: CurrentStep.EditFields,
-					files: filesMock
+					...mockState,
+					currentStep: CurrentStep.SelectFields,
+				},
+			};
+			act(() => {
+				render(<BulkWizard {...defaultProps} />, { store });
+			});
+			expect(screen.queryByText('Opslaan')).toBeDisabled();
+		});
+
+		test('is enabled on step 2 when there are files, form is valid and there are no individual fields', () => {
+			const store = {
+				bulk: {
+					...mockState,
+					fields: [mockState.fields[0]],
+					currentStep: CurrentStep.SelectFields,
 				},
 			};
 			act(() => {
 				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
 			});
-			expect(screen.queryByText('Opslaan')).not.toBeDisabled();
+			expect(screen.queryByText('Opslaan')).toBeEnabled();
+		});
+
+		test('is enabled on step 3 when there are files, form is valid and there individual fields', () => {
+			const store = {
+				bulk: {
+					...mockState,
+					currentStep: CurrentStep.EditFields,
+				},
+			};
+			act(() => {
+				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
+			});
+			expect(screen.queryByText('Opslaan')).toBeEnabled();
 		});
 
 		test('triggers onMetadataSubmit after save', async () => {
 			const store = {
 				bulk: {
+					...mockState,
 					currentStep: CurrentStep.EditFields,
-					files: filesMock
 				},
 			};
 
@@ -150,8 +190,8 @@ describe('<BulkWizard />', () => {
 				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
 			});
 
-			const button = screen.getByText('Opslaan')
-			expect(button).not.toBeDisabled();
+			const button = screen.getByText('Opslaan');
+			expect(button).toBeEnabled();
 
 			await waitFor(() => {
 				fireEvent.click(button);
