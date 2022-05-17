@@ -10,7 +10,6 @@ const AccessibleLabel = ({ label, htmlFor, isRequired, isRequiredLabel = '*' }: 
 	return (
 		<Label
 			htmlFor={htmlFor}
-			test-id={`schaap`}
 			label={
 				<>
 					{label} {isRequired && <i aria-hidden="true">{isRequiredLabel}</i>}
