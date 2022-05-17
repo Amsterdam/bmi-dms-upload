@@ -90,11 +90,12 @@ export default function BulkWizard<T>({
 		}
 
 		// Show save in step 3 when:
+		// - hasIndividualFields = false
+		// else:
 		// - hasFiles = true
 		// - isValidForm = true
-		// - hasIndividualFields = true
 		else if (currentStep === CurrentStep.EditFields) {
-			isAllValid = hasFiles && hasIndividualFields && isValidForm;
+			isAllValid = !hasIndividualFields ? true : hasFiles && isValidForm
 		}
 
 		return !isAllValid;
