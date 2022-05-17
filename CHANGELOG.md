@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-alpha.26](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.25...v0.0.3-alpha.26) (2022-05-17)
+
+
+### Bug Fixes
+
+* **meteadata:** fix when to show save button in step 3 ([69c1a31](https://github.com/Amsterdam/bmi-dms-upload/commit/69c1a31153328a47dede8c5aa0d0d77c769e5538))
+
 ### [0.0.3-alpha.25](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.24...v0.0.3-alpha.25) (2022-05-17)
 
 ### [0.0.3-alpha.24](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.23...v0.0.3-alpha.24) (2022-05-16)
