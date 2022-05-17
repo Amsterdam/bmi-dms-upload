@@ -58,12 +58,16 @@ export default function BulkWizard<T>({
 		});
 	}
 
+	function close() {
+		dispatch(resetState({ navigate }));
+	}
+
 	const handleSubmit = useCallback(
 		(e: SyntheticEvent) => {
 			e.preventDefault();
 			if (files && isValidForm) {
 				onMetadataSubmit(makeMetadataObject(state))
-					.then(() => resetAndClose())
+					.then(() => close())
 					.catch((err) => {
 						console.error(err); // @TODO handle error gracefully
 					});
