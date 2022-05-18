@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.3](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.2...v0.0.4-alpha.3) (2022-05-18)
+
+
+### Bug Fixes
+
+* **metadata:** cleanup metadata when changeIndividual changes on field ([eba04d2](https://github.com/Amsterdam/bmi-dms-upload/commit/eba04d20cb43619f0e00886d2bac4591ec05cf66))
+* **metadata:** tweak width for modal ([41ed956](https://github.com/Amsterdam/bmi-dms-upload/commit/41ed956d45d36a01d6f9ba93183e54a3cb0b0137))
+
 ### [0.0.4-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.26...v0.0.4-alpha.2) (2022-05-17)
 
 
