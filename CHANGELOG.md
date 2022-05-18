@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.26...v0.0.4-alpha.2) (2022-05-17)
+
+
+### Bug Fixes
+
+* **metadata:** removed obsolete test-id ([f0895b1](https://github.com/Amsterdam/bmi-dms-upload/commit/f0895b10eb7ccd4bb9b47a7cfd1a2069354d9567))
+
 ### [0.0.3-alpha.26](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.3-alpha.25...v0.0.3-alpha.26) (2022-05-17)
 
 
