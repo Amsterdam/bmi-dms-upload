@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.modal--bulk {
+		width: 90vw !important;
 		max-width: 1200px !important;
 	}
 `;
