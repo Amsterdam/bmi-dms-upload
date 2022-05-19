@@ -12,6 +12,7 @@ export enum CurrentStep {
 export interface IBulkFile {
 	id: string;
 	metadata?: IBulkFileMetadata[];
+	isMetadataValid?: boolean;
 	uploadedFile: CustomFileLight;
 }
 

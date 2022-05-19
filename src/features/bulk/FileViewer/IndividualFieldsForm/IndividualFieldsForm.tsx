@@ -14,7 +14,7 @@ import {
 	reduceMetadata,
 } from '../../bulk/utils';
 import { IndividualFieldsFormStyle } from './styles';
-import { setFileMetadata } from '../../bulk/store/slice';
+import { setFileMetadata, setFileMetadataValidity } from '../../bulk/store/slice';
 import { getFieldsForFile } from '../../bulk/store/selectors';
 
 export type Props = {
@@ -42,6 +42,13 @@ export default function IndividualFieldsForm({ fields, onChange, file }: Props) 
 	const handleOnChange = (newData: MetadataGenericType, valid: boolean) => {
 		if (!identicalObjects(data, newData)) {
 			setData(newData);
+
+			dispatch(
+				setFileMetadataValidity({
+					fileId: file.id,
+					isValid: valid,
+				}),
+			);
 
 			dispatch(
 				setFileMetadata({

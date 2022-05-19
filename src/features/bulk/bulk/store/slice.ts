@@ -32,6 +32,11 @@ export const slice = createSlice({
 			if (!file) return;
 			file.metadata = action.payload.metadata
 		},
+		setFileMetadataValidity: (state: IBulkState, action: PayloadAction<{ fileId: IBulkFile['id'], isValid: IBulkFile['isMetadataValid']}>) => {
+			const file = state.files.find(file => file.id === action.payload.fileId)
+			if (!file) return;
+			file.isMetadataValid = action.payload.isValid
+		},
 		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 	},
@@ -44,6 +49,7 @@ export const {
 	setFields,
 	setFile,
 	setFileMetadata,
+	setFileMetadataValidity,
 	stepBack,
 	stepForward,
 } = slice.actions;
