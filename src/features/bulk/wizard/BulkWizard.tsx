@@ -38,11 +38,10 @@ export default function BulkWizard<T>({
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
 	const state = useAppSelector(getState);
-	// const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const { isOpen: isConfirmTerminationOpen, confirm: setConfirmTermination } = useConfirmTermination(() =>
 		resetAndClose(),
 	);
-	const { isOpen: isConfirmSaveOpen, confirm: setConfirmSave } = useConfirmSave(() => save());
+	const { isOpen: isConfirmSaveOpen } = useConfirmSave(() => save());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const files = useAppSelector(getFiles);
@@ -156,7 +155,7 @@ export default function BulkWizard<T>({
 						<ModalContentStyle>
 							{filesHaveInvalidMetadata() && (
 								<AlertStyle level="error">
-									Er zit een fout in de metadata van het bestand op pagina's: {fileIndexesContainingInvalidMetadata().join(', ')}
+									Er zit een fout in de metadata van het bestand op pagina&apos;s: {fileIndexesContainingInvalidMetadata().join(', ')}
 								</AlertStyle>
 							)}
 							{children}
