@@ -95,12 +95,6 @@ export default function BulkWizard<T>({
 	const handleSubmit = useCallback(
 		(e: SyntheticEvent) => {
 			e.preventDefault();
-
-			// if (filesHaveInvalidMetadata()) {
-			// 	setConfirmSave();
-			// 	return;
-			// }
-
 			save();
 		},
 		[files, isValidForm],
