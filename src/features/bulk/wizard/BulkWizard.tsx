@@ -38,7 +38,6 @@ export default function BulkWizard<T>({
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
 	const state = useAppSelector(getState);
-	// const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const { isOpen: isConfirmTerminationOpen, confirm: setConfirmTermination } = useConfirmTermination(() =>
 		resetAndClose(),
 	);
