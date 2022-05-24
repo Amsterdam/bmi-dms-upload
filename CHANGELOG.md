@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.3...v0.0.4-alpha.4) (2022-05-24)
+
+
+### Bug Fixes
+
+* **bulk:** fix linting ([cf62105](https://github.com/Amsterdam/bmi-dms-upload/commit/cf62105028bc23d99a90c1ecd25fed6c1050c036))
+* **bulk:** remove obsolete commented code ([683e49f](https://github.com/Amsterdam/bmi-dms-upload/commit/683e49f70f84835c2af5ae110d19f8f54fcb5b0a))
+* **dev-api:** remove some lines from db.json ([a9045be](https://github.com/Amsterdam/bmi-dms-upload/commit/a9045be7a04fe0c86b4e1c703dc93678d7597375))
+* **metadata:** add header in step 2 ([ea8d723](https://github.com/Amsterdam/bmi-dms-upload/commit/ea8d72339f14325978d5edfcd65dc1b563df94fa))
+
 ### [0.0.4-alpha.3](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.2...v0.0.4-alpha.3) (2022-05-18)
 
 
