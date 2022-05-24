@@ -61,7 +61,7 @@ export default function FileViewer({ file, getDocumentViewUrl, onChange }: Props
 
 			<FileViewerDocumentStyle>
 				<FileViewerDocumentInnerStyle>
-					{documentUrl && <DocumentViewer uri={documentUrl} />}
+					{documentUrl && <DocumentViewer currentFilename={file.uploadedFile.name} uri={documentUrl} />}
 				</FileViewerDocumentInnerStyle>
 			</FileViewerDocumentStyle>
 		</FileViewerStyle>

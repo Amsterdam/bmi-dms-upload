@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ComponentProps } from 'react';
-import { Button, Heading, themeSpacing } from '@amsterdam/asc-ui';
+import { Alert, Button, Heading, themeSpacing } from '@amsterdam/asc-ui';
 import { Modal } from '@amsterdam/bmi-component-library';
 
 export const PreviousButtonStyle = styled(Button)`
@@ -27,3 +27,8 @@ export const ModalTopBarStyle = styled(Heading)<ComponentProps<typeof Heading>>`
 	line-height: 25px;
 	font-weight: 700;
 `;
+
+
+export const AlertStyle = styled(Alert)<ComponentProps<typeof Alert>>`
+	margin-bottom: ${themeSpacing(8)};
+`

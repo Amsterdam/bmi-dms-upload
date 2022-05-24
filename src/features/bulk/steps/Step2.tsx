@@ -11,6 +11,7 @@ import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { convertBulkFieldsToMetadataGenericTypes, identicalObjects, reduceFieldData } from '../bulk/utils';
+import { Heading } from '@amsterdam/asc-ui';
 
 export interface Step2Props<T> extends Props<T> {}
 
@@ -59,6 +60,7 @@ export default function Step2<T>(props: Step2Props<T>) {
 	} else {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
+				<Heading forwardedAs="h2">Bulk metadata toevoegen</Heading>
 				<BulkMetadataForm
 					schema={metadataForm.schema}
 					uischema={metadataForm.uischema}

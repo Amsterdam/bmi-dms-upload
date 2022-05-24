@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Modal } from '@amsterdam/bmi-component-library';
 
 import useConfirmTermination from '../../../hooks/useConfirmTermination';
+import useConfirmSave from '../../../hooks/useConfirmSave';
 import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTermination';
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
@@ -12,8 +13,9 @@ import { Props } from '../bulk/types';
 import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
-import { ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
+import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { reduceMetadata } from '../bulk/utils';
+import { hasValues } from './utils';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
@@ -36,7 +38,10 @@ export default function BulkWizard<T>({
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
 	const state = useAppSelector(getState);
-	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
+	const { isOpen: isConfirmTerminationOpen, confirm: setConfirmTermination } = useConfirmTermination(() =>
+		resetAndClose(),
+	);
+	const { isOpen: isConfirmSaveOpen } = useConfirmSave(() => save());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const files = useAppSelector(getFiles);
@@ -51,94 +56,123 @@ export default function BulkWizard<T>({
 		dispatch(stepForward({ navigate }));
 	}, [navigate]);
 
-	function resetAndClose() {
+	const resetAndClose = useCallback(() => {
 		dispatch(resetState({ navigate }));
 		onCancel({}).catch((err) => {
 			console.error(err); // @TODO handle error gracefully
 		});
-	}
+	}, [navigate]);
 
-	function close() {
+	const close = useCallback(() => {
 		dispatch(resetState({ navigate }));
-	}
+	}, [navigate]);
+
+	const save = useCallback(() => {
+		onMetadataSubmit(makeMetadataObject(state))
+			.then(() => close())
+			.catch((err) => {
+				console.error(err); // @TODO handle error gracefully
+			});
+	}, [state]);
+
+	const fileIndexesContainingInvalidMetadata = () => {
+		return files.reduce((acc: number[], file: IBulkFile, index: number) => {
+			if (file.isMetadataValid === false) {
+				return [...acc, index + 1];
+			}
+			return acc;
+		}, []);
+	};
+
+	const filesContainingInvalidMetadata = () => {
+		return files.filter((file) => file.isMetadataValid === false);
+	};
+
+	const filesHaveInvalidMetadata = () => {
+		return hasValues(filesContainingInvalidMetadata()) ? true : false;
+	};
 
 	const handleSubmit = useCallback(
 		(e: SyntheticEvent) => {
 			e.preventDefault();
-			if (files && isValidForm) {
-				onMetadataSubmit(makeMetadataObject(state))
-					.then(() => close())
-					.catch((err) => {
-						console.error(err); // @TODO handle error gracefully
-					});
-			}
+			save();
 		},
 		[files, isValidForm],
 	);
 
+	const isNextVisible = useCallback((): boolean => {
+		if (currentStep === CurrentStep.Upload && hasValues(files)) {
+			return true;
+		}
+
+		if (currentStep === CurrentStep.SelectFields && hasValues(individualFields) && isValidForm) {
+			return true;
+		}
+
+		return false;
+	}, [currentStep, files, individualFields, isValidForm]);
+
+	const isSaveVisible = useCallback((): boolean => {
+		if (currentStep === CurrentStep.SelectFields && !hasValues(individualFields) && isValidForm) {
+			return true;
+		}
+		if (currentStep === CurrentStep.EditFields) {
+			return true;
+		}
+
+		return false;
+	}, [currentStep, individualFields, isValidForm]);
+
 	const isSaveDisabled = useCallback((): boolean => {
-		let isAllValid = false;
-		const hasFiles = files && files.length > 0;
-		const hasIndividualFields = individualFields && individualFields.length > 0;
-
-		// Show save in step 2 when:
-		// - hasFiles = true
-		// - isValidForm = true
-		// - hasIndividualFields = false
-		if (currentStep === CurrentStep.SelectFields) {
-			isAllValid = hasFiles && !hasIndividualFields && isValidForm;
-		}
-
-		// Show save in step 3 when:
-		// - hasIndividualFields = false
-		// else:
-		// - hasFiles = true
-		// - isValidForm = true
-		else if (currentStep === CurrentStep.EditFields) {
-			isAllValid = !hasIndividualFields ? true : hasFiles && isValidForm
-		}
-
-		return !isAllValid;
-	}, [files, individualFields, isValidForm]);
+		return filesHaveInvalidMetadata();
+	}, [files]);
 
 	return (
 		<>
-			{isOpen && <ConfirmTermination backdropOpacity={1} />}
+			{isConfirmTerminationOpen && <ConfirmTermination backdropOpacity={1} />}
+			{isConfirmSaveOpen && <ConfirmTermination backdropOpacity={1} />}
 			<ModalStyle
 				id="dms-upload-wizard"
 				open
-				onClose={() => confirm()}
+				onClose={() => setConfirmTermination()}
 				closeOnBackdropClick={false}
 				size="xl"
 				classnames="modal--bulk"
 			>
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm()}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setConfirmTermination()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
 						Bestanden uploaden voor {asset.name}
 					</ModalTopBarStyle>
 				</Modal.TopBar>
 				<>
 					<Modal.Content>
-						<ModalContentStyle>{children}</ModalContentStyle>
+						<ModalContentStyle>
+							{filesHaveInvalidMetadata() && (
+								<AlertStyle level="error">
+									Er zit een fout in de metadata van het bestand op pagina&apos;s:{' '}
+									{fileIndexesContainingInvalidMetadata().join(', ')}
+								</AlertStyle>
+							)}
+							{children}
+						</ModalContentStyle>
 					</Modal.Content>
 				</>
 				<WizardFooter
-					cancel={{ visible: true, onClick: confirm, dataTestId: 'cancel-wizard' }}
+					cancel={{ visible: true, onClick: setConfirmTermination, dataTestId: 'cancel-wizard' }}
 					previous={{
 						visible: currentStep > CurrentStep.Upload,
 						onClick: handlePrev,
 						dataTestId: 'previous-button',
 					}}
 					next={{
-						visible: currentStep < CurrentStep.EditFields,
-						disabled: !isValidForm,
+						visible: isNextVisible(),
 						onClick: handleNext,
 						dataTestId: 'next-button',
 					}}
 					save={{
-						visible: true,
-						onClick: handleSubmit,
+						visible: isSaveVisible(),
 						disabled: isSaveDisabled(),
+						onClick: handleSubmit,
 						dataTestId: 'save-button',
 					}}
 				/>
