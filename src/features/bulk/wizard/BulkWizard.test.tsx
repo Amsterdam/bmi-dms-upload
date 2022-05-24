@@ -124,7 +124,7 @@ describe('<BulkWizard />', () => {
 	});
 
 	describe('Save button', () => {
-		test('is disabled on step 2 when there are no files', () => {
+		test('is not in the document on step 2 when there are no files', () => {
 			const store = {
 				bulk: {
 					...mockState,
@@ -135,10 +135,10 @@ describe('<BulkWizard />', () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, { store });
 			});
-			expect(screen.queryByText('Opslaan')).toBeDisabled();
+			expect(screen.queryByText('Opslaan')).not.toBeInTheDocument();
 		});
 
-		test('is disabled on step 2 when form is not valid', () => {
+		test('is not in the document on step 2 when form is not valid', () => {
 			const store = {
 				bulk: {
 					...mockState,
@@ -148,7 +148,7 @@ describe('<BulkWizard />', () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, { store });
 			});
-			expect(screen.queryByText('Opslaan')).toBeDisabled();
+			expect(screen.queryByText('Opslaan')).not.toBeInTheDocument();
 		});
 
 		test('is enabled on step 2 when there are files, form is valid and there are no individual fields', () => {
@@ -172,10 +172,14 @@ describe('<BulkWizard />', () => {
 					currentStep: CurrentStep.EditFields,
 				},
 			};
+
 			act(() => {
 				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
 			});
-			expect(screen.queryByText('Opslaan')).toBeEnabled();
+
+			waitFor(async () => {
+				expect(screen.queryByText('Opslaan')).toBeEnabled();
+			});
 		});
 
 		test('triggers onMetadataSubmit after save', async () => {
