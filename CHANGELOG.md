@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.6...v0.0.4-alpha.8) (2022-05-30)
+
+
+### Bug Fixes
+
+* **metadata:** cleanup db.json ([8123618](https://github.com/Amsterdam/bmi-dms-upload/commit/81236182d2f4f0fddf55c0add804c8b935f51031))
+* **metadata:** support user and default value from DMS ([09afe87](https://github.com/Amsterdam/bmi-dms-upload/commit/09afe87e1ab6f6be3b0ea13834d2c0df41340fc5))
+
 ### [0.0.4-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.5...v0.0.4-alpha.6) (2022-05-30)
 
 
