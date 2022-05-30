@@ -6,9 +6,9 @@ import { render } from '../../../tests/utils/testUtils';
 import { mockComponentProps, mocked } from '../../../tests/helpers';
 import { files as filesMock, fields as fieldsMock } from '../bulk/__stubs__';
 import { getDocumentViewUrlMock, onChangeMock } from '../bulk/__mocks__/bulk';
-import FileViewer from './FileViewer';
+import FileViewer, { Props } from './FileViewer';
 
-const defaultProps = {
+const defaultProps: Props = {
 	file: filesMock[0],
 	getDocumentViewUrl: getDocumentViewUrlMock,
 	onChange: onChangeMock,
@@ -21,12 +21,13 @@ jest.mock('@amsterdam/bmi-component-library', () => ({
 
 // Mock IndividualFieldsForm because <Form> doesn't return anything
 jest.mock('./IndividualFieldsForm/IndividualFieldsForm', () => {
-	return jest.fn().mockImplementation(({ fields }) => {
+	return jest.fn().mockImplementation(({ data, schema }) => {
 		return (
 			<div data-testid="form">
-				{fields.map((field: any) => (
-					<span key={field.id}>{field.label}</span>
+				{Object.keys(data).map((field: any) => (
+					<span key={data[field].id}>{data[field].value}</span>
 				))}
+				<div>test</div>
 			</div>
 		);
 	});
@@ -45,28 +46,28 @@ const defaultStore = {
 
 describe('<FileViewer />', () => {
 	test('Default fields are rendered', async () => {
-		await act( async () => {
+		await act(async () => {
 			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
-		expect(screen.getByText('Field 1')).toBeDefined();
-		expect(screen.getByText('Field 3')).toBeDefined();
+		expect(screen.getByText('Field 1 Value')).toBeDefined();
+		expect(screen.getByText('Field 3 Value')).toBeDefined();
 	});
 
 	test('Individual fields are rendered', async () => {
-		await act( async () => {
+		await act(async () => {
 			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
-		expect(screen.getByText('Field 2')).toBeDefined();
+		expect(screen.getByText('Field 2 Value')).toBeDefined();
 	});
 
 	test('DocumentViewer is called with correct data', async () => {
-		await act( async () => {
+		await act(async () => {
 			render(<FileViewer {...defaultProps} />, { store: defaultStore });
 		});
 
 		const DocumentViewerMock = mocked(DocumentViewer);
-		expect(mockComponentProps<ComponentProps<typeof DocumentViewer>>(DocumentViewerMock).uri).toEqual('mock-url')
+		expect(mockComponentProps<ComponentProps<typeof DocumentViewer>>(DocumentViewerMock).uri).toEqual('mock-url');
 	});
 });
