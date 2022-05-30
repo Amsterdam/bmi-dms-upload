@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.6](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.5...v0.0.4-alpha.6) (2022-05-30)
+
+
+### Bug Fixes
+
+* **metadata:** send correct state when saving forms ([44aed1d](https://github.com/Amsterdam/bmi-dms-upload/commit/44aed1d6ccfe72b858e02c6024e4b70f5f4bb890))
+
 ### [0.0.4-alpha.5](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.4...v0.0.4-alpha.5) (2022-05-30)
 
 
