@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.5](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.4...v0.0.4-alpha.5) (2022-05-30)
+
+
+### Bug Fixes
+
+* **metadata:** select renders correctly when navigating files ([b4cf43c](https://github.com/Amsterdam/bmi-dms-upload/commit/b4cf43c80dc0e25215f312f36b466325018364a1))
+
 ### [0.0.4-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.3...v0.0.4-alpha.4) (2022-05-24)
 
 
