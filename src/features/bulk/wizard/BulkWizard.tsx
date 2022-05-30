@@ -97,7 +97,7 @@ export default function BulkWizard<T>({
 			e.preventDefault();
 			save();
 		},
-		[files, isValidForm],
+		[state],
 	);
 
 	const isNextVisible = useCallback((): boolean => {
