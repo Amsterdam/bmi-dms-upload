@@ -28,7 +28,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			item.oneOf.unshift({
 				const: '',
 				title: 'No Value',
-			})
+			});
 			item.customFormat = 'creatable';
 		}
 
@@ -40,7 +40,7 @@ export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDyna
 	return fields.map((field) => ({
 		id: `${field.id}`,
 		label: field.placeholder,
-		value: field.userValue ?? '',
+		value: field.userValue ?? field.defaultValue ?? '',
 		changeIndividual: false,
 		type: convertDmsTypeToBulkFieldType(field.type),
 		values: field.options,

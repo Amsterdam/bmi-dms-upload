@@ -3,6 +3,15 @@
     {
       "id": 1,
       "title": "some-file"
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
     }
   ],
   "upload-session": {
@@ -29,7 +38,7 @@
         "id": 5,
         "placeholder": "Documentomschrijving",
         "required": false,
-        "defaultValue": null,
+        "defaultValue": "Default Value Documentomschrijving",
         "userValue": null,
         "changeIndividual": false,
         "type": "TextType",
@@ -39,8 +48,8 @@
         "id": 691,
         "placeholder": "Contract",
         "required": false,
-        "defaultValue": null,
-        "userValue": null,
+        "defaultValue": "Default Value Contract",
+        "userValue": "User Value Contract",
         "changeIndividual": false,
         "type": "TextType",
         "options": []
@@ -49,7 +58,7 @@
         "id": 689,
         "placeholder": "Object type",
         "required": false,
-        "defaultValue": null,
+        "defaultValue": "Pand",
         "userValue": null,
         "changeIndividual": false,
         "type": "ChoiceType",
