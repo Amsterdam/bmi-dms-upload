@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { ErrorMessage } from '@amsterdam/asc-ui';
 import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
@@ -46,6 +46,10 @@ const CreatableSelect = (props: ControlProps) => {
 	const [selected, setSelected] = useState<SelectOptionType | undefined>(
 		getOptionForValue(filteredOptions as SchemaOptionType[], value),
 	);
+
+	useEffect(() => {
+		setSelected(getOptionForValue(filteredOptions as SchemaOptionType[], value))
+	}, [value])
 
 	return (
 		<>
