@@ -43,7 +43,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			item.customFormat = 'multi-creatable';
 
 			if (field.defaultValue) {
-				item.default = convertArrayString(field.defaultValue);
+				item.default = JSON.parse(field.defaultValue);
 			}
 		}
 
@@ -61,7 +61,7 @@ export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDyna
 		let newValue;
 
 		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
-			newValue = convertArrayString(defaultValue);
+			newValue = JSON.parse(defaultValue);
 		} else {
 			newValue = defaultValue;
 		}

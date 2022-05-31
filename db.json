@@ -1,193 +1,219 @@
 {
-	"files": [
-		{
-			"id": 1,
-			"title": "some-file"
-		}
-	],
-	"upload-session": {
-		"id": "4af69162-2063-46fd-82d8-0f22aaf46437",
-		"finished": false,
-		"dmsAsset": {
-			"id": 8,
-			"name": "Armbrug",
-			"code": "BRU0208"
-		},
-		"dmsFiles": [],
-		"dynamicFormFields": [
-			{
-				"id": 717,
-				"placeholder": "Uitvoeringsdatum",
-				"required": true,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "DateType",
-				"options": []
-			},
-			{
-				"id": 5,
-				"placeholder": "Documentomschrijving",
-				"required": false,
-				"defaultValue": "Default Value Documentomschrijving",
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "TextType",
-				"options": []
-			},
-			{
-				"id": 691,
-				"placeholder": "Contract",
-				"required": false,
-				"defaultValue": "Default Value Contract",
-				"userValue": "User Value Contract",
-				"changeIndividual": false,
-				"type": "TextType",
-				"options": []
-			},
-			{
-				"id": 689,
-				"placeholder": "Object type",
-				"required": false,
-				"defaultValue": "Pand",
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "ChoiceType",
-				"options": ["Object", "Pand", "Object + Pand", "Object + noodconstructie", "Pand + Object + noodconstructie"]
-			},
-			{
-				"id": 690,
-				"placeholder": "Monitoring",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "ChoiceType",
-				"options": ["Ja", "Nee"]
-			},
-			{
-				"id": 687,
-				"placeholder": "Herhalingsmeting object",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "TextType",
-				"options": []
-			},
-			{
-				"id": 720,
-				"placeholder": "Herhalingsmeting pand",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "TextType",
-				"options": []
-			},
-			{
-				"id": 718,
-				"placeholder": "Bron",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "ChoiceType",
-				"options": [
-					"AIP",
-					"ADK",
-					"Afdeling Publieke Werken",
-					"Amsterdamse Bos",
-					"ANTEA",
-					"BWT",
-					"COB",
-					"CTA",
-					"CTAE",
-					"Dienst binnenstad",
-					"Dienst der Publieke Werken",
-					"DIVV",
-					"Externe leverancier",
-					"GISIB",
-					"IB",
-					"IB/V&OR",
-					"Ministerie van Binnenlandse Zaken",
-					"Nebest",
-					"Nog te bepalen",
-					"OGA",
-					"OMEGAM",
-					"PIBK",
-					"S&T",
-					"SD NRD Beheer",
-					"SD NRD 1981-1990",
-					"SD NRD 1991-2000",
-					"SOK",
-					"SW",
-					"V&OR",
-					"Voorportaal",
-					"Waternet",
-					"Weesp"
-				]
-			},
-			{
-				"id": 467,
-				"placeholder": "Ils-3",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "CheckboxType",
-				"options": []
-			},
-			{
-				"id": 719,
-				"placeholder": "Ingenieursbureau",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "TextType",
-				"options": []
-			},
-			{
-				"id": 126,
-				"placeholder": "Vertrouwelijkheid",
-				"required": false,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "ChoiceType",
-				"options": ["Openbaar", "Intern", "Vertrouwelijk", "Geheim"]
-			},
-			{
-				"id": 882,
-				"placeholder": "Actueel",
-				"required": true,
-				"defaultValue": null,
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "ChoiceType",
-				"options": ["Niet bepaald", "Actueel", "Historisch"]
-			},
-			{
-				"id": 65,
-				"placeholder": "Multi Select",
-				"required": true,
-				"defaultValue": "[Test1,Test2]",
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "MultipleChoiceType",
-				"options": ["Test1", "Test2", "Test3"]
-			},
-			{
-				"id": 66,
-				"placeholder": "Multi Select 2",
-				"required": false,
-				"defaultValue": "[Test1]",
-				"userValue": null,
-				"changeIndividual": false,
-				"type": "MultipleChoiceType",
-				"options": ["Test1", "Test2", "Test3"]
-			}
-		]
-	}
+  "files": [
+    {
+      "id": 1,
+      "title": "some-file"
+    }
+  ],
+  "upload-session": {
+    "id": "4af69162-2063-46fd-82d8-0f22aaf46437",
+    "finished": false,
+    "dmsAsset": {
+      "id": 8,
+      "name": "Armbrug",
+      "code": "BRU0208"
+    },
+    "dmsFiles": [],
+    "dynamicFormFields": [
+      {
+        "id": 717,
+        "placeholder": "Uitvoeringsdatum",
+        "required": true,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "DateType",
+        "options": []
+      },
+      {
+        "id": 5,
+        "placeholder": "Documentomschrijving",
+        "required": false,
+        "defaultValue": "Default Value Documentomschrijving",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "TextType",
+        "options": []
+      },
+      {
+        "id": 691,
+        "placeholder": "Contract",
+        "required": false,
+        "defaultValue": "Default Value Contract",
+        "userValue": "User Value Contract",
+        "changeIndividual": false,
+        "type": "TextType",
+        "options": []
+      },
+      {
+        "id": 689,
+        "placeholder": "Object type",
+        "required": false,
+        "defaultValue": "Pand",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "ChoiceType",
+        "options": [
+          "Object",
+          "Pand",
+          "Object + Pand",
+          "Object + noodconstructie",
+          "Pand + Object + noodconstructie"
+        ]
+      },
+      {
+        "id": 690,
+        "placeholder": "Monitoring",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "ChoiceType",
+        "options": [
+          "Ja",
+          "Nee"
+        ]
+      },
+      {
+        "id": 687,
+        "placeholder": "Herhalingsmeting object",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "TextType",
+        "options": []
+      },
+      {
+        "id": 720,
+        "placeholder": "Herhalingsmeting pand",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "TextType",
+        "options": []
+      },
+      {
+        "id": 718,
+        "placeholder": "Bron",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "ChoiceType",
+        "options": [
+          "AIP",
+          "ADK",
+          "Afdeling Publieke Werken",
+          "Amsterdamse Bos",
+          "ANTEA",
+          "BWT",
+          "COB",
+          "CTA",
+          "CTAE",
+          "Dienst binnenstad",
+          "Dienst der Publieke Werken",
+          "DIVV",
+          "Externe leverancier",
+          "GISIB",
+          "IB",
+          "IB/V&OR",
+          "Ministerie van Binnenlandse Zaken",
+          "Nebest",
+          "Nog te bepalen",
+          "OGA",
+          "OMEGAM",
+          "PIBK",
+          "S&T",
+          "SD NRD Beheer",
+          "SD NRD 1981-1990",
+          "SD NRD 1991-2000",
+          "SOK",
+          "SW",
+          "V&OR",
+          "Voorportaal",
+          "Waternet",
+          "Weesp"
+        ]
+      },
+      {
+        "id": 467,
+        "placeholder": "Ils-3",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "CheckboxType",
+        "options": []
+      },
+      {
+        "id": 719,
+        "placeholder": "Ingenieursbureau",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "TextType",
+        "options": []
+      },
+      {
+        "id": 126,
+        "placeholder": "Vertrouwelijkheid",
+        "required": false,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "ChoiceType",
+        "options": [
+          "Openbaar",
+          "Intern",
+          "Vertrouwelijk",
+          "Geheim"
+        ]
+      },
+      {
+        "id": 882,
+        "placeholder": "Actueel",
+        "required": true,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "ChoiceType",
+        "options": [
+          "Niet bepaald",
+          "Actueel",
+          "Historisch"
+        ]
+      },
+      {
+        "id": 65,
+        "placeholder": "Multi Select",
+        "required": true,
+        "defaultValue": "[\"Test1\",\"Test2\"]",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
+      },
+      {
+        "id": 66,
+        "placeholder": "Multi Select 2",
+        "required": false,
+        "defaultValue": "[\"Test1\"]",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
+      }
+    ]
+  }
 }
