@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import { ErrorMessage } from '@amsterdam/asc-ui';
 import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
@@ -34,6 +34,10 @@ const MultiSelect = (props: ControlProps) => {
 	const filteredOptions = options.enum as JsonSchema7[];
 	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 	const [selected, setSelected] = useState<SelectOptionType[]>(convertValueToOptions(value));
+
+	useEffect(() => {
+		setSelected(convertValueToOptions(value))
+	}, [value])
 
 	return (
 		<>

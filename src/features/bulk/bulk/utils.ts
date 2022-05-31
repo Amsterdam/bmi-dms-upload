@@ -24,6 +24,17 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 			item.customFormat = 'creatable';
 		}
 
+		if (field.type === 'multi-select') {
+			item.type = 'array'
+			item.uniqueItems = true
+			item.minItems = field.required ? 1 : 0;
+			item.items = {
+				type: 'string',
+				enum: field.values!,
+			};
+			item.customFormat = 'multi-creatable';
+		}
+
 		return item;
 	});
 }
