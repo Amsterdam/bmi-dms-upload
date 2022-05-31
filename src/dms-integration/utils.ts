@@ -51,10 +51,6 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 	});
 }
 
-function convertArrayString(arrayString: string): string[] {
-	return arrayString.replace('[', '').replace(']', '').split(',');
-}
-
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
 	return fields.map((field) => {
 		const defaultValue = field.userValue ?? field.defaultValue ?? '';
