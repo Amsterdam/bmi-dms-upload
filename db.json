@@ -3,9 +3,6 @@
     {
       "id": 1,
       "title": "some-file"
-    },
-    {
-      "id": 2
     }
   ],
   "upload-session": {
@@ -20,8 +17,7 @@
     "dynamicFormFields": [
       {
         "id": 717,
-        "placeholder": null,
-        "name": "Uitvoeringsdatum",
+        "placeholder": "Uitvoeringsdatum",
         "required": true,
         "defaultValue": null,
         "userValue": null,
@@ -31,8 +27,7 @@
       },
       {
         "id": 5,
-        "placeholder": null,
-        "name": "Documentomschrijving",
+        "placeholder": "Documentomschrijving",
         "required": false,
         "defaultValue": "Default Value Documentomschrijving",
         "userValue": null,
@@ -42,8 +37,7 @@
       },
       {
         "id": 691,
-        "placeholder": null,
-        "name": "Contract",
+        "placeholder": "Contract",
         "required": false,
         "defaultValue": "Default Value Contract",
         "userValue": "User Value Contract",
@@ -53,8 +47,7 @@
       },
       {
         "id": 689,
-        "placeholder": null,
-        "name": "Object type",
+        "placeholder": "Object type",
         "required": false,
         "defaultValue": "Pand",
         "userValue": null,
@@ -70,8 +63,7 @@
       },
       {
         "id": 690,
-        "placeholder": null,
-        "name": "Monitoring",
+        "placeholder": "Monitoring",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -84,8 +76,7 @@
       },
       {
         "id": 687,
-        "placeholder": null,
-        "name": "Herhalingsmeting object",
+        "placeholder": "Herhalingsmeting object",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -95,8 +86,7 @@
       },
       {
         "id": 720,
-        "placeholder": null,
-        "name": "Herhalingsmeting pand",
+        "placeholder": "Herhalingsmeting pand",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -106,8 +96,7 @@
       },
       {
         "id": 718,
-        "placeholder": null,
-        "name": "Bron",
+        "placeholder": "Bron",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -150,8 +139,7 @@
       },
       {
         "id": 467,
-        "placeholder": null,
-        "name": "Ils-3",
+        "placeholder": "Ils-3",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -161,8 +149,7 @@
       },
       {
         "id": 719,
-        "placeholder": null,
-        "name": "Ingenieursbureau",
+        "placeholder": "Ingenieursbureau",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -172,8 +159,7 @@
       },
       {
         "id": 126,
-        "placeholder": null,
-        "name": "Vertrouwelijkheid",
+        "placeholder": "Vertrouwelijkheid",
         "required": false,
         "defaultValue": null,
         "userValue": null,
@@ -188,8 +174,7 @@
       },
       {
         "id": 882,
-        "placeholder": null,
-        "name": "Actueel",
+        "placeholder": "Actueel",
         "required": true,
         "defaultValue": null,
         "userValue": null,
@@ -203,10 +188,23 @@
       },
       {
         "id": 65,
-        "placeholder": null,
-        "name": "Multi Select",
+        "placeholder": "Multi Select",
         "required": true,
         "defaultValue": "[Test1,Test2]",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
+      },
+      {
+        "id": 66,
+        "placeholder": "Multi Select 2",
+        "required": false,
+        "defaultValue": "[Test1]",
         "userValue": null,
         "changeIndividual": false,
         "type": "MultipleChoiceType",

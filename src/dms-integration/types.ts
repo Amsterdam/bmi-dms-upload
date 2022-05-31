@@ -7,7 +7,6 @@ export interface IDmsAsset {
 export interface IDmsDynamicFormField {
 	id: number;
 	placeholder: string;
-	name: string;
 	required: boolean;
 	defaultValue: string;
 	userValue: string;

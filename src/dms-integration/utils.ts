@@ -8,7 +8,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			key: `${field.id}`,
 			scope: 'string',
 			type: 'string',
-			label: field.name,
+			label: field.placeholder,
 		};
 
 		if (field.required) {
@@ -68,7 +68,7 @@ export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDyna
 
 		return {
 			id: `${field.id}`,
-			label: field.name,
+			label: field.placeholder,
 			value: newValue,
 			changeIndividual: false,
 			type: convertDmsTypeToBulkFieldType(field.type),
