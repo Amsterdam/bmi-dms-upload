@@ -8,7 +8,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			key: `${field.id}`,
 			scope: 'string',
 			type: 'string',
-			label: field.placeholder,
+			label: field.name,
 		};
 
 		if (field.required) {
@@ -32,26 +32,58 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			item.customFormat = 'creatable';
 		}
 
+		if (field.type === 'MultipleChoiceType') {
+			item.type = 'array';
+			item.uniqueItems = true;
+			item.minItems = field.required ? 1 : 0;
+			item.items = {
+				type: 'string',
+				enum: field.options,
+			};
+			item.customFormat = 'multi-creatable';
+
+			if (field.defaultValue) {
+				item.default = convertArrayString(field.defaultValue);
+			}
+		}
+
 		return item;
 	});
 }
 
+function convertArrayString(arrayString: string): string[] {
+	return arrayString.replace('[', '').replace(']', '').split(',');
+}
+
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
-	return fields.map((field) => ({
-		id: `${field.id}`,
-		label: field.placeholder,
-		value: field.userValue ?? field.defaultValue ?? '',
-		changeIndividual: false,
-		type: convertDmsTypeToBulkFieldType(field.type),
-		values: field.options,
-		required: field.required,
-	}));
+	return fields.map((field) => {
+		const defaultValue = field.userValue ?? field.defaultValue ?? '';
+		let newValue;
+
+		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
+			newValue = convertArrayString(defaultValue);
+		} else {
+			newValue = defaultValue;
+		}
+
+		return {
+			id: `${field.id}`,
+			label: field.name,
+			value: newValue,
+			changeIndividual: false,
+			type: convertDmsTypeToBulkFieldType(field.type),
+			values: field.options,
+			required: field.required,
+		};
+	});
 }
 
 const convertDmsTypeToBulkFieldType = (type: string): IBulkField['type'] => {
 	switch (type) {
 		case 'ChoiceType':
 			return 'select';
+		case 'MultipleChoiceType':
+			return 'multi-select';
 		case 'CheckboxType':
 			return 'checkbox';
 		case 'DateType':

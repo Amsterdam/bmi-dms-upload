@@ -58,6 +58,7 @@ const CreatableSelect = (props: ControlProps) => {
 				<Creatable
 					inputId={path}
 					value={selected}
+					placeholder="Maak een keuze"
 					// @ts-ignore
 					onChange={(option: any) => {
 						const val = option ? (option.value ? (option.value === 'null' ? null : option.value) : null) : null;

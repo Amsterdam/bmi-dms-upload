@@ -1,11 +1,16 @@
 export type MetadataProperty = {
 	key: string;
+	label: string;
 	scope: string;
 	type: string;
-	format?: string;
-	label: string;
-	'bmi-isNotEmpty'?: boolean;
+
 	'bmi-errorMessage'?: string;
+	'bmi-isNotEmpty'?: boolean;
+	customFormat?: 'creatable' | 'multi-creatable';
+	default?: string[];
+	format?: string;
+	items?: { type: string; enum: string[] };
+	minItems?: number;
 	oneOf?: { const: string; title: string }[];
-	customFormat?: 'creatable';
+	uniqueItems?: boolean;
 };
