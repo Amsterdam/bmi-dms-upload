@@ -1,15 +1,20 @@
-import { MetadataProperty } from '../types';
+import { MetadataProperty, OneOfDateType } from '../types';
 
 export default function createUISchemaFromMetadataProps(metadataProperties: MetadataProperty[]) {
+	console.log('metadataProperties:: ', metadataProperties);
 	return {
 		type: 'Group',
-		elements: metadataProperties.map(({ key, scope, label }): any => ({
+		elements: metadataProperties.map(({ key, scope, label, oneOf }): any => ({
 			type: 'HorizontalLayout',
 			elements: [
 				{
 					type: 'Control',
 					label,
 					scope: `#/properties/${key}/properties/value`,
+					options: {
+						// @ts-ignore: tech debt, should be revised
+						format: oneOf?.find((oo: OneOfDateType) => oo?.format)?.format,
+					},
 				},
 				{
 					type: 'Control',

@@ -30,8 +30,8 @@ export default function createSchemaFromMetadataProps(
 						value: {
 							type,
 							errorMessage: {
-								format: customErrorMessage ?? `Het format voor '${label}' is ongeldig`,
-								'bmi-isNotEmpty': customErrorMessage ?? `Geef de default waarde voor '${label}' op`,
+								format: customErrorMessage ?? `Het format voor '${label}' is ongeldig `,
+								'bmi-isNotEmpty': customErrorMessage ?? `Geef de default waarde voor '${label}' op `,
 							},
 						},
 					},

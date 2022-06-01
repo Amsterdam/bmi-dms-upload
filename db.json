@@ -161,7 +161,7 @@
         "id": 126,
         "placeholder": "Vertrouwelijkheid",
         "required": false,
-        "defaultValue": "0",
+        "defaultValue": "Openbaar",
         "userValue": null,
         "changeIndividual": false,
         "type": "ChoiceType",

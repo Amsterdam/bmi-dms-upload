@@ -6,6 +6,9 @@ export type MetadataProperty = {
 	label: string;
 	'bmi-isNotEmpty'?: boolean;
 	'bmi-errorMessage'?: string;
-	oneOf?: { const: string; title: string }[];
+	oneOf?: { const: string; title: string }[] | OneOfDateType;
 	customFormat?: 'creatable';
+	options?: { format?: string };
 };
+
+export type OneOfDateType = Array<{ maxLength: number } | { format: string }>;
