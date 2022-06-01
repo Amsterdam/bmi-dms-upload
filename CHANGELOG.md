@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.8...v0.0.4-alpha.9) (2022-06-01)
+
+
+### Bug Fixes
+
+* **metadata:** show alert when files contain validation errors ([7ca8577](https://github.com/Amsterdam/bmi-dms-upload/commit/7ca857777dce6680ac548595e5649eef92a6a554))
+* **metadata,multi-select:** pr feedback ([b86ca61](https://github.com/Amsterdam/bmi-dms-upload/commit/b86ca617f9d9a1402430bd14612d7c6187e932d0))
+* **metadata,multi-select:** pr feedback ([a8c4c2c](https://github.com/Amsterdam/bmi-dms-upload/commit/a8c4c2c9639d630f425e41574ebdeb2b29abaea7))
+* **multi-select:** pr feedback on [@ts-ignore](https://github.com/ts-ignore) ([9189a80](https://github.com/Amsterdam/bmi-dms-upload/commit/9189a80b165d8f2500ab9bb58fcc838a8c65b8bb))
+* **uischema:** date was always required even if it was not a required field ([4853521](https://github.com/Amsterdam/bmi-dms-upload/commit/48535210eb84eb26c07e18a9da08c81fc9f43220))
+
 ### [0.0.4-alpha.8](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.6...v0.0.4-alpha.8) (2022-05-30)
 
 
