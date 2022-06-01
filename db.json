@@ -202,7 +202,7 @@
 				"id": 68,
 				"placeholder": "Multi Select 4",
 				"required": false,
-				"defaultValue": "\"\"",
+				"defaultValue": "[\"\"]",
 				"userValue": null,
 				"changeIndividual": false,
 				"type": "MultipleChoiceType",

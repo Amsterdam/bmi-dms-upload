@@ -58,7 +58,7 @@ export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDyna
 		let newValue;
 
 		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
-			newValue = defaultValue ? JSON.parse(defaultValue): defaultValue;
+			newValue = defaultValue ? JSON.parse(defaultValue): undefined;
 		} else {
 			newValue = defaultValue;
 		}
