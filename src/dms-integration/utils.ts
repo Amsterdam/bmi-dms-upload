@@ -17,7 +17,6 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		}
 
 		if (field.type === 'DateType') {
-			delete item.format;
 			item.oneOf = [{ format: 'date' }, { maxLength: 0 }];
 		}
 

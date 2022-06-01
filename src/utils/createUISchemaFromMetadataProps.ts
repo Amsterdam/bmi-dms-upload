@@ -1,7 +1,6 @@
 import { MetadataProperty, OneOfDateType } from '../types';
 
 export default function createUISchemaFromMetadataProps(metadataProperties: MetadataProperty[]) {
-	console.log('metadataProperties:: ', metadataProperties);
 	return {
 		type: 'Group',
 		elements: metadataProperties.map(({ key, scope, label, oneOf }): any => ({
