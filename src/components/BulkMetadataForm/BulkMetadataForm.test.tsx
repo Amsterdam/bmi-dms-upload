@@ -70,9 +70,9 @@ describe('<BulkMetadataForm />', () => {
 	});
 
 	test.each([
-		['default', 'carUse', 'bmi-isNotEmpty', "Geef de default waarde voor 'Gebruik auto' op"],
+		['default', 'carUse', 'bmi-isNotEmpty', "Geef de default waarde voor 'Gebruik auto' op "],
 		['custom', 'year', 'bmi-isNotEmpty', 'Jaartal mag niet leeg zijn (custom error message)'],
-		['default formatting', 'executionDate', 'format', "Het format voor 'Uitvoeringsdatum' is ongeldig"],
+		['default formatting', 'executionDate', 'format', "Het format voor 'Uitvoeringsdatum' is ongeldig "],
 	])('Should have %s error message', (testCase, property, errorType, errorMessage) => {
 		render();
 		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);

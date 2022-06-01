@@ -11,6 +11,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Jaar',
 							scope: '#/properties/year/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -26,6 +29,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Document omschrijving',
 							scope: '#/properties/documentDescription/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -41,6 +47,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Contract',
 							scope: '#/properties/contract/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -56,6 +65,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Gebruik auto',
 							scope: '#/properties/carUse/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -71,6 +83,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Herhalingsmeter',
 							scope: '#/properties/repetitionMeter/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -86,6 +101,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'ILS-3',
 							scope: '#/properties/ils3/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -101,6 +119,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Monitoring',
 							scope: '#/properties/monitoring/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -116,6 +137,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Object type',
 							scope: '#/properties/objectType/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -131,6 +155,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Uitvoeringsdatum',
 							scope: '#/properties/executionDate/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -146,6 +173,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Bron',
 							scope: '#/properties/source/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -161,6 +191,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'Ingenieursbureau',
 							scope: '#/properties/engineeringOffice/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
@@ -176,6 +209,9 @@ describe('utils/createUISchemaFromMetadataProps', () => {
 							label: 'ILS-2',
 							scope: '#/properties/ils2/properties/value',
 							type: 'Control',
+							options: {
+								format: undefined,
+							},
 						},
 						{
 							label: false,
