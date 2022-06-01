@@ -25,7 +25,7 @@ import {
 	identicalObjects,
 	reduceMetadata,
 } from '../bulk/utils';
-import { setFileMetadata } from '../bulk/store/slice';
+import { setFileMetadata, setFileMetadataValidity } from '../bulk/store/slice';
 
 export type Props = {
 	file: IBulkFile;
@@ -70,6 +70,7 @@ export default function FileViewer({ file, getDocumentViewUrl, onChange }: Props
 
 	const handleOnChange = useCallback(
 		debounce((newData: MetadataGenericType, valid: boolean) => {
+			if (!newData) return;
 			if (identicalObjects(formData, newData)) return;
 
 			const newMetadata = Object.keys(newData).map(
@@ -78,6 +79,13 @@ export default function FileViewer({ file, getDocumentViewUrl, onChange }: Props
 						id: key,
 						value: (newData[key] as MetadataGenericType).value,
 					} as IBulkFileMetadata),
+			);
+
+			dispatch(
+				setFileMetadataValidity({
+					fileId: file.id,
+					isValid: valid,
+				}),
 			);
 
 			dispatch(
