@@ -9,6 +9,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			scope: 'string',
 			type: 'string',
 			label: field.placeholder,
+			options: { format: undefined },
 		};
 
 		if (field.required) {
@@ -16,7 +17,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		}
 
 		if (field.type === 'DateType') {
-			item.format = 'date';
+			item.oneOf = [{ format: 'date' }, { maxLength: 0 }];
 		}
 
 		if (field.type === 'ChoiceType') {
