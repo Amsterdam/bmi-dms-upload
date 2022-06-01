@@ -16,10 +16,10 @@ function isInsideModal(id: string): boolean {
 }
 
 function convertValueToOptions(arr: string[]): SelectOptionType[] {
-	return arr.map(option => ({
+	return arr.map((option) => ({
 		value: option,
-		label: option
-	}))
+		label: option,
+	}));
 }
 const MultiSelect = (props: ControlProps) => {
 	const {
@@ -29,15 +29,16 @@ const MultiSelect = (props: ControlProps) => {
 		errors,
 		schema: { items: options = [] },
 	} = props;
-
+	// @TODO: cannot find enum on options type. Technical depth that has to be fixed in the future
 	// @ts-ignore
 	const filteredOptions = options.enum as JsonSchema7[];
+
 	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 	const [selected, setSelected] = useState<SelectOptionType[]>(convertValueToOptions(value));
 
 	useEffect(() => {
-		setSelected(convertValueToOptions(value))
-	}, [value])
+		setSelected(convertValueToOptions(value));
+	}, [value]);
 
 	return (
 		<>
@@ -48,9 +49,10 @@ const MultiSelect = (props: ControlProps) => {
 					inputId={path}
 					value={selected}
 					placeholder="Maak een keuze"
+					// @TODO: type of options (unknown) is not compatible with SelectOptionType. Technical depth that has to be fixed in the future
 					// @ts-ignore
 					onChange={(options: SelectOptionType[]) => {
-						onChange({ currentTarget: { value: options.map(option => option.value) } });
+						onChange({ currentTarget: { value: options.map((option) => option.value) } });
 						setSelected(options);
 					}}
 					isClearable
@@ -61,7 +63,7 @@ const MultiSelect = (props: ControlProps) => {
 					error={!isValid && isDirty}
 					onFocus={onFocus}
 					// Emulate onBlur event object
-					onBlur={() => onBlur({ currentTarget: { value: selected.map(option => option.value) } })}
+					onBlur={() => onBlur({ currentTarget: { value: selected.map((option) => option.value) } })}
 					zIndexMenu={99999}
 					// To avoid overflow issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
