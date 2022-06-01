@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.10](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.9...v0.0.4-alpha.10) (2022-06-01)
+
+
+### Bug Fixes
+
+* **metadata:** fix problems with defaultValue for multi-select ([48ea9c3](https://github.com/Amsterdam/bmi-dms-upload/commit/48ea9c38a8952b6e0dcf5920c7dfda6555b903c4))
+
 ### [0.0.4-alpha.9](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.8...v0.0.4-alpha.9) (2022-06-01)
 
 
