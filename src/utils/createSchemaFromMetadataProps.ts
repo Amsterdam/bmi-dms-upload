@@ -19,6 +19,9 @@ export default function createSchemaFromMetadataProps(
 					label,
 					oneOf,
 					customFormat,
+					uniqueItems,
+					default: defaultArray,
+					items,
 				},
 			) => {
 				acc[key] = {
@@ -49,6 +52,12 @@ export default function createSchemaFromMetadataProps(
 
 				if (isNotEmpty !== undefined) {
 					acc[key].properties!.value['bmi-isNotEmpty'] = isNotEmpty;
+				}
+
+				if (uniqueItems) {
+					acc[key].properties!.value.items = items;
+					acc[key].properties!.value.customFormat = customFormat;
+					acc[key].properties!.value.default = defaultArray;
 				}
 
 				if (oneOf !== undefined) {

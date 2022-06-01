@@ -12,9 +12,16 @@ addFormats(ajv);
 
 ajv.addKeyword({
 	keyword: 'bmi-isNotEmpty',
-	type: 'string',
+	type: ['string', 'array'],
 	validate: function (schema: any, data: any) {
-		return typeof data === 'string' && data.trim() !== '';
+		switch (typeof data) {
+			case 'string':
+				return data.trim() !== ''
+			case 'object':
+				return data.length > 0;
+			default:
+				return false;
+		}
 	},
 	errors: true,
 });

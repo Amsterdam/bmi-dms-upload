@@ -18,15 +18,15 @@ export interface IBulkFile {
 
 export interface IBulkFileMetadata {
 	id: IBulkFieldId;
-	value: string | number | boolean;
+	value: string | number | boolean | any[];
 }
 
 export interface IBulkField {
 	id: IBulkFieldId;
 	label: string;
-	value: string | number | boolean;
+	value: string | number | boolean | any[];
 	changeIndividual: boolean;
-	type: 'text' | 'date' | 'select' | 'checkbox';
+	type: 'text' | 'date' | 'select' | 'multi-select' | 'checkbox';
 	required?: boolean;
 	values?: any[];
 }

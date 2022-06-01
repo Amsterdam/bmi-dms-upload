@@ -185,6 +185,34 @@
           "Actueel",
           "Historisch"
         ]
+      },
+      {
+        "id": 65,
+        "placeholder": "Multi Select",
+        "required": true,
+        "defaultValue": "[\"Test1\",\"Test2\"]",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
+      },
+      {
+        "id": 66,
+        "placeholder": "Multi Select 2",
+        "required": false,
+        "defaultValue": "[\"Test1\"]",
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
       }
     ]
   }
