@@ -10,7 +10,7 @@ import { BulkStepsToRoutes } from '../bulk/constants';
 import { getFiles } from '../bulk/store/selectors';
 import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
-import { StyledPagination } from './styles';
+import { StyledPaginationBottom, StyledPaginationTop } from './styles';
 
 export default function Step3<T>(props: Props<T>) {
 	const { getDocumentViewUrl } = props;
@@ -31,6 +31,9 @@ export default function Step3<T>(props: Props<T>) {
 	} else {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
+				{files && (
+					<StyledPaginationTop collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
+				)}
 				<Heading forwardedAs="h2">Individueel metadateren</Heading>
 				{files && (
 					<FileViewer
@@ -40,7 +43,7 @@ export default function Step3<T>(props: Props<T>) {
 					/>
 				)}
 				{files && (
-					<StyledPagination collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
+					<StyledPaginationBottom collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
 				)}
 			</BulkWizard>
 		);
