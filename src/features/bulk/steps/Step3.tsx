@@ -12,6 +12,9 @@ import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { StyledPaginationBottom, StyledPaginationTop } from './styles';
 
+const LABEL_NEXT = 'Volgende document';
+const LABEL_PREVIOUS = 'Vorige document';
+
 export default function Step3<T>(props: Props<T>) {
 	const { getDocumentViewUrl } = props;
 
@@ -32,7 +35,14 @@ export default function Step3<T>(props: Props<T>) {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
 				{files && (
-					<StyledPaginationTop collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
+					<StyledPaginationTop
+						labelNext={LABEL_NEXT}
+						labelPrevious={LABEL_PREVIOUS}
+						collectionSize={files.length}
+						pageSize={1}
+						page={1}
+						onPageChange={handleOnPageChange}
+					/>
 				)}
 				<Heading forwardedAs="h2">Individueel metadateren</Heading>
 				{files && (
@@ -43,7 +53,14 @@ export default function Step3<T>(props: Props<T>) {
 					/>
 				)}
 				{files && (
-					<StyledPaginationBottom collectionSize={files.length} pageSize={1} page={1} onPageChange={handleOnPageChange} />
+					<StyledPaginationBottom
+						labelNext={LABEL_NEXT}
+						labelPrevious={LABEL_PREVIOUS}
+						collectionSize={files.length}
+						pageSize={1}
+						page={1}
+						onPageChange={handleOnPageChange}
+					/>
 				)}
 			</BulkWizard>
 		);
