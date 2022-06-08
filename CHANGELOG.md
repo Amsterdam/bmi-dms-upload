@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.12](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.11...v0.0.4-alpha.12) (2022-06-08)
+
+
+### Bug Fixes
+
+* **datefield:** datefield was still required in step3 though not required in step2 ([0dddafb](https://github.com/Amsterdam/bmi-dms-upload/commit/0dddafb75b3dc23e8185bec996317d4cd5120198))
+* **style:** fix descriptionlist ([46349ca](https://github.com/Amsterdam/bmi-dms-upload/commit/46349cac4dae7dc86634b02a102d2cd4ded681ff))
+
 ### [0.0.4-alpha.11](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.10...v0.0.4-alpha.11) (2022-06-01)
 
 
