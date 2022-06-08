@@ -7,13 +7,16 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 			key: field.id,
 			scope: 'string',
 			type: 'string',
-			format: field.type === 'date' ? 'date' : undefined,
 			label: field.label,
 			'bmi-errorMessage': undefined,
 		};
 
+		if (field.type === 'date') {
+			item.oneOf = [{ format: 'date' }, { maxLength: 0 }];
+		}
+
 		if (field.required) {
-			item['bmi-isNotEmpty'] = field.required
+			item['bmi-isNotEmpty'] = field.required;
 		}
 
 		if (field.type === 'select' && field.values) {
@@ -25,8 +28,8 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 		}
 
 		if (field.type === 'multi-select') {
-			item.type = 'array'
-			item.uniqueItems = true
+			item.type = 'array';
+			item.uniqueItems = true;
 			item.minItems = field.required ? 1 : 0;
 			item.items = {
 				type: 'string',
@@ -46,13 +49,13 @@ export function convertBulkFieldsToMetadataGenericTypes(fields: IBulkField[] | u
 
 	fields.forEach((field) => {
 		newFields[field.id] = {
-			value: field.value
+			value: field.value,
 		};
 
 		const newField = newFields[field.id] as MetadataGenericType;
 
 		if (field.changeIndividual) {
-			newField.changeIndividual = field.changeIndividual
+			newField.changeIndividual = field.changeIndividual;
 		}
 	});
 
@@ -107,7 +110,7 @@ export const reduceMetadata = (
 	currentFields: IBulkFileMetadata[],
 	newFields?: IBulkFileMetadata[],
 ): IBulkFileMetadata[] => {
-	if (!currentFields) return []
+	if (!currentFields) return [];
 	if (!newFields) return currentFields;
 
 	return currentFields.reduce((acc: IBulkFileMetadata[], currentField: IBulkFileMetadata) => {
