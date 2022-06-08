@@ -5,6 +5,7 @@ import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps, JsonSchema7 } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
+import { identicalObjects } from '../../../features/bulk/bulk/utils';
 
 type SelectOptionType = {
 	value: string;
@@ -37,6 +38,7 @@ const MultiSelect = (props: ControlProps) => {
 	const [selected, setSelected] = useState<SelectOptionType[]>(convertValueToOptions(value));
 
 	useEffect(() => {
+		if (identicalObjects(value, selected)) return;
 		setSelected(convertValueToOptions(value));
 	}, [value]);
 

@@ -132,8 +132,8 @@
     "yup": "^0.32.11"
   },
   "dependencies": {
-    "@amsterdam/asc-assets": "^0.33.0",
-    "@amsterdam/asc-ui": "^0.33.0",
+    "@amsterdam/asc-assets": "^0.36.0",
+    "@amsterdam/asc-ui": "^0.36.0",
     "@amsterdam/bmi-component-library": "0.0.12-alpha.9",
     "@jsonforms/core": "3.0.0-alpha.2",
     "@jsonforms/material-renderers": "3.0.0-alpha.2",
