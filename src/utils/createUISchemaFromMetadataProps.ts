@@ -29,13 +29,17 @@ export default function createUISchemaFromMetadataProps(metadataProperties: Meta
 export function createUISchemaIndividualFieldsFromMetadataProps(metadataProperties: MetadataProperty[]) {
 	return {
 		type: 'VerticalLayout',
-		elements: metadataProperties.map(({ key, scope, label }): any => ({
+		elements: metadataProperties.map(({ key, scope, label, oneOf }): any => ({
 			type: 'HorizontalLayout',
 			elements: [
 				{
 					type: 'Control',
 					label,
 					scope: `#/properties/${key}/properties/value`,
+					options: {
+						// @ts-ignore: tech debt, should be revised
+						format: oneOf?.find((oo: OneOfDateType) => oo?.format)?.format,
+					},
 				},
 			],
 		})),

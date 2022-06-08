@@ -1,10 +1,5 @@
 {
-  "files": [
-    {
-      "id": 1,
-      "title": "some-file"
-    }
-  ],
+  "files": [],
   "upload-session": {
     "id": "4af69162-2063-46fd-82d8-0f22aaf46437",
     "finished": false,
@@ -18,7 +13,7 @@
       {
         "id": 717,
         "placeholder": "Uitvoeringsdatum",
-        "required": true,
+        "required": false,
         "defaultValue": null,
         "userValue": null,
         "changeIndividual": false,
