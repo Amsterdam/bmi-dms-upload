@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.13](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.12...v0.0.4-alpha.13) (2022-06-09)
+
+
+### Bug Fixes
+
+* **bulk:** export GlobalDmsUploadStyle ([6764683](https://github.com/Amsterdam/bmi-dms-upload/commit/6764683fabc224109f4e782c86b47c33818e5fca))
+* **form:** fix styling issue for centered select box ([f1ebee8](https://github.com/Amsterdam/bmi-dms-upload/commit/f1ebee8b8fc35493e28a6ef621c05d62f925c2b9))
+
 ### [0.0.4-alpha.12](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.11...v0.0.4-alpha.12) (2022-06-08)
 
 
