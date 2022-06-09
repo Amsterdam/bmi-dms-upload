@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ComponentProps } from 'react';
-import { Pagination, themeColor, themeSpacing } from '@amsterdam/asc-ui';
+import { Pagination, themeSpacing } from '@amsterdam/asc-ui';
 
 export const Step1Styles = styled.div`
 	&& li {
@@ -11,7 +11,6 @@ export const Step1Styles = styled.div`
 export const StyledPaginationTop = styled(Pagination)<ComponentProps<typeof Pagination>>`
 	display: flex;
 	justify-content: center;
-	background-color: ${themeColor('tint', 'level3')};
 	padding-top: 0;
 	margin: -${themeSpacing(8)} -${themeSpacing(8)} ${themeSpacing(6)};
 `;
@@ -19,6 +18,5 @@ export const StyledPaginationTop = styled(Pagination)<ComponentProps<typeof Pagi
 export const StyledPaginationBottom = styled(Pagination)<ComponentProps<typeof Pagination>>`
 	display: flex;
 	justify-content: center;
-	background-color: ${themeColor('tint', 'level3')};
 	margin: ${themeSpacing(6)} -${themeSpacing(8)} -${themeSpacing(8)};
 `;
