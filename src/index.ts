@@ -7,3 +7,4 @@ export { RowLayoutSchema, CustomJsonSchema, CustomFileLight, CancelCallbackArg }
 export { IBulkField } from './features/bulk/bulk/store/model';
 export { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 export * as dmsIntegration from './dms-integration'
+export { default as GlobalDmsUploadStyle } from './GlobalStyle';

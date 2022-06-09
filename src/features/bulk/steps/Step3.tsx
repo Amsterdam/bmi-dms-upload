@@ -22,12 +22,18 @@ export default function Step3<T>(props: Props<T>) {
 
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [currentFileIndex, setCurrentFileIndex] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 
 	const handleOnFormChange = useCallback((data: MetadataGenericType, valid: boolean) => {
 		setIsValidForm(valid);
 	}, []);
-	const handleOnPageChange = useCallback((page: number) => setCurrentFileIndex(page - 1), [files]);
-
+	const handleOnPageChange = useCallback(
+		(page: number) => {
+			setCurrentPage(page)
+			setCurrentFileIndex(page - 1);
+		},
+		[files],
+	);
 	// Redirect to step1 when state is not correct
 	if (files?.length === 0) {
 		return <Navigate to={BulkStepsToRoutes[1]} />;
@@ -40,7 +46,7 @@ export default function Step3<T>(props: Props<T>) {
 						labelPrevious={LABEL_PREVIOUS}
 						collectionSize={files.length}
 						pageSize={1}
-						page={1}
+						page={currentPage}
 						onPageChange={handleOnPageChange}
 					/>
 				)}
@@ -58,7 +64,7 @@ export default function Step3<T>(props: Props<T>) {
 						labelPrevious={LABEL_PREVIOUS}
 						collectionSize={files.length}
 						pageSize={1}
-						page={1}
+						page={currentPage}
 						onPageChange={handleOnPageChange}
 					/>
 				)}

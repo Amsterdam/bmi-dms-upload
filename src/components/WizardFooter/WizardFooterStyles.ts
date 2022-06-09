@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, themeSpacing } from '@amsterdam/asc-ui';
+import { Button, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
 type ButtonProps = ComponentProps<typeof Button>;
@@ -19,6 +19,7 @@ export const ButtonPanelStyle = styled.div`
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	padding: ${themeSpacing(2, 0)};
+	background-color: ${themeColor('tint', 'level3')};
 `;
 export const WizardButton = styled(Button)<ButtonProps>`
 	margin-left: ${themeSpacing(1)};
