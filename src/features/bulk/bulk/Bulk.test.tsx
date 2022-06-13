@@ -50,7 +50,7 @@ describe('<Bulk />', () => {
 				fireEvent.click(button);
 			});
 
-			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
+			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.code} (${asset.name})`);
 			expect(modalTitle).toBeInTheDocument();
 		});
 	});
@@ -61,7 +61,7 @@ describe('<Bulk />', () => {
 				render(<Bulk {...defaultProps} />, {}, [BulkStepsToRoutes[1]]);
 			});
 
-			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.name}`);
+			const modalTitle = screen.queryByText(`Bestanden uploaden voor ${asset.code} (${asset.name})`);
 			expect(modalTitle).toBeInTheDocument();
 		});
 

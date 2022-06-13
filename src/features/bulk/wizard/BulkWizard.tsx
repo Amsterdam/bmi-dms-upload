@@ -141,7 +141,7 @@ export default function BulkWizard<T>({
 			>
 				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setConfirmTermination()}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
-						Bestanden uploaden voor {asset.name}
+						Bestanden uploaden voor {asset.code} ({asset.name})
 					</ModalTopBarStyle>
 				</Modal.TopBar>
 				<>
