@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.14](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.13...v0.0.4-alpha.14) (2022-06-16)
+
+
+### Bug Fixes
+
+* **bulk-wizard:** show asset code and name in modal title ([085fec4](https://github.com/Amsterdam/bmi-dms-upload/commit/085fec40906a751d90826639273d3d0b97207b86))
+* **metadata:** validation for (multi)select ([9ef55cd](https://github.com/Amsterdam/bmi-dms-upload/commit/9ef55cd3eb7f865636bcd9707ce5cb72cd044721))
+
 ### [0.0.4-alpha.13](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.12...v0.0.4-alpha.13) (2022-06-09)
 
 
