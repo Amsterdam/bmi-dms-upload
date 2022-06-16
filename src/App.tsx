@@ -131,6 +131,7 @@ function App() {
 						<Bulk
 							asset={asset}
 							basePath="/documents/29/bulk-metadata"
+							getDocumentViewUrl={getDocumentViewUrl}
 							getHeaders={getHeaders}
 							getPostUrl={getPostUrl}
 							metadataFields={metadataFields}
@@ -140,7 +141,6 @@ function App() {
 							onFileRemove={onFileRemove}
 							onFileSuccess={onFileSuccessBulk}
 							onMetadataSubmit={onMetadataSubmitBulk}
-							getDocumentViewUrl={getDocumentViewUrl}
 							uploadHTTPMethod={'POST'}
 						/>
 					</div>

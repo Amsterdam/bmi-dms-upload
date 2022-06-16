@@ -5,14 +5,14 @@ export type MetadataProperty = {
 	type: string;
 	'bmi-errorMessage'?: string;
 	'bmi-isNotEmpty'?: boolean;
-	customFormat?: 'creatable' | 'multi-creatable';
+	customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
 	default?: string[];
 	format?: string;
 	items?: { type: string; enum: string[] };
 	minItems?: number;
 	oneOf?: { const: string; title: string }[] | OneOfDateType;
-	uniqueItems?: boolean;
 	options?: { format?: string };
+	uniqueItems?: boolean;
 };
 
 export type OneOfDateType = Array<{ maxLength: number } | { format: string }>;

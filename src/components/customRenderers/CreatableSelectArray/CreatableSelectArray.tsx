@@ -5,7 +5,6 @@ import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps, JsonSchema7 } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
-import { identicalObjects } from '../../../features/bulk/bulk/utils';
 
 type SelectOptionType = {
 	value: string;
@@ -16,13 +15,16 @@ function isInsideModal(id: string): boolean {
 	return !!document.getElementById(id)?.closest('[role=dialog]');
 }
 
-function convertValueToOptions(arr: string[]): SelectOptionType[] {
-	return arr.map((option) => ({
-		value: option,
-		label: option,
-	}));
+function convertValueToSelectOptionType(value: string[] | undefined): SelectOptionType | null {
+	if (value === undefined) return null;
+	if (value.length === 0) return null;
+
+	return {
+		value: value[0],
+		label: value[0],
+	};
 }
-const MultiSelect = (props: ControlProps) => {
+const CreatableSelectArray = (props: ControlProps) => {
 	const {
 		data: value = [],
 		path,
@@ -35,11 +37,10 @@ const MultiSelect = (props: ControlProps) => {
 	const filteredOptions = options.enum as JsonSchema7[];
 
 	const { isValid, isDirty, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
-	const [selected, setSelected] = useState<SelectOptionType[]>(convertValueToOptions(value));
+	const [selected, setSelected] = useState<SelectOptionType | null>(null);
 
 	useEffect(() => {
-		if (identicalObjects(value, selected)) return;
-		setSelected(convertValueToOptions(value));
+		setSelected(convertValueToSelectOptionType(value));
 	}, [value]);
 
 	return (
@@ -47,15 +48,15 @@ const MultiSelect = (props: ControlProps) => {
 			{label && <AccessibleLabel htmlFor={path} label={label} isRequired={isRequired} />}
 			<div>
 				<Creatable
-					isMulti={true}
+					isMulti={false}
 					inputId={path}
 					value={selected}
 					placeholder="Maak een keuze"
 					// @TODO: type of options (unknown) is not compatible with SelectOptionType. Technical depth that has to be fixed in the future
 					// @ts-ignore
-					onChange={(options: SelectOptionType[]) => {
-						onChange({ currentTarget: { value: options.map((option) => option.value) } });
-						setSelected(options);
+					onChange={(option: SelectOptionType) => {
+						onChange({ currentTarget: { value: option ? [option.value] : [] } });
+						setSelected(option);
 					}}
 					isClearable
 					options={filteredOptions.map((option) => ({
@@ -65,15 +66,17 @@ const MultiSelect = (props: ControlProps) => {
 					error={!isValid && isDirty}
 					onFocus={onFocus}
 					// Emulate onBlur event object
-					onBlur={() => onBlur({ currentTarget: { value: selected.map((option) => option.value) } })}
+					onBlur={() => {
+						onBlur({ currentTarget: { value: selected ? [selected.value] : [] } });
+					}}
 					zIndexMenu={99999}
 					// To avoid overflow issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
-				{!isValid && <ErrorMessage message={errors} />}
+				{!isValid && isDirty && <ErrorMessage message={errors} />}
 			</div>
 		</>
 	);
 };
 
-export default withJsonFormsControlProps(MultiSelect);
+export default withJsonFormsControlProps(CreatableSelectArray);
