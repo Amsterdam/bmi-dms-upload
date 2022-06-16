@@ -9,12 +9,12 @@ export interface CustomJsonSchema extends JsonSchema7 {
 	properties?: {
 		[property: string]: JsonSchema7 & {
 			'bmi-isNotEmpty'?: boolean;
-			customFormat?: 'creatable' | 'multi-creatable';
+			customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
 
 			properties?: {
 				[property: string]: JsonSchema7 & {
 					'bmi-isNotEmpty'?: boolean;
-					customFormat?: 'creatable' | 'multi-creatable';
+					customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
 				}
 			}
 		};

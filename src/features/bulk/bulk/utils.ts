@@ -20,17 +20,18 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 		}
 
 		if (field.type === 'select' && field.values) {
-			item.oneOf = field.values.map((fieldOption) => ({
-				const: fieldOption,
-				title: fieldOption,
-			}));
-			item.customFormat = 'creatable';
+			item.type = 'array';
+			item.uniqueItems = true;
+			item.items = {
+				type: 'string',
+				enum: field.values!,
+			};
+			item.customFormat = 'creatable-array';
 		}
 
 		if (field.type === 'multi-select') {
 			item.type = 'array';
 			item.uniqueItems = true;
-			item.minItems = field.required ? 1 : 0;
 			item.items = {
 				type: 'string',
 				enum: field.values!,

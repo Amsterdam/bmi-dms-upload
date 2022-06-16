@@ -21,22 +21,24 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		}
 
 		if (field.type === 'ChoiceType') {
-			item.oneOf = field.options.map((fieldOption) => ({
-				const: fieldOption,
-				title: fieldOption,
-			}));
+			item.type = 'array';
+			item.uniqueItems = true;
+			item.items = {
+				type: 'string',
+				enum: field.options,
+			};
+			item.customFormat = 'creatable-array';
 
-			item.oneOf.unshift({
-				const: '',
-				title: 'No Value',
-			});
-			item.customFormat = 'creatable';
+			if (field.defaultValue) {
+				item.default = JSON.parse(`["${field.defaultValue}"]`);
+			} else {
+				item.default = [];
+			}
 		}
 
 		if (field.type === 'MultipleChoiceType') {
 			item.type = 'array';
 			item.uniqueItems = true;
-			item.minItems = field.required ? 1 : 0;
 			item.items = {
 				type: 'string',
 				enum: field.options,
@@ -45,6 +47,8 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 
 			if (field.defaultValue) {
 				item.default = JSON.parse(field.defaultValue);
+			} else {
+				item.default = []
 			}
 		}
 
@@ -55,12 +59,13 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
 	return fields.map((field) => {
 		const defaultValue = field.userValue ?? field.defaultValue ?? '';
-		let newValue;
+		let newValue = defaultValue;
 
+		if (convertDmsTypeToBulkFieldType(field.type) === 'select') {
+			newValue = defaultValue ? JSON.parse(`["${defaultValue}"]`): [];
+		}
 		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
-			newValue = defaultValue ? JSON.parse(defaultValue): undefined;
-		} else {
-			newValue = defaultValue;
+			newValue = defaultValue ? JSON.parse(defaultValue): [];
 		}
 
 		return {
