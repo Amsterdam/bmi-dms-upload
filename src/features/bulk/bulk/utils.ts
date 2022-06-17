@@ -11,6 +11,10 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 			'bmi-errorMessage': undefined,
 		};
 
+		if (field.type === 'checkbox') {
+			item.type = 'boolean'
+		}
+
 		if (field.type === 'date') {
 			item.oneOf = [{ format: 'date' }, { maxLength: 0 }];
 		}

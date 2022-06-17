@@ -136,7 +136,7 @@
         "id": 467,
         "placeholder": "Ils-3",
         "required": false,
-        "defaultValue": null,
+        "defaultValue": "true",
         "userValue": null,
         "changeIndividual": false,
         "type": "CheckboxType",
