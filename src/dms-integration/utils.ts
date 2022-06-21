@@ -16,6 +16,10 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			item['bmi-isNotEmpty'] = field.required;
 		}
 
+		if (field.type === 'CheckboxType') {
+			item.type = "boolean"
+		}
+
 		if (field.type === 'DateType') {
 			item.oneOf = [{ format: 'date' }, { maxLength: 0 }];
 		}
@@ -59,13 +63,17 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDynamicFormField[]): IBulkField[] {
 	return fields.map((field) => {
 		const defaultValue = field.userValue ?? field.defaultValue ?? '';
-		let newValue = defaultValue;
+		let newValue: IBulkField['value'] = defaultValue;
 
 		if (convertDmsTypeToBulkFieldType(field.type) === 'select') {
 			newValue = defaultValue ? JSON.parse(`["${defaultValue}"]`): [];
 		}
 		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
 			newValue = defaultValue ? JSON.parse(defaultValue): [];
+		}
+
+		if (convertDmsTypeToBulkFieldType(field.type) === 'checkbox') {
+			newValue = defaultValue ? JSON.parse(defaultValue) : false;
 		}
 
 		return {
