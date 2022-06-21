@@ -9,6 +9,8 @@ export enum CurrentStep {
 	EditFields
 }
 
+export type TBulkFieldType = 'text' | 'date' | 'select' | 'multi-select' | 'checkbox';
+
 export interface IBulkFile {
 	id: string;
 	metadata?: IBulkFileMetadata[];
@@ -18,6 +20,7 @@ export interface IBulkFile {
 
 export interface IBulkFileMetadata {
 	id: IBulkFieldId;
+	type: TBulkFieldType;
 	value: string | number | boolean | any[];
 }
 
@@ -26,7 +29,7 @@ export interface IBulkField {
 	label: string;
 	value: string | number | boolean | any[];
 	changeIndividual: boolean;
-	type: 'text' | 'date' | 'select' | 'multi-select' | 'checkbox';
+	type: TBulkFieldType;
 	required?: boolean;
 	values?: any[];
 }

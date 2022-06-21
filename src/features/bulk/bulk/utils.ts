@@ -69,6 +69,7 @@ export function convertBulkFieldsToBulkFileMetadata(fields: IBulkField[] | undef
 	return fields.map((field) => ({
 		id: field.id,
 		value: field.value,
+		type: field.type,
 	}));
 }
 
@@ -125,6 +126,7 @@ export const reduceMetadata = (
 				...{
 					id: newField.id,
 					value: newField.value,
+					type: newField.type ?? currentField.type,
 				},
 			};
 		}
