@@ -36,7 +36,7 @@ const CreatableSelectArray = (props: ControlProps) => {
 	// @ts-ignore
 	const filteredOptions = options.enum as JsonSchema7[];
 
-	const { isValid, isDirty, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
+	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 	const [selected, setSelected] = useState<SelectOptionType | null>(null);
 
 	useEffect(() => {
@@ -73,7 +73,7 @@ const CreatableSelectArray = (props: ControlProps) => {
 					// To avoid overflow issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
-				{!isValid && isDirty && <ErrorMessage message={errors} />}
+				{!isValid && !isFocused && isDirty && <ErrorMessage message={errors} />}
 			</div>
 		</>
 	);
