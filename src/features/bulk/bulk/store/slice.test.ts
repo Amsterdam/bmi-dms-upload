@@ -12,7 +12,7 @@ import {
 	removeFile,
 	setFileMetadata,
 } from './slice';
-import { CurrentStep } from './model';
+import { CurrentStep, IBulkFileMetadata } from './model';
 
 jest.mock('react-router-dom');
 
@@ -73,7 +73,7 @@ describe('Bulk Slice', () => {
 	});
 
 	test('should handle file Metadata being set', () => {
-		const newValues = { id: 'field-1', value: 'New Field 1 value' };
+		const newValues: IBulkFileMetadata = { id: 'field-1', value: 'New Field 1 value', type: 'text' };
 		expect(reducer(stateMock, setFileMetadata({ fileId: '1', metadata: [newValues] })).files[0].metadata).toStrictEqual(
 			[newValues],
 		);

@@ -14,7 +14,7 @@ import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '.
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
 import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
-import { reduceMetadata } from '../bulk/utils';
+import { convertBulkFieldsToBulkFileMetadata, reduceMetadata } from '../bulk/utils';
 import { hasValues } from './utils';
 
 type BulkWizardProps<T> = {
@@ -25,7 +25,7 @@ type BulkWizardProps<T> = {
 const makeMetadataObject = (state: IBulkState): IBulkFile[] => {
 	return state.files.map((file) => ({
 		id: file.id,
-		metadata: reduceMetadata(state.fields, file.metadata),
+		metadata: reduceMetadata(convertBulkFieldsToBulkFileMetadata(state.fields), file.metadata),
 		uploadedFile: file.uploadedFile,
 	}));
 };
