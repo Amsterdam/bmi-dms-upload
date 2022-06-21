@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.15](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.14...v0.0.4-alpha.15) (2022-06-21)
+
+
+### Bug Fixes
+
+* **bulk:** add type to IBulkFileMetadata ([8661b1a](https://github.com/Amsterdam/bmi-dms-upload/commit/8661b1afc8873c82fe74169b7040cc03aefb4c75))
+* **metadata:** support for CheckboxType ([437e478](https://github.com/Amsterdam/bmi-dms-upload/commit/437e47886e8543b1eb15eefd68acb6d0f042e93f))
+* **validation:** show validation after focus ([7757042](https://github.com/Amsterdam/bmi-dms-upload/commit/77570421f18ffef57d84f0d263b0a4150c6f947a))
+
 ### [0.0.4-alpha.14](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.13...v0.0.4-alpha.14) (2022-06-16)
 
 
