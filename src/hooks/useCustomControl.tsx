@@ -4,7 +4,7 @@ import { CustomJsonSchema } from '../types';
 
 function useCustomControl({ data: value, errors, handleChange, path, schema }: ControlProps) {
 	const [isFocused, setFocused] = useState<boolean>(false);
-	const [isDirty, setIsDirty] = useState<boolean>(!!value);
+	const [isDirty, setIsDirty] = useState<boolean>(typeof value === 'object' && value.length === 0 ? false : !!value);
 	const isValid = errors.length === 0 && isDirty;
 
 	const onFocus = useCallback(() => {
