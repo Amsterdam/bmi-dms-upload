@@ -250,6 +250,20 @@
           "Test2",
           "Test3"
         ]
+      },
+      {
+        "id": 70,
+        "placeholder": "Multi Select 6",
+        "required": true,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "MultipleChoiceType",
+        "options": [
+          "Test1",
+          "Test2",
+          "Test3"
+        ]
       }
     ]
   }

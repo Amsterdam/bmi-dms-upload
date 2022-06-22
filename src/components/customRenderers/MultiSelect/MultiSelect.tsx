@@ -5,7 +5,6 @@ import { CreatableSelect as Creatable } from '@amsterdam/bmi-component-library';
 import { ControlProps, JsonSchema7 } from '@jsonforms/core';
 import useCustomControl from '../../../hooks/useCustomControl';
 import AccessibleLabel from '../AccessibleLabel/AccessibleLabel';
-import { identicalObjects } from '../../../features/bulk/bulk/utils';
 
 type SelectOptionType = {
 	value: string;
@@ -34,11 +33,10 @@ const MultiSelect = (props: ControlProps) => {
 	// @ts-ignore
 	const filteredOptions = options.enum as JsonSchema7[];
 
-	const { isValid, isDirty, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
-	const [selected, setSelected] = useState<SelectOptionType[]>(convertValueToOptions(value));
+	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
+	const [selected, setSelected] = useState<SelectOptionType[] | null>(null);
 
 	useEffect(() => {
-		if (identicalObjects(value, selected)) return;
 		setSelected(convertValueToOptions(value));
 	}, [value]);
 
@@ -65,12 +63,12 @@ const MultiSelect = (props: ControlProps) => {
 					error={!isValid && isDirty}
 					onFocus={onFocus}
 					// Emulate onBlur event object
-					onBlur={() => onBlur({ currentTarget: { value: selected.map((option) => option.value) } })}
+					onBlur={() => onBlur({ currentTarget: { value: selected ? selected.map((option) => option.value) : [] } })}
 					zIndexMenu={99999}
 					// To avoid overflow issues in modal windows
 					menuPortalTarget={isInsideModal(path) ? document.body : null}
 				/>
-				{!isValid && <ErrorMessage message={errors} />}
+				{!isValid && !isFocused && isDirty && <ErrorMessage message={errors} />}
 			</div>
 		</>
 	);
