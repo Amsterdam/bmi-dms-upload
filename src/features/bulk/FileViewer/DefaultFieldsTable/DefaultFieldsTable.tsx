@@ -14,7 +14,7 @@ export default function DefaultFieldsTable({ fields }: Props) {
 			{fields &&
 				fields.map((field) => (
 					<StyledDescriptionListItem term={field.label} key={field.id}>
-						{field.value}
+						{field.value === true ? '✔' : field.type === 'multi-select' ? field.value + '' : field.value}
 					</StyledDescriptionListItem>
 				))}
 		</DescriptionList>
