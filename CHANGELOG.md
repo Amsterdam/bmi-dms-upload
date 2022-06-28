@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.18](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.17...v0.0.4-alpha.18) (2022-06-28)
+
+
+### Bug Fixes
+
+* **wizard:** button styling ([e3cee27](https://github.com/Amsterdam/bmi-dms-upload/commit/e3cee2747b27d55da6c5ca97f25154ea1a48bcb6))
+* **wizard:** button styling ([162901e](https://github.com/Amsterdam/bmi-dms-upload/commit/162901e3a9b0bb3fc48d5602aa1c56c1786c807e))
+
 ### [0.0.4-alpha.17](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.16...v0.0.4-alpha.17) (2022-06-22)
 
 
