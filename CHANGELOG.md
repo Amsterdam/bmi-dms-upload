@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4-alpha.19](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.18...v0.0.4-alpha.19) (2022-06-28)
+
+
+### Bug Fixes
+
+* **defaultfieldstable:** boolean TRUE returned an empty string, multi-select had no seperators ([1b604ff](https://github.com/Amsterdam/bmi-dms-upload/commit/1b604ff9129ea4e2d661866443e63aebdc5b9eb8))
+
 ### [0.0.4-alpha.18](https://github.com/Amsterdam/bmi-dms-upload/compare/v0.0.4-alpha.17...v0.0.4-alpha.18) (2022-06-28)
 
 
