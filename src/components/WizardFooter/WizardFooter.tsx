@@ -3,11 +3,9 @@ import { ChevronLeft } from '@amsterdam/asc-assets';
 import React, { ComponentProps } from 'react';
 import {
 	ButtonPanelStyle,
-	CancelButtonStyle,
-	LeftActionStyle,
-	PreviousButtonStyle,
 	RightActionStyle,
-	WizardButton,
+	SaveButton,
+	NextButton
 } from './WizardFooterStyles';
 
 type ButtonConfig = {
@@ -75,33 +73,33 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 
 	return (
 		<ButtonPanelStyle>
-			<LeftActionStyle>
+			<div>
 				{showCancelButton && (
-					<CancelButtonStyle
+					<Button
 						name="cancel"
-						variant="textButton"
+						variant="primaryInverted"
 						iconLeft={<ChevronLeft />}
 						onClick={onCancelClick}
 						data-testid={cancelTestId}
 					>
 						{cancelLabel}
-					</CancelButtonStyle>
+					</Button>
 				)}
-			</LeftActionStyle>
+			</div>
 			<RightActionStyle>
 				{showPreviousButton && (
-					<PreviousButtonStyle
+					<Button
 						name="previous"
-						variant="textButton"
+						variant="primaryInverted"
 						iconLeft={<ChevronLeft />}
 						onClick={onPreviousClick}
 						data-testid={previousTestId}
 					>
 						{previousLabel}
-					</PreviousButtonStyle>
+					</Button>
 				)}
 				{showNextButton && (
-					<WizardButton
+					<NextButton
 						name="next"
 						variant="secondary"
 						onClick={onNextClick}
@@ -110,10 +108,10 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 						taskflow
 					>
 						{nextLabel}
-					</WizardButton>
+					</NextButton>
 				)}
 				{showSaveButton && (
-					<WizardButton
+					<SaveButton
 						name="save"
 						variant="secondary"
 						onClick={onSaveClick}
@@ -121,7 +119,7 @@ const WizardFooter: React.FC<Props> = ({ cancel, next, previous, save }) => {
 						data-testid={saveTestId}
 					>
 						{saveLabel}
-					</WizardButton>
+					</SaveButton>
 				)}
 			</RightActionStyle>
 		</ButtonPanelStyle>
