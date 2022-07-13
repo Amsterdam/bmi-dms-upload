@@ -8,7 +8,9 @@
 	"exclude": [
 		"entry.tsx",
 		"**/*.test.tsx",
+		"**/*.test.ts",
 		"**/*.stories.tsx",
-		"**/__mocks__/*"
+		"**/__mocks__/*",
+		"**/__stubs__/*"
 	]
 }

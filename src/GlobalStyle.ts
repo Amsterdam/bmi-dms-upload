@@ -6,6 +6,11 @@ const GlobalStyle = createGlobalStyle`
 		font-family: ${getValueFromTheme('typography.fontFamily')};
 		color: ${themeColor('tint', 'level7')};
 	}
+
+	.modal--bulk {
+		width: 90vw !important;
+		max-width: 1200px !important;
+	}
 `;
 
 export default GlobalStyle;

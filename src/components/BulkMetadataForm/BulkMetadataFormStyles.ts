@@ -44,6 +44,11 @@ const BulkMetadataFormStyles = styled.div`
 			border-bottom: 1px solid #e6e6e6;
 			margin-top: ${themeSpacing(-2)};
 		}
+
+		> div:last-child > div {
+			width: 100%;
+			text-align: center;
+		}
 	}
 
 	.MuiGrid-container {
@@ -71,11 +76,6 @@ const BulkMetadataFormStyles = styled.div`
 			label + div:nth-of-type(2) {
 				margin: ${themeSpacing(-1, 0)};
 				text-align: left;
-			}
-
-			&:nth-of-type(2) div:first-of-type {
-				width: 100%;
-				text-align: center;
 			}
 
 			&:first-of-type {
