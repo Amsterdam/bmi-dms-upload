@@ -20,7 +20,7 @@ module.exports = {
 			...common.module.rules,
 			{
 				test: /\.css$/,
-				loader: [
+				use: [
 					'style-loader', // 3. Inject styles into DOM
 					{
 						loader: 'css-loader', // 2. Turns css into commonjs
@@ -39,13 +39,9 @@ module.exports = {
 		],
 	},
 	devServer: {
-		inline: true,
-		contentBase: path.join(process.cwd(), '/src'),
 		port: 9999,
 		host: 'localhost',
-		hot: true,
-		hotOnly: true,
-		disableHostCheck: true,
+		hot: 'only',
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},

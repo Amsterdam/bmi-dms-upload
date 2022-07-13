@@ -2,7 +2,7 @@ import React from 'react';
 import { RenderOptions, render } from '@testing-library/react';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import theme from '../../src/theme';
 
 function renderWithTheme(ui: React.ReactElement, options?: Omit<RenderOptions, 'queries'>) {

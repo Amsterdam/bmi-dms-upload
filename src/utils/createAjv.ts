@@ -8,6 +8,7 @@ const ajv = new AJV({
 	strict: false,
 });
 
+// @ts-ignore
 addFormats(ajv);
 
 ajv.addKeyword({

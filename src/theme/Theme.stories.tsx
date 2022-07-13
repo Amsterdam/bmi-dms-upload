@@ -1,10 +1,10 @@
 // @ts-nocheck
 
 import React from 'react';
-import muiTheme from './material-ui-theme';
 import { withA11y } from '@storybook/addon-a11y';
 import styled from 'styled-components';
 import { themeColor, ascDefaultTheme } from '@amsterdam/asc-ui';
+import { muiTheme } from '@amsterdam/bmi-component-library';
 
 export default {
 	title: 'theme/Theme',
