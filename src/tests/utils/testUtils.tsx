@@ -1,5 +1,5 @@
 import React from 'react';
-import { render as rtlRender } from '@testing-library/react';
+import { render as rtlRender, RenderResult } from '@testing-library/react';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
@@ -39,7 +39,11 @@ interface StoreOverrides {
 	};
 }
 
-function render(ui: React.ReactElement, { store, ...rest }: TRenderOptions, initialEntries: string[] = ['/']) {
+function render(
+	ui: React.ReactElement,
+	{ store, ...rest }: TRenderOptions,
+	initialEntries: string[] = ['/'],
+): RenderResult {
 	const testStore = createTestStore(store);
 
 	function Wrapper({ children }: { children?: React.ReactNode }) {
