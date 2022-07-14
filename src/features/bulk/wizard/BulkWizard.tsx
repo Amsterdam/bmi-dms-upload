@@ -42,10 +42,10 @@ export default function BulkWizard<T>({
 		resetAndClose(),
 	);
 	const { isOpen: isConfirmSaveOpen } = useConfirmSave(() => save());
-	const currentStep = useAppSelector(getCurrentStep);
+	const currentStep = useSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
-	const files = useAppSelector(getFiles);
-	const individualFields = useAppSelector(getChangeIndividualFields);
+	const files = useSelector(getFiles);
+	const individualFields = useSelector(getChangeIndividualFields);
 	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
