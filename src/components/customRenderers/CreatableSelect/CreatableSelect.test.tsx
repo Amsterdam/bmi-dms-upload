@@ -62,8 +62,8 @@ describe('customRenderers / CreatableSelect', () => {
 		await selectEvent.openMenu(input);
 		expect(getByText(options[3])).toBeInTheDocument();
 		fireEvent.blur(input);
-		expect(queryByText(options[3])).not.toBeInTheDocument();
 		await waitFor(() => {
+			expect(queryByText(options[3])).not.toBeInTheDocument();
 			expect(onChangeMock).toHaveBeenLastCalledWith(
 				{
 					documentDescription: options[5],
