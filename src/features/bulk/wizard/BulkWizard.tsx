@@ -16,6 +16,7 @@ import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { convertBulkFieldsToBulkFileMetadata, reduceMetadata } from '../bulk/utils';
 import { hasValues } from './utils';
+import { useSelector } from 'react-redux';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
