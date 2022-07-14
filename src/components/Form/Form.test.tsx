@@ -1,13 +1,13 @@
 import React, { ComponentProps } from 'react';
 import { JsonForms } from '@jsonforms/react';
-import renderWithTheme from '~/tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
 import MetadataForm from '../MetadataForm/MetadataForm';
 import { DEFAULT_RENDERERS, Props } from './Form';
 import { schema, uischema } from '../MetadataForm/__stubs__';
 import ajv from '../../utils/createAjv';
 import { tester, DateField } from '../customRenderers/DateField';
 import { error } from './__stubs__/errors';
-import { mockComponentProps, mocked } from '~/tests/helpers';
+import { mockComponentProps, mocked } from '../../tests/helpers';
 
 jest.mock('@jsonforms/react', () => ({
 	...jest.requireActual('@jsonforms/react'),

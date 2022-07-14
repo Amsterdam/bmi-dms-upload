@@ -8,8 +8,10 @@
 	},
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": [
+		"**/*.test.ts",
 		"**/*.test.tsx",
 		"**/*.stories.tsx",
-		"**/__mocks__/*"
+		"**/__mocks__/*",
+		"**/__stubs__/*"
 	]
 }

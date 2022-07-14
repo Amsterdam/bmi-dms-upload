@@ -1,93 +1,153 @@
-import React from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { muiTheme, CustomFile } from '@amsterdam/bmi-component-library';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { ThemeProvider as MUIThemeProvider } from '@mui/material';
-import AddDocumentButton from './features/single-file/components/AddDocumentButton/AddDocumentButton';
-import theme from './theme';
-import { CancelCallbackArg, MetadataDataSubmitCallbackArg } from './types';
-import { schema, uischema } from './components/MetadataForm/__stubs__';
+import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
+import { UISchemaElement } from '@jsonforms/core';
 
-type MetadataExample = {
-	documentDescription: string;
-	executionDate: string;
+import Single from './features/single/single/Single';
+import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
+import Bulk from './features/bulk/bulk/Bulk';
+import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
+import GlobalAppStyle from './GlobalStyle';
+
+import {
+	CancelCallbackArg,
+	CustomFileLight,
+	CustomFileLightOrRejection,
+	CustomJsonSchema,
+	MetadataDataSubmitCallbackArg,
+} from './types';
+import { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
+import {
+	convertDmsDynamicFormFieldsToBulkMetadataFields,
+	convertDmsDynamicFormFieldsToMetadataProperty,
+	IDmsUploadSession,
+} from './dms-integration';
+import { AppStyles } from './AppStyles';
+import theme from './theme';
+
+const asset = {
+	code: '1337',
+	name: 'some-name',
 };
 
-const basePath = '/base/path';
+async function fetchSession(): Promise<IDmsUploadSession> {
+	const response = await fetch(`http://localhost:3000/upload-session`);
+	return (await response.json()) as IDmsUploadSession;
+}
 
-const App: React.FC = () => {
+function App() {
+	const mounted = useRef(false);
+	const hasFiles = useRef(false);
+	const [metadataFields, setMetadataFields] = useState<IBulkField[] | undefined>(undefined);
+	const [session, setSession] = useState<IDmsUploadSession | undefined>(undefined);
+	const [schema, setSchema] = useState<CustomJsonSchema | undefined>(undefined);
+	const [uischema, setUischema] = useState<UISchemaElement | undefined>(undefined);
+
+	useEffect(() => {
+		mounted.current = true;
+
+		return () => {
+			mounted.current = false;
+		};
+	}, []);
+
+	useEffect(() => {
+		const doGetSession = async () => {
+			if (!hasFiles) return false;
+			setSession(session ? session : await fetchSession());
+		};
+
+		doGetSession();
+	}, [hasFiles]);
+
+	useEffect(() => {
+		if (!session) return;
+		const metadataProperties = convertDmsDynamicFormFieldsToMetadataProperty(session.dynamicFormFields);
+		setSchema(createSchemaFromMetadataProps(metadataProperties));
+		setUischema(createUISchemaFromMetadataProps(metadataProperties));
+		setMetadataFields(convertDmsDynamicFormFieldsToBulkMetadataFields(session.dynamicFormFields));
+	}, [session]);
+
+	const metadataForm = {
+		schema,
+		uischema,
+		data: {},
+		renderers: [],
+	};
+
+	const onClose = useCallback(() => console.log(':: onClose'), []);
+	const onCancel = useCallback(async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data), []); //<MetadataExample>
+	const onFileSuccessBulk = useCallback(async (file: CustomFileLight) => {
+		console.log(':: onFileSuccessBulk', file);
+		return {
+			id: `new-${file.tmpId}`,
+			uploadedFile: file,
+		};
+	}, []);
+
+	const onFileSuccessSingle = useCallback((file: CustomFileLight) => console.log(':: onFileSuccess', file), []);
+	const onFileRemove = useCallback((file: CustomFileLightOrRejection) => console.log(':: onFileRemove', file), []);
+	const onMetadataSubmit = useCallback(
+		async (
+			data: MetadataDataSubmitCallbackArg<any>, // <MetadataExample>
+		) => console.log(':: onMetadataSubmit', data),
+		[],
+	);
+	const onMetadataSubmitBulk = useCallback(async (data: IBulkFile[]) => console.log(':: onMetadataSubmit', data), []);
+	const getPostUrl = useCallback(async (file: CustomFileLight) => 'http://localhost:3000/files', []);
+	const getHeaders = useCallback(async () => ({ foo: 'bar' }), []);
+	const getDocumentViewUrl = useCallback(async (id: string): Promise<string> => {
+		console.log(':: getDocumentViewUrl', id);
+		return `/some-fake-url-${id}`;
+	}, []);
+
 	return (
 		<MUIThemeProvider theme={muiTheme}>
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
-				<BrowserRouter>
-					<Switch>
-						<Route
-							path={basePath}
-							component={() => (
-								<div>
-									<AddDocumentButton<MetadataExample>
-										asset={{
-											code: 'BRU0004',
-											name: 'BRU0004 Heibrug',
-										}}
-										getPostUrl={(file: CustomFile) => {
-											console.log(':: getPostUrl', file);
-											return Promise.resolve('https://reqres.in/api/users');
-										}}
-										getHeaders={async () => {
-											const headers: { [key: string]: string } = {};
-											headers['some-token'] = '__TOKEN__';
-											return Promise.resolve(headers);
-										}}
-										onFileSuccess={(file) => {
-											if (typeof file.response !== 'string')
-												throw new Error('BUG: no response provided to onFileSuccess callback');
-
-											const response = JSON.parse(file.response);
-											console.log(':: onFileSuccess', file);
-											console.log('Optionally track successfully uploaded documents in state', response);
-										}}
-										onFileRemove={(file) => {
-											console.log(':: fileRemove', file);
-										}}
-										// A custom form component should be rendered here that is specifically geared towards
-										// capturing the relevant metadata for the context in which this button is implemented
-										metadataForm={{
-											schema,
-											uischema,
-											data: {
-												documentDescription: '__DOCUMENT_DESCRIPTION__',
-											} as Partial<MetadataExample>,
-											renderers: [],
-										}}
-										onMetadataSubmit={async function (data: MetadataDataSubmitCallbackArg<MetadataExample>) {
-											// Dispatch actions/make async calls to persist the metadata
-											// This effectively completes the wizard flow
-											// If an exception were to be thrown from this callback it is gracefully handled with
-											// some generic feedback to the end user
-											console.log(
-												'Persist metadata; the wizard has been completed and will be closed after this.',
-												data,
-											);
-										}}
-										onCancel={async function (data: CancelCallbackArg<MetadataExample>) {
-											// Dispatch actions/make async calls to remove the uploaded files from DMS
-											// (cancellation is only possible prior to metadata being persisted)
-											console.log(':: onCancel', data);
-											// return Promise.resolve();
-										}}
-										basePath={basePath}
-									/>
-								</div>
-							)}
+				<GlobalAppStyle />
+				<AppStyles>
+					<div>
+						<Single
+							asset={asset}
+							basePath="/documents/29/bulk-metadata"
+							getHeaders={getHeaders}
+							getPostUrl={getPostUrl}
+							metadataForm={{
+								...metadataForm,
+								uischema: singleUischema,
+								schema: singleSchema,
+							}}
+							onCancel={onCancel}
+							onClose={onClose}
+							onFileRemove={onFileRemove}
+							onFileSuccess={onFileSuccessSingle}
+							onMetadataSubmit={onMetadataSubmit}
+							uploadHTTPMethod={'POST'}
 						/>
-						<Redirect to={basePath} />
-					</Switch>
-				</BrowserRouter>
+					</div>
+					<div>
+						<Bulk
+							asset={asset}
+							basePath="/documents/29/bulk-metadata"
+							getDocumentViewUrl={getDocumentViewUrl}
+							getHeaders={getHeaders}
+							getPostUrl={getPostUrl}
+							metadataFields={metadataFields}
+							metadataForm={metadataForm}
+							onCancel={onCancel}
+							onClose={onClose}
+							onFileRemove={onFileRemove}
+							onFileSuccess={onFileSuccessBulk}
+							onMetadataSubmit={onMetadataSubmitBulk}
+							uploadHTTPMethod={'POST'}
+						/>
+					</div>
+				</AppStyles>
 			</ThemeProvider>
 		</MUIThemeProvider>
 	);
-};
+}
 
 export default App;

@@ -1,31 +1,23 @@
 import styled from 'styled-components';
-import { Button, themeSpacing } from '@amsterdam/asc-ui';
+import { Button, themeColor, themeSpacing } from '@amsterdam/asc-ui';
 import { ComponentProps } from 'react';
 
 type ButtonProps = ComponentProps<typeof Button>;
 
-export const PreviousButtonStyle = styled(Button)<ButtonProps>`
-	text-align: right;
-	padding: ${themeSpacing(0, 5)};
-	vertical-align: text-top;
-`;
-export const CancelButtonStyle = styled(Button)<ButtonProps>`
-	text-align: left;
-	padding: ${themeSpacing(2, 0)};
-	vertical-align: text-top;
-`;
 export const ButtonPanelStyle = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	padding: ${themeSpacing(2, 0)};
+	padding: ${themeSpacing(2, 4)};
+	background-color: ${themeColor('tint', 'level3')};
 `;
-export const WizardButton = styled(Button)<ButtonProps>`
-	margin-left: ${themeSpacing(1)};
+export const SaveButton = styled(Button)<ButtonProps>`
+	margin-left: ${themeSpacing(2)};
 `;
-export const LeftActionStyle = styled.div`
-	padding-left: ${themeSpacing(4)};
+export const NextButton = styled(Button)<ButtonProps>`
+	margin-left: ${themeSpacing(2)};
+	margin-right: 15px !important;
 `;
 export const RightActionStyle = styled.div`
-	padding-right: ${themeSpacing(4)};
+	display: flex;
 `;

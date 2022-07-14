@@ -1,9 +1,9 @@
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/react';
 import BulkMetadataForm, { Props } from './BulkMetadataForm';
-import renderWithTheme from '~/tests/utils/withTheme';
+import renderWithTheme from '../../tests/utils/withTheme';
+import { mockComponentProps, mocked } from '../../tests/helpers';
 import { schema, uischema } from './__stubs__';
-import { mockComponentProps, mocked } from '~/tests/helpers';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';
 import { JsonSchema7 } from '@jsonforms/core';
@@ -70,9 +70,9 @@ describe('<BulkMetadataForm />', () => {
 	});
 
 	test.each([
-		['default', 'carUse', 'bmi-isNotEmpty', "Geef de default waarde voor 'Gebruik auto' op"],
+		['default', 'carUse', 'bmi-isNotEmpty', "Geef de default waarde voor 'Gebruik auto' op "],
 		['custom', 'year', 'bmi-isNotEmpty', 'Jaartal mag niet leeg zijn (custom error message)'],
-		['default formatting', 'executionDate', 'format', "Het format voor 'Uitvoeringsdatum' is ongeldig"],
+		['default formatting', 'executionDate', 'format', "Het format voor 'Uitvoeringsdatum' is ongeldig "],
 	])('Should have %s error message', (testCase, property, errorType, errorMessage) => {
 		render();
 		const { schema } = mockComponentProps<ComponentProps<typeof Form>>(FormMock);
