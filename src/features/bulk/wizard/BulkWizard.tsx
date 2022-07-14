@@ -90,7 +90,7 @@ export default function BulkWizard<T>({
 	};
 
 	const filesHaveInvalidMetadata = () => {
-		return hasValues(filesContainingInvalidMetadata()) ? true : false;
+		return hasValues(filesContainingInvalidMetadata());
 	};
 
 	const handleSubmit = useCallback(
@@ -106,22 +106,14 @@ export default function BulkWizard<T>({
 			return true;
 		}
 
-		if (currentStep === CurrentStep.SelectFields && hasValues(individualFields) && isValidForm) {
-			return true;
-		}
-
-		return false;
+		return currentStep === CurrentStep.SelectFields && hasValues(individualFields) && isValidForm;
 	}, [currentStep, files, individualFields, isValidForm]);
 
 	const isSaveVisible = useCallback((): boolean => {
 		if (currentStep === CurrentStep.SelectFields && !hasValues(individualFields) && isValidForm) {
 			return true;
 		}
-		if (currentStep === CurrentStep.EditFields) {
-			return true;
-		}
-
-		return false;
+		return currentStep === CurrentStep.EditFields;
 	}, [currentStep, individualFields, isValidForm]);
 
 	const isSaveDisabled = useCallback((): boolean => {
