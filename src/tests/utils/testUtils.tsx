@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 
 import theme from '../../theme';
 import { CustomFileLight, MetadataGenericType } from '../../types';
@@ -40,7 +40,7 @@ interface StoreOverrides {
 }
 
 function render(ui: React.ReactElement, { store, ...rest }: TRenderOptions, initialEntries: string[] = ['/']) {
-	const testStore = createTestStore(store)
+	const testStore = createTestStore(store);
 
 	function Wrapper({ children }: { children?: React.ReactNode }) {
 		return (
