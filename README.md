@@ -66,8 +66,9 @@ from [@amsterdam/asc-ui](https://www.npmjs.com/package/@amsterdam/asc-ui).
 
 ## Development
 
-To bootstrap the app in a static frontend served by webpack devserver (and a mock-api) run `npm run serve`.
-You can also use storybook for the isolated development of components.
+To bootstrap the app in a static frontend served by webpack dev server (and a mock-api) run `npm run serve`. In 
+your browser go to `http://localhost:9999/`.
+You can also use storybook for the isolated development of components using `npm run start`.
 
 ### NPM link
 

@@ -11,14 +11,14 @@ export function createMockComponent(
 	componentName: string,
 	defaultDataTestId: string = '',
 ): React.FC<ComponentMockProps> {
-	const NamedComponentMock: React.FC<ComponentMockProps> = ({
+	const NamedComponentMock = ({
 		children,
 		'data-testid': dataTestId = defaultDataTestId || componentName,
 		onClick,
 		onChange,
 		className,
 		...props
-	}) => (
+	}: React.PropsWithChildren<ComponentMockProps>) => (
 		<div
 			data-mock={`Mock${componentName}`}
 			data-testid={dataTestId}

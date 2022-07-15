@@ -13,7 +13,7 @@ function useCustomControl({ data: value, errors, handleChange, path, schema }: C
 	}, [path]);
 
 	const onBlur = useCallback(
-		(e) => {
+		(e: any) => {
 			setFocused(false);
 			handleChange(path, e.currentTarget.value || '');
 		},
@@ -21,7 +21,7 @@ function useCustomControl({ data: value, errors, handleChange, path, schema }: C
 	);
 
 	const onChange = useCallback(
-		(e) => {
+		(e: any) => {
 			handleChange(path, e.currentTarget.value || '');
 		},
 		[path],

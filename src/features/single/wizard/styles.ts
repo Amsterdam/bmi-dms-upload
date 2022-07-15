@@ -1,22 +1,12 @@
-import { Button, Heading, themeSpacing } from '@amsterdam/asc-ui';
+import { Heading, themeSpacing } from '@amsterdam/asc-ui';
 import styled from 'styled-components';
-import { ComponentProps } from 'react';
-
-export const PreviousButtonStyle = styled(Button)`
-	padding-right: 20px;
-	vertical-align: text-top;
-`;
-
-export const CancelButtonStyle = styled(Button)`
-	align-self: center;
-	padding-left: 10px;
-`;
+import { ComponentProps, FC } from 'react';
 
 export const ModalContentStyle = styled.div`
 	padding: ${themeSpacing(8)};
 `;
 
-export const ModalTopBarStyle = styled(Heading)<ComponentProps<typeof Heading>>`
+export const ModalTopBarStyle: FC<ComponentProps<typeof Heading>> = styled(Heading)`
 	font-size: 18px;
 	line-height: 25px;
 	font-weight: 700;

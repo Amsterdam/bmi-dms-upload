@@ -16,6 +16,7 @@ import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { convertBulkFieldsToBulkFileMetadata, reduceMetadata } from '../bulk/utils';
 import { hasValues } from './utils';
+import { useSelector } from 'react-redux';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
@@ -42,10 +43,10 @@ export default function BulkWizard<T>({
 		resetAndClose(),
 	);
 	const { isOpen: isConfirmSaveOpen } = useConfirmSave(() => save());
-	const currentStep = useAppSelector(getCurrentStep);
+	const currentStep = useSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
-	const files = useAppSelector(getFiles);
-	const individualFields = useAppSelector(getChangeIndividualFields);
+	const files = useSelector(getFiles);
+	const individualFields = useSelector(getChangeIndividualFields);
 	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
@@ -89,7 +90,7 @@ export default function BulkWizard<T>({
 	};
 
 	const filesHaveInvalidMetadata = () => {
-		return hasValues(filesContainingInvalidMetadata()) ? true : false;
+		return hasValues(filesContainingInvalidMetadata());
 	};
 
 	const handleSubmit = useCallback(
@@ -105,22 +106,14 @@ export default function BulkWizard<T>({
 			return true;
 		}
 
-		if (currentStep === CurrentStep.SelectFields && hasValues(individualFields) && isValidForm) {
-			return true;
-		}
-
-		return false;
+		return currentStep === CurrentStep.SelectFields && hasValues(individualFields) && isValidForm;
 	}, [currentStep, files, individualFields, isValidForm]);
 
 	const isSaveVisible = useCallback((): boolean => {
 		if (currentStep === CurrentStep.SelectFields && !hasValues(individualFields) && isValidForm) {
 			return true;
 		}
-		if (currentStep === CurrentStep.EditFields) {
-			return true;
-		}
-
-		return false;
+		return currentStep === CurrentStep.EditFields;
 	}, [currentStep, individualFields, isValidForm]);
 
 	const isSaveDisabled = useCallback((): boolean => {

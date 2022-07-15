@@ -26,6 +26,7 @@ import {
 	reduceMetadata,
 } from '../bulk/utils';
 import { setFileMetadata, setFileMetadataValidity } from '../bulk/store/slice';
+import { useSelector } from 'react-redux';
 
 export type Props = {
 	file: IBulkFile;
@@ -35,8 +36,8 @@ export type Props = {
 
 export default function FileViewer({ file, getDocumentViewUrl, onChange }: Props) {
 	const dispatch = useAppDispatch();
-	const defaultFields = useAppSelector(getDefaultFields);
-	const changeIndividualFields = useAppSelector(getChangeIndividualFields);
+	const defaultFields = useSelector(getDefaultFields);
+	const changeIndividualFields = useSelector(getChangeIndividualFields);
 	const fileFields = useAppSelector((state) => getFieldsForFile(state, file.id));
 
 	const individualFieldsMetadataProperties = convertBulkFieldsToMetadataProperties(changeIndividualFields);

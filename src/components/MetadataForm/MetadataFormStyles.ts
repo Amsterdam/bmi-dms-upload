@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ComponentProps } from 'react';
+import { ComponentProps, FC } from 'react';
 import { Heading, themeSpacing } from '@amsterdam/asc-ui';
 
 export const MetadataFormStyle = styled.form`
@@ -7,6 +7,6 @@ export const MetadataFormStyle = styled.form`
 	flex-direction: column;
 `;
 
-export const StyledHeading = styled(Heading)<ComponentProps<typeof Heading>>`
+export const StyledHeading: FC<ComponentProps<typeof Heading>> = styled(Heading)`
 	margin-bottom: ${themeSpacing(6)};
 `;

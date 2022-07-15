@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
-import { ThemeProvider as MUIThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { UISchemaElement } from '@jsonforms/core';
 
 import Single from './features/single/single/Single';
@@ -46,6 +46,9 @@ function App() {
 
 	useEffect(() => {
 		mounted.current = true;
+		if (window.location.pathname !== '/documents/29/bulk-metadata/') {
+			window.location.href = '/documents/29/bulk-metadata/';
+		}
 
 		return () => {
 			mounted.current = false;
