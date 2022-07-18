@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { CustomFileLightOrRejection } from '../../../../types';
 import { files as filesMock, fields as fieldsMock, state as stateMock } from '../__stubs__';
@@ -14,7 +14,7 @@ import {
 } from './slice';
 import { CurrentStep, IBulkFileMetadata } from './model';
 
-jest.mock('react-router-dom');
+jest.mock('react-router-dom-v5-compat');
 
 describe('Bulk Slice', () => {
 	test('should return the initial state', () => {

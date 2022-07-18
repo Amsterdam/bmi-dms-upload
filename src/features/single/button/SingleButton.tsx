@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Button } from '@amsterdam/asc-ui';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom-v5-compat';
 import { SingleStepsToRoutes } from '../single/constants';
 
 const SingleButton: React.FC = () => {

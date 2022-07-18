@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom-v5-compat';
 
 import withCustomProvider from '../../../features/withCustomProvider';
 import BulkButton from '../button/BulkButton';

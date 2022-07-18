@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { CurrentStep } from './model';
-import { state as stateMock } from '../__stubs__'
+import { state as stateMock } from '../__stubs__';
 import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata, removeFile } from './slice';
 import { file } from '../__stubs__';
 
-jest.mock('react-router-dom')
+jest.mock('react-router-dom-v5-compat');
 
 describe('Single Slice', () => {
 	test('should return the initial state', () => {
@@ -24,7 +24,7 @@ describe('Single Slice', () => {
 						foo: 'bar',
 					},
 				},
-				resetState({navigate}),
+				resetState({ navigate }),
 			),
 		).toEqual(initialState);
 	});
@@ -60,11 +60,6 @@ describe('Single Slice', () => {
 	});
 
 	test('should handle file being removed', () => {
-		expect(
-			reducer(
-				stateMock,
-				removeFile()
-			),
-		).toEqual(initialState);
-	})
+		expect(reducer(stateMock, removeFile())).toEqual(initialState);
+	});
 });

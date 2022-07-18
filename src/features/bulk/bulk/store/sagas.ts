@@ -1,4 +1,4 @@
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom-v5-compat';
 import { select, takeEvery } from 'redux-saga/effects';
 
 import { CustomFileLight } from '../../../../types';

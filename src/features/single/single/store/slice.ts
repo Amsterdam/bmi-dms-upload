@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom-v5-compat';
 import { CustomFileLight, MetadataGenericType } from '../../../../types';
 import { CurrentStep, ISingleState } from './model';
 
@@ -31,14 +31,6 @@ export const slice = createSlice({
 	},
 });
 
-export const {
-	removeFile,
-	resetState,
-	setCurrentStep,
-	setFile,
-	setMetadata,
-	stepBack,
-	stepForward,
-} = slice.actions;
+export const { removeFile, resetState, setCurrentStep, setFile, setMetadata, stepBack, stepForward } = slice.actions;
 
 export const { reducer } = slice;
