@@ -3,6 +3,7 @@ import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { UISchemaElement } from '@jsonforms/core';
+import { BrowserRouter } from 'react-router-dom-v5-compat';
 
 import Single from './features/single/single/Single';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
@@ -110,44 +111,46 @@ function App() {
 			<ThemeProvider overrides={theme}>
 				<GlobalStyle />
 				<GlobalAppStyle />
-				<AppStyles>
-					<div>
-						<Single
-							asset={asset}
-							basePath="/documents/29/bulk-metadata"
-							getHeaders={getHeaders}
-							getPostUrl={getPostUrl}
-							metadataForm={{
-								...metadataForm,
-								uischema: singleUischema,
-								schema: singleSchema,
-							}}
-							onCancel={onCancel}
-							onClose={onClose}
-							onFileRemove={onFileRemove}
-							onFileSuccess={onFileSuccessSingle}
-							onMetadataSubmit={onMetadataSubmit}
-							uploadHTTPMethod={'POST'}
-						/>
-					</div>
-					<div>
-						<Bulk
-							asset={asset}
-							basePath="/documents/29/bulk-metadata"
-							getDocumentViewUrl={getDocumentViewUrl}
-							getHeaders={getHeaders}
-							getPostUrl={getPostUrl}
-							metadataFields={metadataFields}
-							metadataForm={metadataForm}
-							onCancel={onCancel}
-							onClose={onClose}
-							onFileRemove={onFileRemove}
-							onFileSuccess={onFileSuccessBulk}
-							onMetadataSubmit={onMetadataSubmitBulk}
-							uploadHTTPMethod={'POST'}
-						/>
-					</div>
-				</AppStyles>
+				<BrowserRouter>
+					<AppStyles>
+						<div>
+							<Single
+								asset={asset}
+								basePath="/documents/29/bulk-metadata"
+								getHeaders={getHeaders}
+								getPostUrl={getPostUrl}
+								metadataForm={{
+									...metadataForm,
+									uischema: singleUischema,
+									schema: singleSchema,
+								}}
+								onCancel={onCancel}
+								onClose={onClose}
+								onFileRemove={onFileRemove}
+								onFileSuccess={onFileSuccessSingle}
+								onMetadataSubmit={onMetadataSubmit}
+								uploadHTTPMethod={'POST'}
+							/>
+						</div>
+						<div>
+							<Bulk
+								asset={asset}
+								basePath="/documents/29/bulk-metadata"
+								getDocumentViewUrl={getDocumentViewUrl}
+								getHeaders={getHeaders}
+								getPostUrl={getPostUrl}
+								metadataFields={metadataFields}
+								metadataForm={metadataForm}
+								onCancel={onCancel}
+								onClose={onClose}
+								onFileRemove={onFileRemove}
+								onFileSuccess={onFileSuccessBulk}
+								onMetadataSubmit={onMetadataSubmitBulk}
+								uploadHTTPMethod={'POST'}
+							/>
+						</div>
+					</AppStyles>
+				</BrowserRouter>
 			</ThemeProvider>
 		</MUIThemeProvider>
 	);

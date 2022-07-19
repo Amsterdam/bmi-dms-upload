@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom-v5-compat';
 import CustomProvider from './CustomProvider';
 
 export interface WithCustomProviderProps {
@@ -14,9 +13,7 @@ const withCustomProvider = <P extends object>(
 	const componentWithCustomProvider = ({ basePath, ...props }: WithCustomProviderProps) => {
 		return (
 			<CustomProvider>
-				<BrowserRouter basename={basePath}>
-					<Component {...(props as P)} displayName={displayName} />
-				</BrowserRouter>
+				<Component {...(props as P)} displayName={displayName} />
 			</CustomProvider>
 		);
 	};
