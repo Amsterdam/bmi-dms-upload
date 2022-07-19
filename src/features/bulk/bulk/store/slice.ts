@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom-v5-compat';
 
 import { CustomFileLightOrRejection } from '../../../../types';
 import { CurrentStep, IBulkField, IBulkFile, IBulkState } from './model';
@@ -27,15 +27,21 @@ export const slice = createSlice({
 		setFile: (state: IBulkState, action: PayloadAction<IBulkFile>) => {
 			state.files = [...state.files, action.payload];
 		},
-		setFileMetadata: (state: IBulkState, action: PayloadAction<{ fileId: IBulkFile['id'], metadata: IBulkFile['metadata']}>) => {
-			const file = state.files.find(file => file.id === action.payload.fileId)
+		setFileMetadata: (
+			state: IBulkState,
+			action: PayloadAction<{ fileId: IBulkFile['id']; metadata: IBulkFile['metadata'] }>,
+		) => {
+			const file = state.files.find((file) => file.id === action.payload.fileId);
 			if (!file) return;
-			file.metadata = action.payload.metadata
+			file.metadata = action.payload.metadata;
 		},
-		setFileMetadataValidity: (state: IBulkState, action: PayloadAction<{ fileId: IBulkFile['id'], isValid: IBulkFile['isMetadataValid']}>) => {
-			const file = state.files.find(file => file.id === action.payload.fileId)
+		setFileMetadataValidity: (
+			state: IBulkState,
+			action: PayloadAction<{ fileId: IBulkFile['id']; isValid: IBulkFile['isMetadataValid'] }>,
+		) => {
+			const file = state.files.find((file) => file.id === action.payload.fileId);
 			if (!file) return;
-			file.isMetadataValid = action.payload.isValid
+			file.isMetadataValid = action.payload.isValid;
 		},
 		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,

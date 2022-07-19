@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom-v5-compat';
 import CustomProvider from './CustomProvider';
 
 export interface WithCustomProviderProps {

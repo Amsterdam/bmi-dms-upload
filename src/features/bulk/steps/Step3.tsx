@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import { Heading } from '@amsterdam/asc-ui';
 
 import { MetadataGenericType } from '../../../types';
@@ -29,7 +29,7 @@ export default function Step3<T>(props: Props<T>) {
 	}, []);
 	const handleOnPageChange = useCallback(
 		(page: number) => {
-			setCurrentPage(page)
+			setCurrentPage(page);
 			setCurrentFileIndex(page - 1);
 		},
 		[files],

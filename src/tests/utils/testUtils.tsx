@@ -18,7 +18,7 @@ import { singleSaga } from '../../features/single/single/store/sagas';
 import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../features/bulk/bulk/store/model';
 import { reducer as bulkReducer } from '../../features/bulk/bulk/store/slice';
 import { bulkSaga } from '../../features/bulk/bulk/store/sagas';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom-v5-compat';
 
 type TRenderOptions = {
 	store?: any;

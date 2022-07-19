@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom-v5-compat';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCurrentStep } from '../store/selectors';

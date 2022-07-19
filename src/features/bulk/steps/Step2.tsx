@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom-v5-compat';
 import debounce from 'debounce';
 
 import { MetadataGenericType } from '../../../types';
