@@ -3,7 +3,15 @@ import { screen, fireEvent, act } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { mockData, asset, file, schema, uischema } from './__stubs__';
-import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from './__mocks__/single';
+import {
+	getHeadersMock,
+	getPostUrlMock,
+	onCancelMock,
+	onChangeMock,
+	onFileRemoveMock,
+	onFileSuccessMock,
+	onMetadataSubmitMock,
+} from './__mocks__/single';
 import { Props } from './types';
 import { CurrentStep } from './store/model';
 import { Single } from './Single';
@@ -11,7 +19,6 @@ import { SingleStepsToRoutes } from './constants';
 
 const defaultProps: Props<MetadataExample> = {
 	asset: asset,
-	onClose: () => onCloseMock(),
 	getPostUrl: getPostUrlMock,
 	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,

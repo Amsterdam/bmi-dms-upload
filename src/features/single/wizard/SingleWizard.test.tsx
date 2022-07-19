@@ -4,11 +4,18 @@ import { render } from '../../../tests/utils/testUtils';
 import { CurrentStep } from '../single/store/model';
 import { asset, schema, uischema, file as fileMock, mockData } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
-import { getHeadersMock, getPostUrlMock, onCancelMock, onChangeMock, onCloseMock, onFileRemoveMock, onFileSuccessMock, onMetadataSubmitMock } from '../single/__mocks__/single';
+import {
+	getHeadersMock,
+	getPostUrlMock,
+	onCancelMock,
+	onChangeMock,
+	onFileRemoveMock,
+	onFileSuccessMock,
+	onMetadataSubmitMock,
+} from '../single/__mocks__/single';
 
 const defaultProps = {
 	asset: asset,
-	onClose: () => onCloseMock(),
 	getPostUrl: getPostUrlMock,
 	getHeaders: getHeadersMock,
 	onFileSuccess: onFileSuccessMock,

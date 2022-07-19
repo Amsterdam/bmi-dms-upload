@@ -80,7 +80,6 @@ function App() {
 		renderers: [],
 	};
 
-	const onClose = useCallback(() => console.log(':: onClose'), []);
 	const onCancel = useCallback(async (data: CancelCallbackArg<any>) => console.log(':: onCancel', data), []); //<MetadataExample>
 	const onFileSuccessBulk = useCallback(async (file: CustomFileLight) => {
 		console.log(':: onFileSuccessBulk', file);
@@ -125,7 +124,6 @@ function App() {
 									schema: singleSchema,
 								}}
 								onCancel={onCancel}
-								onClose={onClose}
 								onFileRemove={onFileRemove}
 								onFileSuccess={onFileSuccessSingle}
 								onMetadataSubmit={onMetadataSubmit}
@@ -142,7 +140,6 @@ function App() {
 								metadataFields={metadataFields}
 								metadataForm={metadataForm}
 								onCancel={onCancel}
-								onClose={onClose}
 								onFileRemove={onFileRemove}
 								onFileSuccess={onFileSuccessBulk}
 								onMetadataSubmit={onMetadataSubmitBulk}

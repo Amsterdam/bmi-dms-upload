@@ -9,7 +9,6 @@ import {
 	getPostUrlMock,
 	onCancelMock,
 	onChangeMock,
-	onCloseMock,
 	onFileRemoveMock,
 	onFileSuccessMock,
 	onMetadataSubmitMock,
@@ -18,7 +17,6 @@ import BulkWizard from './BulkWizard';
 
 const defaultProps = {
 	asset: asset,
-	onClose: () => onCloseMock(),
 	getPostUrl: getPostUrlMock,
 	getHeaders: getHeadersMock,
 	getDocumentViewUrl: getDocumentViewUrlMock,
