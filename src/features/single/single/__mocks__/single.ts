@@ -1,4 +1,3 @@
-export const onCloseMock = jest.fn();
 export const onMetadataSubmitMock = jest.fn().mockImplementation(() => Promise.resolve());
 export const onFileSuccessMock = jest.fn().mockImplementation(() => Promise.resolve());
 export const onFileRemoveMock = jest.fn().mockImplementation(() => Promise.resolve());

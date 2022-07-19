@@ -16,7 +16,6 @@ export type SupportedHTTPMethods = 'POST' | 'PUT';
 export type TGetDocumentViewUrl = (id: string) => Promise<string>;
 export interface Props<T> {
 	onCancel: (data: CancelCallbackArg<T>) => Promise<void>;
-	onClose: () => void;
 	onFileSuccess: (file: CustomFileLight) => Promise<IBulkFile>;
 	onFileRemove?: (file: CustomFileLightOrRejection) => void;
 	onMetadataSubmit: (data: IBulkFile[]) => Promise<void>;

@@ -102,3 +102,16 @@ TODO
 
 To boot storybook, run the following command: `npm run storybook`. It should open your default browser at
 `http://localhost:6006/`.
+
+## React Router
+
+This package uses [react-router-dom](https://www.npmjs.com/package/react-router-dom). The v6 API is used but since the 
+target applications that will implement this upload to DMS flow are at least partially running 
+[react-router-dom](https://www.npmjs.com/package/react-router-dom) v5, we can not just install and use v6 here.
+Instead, the [react-router-dom-v5-compat](https://www.npmjs.com/package/react-router-dom-v5-compat) package is 
+employed so that the v6 API can be used here, but this package remains more or less backwards compatible with 
+applications that have not yet entirely migrated to v6 (i.e.: AIP).
+Only one router can exist in the component tree. For this reason it is critical that the components exported from 
+this package are not wrapped in for example a `<BrowserRouter>`. It is the responsibility of the implementing party 
+to set up a router at some (high) level in their component tree. The `<Routes>` (`<Switch>` in the v5 API) that is 
+rendered from this package will function as a nested router from the given basePath.   
