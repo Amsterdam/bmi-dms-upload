@@ -5,6 +5,8 @@ import { IBulkField, IBulkFile, IBulkState } from './model';
 
 export const getState = (state: RootState) => state.bulk;
 
+export const getBasePath = createSelector([getState], (state): string => state.basePath);
+
 export const getCurrentStep = createSelector([getState], (state: IBulkState) => state.currentStep);
 
 export const getCustomFiles = createSelector([getState], (state: IBulkState): CustomFileLight[] | undefined =>
@@ -25,10 +27,10 @@ export const getFieldsForFile = createSelector(
 	},
 );
 
-export const getChangeIndividualFields = createSelector([getFields], (fields): IBulkField[] => {
-	return fields.filter((field) => field.changeIndividual);
-});
+export const getChangeIndividualFields = createSelector([getFields], (fields): IBulkField[] =>
+	fields.filter((field) => field.changeIndividual),
+);
 
-export const getDefaultFields = createSelector([getFields], (fields): IBulkField[] => {
-	return fields.filter((field) => !field.changeIndividual);
-});
+export const getDefaultFields = createSelector([getFields], (fields): IBulkField[] =>
+	fields.filter((field) => !field.changeIndividual),
+);

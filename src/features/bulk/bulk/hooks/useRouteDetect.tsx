@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCurrentStep } from '../store/selectors';
 import { setCurrentStep } from '../store/slice';
 import { BulkRoutesToSteps } from '../constants';
+import { appendTrailingSlash } from '../../../../utils';
 
-export function useRouteDetect() {
+export function useRouteDetect(basePath = '/') {
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
 	const location = useLocation();
-	const step = BulkRoutesToSteps.get(location.pathname);
+
+	const step = BulkRoutesToSteps.get(location.pathname.replace(appendTrailingSlash(basePath), '/'));
 
 	useEffect(() => {
 		if (step && step !== currentStep) dispatch(setCurrentStep(step));
