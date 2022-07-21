@@ -21,7 +21,7 @@ export const fields: IBulkField[] = [
 		label: 'Field 1',
 		value: 'Field 1 Value',
 		changeIndividual: false,
-		type: 'text'
+		type: 'text',
 	},
 	{
 		id: 'field-2',
@@ -36,24 +36,25 @@ export const fields: IBulkField[] = [
 		label: 'Field 3',
 		value: 'Field 3 Value',
 		changeIndividual: false,
-		type: 'text'
-	}
-]
+		type: 'text',
+	},
+];
 
 export const files: IBulkFile[] = [
 	{
 		id: '1',
 		uploadedFile: customFile1,
-		metadata: []
+		metadata: [],
 	},
 	{
 		id: '2',
 		uploadedFile: customFile2,
-		metadata: []
+		metadata: [],
 	},
-]
+];
 
 export const state: IBulkState = {
+	basePath: '/',
 	currentStep: 0,
 	fields,
 	files,

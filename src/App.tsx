@@ -3,7 +3,7 @@ import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { UISchemaElement } from '@jsonforms/core';
-import { BrowserRouter } from 'react-router-dom-v5-compat';
+import { BrowserRouter, Route, Routes } from 'react-router-dom-v5-compat';
 
 import Single from './features/single/single/Single';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
@@ -47,7 +47,7 @@ function App() {
 
 	useEffect(() => {
 		mounted.current = true;
-		if (window.location.pathname !== '/documents/29/bulk-metadata/') {
+		if (!window.location.pathname.includes('/documents/29/bulk-metadata/')) {
 			window.location.href = '/documents/29/bulk-metadata/';
 		}
 
@@ -112,40 +112,49 @@ function App() {
 				<GlobalAppStyle />
 				<BrowserRouter>
 					<AppStyles>
-						<div>
-							<Single
-								asset={asset}
-								basePath="/documents/29/bulk-metadata"
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataForm={{
-									...metadataForm,
-									uischema: singleUischema,
-									schema: singleSchema,
-								}}
-								onCancel={onCancel}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccessSingle}
-								onMetadataSubmit={onMetadataSubmit}
-								uploadHTTPMethod={'POST'}
+						<Routes>
+							<Route
+								path="/documents/29/bulk-metadata/*"
+								element={
+									<>
+										<div>
+											<Single
+												asset={asset}
+												basePath="/documents/29/bulk-metadata/"
+												getHeaders={getHeaders}
+												getPostUrl={getPostUrl}
+												metadataForm={{
+													...metadataForm,
+													uischema: singleUischema,
+													schema: singleSchema,
+												}}
+												onCancel={onCancel}
+												onFileRemove={onFileRemove}
+												onFileSuccess={onFileSuccessSingle}
+												onMetadataSubmit={onMetadataSubmit}
+												uploadHTTPMethod={'POST'}
+											/>
+										</div>
+										<div>
+											<Bulk
+												asset={asset}
+												basePath="/documents/29/bulk-metadata"
+												getDocumentViewUrl={getDocumentViewUrl}
+												getHeaders={getHeaders}
+												getPostUrl={getPostUrl}
+												metadataFields={metadataFields}
+												metadataForm={metadataForm}
+												onCancel={onCancel}
+												onFileRemove={onFileRemove}
+												onFileSuccess={onFileSuccessBulk}
+												onMetadataSubmit={onMetadataSubmitBulk}
+												uploadHTTPMethod={'POST'}
+											/>
+										</div>
+									</>
+								}
 							/>
-						</div>
-						<div>
-							<Bulk
-								asset={asset}
-								basePath="/documents/29/bulk-metadata"
-								getDocumentViewUrl={getDocumentViewUrl}
-								getHeaders={getHeaders}
-								getPostUrl={getPostUrl}
-								metadataFields={metadataFields}
-								metadataForm={metadataForm}
-								onCancel={onCancel}
-								onFileRemove={onFileRemove}
-								onFileSuccess={onFileSuccessBulk}
-								onMetadataSubmit={onMetadataSubmitBulk}
-								uploadHTTPMethod={'POST'}
-							/>
-						</div>
+						</Routes>
 					</AppStyles>
 				</BrowserRouter>
 			</ThemeProvider>

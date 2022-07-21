@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, act } from '@testing-library/react';
 
 import { render } from '../../../tests/utils/testUtils';
-import BulkButton from './BulkButton'
+import BulkButton from './BulkButton';
 
 afterEach(() => {
 	jest.restoreAllMocks();
@@ -11,7 +11,7 @@ afterEach(() => {
 describe('<BulkButton  />', () => {
 	test('is rendered', () => {
 		act(() => {
-			render(<BulkButton />, {});
+			render(<BulkButton basePath="/" />, {});
 		});
 		expect(screen.getByText('Upload bestanden')).toBeDefined();
 	});

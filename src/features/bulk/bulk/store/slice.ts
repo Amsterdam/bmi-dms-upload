@@ -5,6 +5,7 @@ import { CustomFileLightOrRejection } from '../../../../types';
 import { CurrentStep, IBulkField, IBulkFile, IBulkState } from './model';
 
 export const initialState: IBulkState = {
+	basePath: '/',
 	currentStep: CurrentStep.Button,
 	files: [],
 	fields: [],
@@ -14,6 +15,9 @@ export const slice = createSlice({
 	name: 'dms_bulk',
 	initialState,
 	reducers: {
+		setBasePath: (state: IBulkState, action: PayloadAction<string>) => {
+			state.basePath = action.payload;
+		},
 		removeFile: (state: IBulkState, action: PayloadAction<CustomFileLightOrRejection>) => {
 			state.files = state.files.filter((file) => file.uploadedFile.tmpId !== action.payload.tmpId);
 		},
@@ -49,6 +53,7 @@ export const slice = createSlice({
 });
 
 export const {
+	setBasePath,
 	removeFile,
 	resetState,
 	setCurrentStep,

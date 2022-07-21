@@ -2,8 +2,11 @@ import { NavigateFunction } from 'react-router-dom-v5-compat';
 import { select, takeEvery } from 'redux-saga/effects';
 
 import { CustomFileLight } from '../../../../types';
-import { resetState, stepForward, stepBack } from './slice';
+import { getBasePath } from '../../../single/single/store/selectors';
+import { buildPath } from '../../../../utils';
 import { BulkStepsToRoutes } from '../constants';
+
+import { resetState, stepForward, stepBack } from './slice';
 import { getCurrentStep, getFiles } from './selectors';
 import { CurrentStep } from './model';
 
@@ -17,16 +20,17 @@ interface ActionType {
 function* back(action: ActionType) {
 	const currentStep: CurrentStep = yield select(getCurrentStep);
 	const { navigate } = action.payload;
+	const basePath: string = yield select(getBasePath);
 
 	switch (currentStep) {
 		case CurrentStep.EditFields:
-			navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.SelectFields]));
 			break;
 		case CurrentStep.SelectFields:
-			navigate(BulkStepsToRoutes[CurrentStep.Upload]);
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]));
 			break;
 		case CurrentStep.Upload:
-			navigate(BulkStepsToRoutes[CurrentStep.Button]);
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Button]));
 			break;
 	}
 }
@@ -36,13 +40,14 @@ function* forward(action: ActionType) {
 	const files: CustomFileLight | undefined = yield select(getFiles);
 
 	const { navigate } = action.payload;
+	const basePath: string = yield select(getBasePath);
 
 	switch (currentStep) {
 		case CurrentStep.Upload:
-			if (files) navigate(BulkStepsToRoutes[CurrentStep.SelectFields]);
+			if (files) navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.SelectFields]));
 			break;
 		case CurrentStep.SelectFields:
-			navigate(BulkStepsToRoutes[CurrentStep.EditFields]);
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.EditFields]));
 			break;
 	}
 }
@@ -50,7 +55,8 @@ function* forward(action: ActionType) {
 /* eslint-disable require-yield */
 function* resetRoute(action: ActionType) {
 	const { navigate } = action.payload;
-	navigate(BulkStepsToRoutes[0]);
+	const basePath: string = yield select(getBasePath);
+	navigate(buildPath(basePath, BulkStepsToRoutes[0]));
 }
 
 export function* bulkSaga() {

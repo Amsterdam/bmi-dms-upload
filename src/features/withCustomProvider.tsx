@@ -10,7 +10,7 @@ const withCustomProvider = <P extends object>(
 ): React.FC<P & WithCustomProviderProps> => {
 	const displayName = Component.displayName || Component.name || 'Component';
 
-	const componentWithCustomProvider = ({ basePath, ...props }: WithCustomProviderProps) => {
+	const componentWithCustomProvider = (props: WithCustomProviderProps) => {
 		return (
 			<CustomProvider>
 				<Component {...(props as P)} displayName={displayName} />

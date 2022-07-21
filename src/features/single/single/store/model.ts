@@ -7,6 +7,7 @@ export enum CurrentStep {
 }
 
 export interface ISingleState {
+	basePath: string;
 	currentStep: CurrentStep;
 	file?: CustomFileLight;
 	metadata: MetadataGenericType;
