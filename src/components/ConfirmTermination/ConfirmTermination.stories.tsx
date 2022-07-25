@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { confirm } from '@amsterdam/bmi-component-library';
-import ConfirmTermination from './ConfirmTermination';
+import ConfirmTermination, { customSubject } from './ConfirmTermination';
 import { MODAL_SIZES } from '../../enums/MODAL_SIZES';
 
 const empty = () =>
@@ -36,7 +36,7 @@ const landingPage = (customProps: any) => {
 	return (
 		<button
 			onClick={() => {
-				confirm(customProps);
+				confirm(customProps, customSubject);
 			}}
 		>
 			Open ConfirmTermination
