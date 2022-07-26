@@ -1,18 +1,39 @@
 import { useNavigate } from 'react-router-dom-v5-compat';
 
 import { CurrentStep } from './model';
-import { state as stateMock } from '../__stubs__';
-import { reducer, initialState, setCurrentStep, resetState, setFile, setMetadata, removeFile } from './slice';
-import { file } from '../__stubs__';
+import { file, state as stateMock } from '../__stubs__';
+import {
+	initialState,
+	reducer,
+	removeFile,
+	resetState,
+	setBasePath,
+	setCurrentStep,
+	setFile,
+	setMetadata,
+	stepBack,
+	stepForward,
+} from './slice';
 
 jest.mock('react-router-dom-v5-compat');
 
 describe('Single Slice', () => {
-	test('should return the initial state', () => {
+	test('initial state', () => {
 		expect(reducer(undefined, { type: '' })).toEqual(initialState);
 	});
 
-	test('should reset to the initial state', () => {
+	test('setBasePath', () => {
+		expect(reducer(initialState, setBasePath('/foo/bar'))).toEqual({
+			...initialState,
+			basePath: '/foo/bar',
+		});
+	});
+
+	test('removeFile', () => {
+		expect(reducer(stateMock, removeFile())).toEqual(initialState);
+	});
+
+	test('resetState', () => {
 		const navigate = useNavigate();
 
 		expect(
@@ -29,21 +50,21 @@ describe('Single Slice', () => {
 		).toEqual(initialState);
 	});
 
-	test('should handle currentStep being set', () => {
+	test('setCurrentStep', () => {
 		expect(reducer(initialState, setCurrentStep(CurrentStep.Upload))).toEqual({
 			...initialState,
-			currentStep: 1,
+			currentStep: CurrentStep.Upload,
 		});
 	});
 
-	test('should handle file beging set', () => {
+	test('setFile', () => {
 		expect(reducer(initialState, setFile(file))).toEqual({
 			...initialState,
 			file,
 		});
 	});
 
-	test('should handle metadata being set', () => {
+	test('setMetadata', () => {
 		expect(
 			reducer(
 				initialState,
@@ -59,7 +80,11 @@ describe('Single Slice', () => {
 		});
 	});
 
-	test('should handle file being removed', () => {
-		expect(reducer(stateMock, removeFile())).toEqual(initialState);
+	test('stepBack', () => {
+		expect(reducer(initialState, stepBack({ navigate: jest.fn() }))).toEqual(initialState);
+	});
+
+	test('stepForward', () => {
+		expect(reducer(initialState, stepForward({ navigate: jest.fn() }))).toEqual(initialState);
 	});
 });

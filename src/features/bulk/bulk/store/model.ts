@@ -6,7 +6,7 @@ export enum CurrentStep {
 	Button,
 	Upload,
 	SelectFields,
-	EditFields
+	EditFields,
 }
 
 export type TBulkFieldType = 'text' | 'date' | 'select' | 'multi-select' | 'checkbox';
@@ -35,6 +35,7 @@ export interface IBulkField {
 }
 
 export interface IBulkState {
+	basePath: string;
 	currentStep: CurrentStep;
 	files: IBulkFile[];
 	fields: IBulkField[];
