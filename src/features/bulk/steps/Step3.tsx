@@ -11,12 +11,13 @@ import { getFiles } from '../bulk/store/selectors';
 import { Props } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { StyledPaginationBottom, StyledPaginationTop } from './styles';
+import { buildPath } from '../../../utils';
 
 const LABEL_NEXT = 'Volgende document';
 const LABEL_PREVIOUS = 'Vorige document';
 
 export default function Step3<T>(props: Props<T>) {
-	const { getDocumentViewUrl } = props;
+	const { getDocumentViewUrl, basePath } = props;
 
 	const files = useAppSelector(getFiles);
 
@@ -36,7 +37,7 @@ export default function Step3<T>(props: Props<T>) {
 	);
 	// Redirect to step1 when state is not correct
 	if (files?.length === 0) {
-		return <Navigate to={BulkStepsToRoutes[1]} />;
+		return <Navigate to={buildPath(basePath, BulkStepsToRoutes[1])} />;
 	} else {
 		return (
 			<BulkWizard {...props} isValidForm={isValidForm}>
