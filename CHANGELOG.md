@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.3...v1.0.1-alpha.4) (2022-07-26)
+
+
+### Features
+
+* **types:** added export for generic callback type ([12635eb](https://github.com/Amsterdam/bmi-dms-upload/commit/12635eb4bbc285f9687491ea4fbb26141bb394c4))
+
+### [1.0.1-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.1...v1.0.1-alpha.2) (2022-07-21)
+
+### [1.0.1-alpha.3](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.1...v1.0.1-alpha.3) (2022-07-25)
+
 ### [1.0.1-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.1...v1.0.1-alpha.2) (2022-07-21)
 
 ### [1.0.1-alpha.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.0...v1.0.1-alpha.1) (2022-07-19)

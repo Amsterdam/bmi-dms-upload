@@ -1,4 +1,4 @@
-import { Asset } from '../types';
+import { Asset } from '../../../single/single/types';
 
 export const asset: Asset = {
 	code: 'BRU0004',
