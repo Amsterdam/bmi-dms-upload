@@ -4,13 +4,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
 import BulkWizard from '../wizard/BulkWizard';
-import { Props } from '../bulk/types';
+import { BulkUploadProps } from '../bulk/types';
 import { IBulkField } from '../bulk/store/model';
 import { getCustomFiles, getFields } from '../bulk/store/selectors';
 import { removeFile, setFields, setFile } from '../bulk/store/slice';
 import { Step1Styles } from './styles';
 
-export interface Step1Props<T> extends Props<T> {
+export interface Step1Props<T> extends BulkUploadProps<T> {
 	metadataFields?: IBulkField[];
 }
 
@@ -35,7 +35,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 		} else {
 			setIsValidForm(false);
 		}
-	}, [files])
+	}, [files]);
 
 	const handleFileRemove = React.useCallback(
 		(file: CustomFileLightOrRejection) => {

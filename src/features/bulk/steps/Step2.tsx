@@ -8,13 +8,13 @@ import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataF
 import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
 import { getFields, getFiles } from '../bulk/store/selectors';
 import { setFields, setFileMetadata } from '../bulk/store/slice';
-import { Props } from '../bulk/types';
+import { BulkUploadProps } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { convertBulkFieldsToMetadataGenericTypes, identicalObjects, reduceFieldData } from '../bulk/utils';
 import { buildPath } from '../../../utils';
 
-export interface Step2Props<T> extends Props<T> {}
+export interface Step2Props<T> extends BulkUploadProps<T> {}
 
 export default function Step2<T>(props: Step2Props<T>) {
 	const { metadataForm, basePath } = props;

@@ -9,7 +9,7 @@ import WizardFooter from '../../../components/WizardFooter/WizardFooter';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
-import { Props } from '../bulk/types';
+import { BulkUploadProps } from '../bulk/types';
 import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
 import { resetState, stepBack, stepForward } from '../bulk/store/slice';
 
@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
 	isValidForm: boolean;
-} & Props<T>;
+} & BulkUploadProps<T>;
 
 const makeMetadataObject = (state: IBulkState): IBulkFile[] => {
 	return state.files.map((file) => ({

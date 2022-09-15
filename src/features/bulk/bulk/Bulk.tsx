@@ -7,14 +7,14 @@ import Step1 from '../steps/Step1';
 import Step2 from '../steps/Step2';
 import Step3 from '../steps/Step3';
 
-import { Props } from './types';
+import { BulkUploadProps } from './types';
 import { useRouteDetect } from './hooks/useRouteDetect';
 import { useDispatch } from 'react-redux';
 import { setBasePath } from '../../single/single/store/slice';
 
 const NoRoute = () => <></>;
 
-export function Bulk<T>(props: Props<T>) {
+export function Bulk<T>(props: BulkUploadProps<T>) {
 	const dispatch = useDispatch();
 	useRouteDetect(props?.basePath ?? '/');
 

@@ -4,7 +4,7 @@ import { CustomFileLight } from '../../../types';
 
 export type TGetDocumentViewUrl = (id: string) => Promise<string>;
 
-export interface Props<T> extends Omit<SingleProps<T>, 'onMetadataSubmit'> {
+export interface BulkUploadProps<T> extends Omit<SingleProps<T>, 'onMetadataSubmit'> {
 	onMetadataSubmit: (data: IBulkFile[]) => Promise<void>;
 	getDocumentViewUrl: TGetDocumentViewUrl;
 	metadataFields?: IBulkField[];

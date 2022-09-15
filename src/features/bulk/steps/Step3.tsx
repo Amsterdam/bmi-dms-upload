@@ -8,7 +8,7 @@ import FileViewer from '../FileViewer/FileViewer';
 
 import { BulkStepsToRoutes } from '../bulk/constants';
 import { getFiles } from '../bulk/store/selectors';
-import { Props } from '../bulk/types';
+import { BulkUploadProps } from '../bulk/types';
 import BulkWizard from '../wizard/BulkWizard';
 import { StyledPaginationBottom, StyledPaginationTop } from './styles';
 import { buildPath } from '../../../utils';
@@ -16,7 +16,7 @@ import { buildPath } from '../../../utils';
 const LABEL_NEXT = 'Volgende document';
 const LABEL_PREVIOUS = 'Vorige document';
 
-export default function Step3<T>(props: Props<T>) {
+export default function Step3<T>(props: BulkUploadProps<T>) {
 	const { getDocumentViewUrl, basePath } = props;
 
 	const files = useAppSelector(getFiles);
