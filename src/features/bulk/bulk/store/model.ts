@@ -40,6 +40,7 @@ export interface IBulkState {
 	files: IBulkFile[];
 	fields: IBulkField[];
 	selectedFileId?: IBulkFieldId;
+	isBulkMode: boolean;
 }
 
 export interface IFieldData {

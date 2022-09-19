@@ -60,7 +60,7 @@ export default function BulkWizard<T>({
 	const handleNext = useCallback(() => {
 		dispatch(setBulkMode(files.length > 1));
 		dispatch(stepForward({ navigate }));
-	}, [navigate]);
+	}, [navigate, files]);
 
 	const resetAndClose = useCallback(() => {
 		dispatch(resetState({ navigate }));
