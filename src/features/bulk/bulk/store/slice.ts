@@ -9,6 +9,7 @@ export const initialState: IBulkState = {
 	currentStep: CurrentStep.Button,
 	files: [],
 	fields: [],
+	isBulkMode: true,
 };
 
 export const slice = createSlice({
@@ -49,6 +50,9 @@ export const slice = createSlice({
 		},
 		stepBack: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
 		stepForward: (state: IBulkState, action: PayloadAction<{ navigate: NavigateFunction }>) => state,
+		setBulkMode: (state: IBulkState, action: PayloadAction<boolean>) => {
+			state.isBulkMode = action.payload;
+		},
 	},
 });
 
@@ -63,6 +67,7 @@ export const {
 	setFileMetadataValidity,
 	stepBack,
 	stepForward,
+	setBulkMode,
 } = slice.actions;
 
 export const { reducer } = slice;

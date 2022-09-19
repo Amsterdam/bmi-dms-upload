@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
 import { BulkUploadProps } from '../bulk/types';
 import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
-import { resetState, stepBack, stepForward } from '../bulk/store/slice';
+import { resetState, setBulkMode, stepBack, stepForward } from '../bulk/store/slice';
 
 import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { convertBulkFieldsToBulkFileMetadata, reduceMetadata } from '../bulk/utils';
@@ -38,22 +38,27 @@ export default function BulkWizard<T>({
 	onCancel,
 	onMetadataSubmit,
 }: BulkWizardProps<T>) {
+	const dispatch = useAppDispatch();
+
 	const state = useAppSelector(getState);
+	const currentStep = useSelector(getCurrentStep);
+	const files = useSelector(getFiles);
+
+	const individualFields = useSelector(getChangeIndividualFields);
+
+	const navigate = useNavigate();
+
 	const { isOpen: isConfirmTerminationOpen, confirm: setConfirmTermination } = useConfirmTermination(() =>
 		resetAndClose(),
 	);
 	const { isOpen: isConfirmSaveOpen } = useConfirmSave(() => save());
-	const currentStep = useSelector(getCurrentStep);
-	const dispatch = useAppDispatch();
-	const files = useSelector(getFiles);
-	const individualFields = useSelector(getChangeIndividualFields);
-	const navigate = useNavigate();
 
 	const handlePrev = useCallback(() => {
 		dispatch(stepBack({ navigate }));
 	}, [navigate]);
 
 	const handleNext = useCallback(() => {
+		dispatch(setBulkMode(files.length > 1));
 		dispatch(stepForward({ navigate }));
 	}, [navigate]);
 

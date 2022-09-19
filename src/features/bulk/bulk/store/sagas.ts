@@ -7,7 +7,7 @@ import { buildPath } from '../../../../utils';
 import { BulkStepsToRoutes } from '../constants';
 
 import { resetState, stepForward, stepBack } from './slice';
-import { getCurrentStep, getFiles } from './selectors';
+import { getCurrentStep, getFiles, getIsBulkMode } from './selectors';
 import { CurrentStep } from './model';
 
 interface ActionType {
@@ -19,12 +19,16 @@ interface ActionType {
 
 function* back({ payload }: ActionType) {
 	const currentStep: CurrentStep = yield select(getCurrentStep);
+	const isBulkMode: boolean = yield select(getIsBulkMode);
 	const basePath: string = yield select(getBasePath);
 	const { navigate } = payload;
 
 	switch (currentStep) {
 		case CurrentStep.EditFields:
-			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.SelectFields]));
+			if (isBulkMode) {
+				return navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.SelectFields]));
+			}
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]));
 			break;
 		case CurrentStep.SelectFields:
 			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]));
@@ -38,13 +42,14 @@ function* back({ payload }: ActionType) {
 function* forward({ payload }: ActionType) {
 	const currentStep: CurrentStep = yield select(getCurrentStep);
 	const basePath: string = yield select(getBasePath);
+	const isBulkMode: boolean = yield select(getIsBulkMode);
 	const files: CustomFileLight[] | undefined = yield select(getFiles);
 	const { navigate } = payload;
 
 	switch (currentStep) {
 		case CurrentStep.Upload:
 			if (files) {
-				const nextStep = files.length > 1 ? CurrentStep.SelectFields : CurrentStep.EditFields;
+				const nextStep = isBulkMode ? CurrentStep.SelectFields : CurrentStep.EditFields;
 				navigate(buildPath(basePath, BulkStepsToRoutes[nextStep]));
 			}
 			break;
@@ -55,9 +60,9 @@ function* forward({ payload }: ActionType) {
 }
 
 /* eslint-disable require-yield */
-function* resetRoute(action: ActionType) {
+function* resetRoute({ payload }: ActionType) {
 	const basePath: string = yield select(getBasePath);
-	const { navigate } = action.payload;
+	const { navigate } = payload;
 	navigate(buildPath(basePath, BulkStepsToRoutes[0]));
 }
 
