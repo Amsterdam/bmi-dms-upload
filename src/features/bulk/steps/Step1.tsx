@@ -26,15 +26,16 @@ export default function Step1<T>(props: Step1Props<T>) {
 
 	useEffect(() => {
 		if (!metadataFields) return;
+
 		if (!fields?.length) dispatch(setFields(metadataFields));
 	}, [metadataFields, fields]);
 
 	useEffect(() => {
 		if (files && files.length !== 0) {
-			setIsValidForm(true);
-		} else {
-			setIsValidForm(false);
+			return setIsValidForm(true);
 		}
+
+		setIsValidForm(false);
 	}, [files]);
 
 	const handleFileRemove = React.useCallback(
