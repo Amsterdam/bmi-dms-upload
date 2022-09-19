@@ -17,10 +17,10 @@ interface ActionType {
 	};
 }
 
-function* back(action: ActionType) {
+function* back({ payload }: ActionType) {
 	const currentStep: CurrentStep = yield select(getCurrentStep);
-	const { navigate } = action.payload;
 	const basePath: string = yield select(getBasePath);
+	const { navigate } = payload;
 
 	switch (currentStep) {
 		case CurrentStep.EditFields:
@@ -35,16 +35,18 @@ function* back(action: ActionType) {
 	}
 }
 
-function* forward(action: ActionType) {
+function* forward({ payload }: ActionType) {
 	const currentStep: CurrentStep = yield select(getCurrentStep);
-	const files: CustomFileLight | undefined = yield select(getFiles);
-
-	const { navigate } = action.payload;
 	const basePath: string = yield select(getBasePath);
+	const files: CustomFileLight[] | undefined = yield select(getFiles);
+	const { navigate } = payload;
 
 	switch (currentStep) {
 		case CurrentStep.Upload:
-			if (files) navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.SelectFields]));
+			if (files) {
+				const nextStep = files.length > 1 ? CurrentStep.SelectFields : CurrentStep.EditFields;
+				navigate(buildPath(basePath, BulkStepsToRoutes[nextStep]));
+			}
 			break;
 		case CurrentStep.SelectFields:
 			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.EditFields]));
@@ -54,8 +56,8 @@ function* forward(action: ActionType) {
 
 /* eslint-disable require-yield */
 function* resetRoute(action: ActionType) {
-	const { navigate } = action.payload;
 	const basePath: string = yield select(getBasePath);
+	const { navigate } = action.payload;
 	navigate(buildPath(basePath, BulkStepsToRoutes[0]));
 }
 
