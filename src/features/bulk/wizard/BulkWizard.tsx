@@ -90,12 +90,8 @@ export default function BulkWizard<T>({
 		}, []);
 	};
 
-	const filesContainingInvalidMetadata = () => {
-		return files.filter((file) => file.isMetadataValid === false);
-	};
-
-	const filesHaveInvalidMetadata = () => {
-		return hasValues(filesContainingInvalidMetadata());
+	const filesHaveInvalidMetadata = (): boolean => {
+		return files.filter((file) => file.isMetadataValid === false).length > 0;
 	};
 
 	const handleSubmit = useCallback(
