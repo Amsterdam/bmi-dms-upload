@@ -1,31 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom-v5-compat';
 import { Heading } from '@amsterdam/asc-ui';
 
-import { MetadataGenericType } from '../../../types';
-import { useAppSelector } from '../../hooks';
-import FileViewer from '../FileViewer/FileViewer';
-
-import { BulkStepsToRoutes } from '../bulk/constants';
 import { getFiles, getIsBulkMode } from '../bulk/store/selectors';
-import { BulkUploadProps } from '../bulk/types';
+
 import BulkWizard from '../wizard/BulkWizard';
-import { StyledPaginationBottom, StyledPaginationTop } from './styles';
+import FileViewer from '../FileViewer/FileViewer';
 import { buildPath } from '../../../utils';
-import { useDispatch } from 'react-redux';
-import { setAllFieldsEditable } from '../bulk/store/slice';
+import { useAppSelector } from '../../hooks';
+
+import { MetadataGenericType } from '../../../types';
+import { BulkUploadProps } from '../bulk/types';
+import { BulkStepsToRoutes } from '../bulk/constants';
+import { StyledPaginationBottom, StyledPaginationTop } from './styles';
 
 const LABEL_NEXT = 'Volgende document';
 const LABEL_PREVIOUS = 'Vorige document';
 
 export default function Step3<T>(props: BulkUploadProps<T>) {
-	const { getDocumentViewUrl, basePath, metadataFields } = props;
+	const { getDocumentViewUrl, basePath } = props;
 
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 	const [currentFileIndex, setCurrentFileIndex] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 
-	const dispatch = useDispatch();
 	const files = useAppSelector(getFiles);
 	const isBulkMode = useAppSelector(getIsBulkMode);
 
@@ -43,17 +41,11 @@ export default function Step3<T>(props: BulkUploadProps<T>) {
 		[files],
 	);
 
-	useEffect(() => {
-		if (!isBulkMode && metadataFields) {
-			dispatch(setAllFieldsEditable(metadataFields));
-		}
-	}, [isBulkMode, metadataFields]);
-
 	// Redirect to step1 when state is not correct
 	if (files?.length === 0) return <Navigate to={buildPath(basePath, BulkStepsToRoutes[1])} />;
 
 	return (
-		<BulkWizard {...props} isValidForm={isValidForm}>
+		<BulkWizard {...props} isValidForm={isValidForm} canShowErrorMessage={true}>
 			{showPaginationNav && (
 				<StyledPaginationTop
 					labelNext={LABEL_NEXT}

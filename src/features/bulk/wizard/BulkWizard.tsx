@@ -1,26 +1,27 @@
 import React, { SyntheticEvent, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom-v5-compat';
 import { Modal } from '@amsterdam/bmi-component-library';
+
+import { resetState, stepBack, stepForward } from '../bulk/store/slice';
+import { getChangeIndividualFields, getCurrentStep, getFiles, getIsBulkMode, getState } from '../bulk/store/selectors';
 
 import useConfirmTermination from '../../../hooks/useConfirmTermination';
 import useConfirmSave from '../../../hooks/useConfirmSave';
 import ConfirmTermination from '../../../components/ConfirmTermination/ConfirmTermination';
 import WizardFooter from '../../../components/WizardFooter/WizardFooter';
-
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
-import { BulkUploadProps } from '../bulk/types';
-import { getChangeIndividualFields, getCurrentStep, getFiles, getState } from '../bulk/store/selectors';
-import { resetState, setBulkMode, stepBack, stepForward } from '../bulk/store/slice';
-
-import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 import { convertBulkFieldsToBulkFileMetadata, reduceMetadata } from '../bulk/utils';
 import { hasValues } from './utils';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+
+import { CurrentStep, IBulkFile, IBulkState } from '../bulk/store/model';
+import { BulkUploadProps } from '../bulk/types';
+import { AlertStyle, ModalContentStyle, ModalStyle, ModalTopBarStyle } from './styles';
 
 type BulkWizardProps<T> = {
 	children?: React.ReactNode;
 	isValidForm: boolean;
+	canShowErrorMessage?: boolean;
 } & BulkUploadProps<T>;
 
 const makeMetadataObject = (state: IBulkState): IBulkFile[] => {
@@ -37,14 +38,15 @@ export default function BulkWizard<T>({
 	isValidForm = false,
 	onCancel,
 	onMetadataSubmit,
+	canShowErrorMessage,
 }: BulkWizardProps<T>) {
 	const dispatch = useAppDispatch();
 
 	const state = useAppSelector(getState);
 	const currentStep = useSelector(getCurrentStep);
 	const files = useSelector(getFiles);
-
 	const individualFields = useSelector(getChangeIndividualFields);
+	const isBulkMode = useAppSelector(getIsBulkMode);
 
 	const navigate = useNavigate();
 
@@ -58,7 +60,6 @@ export default function BulkWizard<T>({
 	}, [navigate]);
 
 	const handleNext = useCallback(() => {
-		dispatch(setBulkMode(files.length > 1));
 		dispatch(stepForward({ navigate }));
 	}, [navigate, files]);
 
@@ -141,7 +142,8 @@ export default function BulkWizard<T>({
 				<>
 					<Modal.Content>
 						<ModalContentStyle>
-							{filesHaveInvalidMetadata() && (
+							{/* This error message is only allowed to be visible on the final step and when in bulk mode. */}
+							{filesHaveInvalidMetadata() && isBulkMode && canShowErrorMessage && (
 								<AlertStyle level="error">
 									Er zit een fout in de metadata van het bestand op pagina&apos;s:{' '}
 									{fileIndexesContainingInvalidMetadata().join(', ')}

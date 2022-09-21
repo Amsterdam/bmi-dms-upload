@@ -3,16 +3,18 @@ import { Navigate } from 'react-router-dom-v5-compat';
 import debounce from 'debounce';
 import { Heading } from '@amsterdam/asc-ui';
 
-import { MetadataGenericType } from '../../../types';
-import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
-import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
 import { getFields, getFiles } from '../bulk/store/selectors';
 import { setFields, setFileMetadata } from '../bulk/store/slice';
-import { BulkUploadProps } from '../bulk/types';
+
 import BulkWizard from '../wizard/BulkWizard';
+import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { convertBulkFieldsToMetadataGenericTypes, identicalObjects, reduceFieldData } from '../bulk/utils';
 import { buildPath } from '../../../utils';
+import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
+
+import { MetadataGenericType } from '../../../types';
+import { BulkUploadProps } from '../bulk/types';
 
 export interface Step2Props<T> extends BulkUploadProps<T> {}
 

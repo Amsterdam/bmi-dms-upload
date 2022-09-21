@@ -32,6 +32,15 @@ export const slice = createSlice({
 		setAllFieldsEditable: (state: IBulkState, { payload }: PayloadAction<IBulkField[]>) => {
 			state.fields = payload.map((field) => ({ ...field, changeIndividual: true }));
 		},
+		resetFieldsAndFiles: (state: IBulkState, { payload }: PayloadAction<IBulkField[]>) => {
+			state.fields = payload.map((field) => ({ ...field, changeIndividual: false }));
+
+			if (state.files && state.files.length) {
+				const defaultFiles = state.files.map(({ id, uploadedFile }) => ({ id, uploadedFile }));
+
+				state.files = defaultFiles;
+			}
+		},
 		setFile: (state: IBulkState, { payload }: PayloadAction<IBulkFile>) => {
 			state.files = [...state.files, payload];
 		},
@@ -72,6 +81,7 @@ export const {
 	stepForward,
 	setBulkMode,
 	setAllFieldsEditable,
+	resetFieldsAndFiles,
 } = slice.actions;
 
 export const { reducer } = slice;
