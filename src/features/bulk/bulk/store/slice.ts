@@ -35,6 +35,7 @@ export const slice = createSlice({
 		resetFieldsAndFiles: (state: IBulkState, { payload }: PayloadAction<IBulkField[]>) => {
 			state.fields = payload.map((field) => ({ ...field, changeIndividual: false }));
 
+			// Reset file data to initial state, which only has the id and uploadedFile properties
 			if (state.files && state.files.length) {
 				const defaultFiles = state.files.map(({ id, uploadedFile }) => ({ id, uploadedFile }));
 

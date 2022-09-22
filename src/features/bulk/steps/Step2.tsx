@@ -33,7 +33,6 @@ export default function Step2<T>(props: Step2Props<T>) {
 				dispatch(setFields(newFields));
 
 				// Filter metadata
-				//
 				// This filters obsolete metadata from files when changeIndividual is removed on the field.
 				newFields
 					.filter((field) => !field.changeIndividual)
