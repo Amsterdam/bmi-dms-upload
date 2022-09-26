@@ -12,7 +12,7 @@ jest.mock('react-redux', () => ({
 	useDispatch: jest.fn().mockReturnValue(jest.fn()),
 }));
 
-describe.only('<Step1 />', () => {
+describe('<Step1 />', () => {
 	test('should render component', () => {
 		const store = {
 			bulk: state,
