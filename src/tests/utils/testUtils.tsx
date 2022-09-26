@@ -35,6 +35,7 @@ interface StoreOverrides {
 		currentStep?: CurrentStepBulk;
 		files?: IBulkFile[];
 		fields?: IBulkField[];
+		isBulkMode?: boolean;
 	};
 }
 
