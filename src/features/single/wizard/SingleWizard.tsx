@@ -70,8 +70,8 @@ export default function SingleWizard<T>({
 	return (
 		<>
 			{isOpen && <ConfirmTermination backdropOpacity={1} />}
-			<Modal id="dms-upload-wizard" open onClose={() => confirm()} closeOnBackdropClick={false}>
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm()}>
+			<Modal id="dms-upload-wizard" open onClose={!file ? undefined : () => confirm()} closeOnBackdropClick={false}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => confirm(!file)}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
 						Bestand uploaden voor {asset.name}
 					</ModalTopBarStyle>
@@ -82,7 +82,7 @@ export default function SingleWizard<T>({
 					</Modal.Content>
 				</>
 				<WizardFooter
-					cancel={{ visible: true, onClick: confirm, dataTestId: 'cancel-wizard' }}
+					cancel={{ visible: true, onClick: () => confirm(), dataTestId: 'cancel-wizard' }}
 					previous={{
 						visible: currentStep >= CurrentStep.SelectFields,
 						onClick: handlePrev,

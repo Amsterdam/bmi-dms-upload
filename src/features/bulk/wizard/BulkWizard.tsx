@@ -129,12 +129,12 @@ export default function BulkWizard<T>({
 			<ModalStyle
 				id="dms-upload-wizard"
 				open
-				onClose={() => setConfirmTermination()}
+				onClose={files.length > 0 ? () => setConfirmTermination() : undefined}
 				closeOnBackdropClick={false}
 				size="xl"
 				classnames="modal--bulk"
 			>
-				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setConfirmTermination()}>
+				<Modal.TopBar hideCloseButton={false} onCloseButton={() => setConfirmTermination(files.length === 0)}>
 					<ModalTopBarStyle styleAs="h4" as="h2">
 						Bestanden uploaden voor {asset.code} ({asset.name})
 					</ModalTopBarStyle>
@@ -154,7 +154,7 @@ export default function BulkWizard<T>({
 					</Modal.Content>
 				</>
 				<WizardFooter
-					cancel={{ visible: true, onClick: setConfirmTermination, dataTestId: 'cancel-wizard' }}
+					cancel={{ visible: true, onClick: () => setConfirmTermination(), dataTestId: 'cancel-wizard' }}
 					previous={{
 						visible: currentStep > CurrentStep.Upload,
 						onClick: handlePrev,
