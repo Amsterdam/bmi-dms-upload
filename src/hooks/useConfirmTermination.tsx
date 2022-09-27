@@ -7,8 +7,8 @@ function useConfirmTermination(onTerminate: () => void): {
 	confirm: (forceTerminate?: boolean) => void;
 } {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const confirm = useCallback((forceClose?: boolean) => {
-		if (typeof forceClose !== 'undefined' && forceClose) {
+	const confirm = useCallback((forceTerminate?: boolean) => {
+		if (typeof forceTerminate !== 'undefined' && forceTerminate) {
 			return onTerminate();
 		}
 
