@@ -17,7 +17,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		}
 
 		if (field.type === 'CheckboxType') {
-			item.type = "boolean"
+			item.type = 'boolean';
 		}
 
 		if (field.type === 'DateType') {
@@ -52,7 +52,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			if (field.defaultValue) {
 				item.default = JSON.parse(field.defaultValue);
 			} else {
-				item.default = []
+				item.default = [];
 			}
 		}
 
@@ -66,10 +66,10 @@ export function convertDmsDynamicFormFieldsToBulkMetadataFields(fields: IDmsDyna
 		let newValue: IBulkField['value'] = defaultValue;
 
 		if (convertDmsTypeToBulkFieldType(field.type) === 'select') {
-			newValue = defaultValue ? JSON.parse(`["${defaultValue}"]`): [];
+			newValue = defaultValue ? JSON.parse(`["${defaultValue}"]`) : [];
 		}
 		if (convertDmsTypeToBulkFieldType(field.type) === 'multi-select') {
-			newValue = defaultValue ? JSON.parse(defaultValue): [];
+			newValue = defaultValue ? JSON.parse(defaultValue) : [];
 		}
 
 		if (convertDmsTypeToBulkFieldType(field.type) === 'checkbox') {

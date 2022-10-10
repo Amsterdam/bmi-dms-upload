@@ -3,18 +3,20 @@ import { Navigate } from 'react-router-dom-v5-compat';
 import debounce from 'debounce';
 import { Heading } from '@amsterdam/asc-ui';
 
-import { MetadataGenericType } from '../../../types';
-import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
-import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
 import { getFields, getFiles } from '../bulk/store/selectors';
 import { setFields, setFileMetadata } from '../bulk/store/slice';
-import { Props } from '../bulk/types';
+
 import BulkWizard from '../wizard/BulkWizard';
+import BulkMetadataForm from '../../../components/BulkMetadataForm/BulkMetadataForm';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { convertBulkFieldsToMetadataGenericTypes, identicalObjects, reduceFieldData } from '../bulk/utils';
 import { buildPath } from '../../../utils';
+import { BulkStepsToRoutes, DEFAULT_DEBOUNCE } from '../bulk/constants';
 
-export interface Step2Props<T> extends Props<T> {}
+import { MetadataGenericType } from '../../../types';
+import { BulkUploadProps } from '../bulk/types';
+
+export interface Step2Props<T> extends BulkUploadProps<T> {}
 
 export default function Step2<T>(props: Step2Props<T>) {
 	const { metadataForm, basePath } = props;
@@ -31,7 +33,6 @@ export default function Step2<T>(props: Step2Props<T>) {
 				dispatch(setFields(newFields));
 
 				// Filter metadata
-				//
 				// This filters obsolete metadata from files when changeIndividual is removed on the field.
 				newFields
 					.filter((field) => !field.changeIndividual)

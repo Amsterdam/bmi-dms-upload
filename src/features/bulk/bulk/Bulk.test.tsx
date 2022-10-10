@@ -3,7 +3,7 @@ import { screen, fireEvent, act } from '@testing-library/react';
 import { render } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { asset, data as mockData, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
-import { Props } from './types';
+import { BulkUploadProps } from './types';
 import { CurrentStep } from './store/model';
 import { BulkStepsToRoutes } from './constants';
 import { Bulk } from './Bulk';
@@ -18,7 +18,7 @@ import {
 	onMetadataSubmitMock,
 } from './__mocks__/bulk';
 
-const defaultProps: Props<MetadataExample> = {
+const defaultProps: BulkUploadProps<MetadataExample> = {
 	asset: asset,
 	getDocumentViewUrl: getDocumentViewUrlMock,
 	getPostUrl: getPostUrlMock,

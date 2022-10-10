@@ -2,9 +2,16 @@ import { useState, useCallback } from 'react';
 import { confirm as dialogConfirm } from '@amsterdam/bmi-component-library';
 import { customSubject } from '../components/ConfirmTermination/ConfirmTermination';
 
-function useConfirmTermination(onTerminate: () => void): { isOpen: boolean; confirm: () => void } {
+function useConfirmTermination(onTerminate: () => void): {
+	isOpen: boolean;
+	confirm: (forceTerminate?: boolean) => void;
+} {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const confirm = useCallback(() => {
+	const confirm = useCallback((forceTerminate?: boolean) => {
+		if (typeof forceTerminate !== 'undefined' && forceTerminate) {
+			return onTerminate();
+		}
+
 		setIsOpen(true);
 		dialogConfirm(
 			{

@@ -34,3 +34,5 @@ export const getChangeIndividualFields = createSelector([getFields], (fields): I
 export const getDefaultFields = createSelector([getFields], (fields): IBulkField[] =>
 	fields.filter((field) => !field.changeIndividual),
 );
+
+export const getIsBulkMode = createSelector(getState, (state: IBulkState) => state.isBulkMode);

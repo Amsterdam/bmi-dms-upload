@@ -1,39 +1,12 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { render } from '../../../tests/utils/testUtils';
-import { CurrentStep } from '../bulk/store/model';
-import { asset, state as mockState, mockData, schema, uischema } from '../bulk/__stubs__';
-import {
-	getDocumentViewUrlMock,
-	getHeadersMock,
-	getPostUrlMock,
-	onCancelMock,
-	onChangeMock,
-	onFileRemoveMock,
-	onFileSuccessMock,
-	onMetadataSubmitMock,
-} from '../bulk/__mocks__/bulk';
-import BulkWizard from './BulkWizard';
 
-const defaultProps = {
-	asset: asset,
-	getPostUrl: getPostUrlMock,
-	getHeaders: getHeadersMock,
-	getDocumentViewUrl: getDocumentViewUrlMock,
-	onFileSuccess: onFileSuccessMock,
-	onFileRemove: onFileRemoveMock,
-	metadataForm: {
-		schema,
-		uischema,
-		data: mockData,
-		onChange: onChangeMock,
-		renderers: [],
-	},
-	onMetadataSubmit: onMetadataSubmitMock,
-	onCancel: onCancelMock,
-	basePath: '/',
-	isValidForm: false,
-};
+import BulkWizard from './BulkWizard';
+import { CurrentStep } from '../bulk/store/model';
+
+import { render } from '../../../tests/utils/testUtils';
+import { state as mockState, defaultProps } from '../bulk/__stubs__';
+import { onCancelMock, onMetadataSubmitMock } from '../bulk/__mocks__/bulk';
 
 afterEach(() => {
 	jest.restoreAllMocks();

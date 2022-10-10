@@ -11,13 +11,14 @@
 DMS Upload kent twee uitvoeringen, een single-file en een bulk upload. In de single-file modus kan je een bestand uploaden en deze voorzien van metadata. In de bulk modus kan je meerdere bestanden uploaden en deze voorzien van algemene metadata en individuele metadata per bestand.
 
 ---
+
 ## Technical Depth
 
 ### CreatableSelect/CreatableSelectArray
 
-Er is een stuk technical depth rondom het selectbox element. Voor de bulk-upload wordt een nieuwe variant `<CreatableSelectArray />` gebruikt. Voor single-upload gebruiken we de het oude component;  `<CreatableSelect />`. De Technical depth zit in een stuk duplicatie tussen de twee componenten, al werken ze wel op een andere manier. 
+Er is een stuk technical depth rondom het selectbox element. Voor de bulk-upload wordt een nieuwe variant `<CreatableSelectArray />` gebruikt. Voor single-upload gebruiken we de het oude component; `<CreatableSelect />`. De Technical depth zit in een stuk duplicatie tussen de twee componenten, al werken ze wel op een andere manier.
 
-Het voornemen is om deze componenten later te repareren en volgens een oplossing te laten werken. De reden voor het opnemen van deze technical depth is omdat we in tijdsnoods kwamen rondom de oplevering van DMS. Het oplossen van de bugs rondom validatie in het selectbox element lukte niet met het oude component `<CreatableSelect />`. 
+Het voornemen is om deze componenten later te repareren en volgens een oplossing te laten werken. De reden voor het opnemen van deze technical depth is omdat we in tijdsnoods kwamen rondom de oplevering van DMS. Het oplossen van de bugs rondom validatie in het selectbox element lukte niet met het oude component `<CreatableSelect />`.
 
 ### CreatableSelect
 
@@ -28,14 +29,16 @@ Dit is het oude component wat in single-upload wordt gebruikt. Deze werkt met ee
 Dit is het nieuwe component wat in bulk-upload wordt gebruikt. Deze werkt met een array van enums voor het generen van de opties.
 
 ---
-## Interfaces 
+
+## Interfaces
+
 ### Algemeen
 
-De interfaces voor `<Single />` en `<Bulk  />` zijn grotendeels gelijk.
+De interfaces voor `<Single />` en `<Bulk />` zijn grotendeels gelijk.
 
 ```
 asset               - Asset object
-basePath            - Pad dat vanuit DMS wordt meegegeven 
+basePath            - Pad dat vanuit DMS wordt meegegeven
                       (bijv `/documents/29/bulk-metadata`)
 getHeaders          - Callback voor request headers
 getPostUrl          - Callback voor opvragen POST url
@@ -66,6 +69,7 @@ onMetadataSubmit    - Callback voor opslaan metadata
 ```
 
 ---
+
 ## Structuur
 
 De props aan `<Single />` en `<Bulk />` worden doorgegeven aan `<StepX />` en `<SingleWizard />`, `<BulkWizard />`.
@@ -106,6 +110,7 @@ De props aan `<Single />` en `<Bulk />` worden doorgegeven aan `<StepX />` en `<
 #### Step 1
 
 Beheert de state vanuit het `<FileUpload />` component. En roept de callbacks aan die vanuit de `Props` komen, meegegeven vanuit `<Bulk />`.
+In Step1 wordt de state bepaald of het om een single of bulk modus gaat, middels de `isBulkMode` property. Single wordt onderliggend afgehandeld als een bulk, maar slaat in de UI een stap over en gaat gelijk naar stap 3, waarbij alle fields editable zijn.
 
 **FileUpload**
 
@@ -127,14 +132,15 @@ Beheert de state vanuit de `<Pagination />` en `<FileViewer />` componenten. En 
 
 Toont de individuele velden, standaard velden en een voorvertoning van het bestand.
 
-* `<IndividualFieldsForm />` toont de velden die individueel per bestand moeten worden aangepast.
-* `<DefaultFieldsTable />` toont de velden die standaard zijn voor alle bestanden
-* `<DocumentViewer />` toont de voorvertoning van het bestand.
+- `<IndividualFieldsForm />` toont de velden die individueel per bestand moeten worden aangepast.
+- `<DefaultFieldsTable />` toont de velden die standaard zijn voor alle bestanden
+- `<DocumentViewer />` toont de voorvertoning van het bestand.
 
 ---
+
 ## State (Redux)
 
-Zie `src/features/single/single/store/slice.ts` en `src/features/bulk/bulk/store/slice.ts` voor de slices. 
+Zie `src/features/single/single/store/slice.ts` en `src/features/bulk/bulk/store/slice.ts` voor de slices.
 
 Zie `src/features/single/single/store/model.ts` en `src/features/bulk/bulk/store/model.ts` voor de Interfaces van de twee stores.
 
@@ -148,9 +154,11 @@ state:
     - currentStep
 	- files
 	- fields
+	- isBulkMode
 ```
 
 ---
+
 ## Data conversie
 
 ### Bulk
@@ -158,18 +166,19 @@ state:
 Er vinden een aantal data conversies plaats.
 
 1. DMS velden naar de state.bulk.fields.
-	`convertDmsDynamicFormFieldsToBulkMetadataFields`
+   `convertDmsDynamicFormFieldsToBulkMetadataFields`
 2. DMS velden omvormen voor metadataProperties, nodig JSONForms schema en uischema
-	`convertDmsDynamicFormFieldsToMetadataProperty`
+   `convertDmsDynamicFormFieldsToMetadataProperty`
 3. state.bulk.fields omvormen voor metadataProperties, nodig JSONForms schema en uischema
-	`convertBulkFieldsToMetadataProperties`
+   `convertBulkFieldsToMetadataProperties`
 4. state.bulk.fields naar JSONForms data
-	`convertBulkFieldsToMetadataGenericTypes`
+   `convertBulkFieldsToMetadataGenericTypes`
 
 Er vind dus een conversie plaats in `App.tsx` zodat de data vanuit DMS wordt omgezet naar objecten die nodig zijn voor JSONForms en de velden in de state.
-Ook is er een belangrijke conversie in `<FileViewer />`, daar wordt de state omgezet naar objecten die nodig zijn voor JSONForms. 
+Ook is er een belangrijke conversie in `<FileViewer />`, daar wordt de state omgezet naar objecten die nodig zijn voor JSONForms.
 
 --
+
 ## Mock API
 
 In `db.json` wordt de mock-api beschreven, deze json is de input voor de [json-server](https://github.com/typicode/json-server) module.

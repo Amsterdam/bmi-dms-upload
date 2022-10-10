@@ -58,4 +58,5 @@ export const state: IBulkState = {
 	currentStep: 0,
 	fields,
 	files,
+	isBulkMode: true,
 };

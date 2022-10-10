@@ -4,3 +4,4 @@ export * from './metadataFields';
 export * from './schema';
 export * from './state';
 export * from './uischema';
+export * from './props';
