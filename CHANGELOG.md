@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1...v1.2.0-alpha.0) (2022-10-10)
+
+
+### Features
+
+* map all fields to editable when single mode ([7bd5cd2](https://github.com/Amsterdam/bmi-dms-upload/commit/7bd5cd2f62a92379b41f25e84c68192936bca736))
+* show closing modal only when files are added ([849e545](https://github.com/Amsterdam/bmi-dms-upload/commit/849e5454911fc807890cff1ca7e0a8dfbd77d12b))
+* skip step when only 1 file uploaded ([fc5b935](https://github.com/Amsterdam/bmi-dms-upload/commit/fc5b93592b6cda1d6a080b54cf3ac521bfaafbb6))
+* update state per step ([31c4337](https://github.com/Amsterdam/bmi-dms-upload/commit/31c43372879059db96695673d0d6d02294936591))
+* update state with bulk mode and do step forward ([61f05cd](https://github.com/Amsterdam/bmi-dms-upload/commit/61f05cd05ffae3007289b866458282d9a0ff759f))
+* version bumb ([54c540b](https://github.com/Amsterdam/bmi-dms-upload/commit/54c540bb48477f37d2a9ca219052005e0eb7aa49))
+
 ### [1.0.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.4...v1.0.1) (2022-07-27)
 
 ### [1.0.1-alpha.4](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1-alpha.3...v1.0.1-alpha.4) (2022-07-26)
