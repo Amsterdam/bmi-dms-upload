@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom-v5-compat';
 import debounce from 'debounce';
 import { Heading } from '@amsterdam/asc-ui';
@@ -55,6 +55,13 @@ export default function Step2<T>(props: Step2Props<T>) {
 		}, DEFAULT_DEBOUNCE),
 		[fields],
 	);
+
+	// Clear all tasks of the dounce function when components unmounts, to prevent memory leaks
+	useEffect(() => {
+		return () => {
+			handleOnChange.clear();
+		};
+	}, []);
 
 	// Redirect to step1 when state is not correct
 	if (files?.length === 0) {
