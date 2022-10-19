@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { useLocation } from 'react-router-dom-v5-compat';
 
 import { getCustomFiles, getFields, getIsBulkMode } from '../bulk/store/selectors';
 
@@ -19,11 +20,14 @@ import {
 	setFields,
 	setFile,
 } from '../bulk/store/slice';
-import { useLocation } from 'react-router-dom-v5-compat';
 
 export interface Step1Props<T> extends BulkUploadProps<T> {
 	metadataFields?: IBulkField[];
 }
+
+type HistoryRouterState = {
+	previousPath: string;
+};
 
 export default function Step1<T>(props: Step1Props<T>) {
 	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, uploadHTTPMethod } = props;
@@ -83,7 +87,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 		// Prevents resetting fields when still in progress of editing bulk meta data.
 		// This will keep the previous state of step 2
 		// Only counts for bulk mode not single.
-		if (state && (state as any).previousPath === 'step-2') return;
+		if (state && (state as HistoryRouterState).previousPath === 'step-2') return;
 
 		if (metadataFields) {
 			const reducer = isBulkMode ? resetFieldsAndFiles : setAllFieldsEditable;
