@@ -31,7 +31,9 @@ function* back({ payload }: ActionType) {
 			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]));
 			break;
 		case CurrentStep.SelectFields:
-			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]));
+			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Upload]), {
+				state: { previousPath: 'step-2' },
+			});
 			break;
 		case CurrentStep.Upload:
 			navigate(buildPath(basePath, BulkStepsToRoutes[CurrentStep.Button]));

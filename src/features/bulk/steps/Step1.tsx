@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
+import { useLocation } from 'react-router-dom-v5-compat';
 
 import { getCustomFiles, getFields, getIsBulkMode } from '../bulk/store/selectors';
 
@@ -24,13 +25,17 @@ export interface Step1Props<T> extends BulkUploadProps<T> {
 	metadataFields?: IBulkField[];
 }
 
+type HistoryRouterState = {
+	previousPath: string;
+};
+
 export default function Step1<T>(props: Step1Props<T>) {
 	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, uploadHTTPMethod } = props;
-
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
-	const dispatch = useAppDispatch();
+	const { state } = useLocation();
 
+	const dispatch = useAppDispatch();
 	const files = useAppSelector(getCustomFiles);
 	const fields = useAppSelector(getFields);
 	const isBulkMode = useAppSelector(getIsBulkMode);
@@ -79,11 +84,16 @@ export default function Step1<T>(props: Step1Props<T>) {
 
 	// When changing mode from single to bulk or vice versa, we need set the default form state
 	useEffect(() => {
+		// Prevents resetting fields when still in progress of editing bulk meta data.
+		// This will keep the previous state of step 2
+		// Only counts for bulk mode not single.
+		if (state && (state as HistoryRouterState).previousPath === 'step-2') return;
+
 		if (metadataFields) {
 			const reducer = isBulkMode ? resetFieldsAndFiles : setAllFieldsEditable;
 			dispatch(reducer(metadataFields));
 		}
-	}, [isBulkMode, metadataFields]);
+	}, [isBulkMode, metadataFields, state]);
 
 	return (
 		<BulkWizard {...props} isValidForm={isValidForm}>
