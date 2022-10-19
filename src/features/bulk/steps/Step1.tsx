@@ -87,13 +87,13 @@ export default function Step1<T>(props: Step1Props<T>) {
 		// Prevents resetting fields when still in progress of editing bulk meta data.
 		// This will keep the previous state of step 2
 		// Only counts for bulk mode not single.
-		if (state && (state as HistoryRouterState).previousPath === 'step-2') return;
+		if (isBulkMode && state && (state as HistoryRouterState).previousPath === 'step-2') return;
 
-		if (metadataFields) {
+		if (fields?.length) {
 			const reducer = isBulkMode ? resetFieldsAndFiles : setAllFieldsEditable;
-			dispatch(reducer(metadataFields));
+			dispatch(reducer(fields));
 		}
-	}, [isBulkMode, metadataFields, state]);
+	}, [isBulkMode, state]);
 
 	return (
 		<BulkWizard {...props} isValidForm={isValidForm}>
