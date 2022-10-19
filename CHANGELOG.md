@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0-alpha.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.0...v1.2.0-alpha.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* keep edit state when nav back from step 2 ([8476894](https://github.com/Amsterdam/bmi-dms-upload/commit/84768949c00569ae81040479b44cca24ca1bb950))
+* prevent memory leak when component unmounts ([dd3d029](https://github.com/Amsterdam/bmi-dms-upload/commit/dd3d029699e300e276e1e7df753dbaedfb3d095a))
+
 ## [1.2.0-alpha.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.0.1...v1.2.0-alpha.0) (2022-10-10)
 
 
