@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0-alpha.3](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.2...v1.2.0-alpha.3) (2022-11-09)
+
+
+### Bug Fixes
+
+* added lock file ([6a77680](https://github.com/Amsterdam/bmi-dms-upload/commit/6a77680338594c32525700456ad238949f3bb275))
+* don't use latest version of bmi comp lib ([7af43cf](https://github.com/Amsterdam/bmi-dms-upload/commit/7af43cfc70d7aa25cfd6d96c5ff1874a4065cdc9))
+
 ## [1.2.0-alpha.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.1...v1.2.0-alpha.2) (2022-10-19)
 
 ## [1.2.0-alpha.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.0...v1.2.0-alpha.1) (2022-10-19)
