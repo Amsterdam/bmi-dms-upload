@@ -3,7 +3,7 @@ import React from 'react';
 import Step1 from './Step1';
 import * as SliceModule from '../bulk/store/slice';
 
-import { render } from '../../../tests/utils/testUtils';
+import { render, matchMediaMock } from '../../../tests/utils/testUtils';
 import { files, state } from '../bulk/__stubs__/state';
 import { metadataFields, defaultProps } from '../bulk/__stubs__';
 
@@ -13,6 +13,10 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('<Step1 />', () => {
+	beforeAll(() => {
+		matchMediaMock();
+	});
+
 	test('should render component', () => {
 		const store = {
 			bulk: state,

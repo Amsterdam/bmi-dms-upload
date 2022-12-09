@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, act } from '@testing-library/react';
-import { render } from '../../../tests/utils/testUtils';
+import { render, matchMediaMock } from '../../../tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
 import { asset, data as mockData, schema, uischema, files as filesMock, fields as fieldsMock } from './__stubs__';
 import { BulkUploadProps } from './types';
@@ -42,6 +42,10 @@ afterEach(() => {
 });
 
 describe('<Bulk />', () => {
+	beforeAll(() => {
+		matchMediaMock();
+	});
+
 	describe('Button', () => {
 		test('is rendered', () => {
 			render(<Bulk {...defaultProps} />, {});
