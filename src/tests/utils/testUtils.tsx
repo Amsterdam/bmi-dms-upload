@@ -84,5 +84,23 @@ const createTestStore = (storeOverrides?: StoreOverrides) => {
 	return store;
 };
 
+export function matchMediaMock(overrides = {}) {
+	const defaultDescriptor = {
+		writable: true,
+		value: jest.fn().mockImplementation((query) => ({
+			matches: false,
+			media: query,
+			onchange: null,
+			addListener: jest.fn(), // Deprecated
+			removeListener: jest.fn(), // Deprecated
+			addEventListener: jest.fn(),
+			removeEventListener: jest.fn(),
+			dispatchEvent: jest.fn(),
+		})),
+	};
+
+	Object.defineProperty(window, 'matchMedia', { ...defaultDescriptor, ...overrides });
+}
+
 export * from '@testing-library/react';
 export { render };
