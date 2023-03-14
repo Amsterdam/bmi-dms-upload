@@ -70,7 +70,6 @@ export default function createSchemaFromMetadataProps(
 
 				if (isDateYear !== undefined) {
 					acc[key].properties!.value['is-date-year'] = isDateYear;
-					acc[key].type = 'number';
 				}
 
 				return acc;

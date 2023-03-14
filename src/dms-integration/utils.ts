@@ -102,8 +102,8 @@ const convertDmsTypeToBulkFieldType = (type: string): IBulkField['type'] => {
 			return 'checkbox';
 		case 'DateType':
 			return 'date';
-		case 'DateYearType':
-			return 'number';
+		// case 'DateYearType':
+		// 	// return 'number';
 		case 'TextType':
 		default:
 			return 'text';
