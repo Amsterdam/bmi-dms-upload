@@ -1,5 +1,30 @@
 {
-  "files": [],
+  "files": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    }
+  ],
   "upload-session": {
     "id": "4af69162-2063-46fd-82d8-0f22aaf46437",
     "finished": false,
@@ -264,6 +289,16 @@
           "Test2",
           "Test3"
         ]
+      },
+      {
+        "id": 71,
+        "placeholder": "Hoi",
+        "required": true,
+        "defaultValue": null,
+        "userValue": null,
+        "changeIndividual": false,
+        "type": "DateYearType",
+        "options": []
       }
     ]
   }
