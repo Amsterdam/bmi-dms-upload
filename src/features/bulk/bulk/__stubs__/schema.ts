@@ -7,25 +7,26 @@ export const schema: CustomJsonSchema = {
 			type: 'object',
 			properties: {
 				name: {
-					type: 'string'
+					type: 'string',
 				},
 				value: {
 					type: 'string',
 					errorMessage: {
 						format: 'invalid',
 						'bmi-isNotEmpty': 'Dit is een verplicht veld',
-					}
+						'is-date-year': 'Hoi',
+					},
 				},
 				changeIndividual: {
-					type: 'boolean'
-				}
-			}
+					type: 'boolean',
+				},
+			},
 		},
 		dummyDate: {
 			type: 'object',
 			properties: {
 				name: {
-					type: 'string'
+					type: 'string',
 				},
 				value: {
 					type: 'string',
@@ -33,13 +34,14 @@ export const schema: CustomJsonSchema = {
 					errorMessage: {
 						format: 'invalid',
 						'bmi-isNotEmpty': 'Dit is een verplicht veld',
-					}
+						'is-date-year': 'Hoi',
+					},
 				},
 				changeIndividual: {
-					type: 'boolean'
-				}
-			}
-		}
+					type: 'boolean',
+				},
+			},
+		},
 	},
 	additionalProperties: false,
 	required: ['documentDescription', 'dummyDate'],
