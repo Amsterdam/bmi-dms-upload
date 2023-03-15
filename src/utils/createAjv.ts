@@ -35,7 +35,9 @@ ajv.addKeyword({
 			case 'number':
 				return data >= 0 && data <= new Date().getFullYear();
 			case 'string':
-				return parseInt(data) >= 0 && parseInt(data) <= new Date().getFullYear();
+				return (
+					data.match(/^[0-9]+$/) != null && parseInt(data, 10) >= 0 && parseInt(data, 10) <= new Date().getFullYear()
+				);
 			default:
 				return false;
 		}
