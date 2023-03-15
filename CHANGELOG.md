@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0...v1.3.0) (2023-03-15)
+
+
+### Features
+
+* added is-date-year validation to JSON Forms ([b494a73](https://github.com/Amsterdam/bmi-dms-upload/commit/b494a7355e47a451fd23af4b1c921d165bc214b9))
+* added number field ([2f22146](https://github.com/Amsterdam/bmi-dms-upload/commit/2f22146ed8747569c75f4c2e42d9d7e0058e0a77))
+* map isDateYear to number field and upda ([6e01209](https://github.com/Amsterdam/bmi-dms-upload/commit/6e012096e7e49f4782615f465896c6f6e20d1544))
+
 ## [1.2.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.3...v1.2.0) (2022-12-09)
 
 ## [1.2.0-alpha.3](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0-alpha.2...v1.2.0-alpha.3) (2022-11-09)
