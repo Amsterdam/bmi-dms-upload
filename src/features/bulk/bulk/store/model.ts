@@ -9,7 +9,7 @@ export enum CurrentStep {
 	EditFields,
 }
 
-export type TBulkFieldType = 'text' | 'date' | 'select' | 'multi-select' | 'checkbox';
+export type TBulkFieldType = 'text' | 'date' | 'select' | 'multi-select' | 'checkbox' | 'number';
 
 export interface IBulkFile {
 	id: string;

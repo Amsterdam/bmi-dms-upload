@@ -16,6 +16,7 @@ export default function createSchemaFromMetadataProps(
 					format,
 					'bmi-isNotEmpty': isNotEmpty,
 					'bmi-errorMessage': customErrorMessage,
+					'is-date-year': isDateYear,
 					label,
 					oneOf,
 					customFormat,
@@ -35,6 +36,8 @@ export default function createSchemaFromMetadataProps(
 							errorMessage: {
 								format: customErrorMessage ?? `Het format voor '${label}' is ongeldig `,
 								'bmi-isNotEmpty': customErrorMessage ?? `Geef de default waarde voor '${label}' op `,
+								'is-date-year':
+									customErrorMessage ?? `Jaar moet een getal tussen 0 en ${new Date().getFullYear()} zijn.`,
 							},
 						},
 					},
@@ -63,6 +66,10 @@ export default function createSchemaFromMetadataProps(
 				if (oneOf !== undefined) {
 					acc[key].properties!.value.oneOf = oneOf;
 					acc[key].properties!.value.customFormat = customFormat;
+				}
+
+				if (isDateYear !== undefined) {
+					acc[key].properties!.value['is-date-year'] = isDateYear;
 				}
 
 				return acc;

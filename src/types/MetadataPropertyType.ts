@@ -5,6 +5,7 @@ export type MetadataProperty = {
 	type: string;
 	'bmi-errorMessage'?: string;
 	'bmi-isNotEmpty'?: boolean;
+	'is-date-year'?: boolean;
 	customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
 	default?: string[];
 	format?: string;

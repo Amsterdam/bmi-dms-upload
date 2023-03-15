@@ -6,17 +6,20 @@ export type OnChangeCallback = (data: MetadataGenericType, valid: boolean, error
 
 export interface CustomJsonSchema extends JsonSchema7 {
 	'bmi-isNotEmpty'?: boolean;
+	'is-date-year'?: boolean;
 	properties?: {
 		[property: string]: JsonSchema7 & {
 			'bmi-isNotEmpty'?: boolean;
+			'is-date-year'?: boolean;
 			customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
 
 			properties?: {
 				[property: string]: JsonSchema7 & {
 					'bmi-isNotEmpty'?: boolean;
+					'is-date-year'?: boolean;
 					customFormat?: 'creatable' | 'creatable-array' | 'multi-creatable';
-				}
-			}
+				};
+			};
 		};
 	};
 }

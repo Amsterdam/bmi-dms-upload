@@ -56,6 +56,10 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 			}
 		}
 
+		if (field.type === 'DateYearType') {
+			item['is-date-year'] = parseInt(field.userValue) >= 0 && parseInt(field.userValue) <= new Date().getFullYear();
+		}
+
 		return item;
 	});
 }
@@ -98,6 +102,8 @@ const convertDmsTypeToBulkFieldType = (type: string): IBulkField['type'] => {
 			return 'checkbox';
 		case 'DateType':
 			return 'date';
+		// case 'DateYearType':
+		// 	// return 'number';
 		case 'TextType':
 		default:
 			return 'text';

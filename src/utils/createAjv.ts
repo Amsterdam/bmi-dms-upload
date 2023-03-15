@@ -17,9 +17,25 @@ ajv.addKeyword({
 	validate: function (schema: any, data: any) {
 		switch (typeof data) {
 			case 'string':
-				return data.trim() !== ''
+				return data.trim() !== '';
 			case 'object':
 				return data.length > 0;
+			default:
+				return false;
+		}
+	},
+	errors: true,
+});
+
+ajv.addKeyword({
+	keyword: 'is-date-year',
+	type: ['string', 'number'],
+	validate: function (schema: any, data: unknown) {
+		switch (typeof data) {
+			case 'number':
+				return data >= 0 && data <= new Date().getFullYear();
+			case 'string':
+				return parseInt(data) >= 0 && parseInt(data) <= new Date().getFullYear();
 			default:
 				return false;
 		}

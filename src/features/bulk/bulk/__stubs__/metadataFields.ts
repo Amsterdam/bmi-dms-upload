@@ -91,4 +91,11 @@ export const metadataFields: IBulkField[] = [
 		changeIndividual: false,
 		type: 'text',
 	},
+	{
+		id: 'dateYearType',
+		value: '',
+		label: 'Date Year Type',
+		changeIndividual: false,
+		type: 'text',
+	},
 ];
