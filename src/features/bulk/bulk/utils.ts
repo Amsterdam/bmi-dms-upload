@@ -12,7 +12,7 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 		};
 
 		if (field.type === 'checkbox') {
-			item.type = 'boolean'
+			item.type = 'boolean';
 		}
 
 		if (field.type === 'date') {
@@ -41,6 +41,10 @@ export function convertBulkFieldsToMetadataProperties(fields: IBulkField[]): Met
 				enum: field.values!,
 			};
 			item.customFormat = 'multi-creatable';
+		}
+
+		if (field.type === 'year') {
+			item['is-date-year'] = true;
 		}
 
 		return item;
