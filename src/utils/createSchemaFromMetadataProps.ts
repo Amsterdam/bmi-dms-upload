@@ -36,8 +36,7 @@ export default function createSchemaFromMetadataProps(
 							errorMessage: {
 								format: customErrorMessage ?? `Het format voor '${label}' is ongeldig `,
 								'bmi-isNotEmpty': customErrorMessage ?? `Geef de default waarde voor '${label}' op `,
-								'is-date-year':
-									customErrorMessage ?? `Jaar moet een getal tussen 0 en ${new Date().getFullYear()} zijn.`,
+								'is-date-year': customErrorMessage ?? `Jaar moet een getal van 0 t/m ${new Date().getFullYear()} zijn.`,
 							},
 						},
 					},

@@ -57,7 +57,7 @@ export function convertDmsDynamicFormFieldsToMetadataProperty(fields: IDmsDynami
 		}
 
 		if (field.type === 'DateYearType') {
-			item['is-date-year'] = parseInt(field.userValue) >= 0 && parseInt(field.userValue) <= new Date().getFullYear();
+			item['is-date-year'] = true;
 		}
 
 		return item;
@@ -102,8 +102,8 @@ const convertDmsTypeToBulkFieldType = (type: string): IBulkField['type'] => {
 			return 'checkbox';
 		case 'DateType':
 			return 'date';
-		// case 'DateYearType':
-		// 	// return 'number';
+		case 'DateYearType':
+			return 'year';
 		case 'TextType':
 		default:
 			return 'text';
