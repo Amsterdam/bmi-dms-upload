@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.3.0...v1.3.1) (2023-03-16)
+
+
+### Bug Fixes
+
+* added year type so fields can be validated on step 3 ([0e2df34](https://github.com/Amsterdam/bmi-dms-upload/commit/0e2df347e1799a7c2ec6951c348dfad4d388a829))
+* improve year type validation ([7069e01](https://github.com/Amsterdam/bmi-dms-upload/commit/7069e010fb2dbf600a11267fca67b6dcfef81eaf))
+
 ## [1.3.0](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.2.0...v1.3.0) (2023-03-15)
 
 
