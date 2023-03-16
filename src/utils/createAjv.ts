@@ -30,7 +30,9 @@ ajv.addKeyword({
 ajv.addKeyword({
 	keyword: 'is-date-year',
 	type: ['string', 'number'],
-	validate: function (schema: any, data: unknown) {
+	validate: function (schema: any, data: number | string | null) {
+		if (data === null || (typeof data === 'string' && data.length === 0)) return true;
+
 		switch (typeof data) {
 			case 'number':
 				return data >= 0 && data <= new Date().getFullYear();
