@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.3.1...v1.3.2) (2023-03-17)
+
+
+### Bug Fixes
+
+* validation to work well together with required ([ff3f276](https://github.com/Amsterdam/bmi-dms-upload/commit/ff3f276999295fca46771eb732399d162d38c453))
+
 ### [1.3.1](https://github.com/Amsterdam/bmi-dms-upload/compare/v1.3.0...v1.3.1) (2023-03-16)
 
 
