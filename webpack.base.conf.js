@@ -41,36 +41,7 @@ module.exports = {
 				include: [path.resolve(__dirname, 'src')],
 				use: [
 					{
-						loader: 'babel-loader',
-						options: {
-							presets: [
-								[
-									'@babel/preset-env',
-									{
-										debug: false,
-										modules: false,
-										useBuiltIns: 'entry',
-										corejs: 3,
-									},
-								],
-								'@babel/preset-react',
-								'@babel/preset-typescript',
-							],
-							plugins: [
-								[
-									'babel-plugin-styled-components',
-									{
-										pure: true,
-									},
-								],
-							],
-						},
-					},
-					{
-						loader: 'ts-loader',
-						options: {
-							transpileOnly: true,
-						},
+						loader: 'swc-loader',
 					},
 				],
 			},

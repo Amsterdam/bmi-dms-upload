@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { confirm } from '@amsterdam/bmi-component-library';
 
-import renderWithTheme from '../../tests/utils/withTheme';
+import renderWithTheme from '~/tests/utils/withTheme';
 
 import ConfirmTermination, { customSubject } from './ConfirmTermination';
 

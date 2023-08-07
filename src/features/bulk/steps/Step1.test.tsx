@@ -1,11 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import Step1 from './Step1';
-import * as SliceModule from '../bulk/store/slice';
 
-import { render, matchMediaMock } from '../../../tests/utils/testUtils';
-import { files, state } from '../bulk/__stubs__/state';
-import { metadataFields, defaultProps } from '../bulk/__stubs__';
+import { render, matchMediaMock } from '~/tests/utils/testUtils';
+import { files, defaultProps, metadataFields, state } from '../bulk/__stubs__';
+import { mocked } from '~/tests/helpers';
+import { resetFieldsAndFiles, setAllFieldsEditable, setBulkMode } from '../bulk/store/slice';
 
 jest.mock('react-redux', () => ({
 	...jest.requireActual('react-redux'),
@@ -13,6 +14,12 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('<Step1 />', () => {
+	const dispatchSpy = jest.fn();
+
+	beforeEach(() => {
+		mocked(useDispatch).mockImplementation(() => dispatchSpy);
+	});
+
 	beforeAll(() => {
 		matchMediaMock();
 	});
@@ -27,7 +34,6 @@ describe('<Step1 />', () => {
 	});
 
 	test('should set isBulkMode to false when single file has been uploaded', () => {
-		const setBulkModeSpy = jest.spyOn(SliceModule, 'setBulkMode');
 		const store = {
 			bulk: {
 				...state,
@@ -37,12 +43,10 @@ describe('<Step1 />', () => {
 		};
 
 		render(<Step1 {...defaultProps} />, { store });
-
-		expect(setBulkModeSpy).toHaveBeenCalledWith(false);
+		expect(dispatchSpy).toHaveBeenCalledWith(setBulkMode(false));
 	});
 
 	test('should set isBulkMode to true when multiple have been uploaded', () => {
-		const setBulkModeSpy = jest.spyOn(SliceModule, 'setBulkMode');
 		const store = {
 			bulk: {
 				...state, // State stub has 2 files
@@ -51,12 +55,10 @@ describe('<Step1 />', () => {
 		};
 
 		render(<Step1 {...defaultProps} />, { store });
-
-		expect(setBulkModeSpy).toHaveBeenCalledWith(true);
+		expect(dispatchSpy).toHaveBeenCalledWith(setBulkMode(true));
 	});
 
 	test('should set all fields to editable when isBulkMode is FALSE and metadataFields are provided', () => {
-		const setAllFieldsEditableSpy = jest.spyOn(SliceModule, 'setAllFieldsEditable');
 		const props = { ...defaultProps, metadataFields };
 		const store = {
 			bulk: {
@@ -67,12 +69,10 @@ describe('<Step1 />', () => {
 		};
 
 		render(<Step1 {...props} />, { store });
-
-		expect(setAllFieldsEditableSpy).toHaveBeenCalled();
+		expect(dispatchSpy).toHaveBeenCalledWith(setAllFieldsEditable(state.fields));
 	});
 
 	test('should reset all fields and files to default/initial when isBulkMode is TRUE and metadataFields are provided', () => {
-		const resetFieldsAndFilesSpy = jest.spyOn(SliceModule, 'resetFieldsAndFiles');
 		const props = { ...defaultProps, metadataFields };
 		const store = {
 			bulk: {
@@ -83,7 +83,6 @@ describe('<Step1 />', () => {
 		};
 
 		render(<Step1 {...props} />, { store });
-
-		expect(resetFieldsAndFilesSpy).toHaveBeenCalled();
+		expect(dispatchSpy).toHaveBeenCalledWith(resetFieldsAndFiles());
 	});
 });

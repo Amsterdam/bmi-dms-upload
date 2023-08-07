@@ -90,8 +90,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 		if (isBulkMode && state && (state as HistoryRouterState).previousPath === 'step-2') return;
 
 		if (fields?.length) {
-			const reducer = isBulkMode ? resetFieldsAndFiles : setAllFieldsEditable;
-			dispatch(reducer(fields));
+			dispatch(isBulkMode ? resetFieldsAndFiles() : setAllFieldsEditable(fields));
 		}
 	}, [isBulkMode, state]);
 
