@@ -1,5 +1,5 @@
 export { default as SingleUpload } from './features/single/single/Single';
-export { Props as SingleUploadProps, MetadataDataSubmitCallbackArg } from './features/single/single/types';
+export type { Props as SingleUploadProps, MetadataDataSubmitCallbackArg } from './features/single/single/types';
 export { default as BulkUpload } from './features/bulk/bulk/Bulk';
 export type { BulkUploadProps } from './features/bulk/bulk/types';
 
