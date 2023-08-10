@@ -60,13 +60,12 @@ describe('customRenderers / CreatableSelectArray', () => {
 
 	test('onBlur triggers onChange another time', async () => {
 		const onChangeMock = jest.fn();
-		const { getByLabelText, getByText, queryByText, debug } = renderForm({
+		const { getByLabelText, getByText, queryByText } = renderForm({
 			onChange: onChangeMock,
 			data: {
 				documentDescription: [options[5]],
 			},
 		});
-		debug();
 		const input = getByLabelText(label);
 		expect(queryByText(options[3])).not.toBeInTheDocument();
 
