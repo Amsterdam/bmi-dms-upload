@@ -4,13 +4,9 @@ import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import BulkWizard from './BulkWizard';
 import { CurrentStep } from '../bulk/store/model';
 
-import { render } from '../../../tests/utils/testUtils';
+import { render } from '~/tests/utils/testUtils';
 import { state as mockState, defaultProps } from '../bulk/__stubs__';
 import { onCancelMock, onMetadataSubmitMock } from '../bulk/__mocks__/bulk';
-
-afterEach(() => {
-	jest.restoreAllMocks();
-});
 
 describe('<BulkWizard />', () => {
 	describe('Cancel button', () => {
@@ -24,6 +20,8 @@ describe('<BulkWizard />', () => {
 		test('triggers onCancel', async () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, {});
+			});
+			act(() => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
@@ -38,6 +36,9 @@ describe('<BulkWizard />', () => {
 		test('closes modal on accept', async () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, {});
+			});
+
+			act(() => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 

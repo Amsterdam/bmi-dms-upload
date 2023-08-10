@@ -32,14 +32,12 @@ export const slice = createSlice({
 		setAllFieldsEditable: (state: IBulkState, { payload }: PayloadAction<IBulkField[]>) => {
 			state.fields = payload.map((field) => ({ ...field, changeIndividual: true }));
 		},
-		resetFieldsAndFiles: (state: IBulkState, action: PayloadAction) => {
+		resetFieldsAndFiles: (state: IBulkState) => {
 			state.fields = state.fields.map((field) => ({ ...field, changeIndividual: false }));
 
 			// Reset file data to initial state, which only has the id and uploadedFile properties
 			if (state.files && state.files.length) {
-				const defaultFiles = state.files.map(({ id, uploadedFile }) => ({ id, uploadedFile }));
-
-				state.files = defaultFiles;
+				state.files = state.files.map(({ id, uploadedFile }) => ({ id, uploadedFile }));
 			}
 		},
 		setFile: (state: IBulkState, { payload }: PayloadAction<IBulkFile>) => {

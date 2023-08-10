@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import useConfirmSave from './useConfirmSave';
 import { act } from 'react-dom/test-utils';
 

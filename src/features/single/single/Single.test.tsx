@@ -1,7 +1,9 @@
 import React from 'react';
 import { screen, fireEvent, act } from '@testing-library/react';
-import { render, matchMediaMock } from '../../../tests/utils/testUtils';
+
+import { render, matchMediaMock } from '~/tests/utils/testUtils';
 import { MetadataExample } from '../../../types';
+
 import { mockData, asset, file, schema, uischema } from './__stubs__';
 import {
 	getHeadersMock,
@@ -34,10 +36,6 @@ const defaultProps: Props<MetadataExample> = {
 	onCancel: onCancelMock,
 	basePath: '/',
 };
-
-afterEach(() => {
-	jest.restoreAllMocks();
-});
 
 describe('<Single />', () => {
 	beforeAll(() => {

@@ -1,8 +1,8 @@
 import React, { ComponentProps } from 'react';
-import renderWithTheme from '../../tests/utils/withTheme';
+import renderWithTheme from '~/tests/utils/withTheme';
 import StaticMetadata from './StaticMetadata';
 import { metadataList } from './__stubs__';
-import { mockComponentProps, mocked } from '../../tests/helpers';
+import { mockComponentProps, mocked } from '../../../tests/helpers';
 import { DescriptionList } from '@amsterdam/bmi-component-library';
 
 jest.mock('@amsterdam/bmi-component-library', () => ({

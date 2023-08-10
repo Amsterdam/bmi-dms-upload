@@ -1,8 +1,8 @@
 import React, { ComponentProps } from 'react';
 import { screen } from '@testing-library/react';
 import BulkMetadataForm, { Props } from './BulkMetadataForm';
-import renderWithTheme from '../../tests/utils/withTheme';
-import { mockComponentProps, mocked } from '../../tests/helpers';
+import renderWithTheme from '~/tests/utils/withTheme';
+import { mockComponentProps, mocked } from '../../../tests/helpers';
 import { schema, uischema } from './__stubs__';
 import MetadataColumnHeaders from '../MetadataColumnHeaders/MetadataColumnHeaders';
 import Form from '../Form/Form';

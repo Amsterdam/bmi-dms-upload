@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen, fireEvent, act, waitFor } from '@testing-library/react';
-import { render } from '../../../tests/utils/testUtils';
+import { render } from '~/tests/utils/testUtils';
 import { CurrentStep } from '../single/store/model';
 import { asset, schema, uischema, file as fileMock, mockData } from '../single/__stubs__';
 import SingleWizard from './SingleWizard';
@@ -33,10 +33,6 @@ const defaultProps = {
 	isValidForm: false,
 };
 
-afterEach(() => {
-	jest.restoreAllMocks();
-});
-
 describe('<SingleWizard />', () => {
 	describe('Cancel button', () => {
 		test('is rendered', () => {
@@ -49,6 +45,8 @@ describe('<SingleWizard />', () => {
 		test('triggers onCancel', async () => {
 			act(() => {
 				render(<SingleWizard {...defaultProps} />, {});
+			});
+			act(() => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 			const buttonAccept = screen.getByText('Akkoord');
@@ -62,6 +60,8 @@ describe('<SingleWizard />', () => {
 		test('closes modal on accept', async () => {
 			act(() => {
 				render(<SingleWizard {...defaultProps} />, {});
+			});
+			act(() => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 

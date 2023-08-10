@@ -3,22 +3,19 @@ import { render as rtlRender, RenderResult } from '@testing-library/react';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-
+import { MemoryRouter } from 'react-router-dom-v5-compat';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 
-import theme from '../../theme';
-import { CustomFileLight, MetadataGenericType } from '../../types';
-
-import { CurrentStep as CurrentStepSingle } from '../../features/single/single/store/model';
-import { reducer as singleReducer } from '../../features/single/single/store/slice';
-import { singleSaga } from '../../features/single/single/store/sagas';
-
-import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../features/bulk/bulk/store/model';
-import { reducer as bulkReducer } from '../../features/bulk/bulk/store/slice';
-import { bulkSaga } from '../../features/bulk/bulk/store/sagas';
-import { MemoryRouter } from 'react-router-dom-v5-compat';
+import theme from '../../src/theme';
+import { CustomFileLight, MetadataGenericType } from '../../src/types';
+import { CurrentStep as CurrentStepSingle } from '../../src/features/single/single/store/model';
+import { reducer as singleReducer } from '../../src/features/single/single/store/slice';
+import { singleSaga } from '../../src/features/single/single/store/sagas';
+import { CurrentStep as CurrentStepBulk, IBulkField, IBulkFile } from '../../src/features/bulk/bulk/store/model';
+import { reducer as bulkReducer } from '../../src/features/bulk/bulk/store/slice';
+import { bulkSaga } from '../../src/features/bulk/bulk/store/sagas';
 
 type TRenderOptions = {
 	store?: any;

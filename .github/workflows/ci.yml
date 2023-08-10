@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                job: [ lint, 'ci:test', 'build:storybook' ]
+                job: [ lint, 'ci:test', 'storybook:build' ]
         steps:
             -   uses: actions/checkout@v2
 

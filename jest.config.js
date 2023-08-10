@@ -2,7 +2,7 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-	preset: 'ts-jest',
+	// preset: 'ts-jest',
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
 
@@ -74,8 +74,8 @@ module.exports = {
 	moduleNameMapper: {
 		'~/tests/(.*)$': '<rootDir>/tests/$1',
 		'~/(.*)$': '<rootDir>/src/$1',
-		'^.+\\.(css|scss)$': '<rootDir>/src/tests/jest-cssstub.js',
-		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/src/tests/jest-imagestub.js',
+		'^.+\\.(css|scss)$': '<rootDir>/tests/jest-cssstub.js',
+		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
 		'^react$': '<rootDir>/node_modules/react',
 		'^react-dom$': '<rootDir>/node_modules/react-dom',
 	},
@@ -114,7 +114,7 @@ module.exports = {
 	// rootDir: null,
 
 	// A list of paths to directories that Jest should use to search for files in
-	roots: ['<rootDir>/src'],
+	roots: ['<rootDir>/src', '<rootDir>/tests'],
 
 	// Allows you to use a custom runner instead of Jest's default test runner
 	// runner: "jest-runner",
@@ -123,13 +123,13 @@ module.exports = {
 	setupFiles: [],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
-	setupFilesAfterEnv: ['./src/tests/jest-setup.ts'],
+	setupFilesAfterEnv: ['./tests/jest-setup.ts'],
 
 	// A list of paths to snapshot serializer modules Jest should use for snapshot testing
 	snapshotSerializers: [],
 
 	// The test environment that will be used for testing
-	// testEnvironment: '',
+	testEnvironment: 'jsdom',
 
 	// Options that will be passed to the testEnvironment
 	// testEnvironmentOptions: {},
@@ -170,8 +170,10 @@ module.exports = {
 	//     // '^.+\\.(ts|tsx)?$': `<rootDir>/tests/jest-preprocess.js`
 	// },
 	transform: {
-		'^.+\\.[t|j]sx?$': 'babel-jest',
-		'^.+\\.svg$': 'jest-svg-transformer',
+		'^.+\\.[t|j]sx?$': '@swc/jest',
+		'^.+\\.svg$': '<rootDir>/tests/jest-svg-transformer.js',
+
+		// '^.+\\.svg$': 'jest-svg-transformer',
 		// '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx',
 	},
 

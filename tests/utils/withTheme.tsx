@@ -3,7 +3,7 @@ import { RenderOptions, render, RenderResult } from '@testing-library/react';
 import { muiTheme } from '@amsterdam/bmi-component-library';
 import { GlobalStyle, ThemeProvider } from '@amsterdam/asc-ui';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material';
-import theme from '../../theme';
+import theme from '../../src/theme';
 
 function renderWithTheme(ui: React.ReactElement, options?: Omit<RenderOptions, 'queries'>): RenderResult {
 	const ThemeProviders = ({ children }: React.PropsWithChildren<{}>) => (

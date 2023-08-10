@@ -28,8 +28,8 @@ jobs:
             - name: build
               run: npm run build
 
-            - name: build:storybook
-              run: npm run build:storybook
+            - name: storybook:build
+              run: npm run storybook:build
 
             - name: Deploy to Github pages
               uses: JamesIves/github-pages-deploy-action@3.7.1

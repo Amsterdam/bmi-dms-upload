@@ -2,8 +2,8 @@ import React, { ComponentProps } from 'react';
 import { screen, act } from '@testing-library/react';
 import { DocumentViewer } from '@amsterdam/bmi-component-library';
 
-import { render } from '../../../tests/utils/testUtils';
-import { mockComponentProps, mocked } from '../../../tests/helpers';
+import { render } from '~/tests/utils/testUtils';
+import { mockComponentProps, mocked } from '~/tests/helpers';
 import { files as filesMock, fields as fieldsMock } from '../bulk/__stubs__';
 import { getDocumentViewUrlMock, onChangeMock } from '../bulk/__mocks__/bulk';
 import FileViewer, { Props } from './FileViewer';
@@ -31,10 +31,6 @@ jest.mock('./IndividualFieldsForm/IndividualFieldsForm', () => {
 			</div>
 		);
 	});
-});
-
-afterEach(() => {
-	jest.restoreAllMocks();
 });
 
 const defaultStore = {
