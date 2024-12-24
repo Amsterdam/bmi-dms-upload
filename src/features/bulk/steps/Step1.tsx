@@ -30,7 +30,7 @@ type HistoryRouterState = {
 };
 
 export default function Step1<T>(props: Step1Props<T>) {
-	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, uploadHTTPMethod } = props;
+	const { getHeaders, getPostUrl, onFileRemove, onFileSuccess, metadataFields, uploadHTTPMethod, fileUploadOptions = {} } = props;
 	const [isValidForm, setIsValidForm] = useState<boolean>(false);
 
 	const { state } = useLocation();
@@ -107,7 +107,7 @@ export default function Step1<T>(props: Step1Props<T>) {
 					httpMethod={uploadHTTPMethod}
 					onFileRemove={handleFileRemove}
 					onFileSuccess={handleFileSuccess}
-					options={{ noClick: true, noKeyboard: true, maxFiles: 0 }}
+					options={{ noClick: true, noKeyboard: true, maxFiles: 0, ...fileUploadOptions }}
 					placeholder="Sleep een bestand in dit vlak of"
 					removeLabel="Wissen"
 					selectFilesLabel="selecteer bestand"
