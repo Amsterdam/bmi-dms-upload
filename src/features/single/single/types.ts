@@ -24,4 +24,6 @@ export interface Props<T> {
 	metadataForm: ComponentProps<typeof JsonForms>;
 	basePath?: string;
 	uploadHTTPMethod?: SupportedHTTPMethods;
+
+	fileUploadOptions?: FileUploadProps['options'];
 }
