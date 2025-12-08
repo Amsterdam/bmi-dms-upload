@@ -1,8 +1,8 @@
 import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import Form, { Props } from '../../Form/Form';
-import { schema as schemaStub, options } from './__stubs__/schema';
+import { options, schema as schemaStub } from './__stubs__/schema';
 import { uischema, uischema as uischemaStub } from './__stubs__/uischema';
 
 const label = `${uischema.elements[0]?.label} *` ?? '';
@@ -15,7 +15,9 @@ describe('customRenderers / CreatableSelect', () => {
 		onChange = jest.fn(),
 		renderers = [],
 	}: Partial<Pick<Props, 'onChange' | 'data' | 'schema' | 'uischema' | 'renderers'>>) => {
-		return render(<Form onChange={onChange} schema={schema} uischema={uischema} data={data} renderers={renderers} />);
+		return render(
+			<Form onChange={onChange} schema={schema} uischema={uischema} data={data} renderers={renderers} />,
+		);
 	};
 
 	test('Renders input with label', () => {
@@ -42,9 +44,17 @@ describe('customRenderers / CreatableSelect', () => {
 	test('Produces error onBlur when dirty', async () => {
 		const { getByRole, getByLabelText } = renderForm({ onChange: jest.fn() });
 		const input = getByLabelText(label);
-		await selectEvent.select(input, options[3]);
-		await selectEvent.clearFirst(input);
+
+		// Select an option and reset the selection
+		await waitFor(() => {
+			selectEvent.select(input, options[3]);
+			selectEvent.clearFirst(input);
+		});
+
+		// Trigger blur event
 		fireEvent.blur(input);
+
+		// Expects alert message
 		expect(getByRole('alert').textContent).toBe(
 			schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
 		);

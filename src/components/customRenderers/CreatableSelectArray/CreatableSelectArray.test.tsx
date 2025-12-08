@@ -47,12 +47,20 @@ describe('customRenderers / CreatableSelectArray', () => {
 
 	// Disabling this for now since the test case is not valid anymore it seems with batching in react 18
 	// I suggest reviewing this once json-forms has been updated
-	xtest('Produces error onBlur when dirty', async () => {
+	test('Produces error onBlur when dirty', async () => {
 		const { getByRole, getByLabelText } = renderForm({ onChange: jest.fn() });
 		const input = getByLabelText(label);
-		await selectEvent.select(input, options[3]);
-		await selectEvent.clearFirst(input);
+
+		// Select an option and reset the selection
+		await waitFor(() => {
+			selectEvent.select(input, options[3]);
+			selectEvent.clearFirst(input);
+		});
+
+		// Trigger blur event
 		fireEvent.blur(input);
+
+		// Expects alert message
 		await waitFor(() => {
 			expect(getByRole('alert').textContent).toContain(
 				schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
