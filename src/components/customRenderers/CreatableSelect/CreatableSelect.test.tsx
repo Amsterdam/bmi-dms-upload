@@ -1,12 +1,11 @@
 import React from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import Form, { Props } from '../../Form/Form';
 import { options, schema as schemaStub } from './__stubs__/schema';
 import { uischema, uischema as uischemaStub } from './__stubs__/uischema';
 
-const label = `${uischema.elements[0]?.label} *` ?? '';
-
+const label = uischema.elements[0]?.label ? `${uischema.elements[0].label} *` : '';
 describe('customRenderers / CreatableSelect', () => {
 	const renderForm = ({
 		schema = schemaStub,
@@ -43,21 +42,21 @@ describe('customRenderers / CreatableSelect', () => {
 
 	test('Produces error onBlur when dirty', async () => {
 		const { getByRole, getByLabelText } = renderForm({ onChange: jest.fn() });
-		const input = getByLabelText(label);
+		waitFor(async () => {
+			const input = getByLabelText(label);
 
-		// Select an option and reset the selection
-		await waitFor(() => {
-			selectEvent.select(input, options[3]);
-			selectEvent.clearFirst(input);
+			// Select an option and reset the selection
+			await selectEvent.select(input, options[3]);
+			await selectEvent.clearFirst(input);
+
+			// Trigger blur event
+			fireEvent.blur(input);
+
+			// Expects alert message
+			expect(getByRole('alert')).toHaveTextContent(
+				schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
+			);
 		});
-
-		// Trigger blur event
-		fireEvent.blur(input);
-
-		// Expects alert message
-		expect(getByRole('alert').textContent).toBe(
-			schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
-		);
 	});
 
 	test('onBlur triggers onChange', async () => {

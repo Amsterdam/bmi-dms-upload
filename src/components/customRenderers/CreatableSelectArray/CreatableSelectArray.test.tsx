@@ -7,7 +7,7 @@ import Form, { Props } from '../../Form/Form';
 import { schema as schemaStub, options } from './__stubs__/schema';
 import { uischema, uischema as uischemaStub } from './__stubs__/uischema';
 
-const label = `${uischema.elements[0]?.label} *` ?? '';
+const label = uischema.elements[0]?.label ? `${uischema.elements[0].label} *` : '';
 
 describe('customRenderers / CreatableSelectArray', () => {
 	const renderForm = ({
@@ -49,19 +49,17 @@ describe('customRenderers / CreatableSelectArray', () => {
 	// I suggest reviewing this once json-forms has been updated
 	test('Produces error onBlur when dirty', async () => {
 		const { getByRole, getByLabelText } = renderForm({ onChange: jest.fn() });
-		const input = getByLabelText(label);
+		await waitFor(async () => {
+			const input = getByLabelText(label);
 
-		// Select an option and reset the selection
-		await waitFor(() => {
-			selectEvent.select(input, options[3]);
-			selectEvent.clearFirst(input);
-		});
+			// Select an option and reset the selection
+			await selectEvent.select(input, options[3]);
+			await selectEvent.clearFirst(input);
 
-		// Trigger blur event
-		fireEvent.blur(input);
+			// Trigger blur event
+			fireEvent.blur(input);
 
-		// Expects alert message
-		await waitFor(() => {
+			// Expects alert message
 			expect(getByRole('alert').textContent).toContain(
 				schemaStub.properties?.documentDescription?.errorMessage?.['bmi-isNotEmpty'],
 			);
