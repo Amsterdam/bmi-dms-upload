@@ -86,7 +86,7 @@ describe('<Bulk />', () => {
 				render(<Bulk {...defaultProps} />, { store }, [BulkStepsToRoutes[2]]);
 			});
 
-			expect(screen.queryByText(`Metadata veld`)).toBeInTheDocument();
+			expect(screen.getByText(`Metadata veld`)).toBeInTheDocument();
 		});
 	});
 });

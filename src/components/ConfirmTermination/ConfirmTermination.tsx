@@ -30,7 +30,7 @@ const ConfirmTermination: IDialog = ({
 				hideCloseButton={hideCloseButton}
 				size={size}
 				backdropOpacity={backdropOpacity}
-				disablePortal={true}
+				disablePortal
 				store={customSubject}
 			/>
 			{backdropOpacity == 1 && <BackDropStyle zIndexOffset={1} />}

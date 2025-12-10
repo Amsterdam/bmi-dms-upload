@@ -85,7 +85,7 @@ describe('<Single />', () => {
 				render(<Single {...defaultProps} />, { store }, [SingleStepsToRoutes[2]]);
 			});
 
-			expect(screen.queryByText(`Metadata toevoegen`)).toBeInTheDocument();
+			expect(screen.getByText(`Metadata toevoegen`)).toBeInTheDocument();
 		});
 	});
 });

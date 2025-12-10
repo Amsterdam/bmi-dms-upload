@@ -58,9 +58,8 @@ const BulkMetadataFormStyles = styled.div`
 		.MuiGrid-item {
 			display: flex;
 			flex-flow: row nowrap;
-			justify-content: normal;
+			place-content: normal;
 			align-items: normal;
-			align-content: normal;
 			padding: ${themeSpacing(1, 0)};
 
 			label,

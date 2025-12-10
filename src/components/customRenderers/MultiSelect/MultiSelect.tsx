@@ -45,7 +45,7 @@ const MultiSelect = (props: ControlProps) => {
 			{label && <AccessibleLabel htmlFor={path} label={label} isRequired={isRequired} />}
 			<div>
 				<Creatable
-					isMulti={true}
+					isMulti
 					inputId={path}
 					value={selected}
 					placeholder="Maak een keuze"

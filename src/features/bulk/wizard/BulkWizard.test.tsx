@@ -25,7 +25,7 @@ describe('<BulkWizard />', () => {
 				fireEvent.click(screen.getByText('Annuleer'));
 			});
 
-			const buttonAccept = await screen.getByText('Akkoord');
+			const buttonAccept = screen.getByText('Akkoord');
 			act(() => {
 				fireEvent.click(buttonAccept);
 			});
@@ -59,11 +59,16 @@ describe('<BulkWizard />', () => {
 			expect(screen.queryByText('Vorige')).toBeNull();
 		});
 
-		test('is rendered on steps after the first step', () => {
+		test('is rendered on steps after the first step', async () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, { bulk: mockState });
 			});
-			expect(screen.queryByText('Vorige')).toBeDefined();
+			await waitFor(()=>{
+				screen.findByText('Vorige').then((previousBtn) => {
+					expect(previousBtn).toBeDefined();
+				});
+
+			});
 		});
 	});
 
@@ -91,7 +96,7 @@ describe('<BulkWizard />', () => {
 			act(() => {
 				render(<BulkWizard {...defaultProps} />, { store });
 			});
-			expect(screen.queryByText('Volgende')).toBeDefined();
+			expect(screen.getByText('Volgende')).toBeDefined();
 		});
 	});
 
@@ -132,12 +137,12 @@ describe('<BulkWizard />', () => {
 				},
 			};
 			act(() => {
-				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
+				render(<BulkWizard {...defaultProps} isValidForm />, { store });
 			});
 			expect(screen.queryByText('Opslaan')).toBeEnabled();
 		});
 
-		test('is enabled on step 3 when there are files, form is valid and there individual fields', () => {
+		test('is enabled on step 3 when there are files, form is valid and there individual fields', async () => {
 			const store = {
 				bulk: {
 					...mockState,
@@ -146,10 +151,10 @@ describe('<BulkWizard />', () => {
 			};
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
+				render(<BulkWizard {...defaultProps} isValidForm />, { store });
 			});
 
-			waitFor(async () => {
+			await waitFor(async () => {
 				expect(screen.queryByText('Opslaan')).toBeEnabled();
 			});
 		});
@@ -163,14 +168,14 @@ describe('<BulkWizard />', () => {
 			};
 
 			act(() => {
-				render(<BulkWizard {...defaultProps} isValidForm={true} />, { store });
+				render(<BulkWizard {...defaultProps} isValidForm />, { store });
 			});
 
 			const button = screen.getByText('Opslaan');
 			expect(button).toBeEnabled();
 
+			fireEvent.click(button);
 			await waitFor(() => {
-				fireEvent.click(button);
 				expect(onMetadataSubmitMock).toHaveBeenCalled();
 			});
 		});

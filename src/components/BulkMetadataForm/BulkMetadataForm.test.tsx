@@ -45,9 +45,9 @@ describe('<BulkMetadataForm />', () => {
 
 		expect(mockComponentProps<ComponentProps<typeof MetadataColumnHeaders>>(MetadadataColumnHeadersMock)).toEqual({
 			columns: [
-				{ header: 'Metadata veld', width: 34 },
-				{ header: 'Default waarde', width: 34 },
-				{ align: 'center', header: 'Individueel wijzigen', width: 32 },
+				{ header: 'Metadata veld', width: 34, objectID: 1 },
+				{ header: 'Default waarde', width: 34, objectID: 2 },
+				{ align: 'center', header: 'Individueel wijzigen', width: 32, objectID: 3 },
 			],
 		});
 	});

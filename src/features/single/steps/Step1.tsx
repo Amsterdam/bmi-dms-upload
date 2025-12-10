@@ -32,7 +32,7 @@ export default function Step1<T>(props: Props<T>) {
 	);
 
 	return (
-		<SingleWizard {...props} isValidForm={true}>
+		<SingleWizard {...props} isValidForm>
 			<Step1Styles>
 				<FileUpload
 					cancelLabel="Annuleren"

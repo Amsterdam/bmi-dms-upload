@@ -22,7 +22,6 @@ function getOptionForValue(options: SchemaOptionType[], value: string): SelectOp
 		? {
 				value: option.const,
 				label: option.title,
-				// eslint-disable-next-line no-mixed-spaces-and-tabs
 		  }
 		: value
 		? { value, label: value }

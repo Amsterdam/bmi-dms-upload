@@ -45,7 +45,6 @@ function* forward(action: ActionType) {
 	}
 }
 
-/* eslint-disable require-yield */
 function* resetRoute(action: ActionType) {
 	const { navigate } = action.payload;
 	const basePath: string = yield select(getBasePath);

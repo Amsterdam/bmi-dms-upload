@@ -4,8 +4,7 @@ import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 const RowStyles = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: start;
-	align-content: start;
+	place-content: start;
 	border-bottom: 1px solid ${themeColor('tint', 'level3')};
 	padding: ${themeSpacing(1)} ${themeSpacing(2)};
 

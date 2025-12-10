@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 import { DescriptionList } from '@amsterdam/bmi-component-library';
 import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
@@ -5,6 +6,7 @@ import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 export const DescriptionListStyle = styled(DescriptionList)`
 	background-color: ${themeColor('tint', 'level1')};
 
+	/* stylelint-disable nesting-selector-no-missing-scoping-root */
 	&& {
 		div {
 			display: flex;
