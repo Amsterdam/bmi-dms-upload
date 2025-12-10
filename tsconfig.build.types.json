@@ -1,11 +1,15 @@
-// tsconfig.types.json
 {
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"declaration": true,
 		"emitDeclarationOnly": true,
-		"outDir": "./lib",
+		"outDir": "./lib/types",
 		"rootDir": "./src"
 	},
-	"exclude": ["tests/**/*", "src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__mocks__/**/*"]
+	"exclude": [
+		"tests/**/*",
+		"src/**/*.test.ts",
+		"src/**/*.test.tsx",
+		"src/**/__mocks__/**/*"
+	]
 }

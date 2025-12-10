@@ -1,40 +1,32 @@
 {
 	"compilerOptions": {
-		"target": "ES2017",
-		"lib": ["dom", "dom.iterable", "ESNext"],
-		"types": [
-			"jest",
-			"node",
-			"styled-components",
-			"@testing-library/jest-dom"
-		],
-		"allowJs": false,
+		"target": "ES2020",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+
+		"jsx": "react-jsx",
+
+		"strict": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
-		"strict": true,
+
 		"forceConsistentCasingInFileNames": true,
-		"module": "ES2015",
-		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"isolatedModules": false,
-		"noEmit": false,
-		"jsx": "react-jsx",
-		"noImplicitAny": true,
-		"typeRoots": ["node_modules/@types", "/types"],
-		"baseUrl": ".",
+
+		// ⭐ Important for linting-only setup
+		"noEmit": true,
+
+		"baseUrl": "src",
 		"paths": {
-			"~/tests/*": ["tests/*"],
-			"@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
-		},
-		"rootDir": "./",
-		"outDir": "./lib",
-		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true
+			"~/tests/*": ["../tests/*"],
+			"@/*": ["*"],
+			"@mui/styled-engine": ["../node_modules/@mui/styled-engine-sc"]
+		}
 	},
-	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["build/**/*", "node_modules"]
+
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist", "lib", "es"]
 }

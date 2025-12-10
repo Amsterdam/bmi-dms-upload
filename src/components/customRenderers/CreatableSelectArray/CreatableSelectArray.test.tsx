@@ -7,7 +7,7 @@ import Form, { Props } from '../../Form/Form';
 import { schema as schemaStub, options } from './__stubs__/schema';
 import { uischema, uischema as uischemaStub } from './__stubs__/uischema';
 
-const label = `${uischema.elements[0]?.label} *` ?? '';
+const label = uischema.elements[0]?.label ? `${uischema.elements[0].label} *` : '';
 
 describe('customRenderers / CreatableSelectArray', () => {
 	const renderForm = ({
