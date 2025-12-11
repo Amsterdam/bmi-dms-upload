@@ -10,6 +10,7 @@ import { schema as singleSchema, uischema as singleUischema } from './features/s
 import Bulk from './features/bulk/bulk/Bulk';
 import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
 import GlobalAppStyle from './GlobalStyle';
+import UploadButton from './features/upload/UploadButton';
 
 import {
 	CancelCallbackArg,
@@ -149,6 +150,17 @@ function App() {
 												onFileSuccess={onFileSuccessBulk}
 												onMetadataSubmit={onMetadataSubmitBulk}
 												uploadHTTPMethod={'POST'}
+											/>
+										</div>
+										<div>
+											<UploadButton
+												asset={asset}
+												basePath="/documents/29/bulk-metadata"
+												getHeaders={getHeaders}
+												onCancel={onCancel}
+												getPostUrl={getPostUrl}
+												metadataForm={metadataForm}
+												onMetadataSubmit={onMetadataSubmit}
 											/>
 										</div>
 									</>

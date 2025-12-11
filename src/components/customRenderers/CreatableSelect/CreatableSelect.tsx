@@ -20,12 +20,12 @@ function getOptionForValue(options: SchemaOptionType[], value: string): SelectOp
 	const option = options.find((option) => option.const === value);
 	return option
 		? {
-				value: option.const,
-				label: option.title,
+			value: option.const,
+			label: option.title,
 		  }
 		: value
-		? { value, label: value }
-		: undefined;
+			? { value, label: value }
+			: undefined;
 }
 
 function isInsideModal(id: string): boolean {
@@ -40,15 +40,15 @@ const CreatableSelect = (props: ControlProps) => {
 		errors,
 		schema: { oneOf: options = [] },
 	} = props;
-	const filteredOptions = (options as JsonSchema7[]).filter((option: JsonSchema7) => option.const !== '')
+	const filteredOptions = (options as JsonSchema7[]).filter((option: JsonSchema7) => option.const !== '');
 	const { isValid, isDirty, isFocused, onFocus, onBlur, onChange, isRequired } = useCustomControl(props);
 	const [selected, setSelected] = useState<SelectOptionType | undefined>(
 		getOptionForValue(filteredOptions as SchemaOptionType[], value),
 	);
 
 	useEffect(() => {
-		setSelected(getOptionForValue(filteredOptions as SchemaOptionType[], value))
-	}, [value])
+		setSelected(getOptionForValue(filteredOptions as SchemaOptionType[], value));
+	}, [value]);
 
 	return (
 		<>

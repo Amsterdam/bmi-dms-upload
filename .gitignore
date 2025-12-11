@@ -84,3 +84,4 @@ dist/
 .env
 
 reports/
+/src/features/upload/
