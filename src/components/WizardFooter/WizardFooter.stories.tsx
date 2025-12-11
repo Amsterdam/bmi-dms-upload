@@ -1,72 +1,98 @@
-import React from 'react';
-
-import { storiesOf } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import WizardFooter from './WizardFooter';
 
-storiesOf('WizardFooter', module)
-	.add('Cancel, Previous and Next', () => (
-		<WizardFooter
-			cancel={{ visible: true, onClick: undefined }}
-			previous={{ visible: true, onClick: undefined }}
-			next={{ visible: true, onClick: undefined }}
-		/>
-	))
-	.add('Cancel, Previous and Next (disabled)', () => (
-		<WizardFooter
-			cancel={{ visible: true, onClick: undefined }}
-			previous={{ visible: true, onClick: undefined }}
-			next={{ visible: true, disabled: true, onClick: undefined }}
-		/>
-	))
-	.add('Cancel, Previous and Next (custom labels', () => (
-		<WizardFooter
-			cancel={{ visible: true, onClick: undefined, label: 'Cancel' }}
-			previous={{ visible: true, onClick: undefined, label: 'Previous' }}
-			next={{ visible: true, disabled: true, onClick: undefined, label: 'Next' }}
-		/>
-	))
-	.add('Cancel and Save', () => (
-		<WizardFooter cancel={{ visible: true, onClick: undefined }} save={{ visible: true, onClick: undefined }} />
-	))
-	.add('Cancel and Save (disabled)', () => (
-		<WizardFooter
-			cancel={{ visible: true, onClick: undefined }}
-			save={{ visible: true, disabled: true, onClick: undefined }}
-		/>
-	))
-	.add('Cancel and Save (custom labels)', () => (
-		<WizardFooter
-			cancel={{ visible: true, onClick: undefined, label: 'Cancel' }}
-			save={{ visible: true, onClick: undefined, label: 'Save' }}
-		/>
-	))
-	.add('Previous and Next', () => (
-		<WizardFooter previous={{ visible: true, onClick: undefined }} next={{ visible: true, onClick: undefined }} />
-	))
-	.add('Previous and Next (disabled)', () => (
-		<WizardFooter
-			previous={{ visible: true, onClick: undefined }}
-			next={{ visible: true, disabled: true, onClick: undefined }}
-		/>
-	))
-	.add('Previous and Next (custom labels)', () => (
-		<WizardFooter
-			previous={{ visible: true, onClick: undefined, label: 'Previous' }}
-			next={{ visible: true, onClick: undefined, label: 'Next' }}
-		/>
-	))
-	.add('Next and Save', () => (
-		<WizardFooter next={{ visible: true, onClick: undefined }} save={{ visible: true, onClick: undefined }} />
-	))
-	.add('Next and Save (disabled)', () => (
-		<WizardFooter
-			next={{ visible: true, disabled: true, onClick: undefined }}
-			save={{ visible: true, disabled: true, onClick: undefined }}
-		/>
-	))
-	.add('Next and Save (custom labels)', () => (
-		<WizardFooter
-			next={{ visible: true, label: 'Next', onClick: undefined }}
-			save={{ visible: true, label: 'Save', onClick: undefined }}
-		/>
-	));
+const meta: Meta<typeof WizardFooter> = {
+	title: 'WizardFooter',
+	component: WizardFooter,
+};
+
+export default meta;
+
+type Story = StoryObj<typeof WizardFooter>;
+
+export const CancelPreviousNext: Story = {
+	args: {
+		cancel: { visible: true },
+		previous: { visible: true },
+		next: { visible: true },
+	},
+};
+
+export const CancelPreviousNextDisabled: Story = {
+	args: {
+		cancel: { visible: true },
+		previous: { visible: true },
+		next: { visible: true, disabled: true },
+	},
+};
+
+export const CancelPreviousNextCustomLabels: Story = {
+	args: {
+		cancel: { visible: true, label: 'Cancel' },
+		previous: { visible: true, label: 'Previous' },
+		next: { visible: true, disabled: true, label: 'Next' },
+	},
+};
+
+export const CancelSave: Story = {
+	args: {
+		cancel: { visible: true },
+		save: { visible: true },
+	},
+};
+
+export const CancelSaveDisabled: Story = {
+	args: {
+		cancel: { visible: true },
+		save: { visible: true, disabled: true },
+	},
+};
+
+export const CancelSaveCustomLabels: Story = {
+	args: {
+		cancel: { visible: true, label: 'Cancel' },
+		save: { visible: true, label: 'Save' },
+	},
+};
+
+export const PreviousNext: Story = {
+	args: {
+		previous: { visible: true },
+		next: { visible: true },
+	},
+};
+
+export const PreviousNextDisabled: Story = {
+	args: {
+		previous: { visible: true },
+		next: { visible: true, disabled: true },
+	},
+};
+
+export const PreviousNextCustomLabels: Story = {
+	args: {
+		previous: { visible: true, label: 'Previous' },
+		next: { visible: true, label: 'Next' },
+	},
+};
+
+export const NextSave: Story = {
+	args: {
+		next: { visible: true },
+		save: { visible: true },
+	},
+};
+
+export const NextSaveDisabled: Story = {
+	args: {
+		next: { visible: true, disabled: true },
+		save: { visible: true, disabled: true },
+	},
+};
+
+export const NextSaveCustomLabels: Story = {
+	args: {
+		next: { visible: true, label: 'Next' },
+		save: { visible: true, label: 'Save' },
+	},
+};
