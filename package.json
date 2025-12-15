@@ -21,7 +21,7 @@
     "test": "jest --silent",
     "test:watch": "jest --watch",
     "lint": "npm-run-all --parallel lint:js lint:css lint:types",
-    "lint:js": "eslint",
+    "lint:js": "eslint \"src/**/*.{ts,tsx,js,jsx}\" \"tests/**/*.{ts,tsx,js,jsx}\"",
     "lint:css": "stylelint --config-basedir ./ --config stylelint.config.js \"src/**/*.{tsx,ts}\"",
     "lint:types": "tsc --noEmit",
     "fix": "npm-run-all --parallel fix:js fix:css",

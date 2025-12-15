@@ -78,7 +78,7 @@ module.exports = {
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
 		'^react$': '<rootDir>/node_modules/react',
 		'^react-dom$': '<rootDir>/node_modules/react-dom',
-		'^@amsterdam/bmi-component-library$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/index.js',
+		'^@amsterdam/bmi-component-library/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/$1',
 		'^@common/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/common/src/$1',
 		'^@form/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/form/$1',
 		'^@utils/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/utils/$1',
