@@ -29,11 +29,11 @@ const config: StorybookConfig = {
 			...(baseConfig.resolve.alias || {}),
 			'@amsterdam/bmi-component-library': path.resolve(
 				__dirname,
-				'../node_modules/@amsterdam/bmi-component-library/lib/src/index.js',
+				'../node_modules/@amsterdam/bmi-component-library/lib/index.js',
 			),
-			'@common': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/src/common/src'),
-			'@form': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/src/form'),
-			'@utils': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/src/utils'),
+			'@common': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/common'),
+			'@form': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/form'),
+			'@utils': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/utils'),
 		};
 		return baseConfig;
 	},
