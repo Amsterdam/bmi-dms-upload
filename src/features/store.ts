@@ -9,9 +9,6 @@ import { ISingleState } from './single/single/store/model';
 import { reducer as singleReducer } from './single/single/store/slice';
 import { singleSaga } from './single/single/store/sagas';
 
-import uploadReducer from './upload/store/slice';
-import { uploadSaga } from './upload/store/sagas';
-
 export interface Store {
 	single: ISingleState;
 	bulk: IBulkState;
@@ -25,8 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
 	reducer: combineReducers({
 		single: singleReducer,
-		bulk: bulkReducer,
-		upload: uploadReducer,
+		bulk: bulkReducer
 	}),
 	middleware: (getDefaultMiddleware) => [
 		...getDefaultMiddleware({
@@ -55,4 +51,3 @@ export const store = configureStore({
 
 sagaMiddleware.run(bulkSaga);
 sagaMiddleware.run(singleSaga);
-sagaMiddleware.run(uploadSaga);

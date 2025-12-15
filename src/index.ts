@@ -8,7 +8,14 @@ export { default as SingleMPUpload } from './features/single-mp/single/SingleMP'
 export type { SingleMPProps } from './features/single-mp/single/SingleMP';
 
 export type { RowLayoutSchema, CustomJsonSchema, CustomFileLight, CancelCallbackArg } from './types';
-export type { IBulkField } from './features/bulk/bulk/store/model';
+export type {
+	IBulkField,
+	IBulkFile,
+	IBulkFileMetadata,
+	IBulkState,
+	IFieldData,
+} from './features/bulk/bulk/store/model';
+export { CurrentStep } from './features/bulk/bulk/store/model';
 export { createSchemaFromMetadataProps, createUISchemaFromMetadataProps } from './utils';
 export * as dmsIntegration from './dms-integration';
 export { default as GlobalDmsUploadStyle } from './GlobalStyle';

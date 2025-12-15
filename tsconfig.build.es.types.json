@@ -1,11 +1,12 @@
 {
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"declaration": true,
-		"emitDeclarationOnly": true,
-		"outDir": "./es/types",
-		"rootDir": "./src"
-	},
+ "extends": "./tsconfig.json",
+ "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./es/types",
+    "rootDir": "./src"
+  },
 	"exclude": [
 		"tests/**/*",
 		"src/**/*.test.ts",

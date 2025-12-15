@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { confirm as dialogConfirm } from '@amsterdam/bmi-component-library/lib/src/common/src/ConfirmDialog/';
+import { confirm as dialogConfirm } from '@amsterdam/bmi-component-library';
 import { customSubject } from '../components/ConfirmTermination/ConfirmTermination';
 
 function useConfirmTermination(onTerminate: () => void): {
