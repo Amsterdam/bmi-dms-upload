@@ -1,33 +1,36 @@
 {
 	"compilerOptions": {
-		"target": "ES2020",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-
-		"jsx": "react-jsx",
-
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"types": ["jest", "node", "@testing-library/jest-dom"],
+		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"downlevelIteration": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
-
-		// ⭐ Important for linting-only setup
-		"noEmit": true,
-
-		"baseUrl": "src",
+		"isolatedModules": false,
+		"noEmit": false,
+		"jsx": "react-jsx",
+		"noImplicitAny": true,
+		"baseUrl": ".",
 		"paths": {
-			"~/tests/*": ["../tests/*"],
+			"~/tests/*": ["./tests/*"],
 			"@/*": ["*"],
-			"@mui/styled-engine": ["../node_modules/@mui/styled-engine-sc"],
+			"@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
 			"@amsterdam/bmi-component-library": ["./node_modules/@amsterdam/bmi-component-library"]
-		}
+		},
+		"rootDir": "./",
+		"outDir": "./lib",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true
 	},
 
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "src/**/*.tsx"],
 	"exclude": ["node_modules", "dist", "lib", "es"]
 }

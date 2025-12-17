@@ -3,7 +3,7 @@
  "compilerOptions": {
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "./es/types",
+    "outDir": "./es",
     "rootDir": "./src"
   },
 	"exclude": [
