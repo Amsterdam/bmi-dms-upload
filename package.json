@@ -16,6 +16,7 @@
   ],
   "scripts": {
     "xprepare": "npm run build:ts:es && npm run build:ts && husky install",
+    "prepare": "npm run build",
     "prepack": "npm run build",
     "start": "npm run storybook",
     "serve": "npm-run-all --parallel serve:mock-api serve:app",
