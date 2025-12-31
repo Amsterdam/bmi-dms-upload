@@ -3,7 +3,7 @@ import { screen, fireEvent, act } from '@testing-library/react';
 import { render } from '~/tests/utils/testUtils';
 import { CurrentStep } from '../single/store/model';
 import { asset, schema, uischema, file as fileMock, mockData } from '../single/__stubs__';
-import SingleWizard from './SingleWizard';
+import { SingleWizard } from './SingleWizard';
 import {
 	getHeadersMock,
 	getPostUrlMock,
