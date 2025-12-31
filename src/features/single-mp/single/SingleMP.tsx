@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { FileUploadProps } from '@amsterdam/bmi-component-library';
-import SingleButton from '../../single/button/SingleButton';
 import { useDispatch } from 'react-redux';
 import { useRouteDetect } from '../../single/single/hooks/useRouteDetect';
 import { setBasePath } from '../../single/single/store/slice';
 import { Route, Routes } from 'react-router-dom-v5-compat';
 import { Step1MP } from '../../single-mp/steps/Step1MP';
 import withCustomProvider from '../../withCustomProvider';
+import { SingleButtonMP } from '../button/SingleButtonMP';
 
-type SingleMPProps<T> = FileUploadProps & {
+type SingleMPProps<T> = Partial<FileUploadProps> & {
 	label: string;
+	limit: number;
 	basePath?: string;
 	someValue: T;
 }
@@ -28,9 +29,9 @@ const SingleMP = <T, >(props: SingleMPProps<T>) => {
 
 	return (
 		<React.Fragment>
-			<SingleButton basePath={basePath} />
+			<SingleButtonMP basePath={basePath} />
 			<Routes>
-				<Route path={`single/step1`} element={<Step1MP label={props.label} />} />
+				<Route path={`single-mp/step1`} element={<Step1MP label={props.label + ' blah'} limit={props.limit}/>} />
 				<Route path="*" element={<NoRoute />} />
 			</Routes>
 		</React.Fragment>

@@ -4,6 +4,7 @@ export enum CurrentStep {
 	Button,
 	Upload,
 	SelectFields,
+	UploadMP,
 }
 
 export interface ISingleState {

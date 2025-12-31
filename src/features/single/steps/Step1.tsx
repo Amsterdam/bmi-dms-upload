@@ -4,7 +4,7 @@ import { FileUpload, FileUploadProps } from '@amsterdam/bmi-component-library';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import { CustomFileLight, CustomFileLightOrRejection } from '../../../types';
-import SingleWizard from '../wizard/SingleWizard';
+import { SingleWizard } from '../wizard/SingleWizard';
 import { getFile } from '../single/store/selectors';
 import { setFile, removeFile } from '../single/store/slice';
 import { Step1Styles } from './styles';

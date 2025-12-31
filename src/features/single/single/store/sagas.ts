@@ -23,10 +23,10 @@ function* back(action: ActionType) {
 
 	switch (currentStep) {
 		case CurrentStep.SelectFields:
-			navigate(buildPath(basePath, SingleStepsToRoutes[CurrentStep.Upload]));
+			navigate(buildPath(basePath, SingleStepsToRoutes.STEP1));
 			break;
 		case CurrentStep.Upload:
-			navigate(buildPath(basePath, SingleStepsToRoutes[CurrentStep.Button]));
+			navigate(buildPath(basePath, SingleStepsToRoutes.START));
 			break;
 	}
 }
@@ -40,7 +40,7 @@ function* forward(action: ActionType) {
 
 	switch (currentStep) {
 		case CurrentStep.Upload:
-			if (file) navigate(buildPath(basePath, SingleStepsToRoutes[CurrentStep.SelectFields]));
+			if (file) navigate(buildPath(basePath, SingleStepsToRoutes.STEP2));
 			break;
 	}
 }
@@ -48,7 +48,7 @@ function* forward(action: ActionType) {
 function* resetRoute(action: ActionType) {
 	const { navigate } = action.payload;
 	const basePath: string = yield select(getBasePath);
-	navigate(buildPath(basePath, SingleStepsToRoutes[0]));
+	navigate(buildPath(basePath, SingleStepsToRoutes.START));
 }
 
 export function* singleSaga() {

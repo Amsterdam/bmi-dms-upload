@@ -6,6 +6,7 @@ import { UISchemaElement } from '@jsonforms/core';
 import { BrowserRouter, Route, Routes } from 'react-router-dom-v5-compat';
 
 import Single from './features/single/single/Single';
+import SingleMP from './features/single-mp/single/SingleMP';
 import { schema as singleSchema, uischema as singleUischema } from './features/single/single/__stubs__';
 import Bulk from './features/bulk/bulk/Bulk';
 import { IBulkField, IBulkFile } from './features/bulk/bulk/store/model';
@@ -120,7 +121,7 @@ function App() {
 										<div>
 											<Single
 												asset={asset}
-												basePath="/documents/29/bulk-metadata/"
+												basePath="/documents/29/bulk-metadata"
 												getHeaders={getHeaders}
 												getPostUrl={getPostUrl}
 												metadataForm={{
@@ -149,6 +150,14 @@ function App() {
 												onFileSuccess={onFileSuccessBulk}
 												onMetadataSubmit={onMetadataSubmitBulk}
 												uploadHTTPMethod={'POST'}
+											/>
+										</div>
+										<div>
+											<SingleMP
+												basePath="/documents/29/bulk-metadata"
+												limit={200}
+												label={'Single MP file uploader'}
+												someValue={'test'}
 											/>
 										</div>
 									</>

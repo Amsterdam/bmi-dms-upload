@@ -11,7 +11,7 @@ type Props = {
 const SingleButton: React.FC<Props> = ({ basePath }) => {
 	const navigate = useNavigate();
 	return (
-		<Button onClick={() => navigate(stripTrailingSlash(basePath) + SingleStepsToRoutes[1])}>Upload bestand</Button>
+		<Button onClick={() => navigate(stripTrailingSlash(basePath) + SingleStepsToRoutes.STEP1)}>Upload bestand</Button>
 	);
 };
 
