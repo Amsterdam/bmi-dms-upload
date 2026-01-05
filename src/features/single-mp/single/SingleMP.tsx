@@ -31,7 +31,7 @@ const SingleMP = <T, >(props: SingleMPProps<T>) => {
 		<React.Fragment>
 			<SingleButtonMP basePath={basePath} />
 			<Routes>
-				<Route path={`single-mp/step1`} element={<Step1MP label={props.label + ' blah'} limit={props.limit}/>} />
+				<Route path={`single-mp/step1`} element={<Step1MP label={props.label} limit={props.limit}/>} />
 				<Route path="*" element={<NoRoute />} />
 			</Routes>
 		</React.Fragment>
