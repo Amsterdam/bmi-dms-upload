@@ -6,6 +6,10 @@ bin/
 certificates/
 reports/
 src/
+tests/
+storybook-static/
+.turbo/
+.swc/
 .babelrc.js
 .browserlistrc
 .editorconfig

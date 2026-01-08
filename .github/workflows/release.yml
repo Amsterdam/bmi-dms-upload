@@ -1,19 +1,12 @@
-name: CI
+name: Build on release
 
 on:
-    push:
-        branches:
-            - '**'
-
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
+    release:
+        types: [ created ]
 
 jobs:
     build:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                job: [ lint, 'ci:test', 'storybook:build' ]
         steps:
             -   uses: actions/checkout@v6
 
@@ -32,5 +25,13 @@ jobs:
             -   name: build
                 run: npm run build
 
-            -   name: Run ${{ matrix.job }}
-                run: npm run ${{ matrix.job }}
+            -   name: pack
+                run: |
+                    npm version "$GITHUB_REF_NAME" --no-git-tag-version
+                    npm pack
+
+            -   name: Upload build artifacts to release
+                run: |
+                    gh release upload "$GITHUB_REF_NAME" *.tgz --clobber
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

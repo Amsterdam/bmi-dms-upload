@@ -1,13 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ES2017",
-		"lib": ["dom", "dom.iterable", "ESNext"],
-		"types": [
-			"jest",
-			"node",
-			"styled-components",
-			"@testing-library/jest-dom"
-		],
+		"target": "es5",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"types": ["jest", "node", "@testing-library/jest-dom"],
 		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
@@ -15,18 +10,19 @@
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "ES2015",
-		"moduleResolution": "node",
+		"module": "esnext",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"isolatedModules": false,
 		"noEmit": false,
 		"jsx": "react-jsx",
 		"noImplicitAny": true,
-		"typeRoots": ["node_modules/@types", "/types"],
 		"baseUrl": ".",
 		"paths": {
-			"~/tests/*": ["tests/*"],
-			"@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+			"~/tests/*": ["./tests/*"],
+			"@/*": ["*"],
+			"@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
+			"@amsterdam/bmi-component-library": ["./node_modules/@amsterdam/bmi-component-library"]
 		},
 		"rootDir": "./",
 		"outDir": "./lib",
@@ -34,7 +30,7 @@
 		"declaration": true,
 		"declarationMap": true
 	},
-	"files": ["src/index.ts"],
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["build/**/*", "node_modules"]
+
+	"include": ["src/**/*", "src/**/*.tsx"],
+	"exclude": ["node_modules", "dist", "lib", "es"]
 }

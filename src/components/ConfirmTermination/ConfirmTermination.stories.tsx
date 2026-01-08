@@ -1,71 +1,82 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { confirm } from '@amsterdam/bmi-component-library';
 import ConfirmTermination, { customSubject } from './ConfirmTermination';
 import { MODAL_SIZES } from '../../enums/MODAL_SIZES';
 
-const empty = () =>
-	confirm({
-		title: '',
-		message: '',
-		onCancel: () => {},
-		onConfirm: () => {},
-	});
+type ConfirmArgs = Parameters<typeof confirm>[0];
 
-const callbackMocks = {
-	onCancel: empty,
-	onConfirm: empty,
-	onCloseButton: empty,
-};
-
-const props = {
+const defaultConfirm: ConfirmArgs = {
 	title: 'Waarschuwing',
 	message: 'Weet u zeker dat u dit document definitief wilt verwijderen?',
-	...callbackMocks,
+	onCancel: () => {},
+	onConfirm: () => {},
 };
 
-const customProps = {
+const englishConfirm: ConfirmArgs = {
 	title: 'Warning',
 	message: 'Do you want to delete this document?',
 	textCancelButton: 'Cancel',
 	textConfirmButton: 'Confirm',
-	...callbackMocks,
+	onCancel: () => {},
+	onConfirm: () => {},
 };
 
-const landingPage = (customProps: any) => {
-	return (
-		<button
-			onClick={() => {
-				confirm(customProps, customSubject);
-			}}
-		>
-			Open ConfirmTermination
-		</button>
-	);
+const meta: Meta<typeof ConfirmTermination> = {
+	title: 'ConfirmTermination',
+	component: ConfirmTermination,
 };
 
-storiesOf('ConfirmTermination', module)
-	.add('Default', () => (
+export default meta;
+
+type Story = StoryObj<typeof ConfirmTermination>;
+
+const Template: Story = {
+	render: (args, { globals, viewMode }) => (
 		<>
-			{landingPage(props)}
-			<ConfirmTermination />
+			<button
+				onClick={() => {
+					confirm(defaultConfirm, customSubject);
+				}}
+			>
+				Open ConfirmTermination
+			</button>
+			<ConfirmTermination {...args} />
 		</>
-	))
-	.add('With Close Button', () => (
+	),
+	args: {},
+};
+
+export const Default: Story = {
+	...Template,
+};
+
+export const WithCloseButton: Story = {
+	...Template,
+	args: {
+		hideCloseButton: false,
+	},
+};
+
+export const DifferentDialogSize: Story = {
+	...Template,
+	args: {
+		size: MODAL_SIZES.MD,
+	},
+};
+
+export const WithCustomButtons: Story = {
+	render: (args) => (
 		<>
-			{landingPage(props)}
-			<ConfirmTermination hideCloseButton={false} />
+			<button
+				onClick={() => {
+					confirm(englishConfirm, customSubject);
+				}}
+			>
+				Open ConfirmTermination
+			</button>
+			<ConfirmTermination {...args} />
 		</>
-	))
-	.add('Different Dialog Size', () => (
-		<>
-			{landingPage(props)}
-			<ConfirmTermination size={MODAL_SIZES.MD} />
-		</>
-	))
-	.add('With Custom Buttons', () => (
-		<>
-			{landingPage(customProps)}
-			<ConfirmTermination />
-		</>
-	));
+	),
+	args: {},
+};

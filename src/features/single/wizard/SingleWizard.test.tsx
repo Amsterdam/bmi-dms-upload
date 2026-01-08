@@ -1,9 +1,9 @@
 import React from 'react';
-import { screen, fireEvent, act, waitFor } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import { render } from '~/tests/utils/testUtils';
 import { CurrentStep } from '../single/store/model';
 import { asset, schema, uischema, file as fileMock, mockData } from '../single/__stubs__';
-import SingleWizard from './SingleWizard';
+import { SingleWizard } from './SingleWizard';
 import {
 	getHeadersMock,
 	getPostUrlMock,
@@ -92,7 +92,7 @@ describe('<SingleWizard />', () => {
 			act(() => {
 				render(<SingleWizard {...defaultProps} />, { store });
 			});
-			expect(screen.queryByText('Vorige')).toBeDefined();
+			expect(screen.getByText('Vorige')).toBeDefined();
 		});
 	});
 
@@ -118,7 +118,7 @@ describe('<SingleWizard />', () => {
 			act(() => {
 				render(<SingleWizard {...defaultProps} />, { store });
 			});
-			expect(screen.queryByText('Volgende')).toBeDefined();
+			expect(screen.getByText('Volgende')).toBeDefined();
 		});
 	});
 
@@ -153,16 +153,14 @@ describe('<SingleWizard />', () => {
 			};
 
 			act(() => {
-				render(<SingleWizard {...defaultProps} isValidForm={true} />, { store });
+				render(<SingleWizard {...defaultProps} isValidForm />, { store });
 			});
 
 			const button = screen.getByText('Opslaan');
 
 			expect(button).not.toBeDisabled();
 
-			await waitFor(() => {
-				fireEvent.click(button);
-			});
+			fireEvent.click(button);
 			expect(onMetadataSubmitMock).toHaveBeenCalled();
 		});
 	});

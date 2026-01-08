@@ -7,6 +7,7 @@ const RowLayoutRenderer = ({ schema, uischema, path, renderers, cells, enabled, 
 	<div data-testid='row-layout'>
 		{visible &&
 			(uischema as Layout).elements.map((child, idx) => {
+				/* eslint-disable react/no-array-index-key */
 				return (
 					<RowStyles key={`row-${idx}`}>
 						<ResolvedJsonFormsDispatch

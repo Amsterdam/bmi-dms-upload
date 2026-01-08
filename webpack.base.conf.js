@@ -7,6 +7,8 @@ module.exports = {
 		extensions: ['.js', '.jsx', '.ts', '.tsx', '.svg'],
 		alias: {
 			'~': path.resolve(__dirname, 'src/'),
+			'@mui/material': path.resolve(__dirname, 'node_modules/@mui/material/'),
+			'@mui/system': path.resolve(__dirname, 'node_modules/@mui/system/'),
 		},
 	},
 	plugins: [new ESLintPlugin()],

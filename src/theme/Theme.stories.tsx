@@ -1,14 +1,24 @@
 // @ts-nocheck
 
 import React from 'react';
-import { withA11y } from '@storybook/addon-a11y';
 import styled from 'styled-components';
-import { themeColor, ascDefaultTheme } from '@amsterdam/asc-ui';
+import { ThemeProvider, GlobalStyle, themeColor, ascDefaultTheme } from '@amsterdam/asc-ui';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material';
 import { muiTheme } from '@amsterdam/bmi-component-library';
+import theme from './theme';
 
 export default {
 	title: 'theme/Theme',
-	decorators: [withA11y],
+	decorators: [
+		(Story) => (
+			<MUIThemeProvider theme={muiTheme}>
+				<ThemeProvider theme={theme}>
+					<GlobalStyle />
+					<Story />
+				</ThemeProvider>
+			</MUIThemeProvider>
+		),
+	],
 };
 
 const ColorSquare = styled.div`

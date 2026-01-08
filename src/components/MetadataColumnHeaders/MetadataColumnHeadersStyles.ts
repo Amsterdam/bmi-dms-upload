@@ -4,8 +4,7 @@ import { themeColor, themeSpacing } from '@amsterdam/asc-ui';
 export const MetadataColumnHeadersStyle = styled.div`
 	display: flex;
 	flex-flow: row nowrap;
-	justify-content: start;
-	align-content: start;
+	place-content: start;
 	border-bottom: 2px solid ${themeColor('tint', 'level3')};
 	border-top: 2px solid ${themeColor('tint', 'level3')};
 	padding: ${themeSpacing(3)} ${themeSpacing(2)};

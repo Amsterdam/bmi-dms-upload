@@ -78,6 +78,10 @@ module.exports = {
 		'\\.(jpg|jpeg|png|svg)$': '<rootDir>/tests/jest-imagestub.js',
 		'^react$': '<rootDir>/node_modules/react',
 		'^react-dom$': '<rootDir>/node_modules/react-dom',
+		'^@amsterdam/bmi-component-library/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/$1',
+		'^@common/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/common/src/$1',
+		'^@form/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/form/$1',
+		'^@utils/(.*)$': '<rootDir>/node_modules/@amsterdam/bmi-component-library/lib/src/utils/$1',
 	},
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -120,7 +124,7 @@ module.exports = {
 	// runner: "jest-runner",
 
 	// The paths to modules that run some code to configure or set up the testing environment before each test
-	setupFiles: [],
+	setupFiles: ['<rootDir>/tests/jest-polyfills.ts'],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
 	setupFilesAfterEnv: ['./tests/jest-setup.ts'],

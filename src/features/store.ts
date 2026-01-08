@@ -22,7 +22,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
 	reducer: combineReducers({
 		single: singleReducer,
-		bulk: bulkReducer,
+		bulk: bulkReducer
 	}),
 	middleware: (getDefaultMiddleware) => [
 		...getDefaultMiddleware({

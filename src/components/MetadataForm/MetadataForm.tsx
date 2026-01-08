@@ -32,10 +32,12 @@ const MetadataForm: React.FC<Props> = ({
 						{
 							header: 'Metadataveld',
 							width: 50,
+							objectID: 1
 						},
 						{
 							header: 'Waarde',
 							width: 50,
+							objectID: 2
 						},
 					]}
 				/>

@@ -37,8 +37,8 @@ describe('<MetadataForm />', () => {
 		render();
 		expect(mockComponentProps<ComponentProps<typeof MetdadataColumnHeaders>>(MetdadataColumnHeadersMock)).toEqual({
 			columns: [
-				{ header: 'Metadataveld', width: 50 },
-				{ header: 'Waarde', width: 50 },
+				{ header: 'Metadataveld', width: 50, objectID: 1 },
+				{ header: 'Waarde', width: 50, objectID: 2 },
 			],
 		});
 	});

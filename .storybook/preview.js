@@ -17,7 +17,7 @@ export const parameters = {
 export const decorators = [
 	(Story) => (
 		<MUIThemeProvider theme={muiTheme}>
-			<ThemeProvider overrides={theme}>
+			<ThemeProvider theme={theme}>
 				<GlobalStyle />
 				<Story />
 			</ThemeProvider>

@@ -45,7 +45,7 @@ export default function Step3<T>(props: BulkUploadProps<T>) {
 	if (files?.length === 0) return <Navigate to={buildPath(basePath, BulkStepsToRoutes[1])} />;
 
 	return (
-		<BulkWizard {...props} isValidForm={isValidForm} canShowErrorMessage={true}>
+		<BulkWizard {...props} isValidForm={isValidForm} canShowErrorMessage>
 			{showPaginationNav && (
 				<StyledPaginationTop
 					labelNext={LABEL_NEXT}

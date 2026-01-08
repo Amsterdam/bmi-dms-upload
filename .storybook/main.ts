@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
+import path from 'path';
 const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
 	staticDirs: [{ from: '../src/assets', to: '/assets' }],
@@ -6,9 +7,6 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/react-webpack5',
 		options: {},
-	},
-	features: {
-		storyStoreV7: false,
 	},
 	docs: {
 		autodocs: true,
@@ -24,6 +22,20 @@ const config: StorybookConfig = {
 			url: 'https://amsterdam.github.io/bmi-component-library/',
 			expanded: false,
 		},
+	},
+	webpackFinal: async (baseConfig) => {
+		baseConfig.resolve = baseConfig.resolve || {};
+		baseConfig.resolve.alias = {
+			...(baseConfig.resolve.alias || {}),
+			'@amsterdam/bmi-component-library': path.resolve(
+				__dirname,
+				'../node_modules/@amsterdam/bmi-component-library/lib/index.js',
+			),
+			'@common': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/common'),
+			'@form': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/form'),
+			'@utils': path.resolve(__dirname, '../node_modules/@amsterdam/bmi-component-library/lib/utils'),
+		};
+		return baseConfig;
 	},
 };
 export default config;

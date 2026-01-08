@@ -12,7 +12,9 @@ export function useRouteDetect(basePath = '/') {
 	const dispatch = useAppDispatch();
 	const location = useLocation();
 
-	const step = SingleRoutesToSteps.get(location.pathname.replace(appendTrailingSlash(basePath), '/'));
+	const step = SingleRoutesToSteps.get(
+		location.pathname.replace(appendTrailingSlash(basePath), '/')
+	);
 
 	useEffect(() => {
 		if (step && step !== currentStep) dispatch(setCurrentStep(step));

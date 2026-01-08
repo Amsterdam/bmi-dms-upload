@@ -15,17 +15,21 @@ import { Props } from '../single/types';
 import { ModalContentStyle, ModalTopBarStyle } from './styles';
 
 type SingleWizardProps<T> = {
+	asset: {
+		name: string;
+		code: string;
+	},
 	children?: React.ReactNode;
 	isValidForm: boolean;
 } & Props<T>;
 
-export default function SingleWizard<T>({
+const SingleWizard = <T, >({
 	asset,
 	children,
 	isValidForm,
 	onCancel,
 	onMetadataSubmit,
-}: SingleWizardProps<T>) {
+}: SingleWizardProps<T>) => {
 	const { isOpen, confirm } = useConfirmTermination(() => resetAndClose());
 	const currentStep = useAppSelector(getCurrentStep);
 	const dispatch = useAppDispatch();
@@ -105,3 +109,5 @@ export default function SingleWizard<T>({
 		</>
 	);
 }
+
+export { SingleWizard, SingleWizardProps }
